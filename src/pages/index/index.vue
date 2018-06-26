@@ -1,16 +1,21 @@
 <template>
   <div class="page">
-    <scroll-view class="content">
-
-    </scroll-view>
+    <view class="content">
+      <scroll-view>
+        <header-area/>
+      </scroll-view>
+    </view>
     <view class="footer">
-      Test
+      <command-area>
+
+      </command-area>
     </view>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
+import commandArea from '@/components/commandArea'
+import headerArea from '@/components/headerArea'
 
 export default {
   data () {
@@ -21,7 +26,8 @@ export default {
   },
 
   components: {
-    card
+    headerArea,
+    commandArea
   },
 
   methods: {
@@ -49,6 +55,10 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
+  },
+
+  onShow () {
+    this.$store.dispatch('login')
   }
 }
 </script>
@@ -56,17 +66,17 @@ export default {
 <style scoped>
 .page {
   display: flex;
-  height: 100vh;
+  height: 100% !important;
   flex-direction: column;
 }
 
 .content {
   flex: 1;
-  background-color: rgb(249, 249, 249)
+  background-color: rgb(249, 249, 249);
+  height: auto;
 }
 
 .footer {
-  background-color: rgb(236, 232, 232)
+  background-color: rgb(249, 249, 249);
 }
-
 </style>
