@@ -21,7 +21,9 @@ export default {
 .outgoing {
   padding: 10px;
   border: solid #2b85e4 1px;
-  border-radius: 10px 10px 0 10px;
-  background-color: #70b3f7
+  border-radius: 15px 15px 0 15px;
+  background-color: #91c4f7;
+  font-size: 12px;
+  margin-right: 5px;
 }
 </style>

@@ -1,22 +1,19 @@
 <template>
   <block>
-    <block v-if="outgoing">
-      <block v-for="msg in msgs" :key="msg">
-        <user-say :content="msg.data.query" v-if="msg.type=='text'"></user-say>
-      </block>
+    <block v-if="outgoing">  
+        <user-say :content="messages.data.query" v-if="messages.type=='text'"></user-say>
     </block>
     <block v-else>
-      <block  v-for="(msg, i) in msgs" :key="i">
-        <i-row i-class="message-wrapper">
-          <i-col span="3" >
-            <view style="padding: 3px 10px">
-              <i-avatar :src="bodAvatar" v-if="i == receivingMsgId || i == msgs.length-1"></i-avatar>
-            </view>
-          </i-col>
-          <i-col span="18">
-            <bot-say-text :content="msg.reply" v-if="msg.type=='text'"></bot-say-text> 
-          </i-col>
-        </i-row>
+      <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
+        
+        <view class="weui-flex">
+          <view style="padding: 3px 10px;width: 40rpx">
+            <image :src="bodAvatar" class="small-avatar" v-if="i==msgs.length-1"/>
+          </view>
+          <view>
+            <bot-say-text :content="msg.reply"></bot-say-text> 
+          </view>
+        </view>
       </block>
     </block>
   </block>
@@ -29,23 +26,21 @@ import { mapState } from 'vuex'
 
 export default {
   data () {
+    console.log('msglist')
+    console.log(this.messages)
     return {
-      receivingMsgId: this.msgs.length
+      msgs: this.messages.to ? this.messages.msgs.filter((msg) => msg.type !== 'radio') : undefined,
+      receivingMsgId: this.messages.to ? this.messages.msgs.length : undefined,
+      outgoing: this.messages.from !== undefined
     }
   },
 
   props: {
+    messages: {
+      type: Object,
+      default: {}
+    },
     receiving: {
-      type: Boolean,
-      default: false
-    },
-
-    msgs: {
-      type: Array,
-      default: []
-    },
-
-    outgoing: {
       type: Boolean,
       default: true
     }
@@ -75,4 +70,10 @@ export default {
 .message-wrapper{
   margin-bottom: 10px;
 }
+.small-avatar {
+  width: 50rpx!important;
+  height: 50rpx!important;
+  border-radius: 50%;
+}
+
 </style>

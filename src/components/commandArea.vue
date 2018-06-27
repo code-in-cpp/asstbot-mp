@@ -5,7 +5,7 @@
         <button v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
       </view>
       <view class="weui-flex__item">
-        <i-input type="textarea" placeholder="请输入消息" />
+        <i-input type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
       </view>
       <view class="placeholder">
         <button class="input-widget" size="small" formType="submit">发送</button>
@@ -18,7 +18,12 @@
 import { mapState } from 'vuex'
 
 export default {
-  props: ['text'],
+  data () {
+    return {
+      currentMessage: ''
+    }
+  },
+
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed
@@ -27,16 +32,19 @@ export default {
   methods: {
     updateUserInfo (ev) {
       this.$store.dispatch('updateUserInfo')
+    },
+    valueChange (ev) {
+      this.currentMessage = ev.mp.detail.detail.value
+    },
+    sendMessage (ev) {
+      this.$store.dispatch('sendQuery', this.currentMessage)
+      this.currentMessage = ''
     }
   }
 }
 </script>
 
 <style>
-.card {
-  padding: 10px;
-}
-
 .input-widget {
   margin: 0!important;
   height: 100%;

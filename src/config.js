@@ -11,7 +11,7 @@ export default {
   service: {
     host,
     // 登录地址，用于建立会话
-    messageUrl: `${hostRoot}/message`,
+    messageUrl: `${hostRoot}/chatbot`,
     openIdUrl: `${hostRoot}/openid`,
     userInfoUrl: `${hostRoot}/user/wechat`
   }
