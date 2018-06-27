@@ -97,7 +97,7 @@ function __currentday () {
 
 function __isReachLimit () {
   var requestData = wx.getStorageSync('requestCode') || {time: 0}
-  console.log(requestData)
+  // console.log(requestData)
   return __currentday() === requestData.last && requestData.time >= 10
 }
 function __updateRequest () {

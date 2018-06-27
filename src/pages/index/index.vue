@@ -8,13 +8,15 @@
           <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
               :messages="messages"/>
           </view>
+
         </block>
       </scroll-view>
     </view>
     <view class="footer">
       <command-area/>
     </view>
-    <box-float :list="dataArray" :type="type"></box-float>
+    <!--<box-float :list="dataArray" :type="type"></box-float>-->
+    <box-float></box-float>
   </div>
 </template>
 
