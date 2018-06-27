@@ -6,6 +6,7 @@
       <scroll-view scroll-y=true class="ulBox">
         <ul class="boxItemBox">
           <li class="item" v-for="(option, value) in item.items" :key="item" @click="selectItem(option.value)">{{option.caption}}</li>
+          <!--<li><upload-image></upload-image></li>-->
         </ul>
       </scroll-view>
     </view>
@@ -14,6 +15,7 @@
 <!--<template v-else-if="type == 'image'"></template>-->
 
 <script>
+  import uploadImage from './uploadImage'
   export default {
     name: 'boxFloat',
     props: [ 'list', 'type' ],
@@ -29,6 +31,9 @@
         console.log(caption)
         this.flag = false
       }
+    },
+    components: {
+      uploadImage
     },
     created () {
       console.log(this.list)
