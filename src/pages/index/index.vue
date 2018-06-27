@@ -10,24 +10,38 @@
 
       </command-area>
     </view>
+    <box-float :list="dataArray" :type="type"></box-float>
   </div>
 </template>
 
 <script>
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
+import boxFloat from '@/components/boxFloat'
 
 export default {
   data () {
     return {
       motto: 'Hello World',
-      userInfo: {}
+      userInfo: {},
+      dataArray: [
+        {
+          type: 'radio',
+          title: '您是男的还是女的呢？',
+          items: [
+            {caption: '男', value: '我是男的'},
+            {caption: '女', value: '我是女的'}
+          ]
+        }
+      ],
+      type: 'radio'
     }
   },
 
   components: {
     headerArea,
-    commandArea
+    commandArea,
+    boxFloat
   },
 
   methods: {
