@@ -1,5 +1,5 @@
 const state = {
-  avatar: '../../static/image/avatar.png',
+  avatar: '/static/image/avatar.png',
   name: '小哒'
 }
 

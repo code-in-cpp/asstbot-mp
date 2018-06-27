@@ -9,7 +9,9 @@ export default {
     'usingComponents': {
       'i-button': '../../../static/iview/button/index',
       'i-input': '../../../static/iview/input/index',
-      'i-avatar': '../../../static/iview/avatar/index'
+      'i-avatar': '../../../static/iview/avatar/index',
+      'i-row': '../../../static/iview/row/index',
+      'i-col': '../../../static/iview/col/index'
     },
     page: {
       'enablePullDownRefresh': false

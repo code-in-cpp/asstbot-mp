@@ -3,19 +3,26 @@
     <view class="content">
       <scroll-view>
         <header-area/>
+        <block v-for="(messages, i) in messagesList" :key="i" v-if="messages.msgs!=undefined">
+          <view>
+          <msg-list :outgoing="messages.from!=undefined" 
+              :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
+              :msgs="messages.msgs"/>
+          </view>
+        </block>
       </scroll-view>
     </view>
     <view class="footer">
-      <command-area>
-
-      </command-area>
+      <command-area/>
     </view>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
+import msgList from '@/components/msgList'
 
 export default {
   data () {
@@ -25,9 +32,16 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState({
+      messagesList: state => state.messages.data
+    })
+  },
+
   components: {
     headerArea,
-    commandArea
+    commandArea,
+    msgList
   },
 
   methods: {

@@ -15,7 +15,7 @@ const getters = {
 const mutations = {
   appendMessage (state, message) {
     const timestamp = new Date()
-    state.data.push({timestamp, message})
+    state.data.push({timestamp, ...message})
   }
 }
 
@@ -36,7 +36,7 @@ var _impleSendmessage = (commit, id, type, data) => {
       data: message,
       method: 'POST',
       success: (response) => {
-        console.log(response)
+        console.log(response.data)
         commit('appendMessage', response.data)
         resolve(response)
       },
