@@ -9,7 +9,7 @@
     <view class="header-item discription">
       <view class="talking"></view>
       <view class="">
-        个人助理
+        我可以做很多事情哦
       </view>
     </view>
   </view>  
