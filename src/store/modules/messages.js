@@ -36,7 +36,6 @@ var _impleSendmessage = (commit, id, type, data) => {
       data: message,
       method: 'POST',
       success: (response) => {
-        console.log(response.data)
         commit('appendMessage', response.data)
         resolve(response)
       },

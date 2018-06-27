@@ -3,11 +3,10 @@
     <view class="content">
       <scroll-view>
         <header-area/>
-        <block v-for="(messages, i) in messagesList" :key="i" v-if="messages.msgs!=undefined">
+        <block v-for="(messages, i) in messagesList" :key="i">
           <view>
-          <msg-list :outgoing="messages.from!=undefined"
-              :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
-              :msgs="messages.msgs"/>
+          <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
+              :messages="messages"/>
           </view>
         </block>
       </scroll-view>
