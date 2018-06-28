@@ -19,5 +19,7 @@ export default {
   width: auto!important;
   display: inline-block;
   font-size: 12px;
+  max-width: 90%;
+  
 }
 </style>
