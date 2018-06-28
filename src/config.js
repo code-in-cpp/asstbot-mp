@@ -9,10 +9,11 @@ var hostRoot = `${host}/asstbot`
 
 export default {
   service: {
-    host,
+    hostRoot,
     // 登录地址，用于建立会话
     messageUrl: `${hostRoot}/chatbot`,
     openIdUrl: `${hostRoot}/openid`,
-    userInfoUrl: `${hostRoot}/user/wechat`
+    userInfoUrl: `${hostRoot}/user/wechat`,
+    imageUrl: `${hostRoot}/image`
   }
 }

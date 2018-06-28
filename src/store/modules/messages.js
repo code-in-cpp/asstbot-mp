@@ -54,11 +54,11 @@ var _sendmessage = (commit, type, data) => {
         .then((response) => {
           resolve(response)
         })
-        .fail((err) => {
+        .catch((err) => {
           reject(err)
         })
     })
-    .fail((err) => {
+    .catch((err) => {
       reject(err)
     })
   })
@@ -74,6 +74,9 @@ const actions = {
   },
   sendQuery ({commit}, query) {
     return _sendmessage(commit, 'text', {query})
+  },
+  sendImage ({commit}, url) {
+    return _sendmessage(commit, 'image', {url})
   }
 }
 

@@ -17,6 +17,7 @@
     </view>
     <!--<box-float :list="dataArray" :type="type"></box-float>-->
     <box-float></box-float>
+    <upload-image></upload-image>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
 import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
+import uploadImage from '@/components/uploadImage'
 
 export default {
   data () {
@@ -56,7 +58,8 @@ export default {
     headerArea,
     commandArea,
     boxFloat,
-    msgList
+    msgList,
+    uploadImage
   },
 
   methods: {

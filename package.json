@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "mpvue": "^1.0.10",
+    "mpvue-cropper": "0.0.8",
     "vuetify": "^1.0.17",
     "vuex": "^2.3.1"
   },

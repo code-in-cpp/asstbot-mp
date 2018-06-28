@@ -1,7 +1,8 @@
 <template>
   <block>
     <block v-if="outgoing">
-        <user-say :content="messages.data.query" v-if="messages.type=='text'"></user-say>
+        <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
+        <user-say-image :Url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
     </block>
     <block v-else>
       <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
@@ -20,8 +21,10 @@
 </template>
 
 <script>
-import userSay from '@/components/userSay'
+import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
+import userSayImage from '@/components/userSay/userSayImage'
+
 import { mapState } from 'vuex'
 
 export default {
@@ -52,8 +55,9 @@ export default {
   },
 
   components: {
-    userSay,
-    botSayText
+    userSayText,
+    botSayText,
+    userSayImage
   },
 
   mounted () {
