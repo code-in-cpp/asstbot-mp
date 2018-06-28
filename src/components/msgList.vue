@@ -6,10 +6,9 @@
     </block>
     <block v-else>
       <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
-
         <view class="weui-flex word-text">
           <view style="padding: 3px 10px;width: 40rpx">
-            <image :src="bodAvatar" class="small-avatar" v-if="i==msgs.length-1"/>
+            <image :src="bodAvatar" class="small-avatar" v-if="i==0"/>
           </view>
           <view>
             <bot-say-text :content="msg.reply"></bot-say-text>

@@ -1,14 +1,14 @@
 <template>
   <div class="page">
     <view class="content">
-      <scroll-view scroll-y='true' style="height: 100%">
+      <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
         <header-area/>
         <block v-for="(messages, i) in messagesList" :key="i">
-          <view>
+          <view :id="i">
           <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
               :messages="messages"/>
           </view>
-
+          <view :id="'bottom'+i"></view>
         </block>
       </scroll-view>
     </view>
@@ -30,27 +30,10 @@ import msgList from '@/components/msgList'
 import uploadImage from '@/components/uploadImage'
 
 export default {
-  data () {
-    return {
-      motto: 'Hello World',
-      userInfo: {},
-      dataArray: [
-        {
-          type: 'radio',
-          title: '您是男的还是女的呢？',
-          items: [
-            {caption: '男', value: '我是男的'},
-            {caption: '女', value: '我是女的'}
-          ]
-        }
-      ],
-      type: 'radio'
-    }
-  },
-
   computed: {
     ...mapState({
-      messagesList: state => state.messages.data
+      messagesList: state => state.messages.data,
+      scrollToView: state => `bottom${state.messages.data.length - 1}`
     })
   },
 
