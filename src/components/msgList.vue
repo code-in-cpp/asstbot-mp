@@ -1,17 +1,17 @@
 <template>
   <block>
-    <block v-if="outgoing">  
+    <block v-if="outgoing">
         <user-say :content="messages.data.query" v-if="messages.type=='text'"></user-say>
     </block>
     <block v-else>
       <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
-        
+
         <view class="weui-flex">
           <view style="padding: 3px 10px;width: 40rpx">
             <image :src="bodAvatar" class="small-avatar" v-if="i==msgs.length-1"/>
           </view>
           <view>
-            <bot-say-text :content="msg.reply"></bot-say-text> 
+            <bot-say-text :content="msg.reply"></bot-say-text>
           </view>
         </view>
       </block>
@@ -26,8 +26,7 @@ import { mapState } from 'vuex'
 
 export default {
   data () {
-    console.log('msglist')
-    console.log(this.messages)
+    // console.log(this.messages)
     return {
       msgs: this.messages.to ? this.messages.msgs.filter((msg) => msg.type !== 'radio') : undefined,
       receivingMsgId: this.messages.to ? this.messages.msgs.length : undefined,
@@ -58,7 +57,7 @@ export default {
   },
 
   mounted () {
-    console.log('mounted')
+    // console.log('mounted')
   }
 }
 </script>

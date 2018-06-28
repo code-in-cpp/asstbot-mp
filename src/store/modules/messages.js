@@ -49,7 +49,7 @@ var _impleSendmessage = (commit, id, type, data) => {
 var _sendmessage = (commit, type, data) => {
   return new Promise((resolve, reject) => {
     wechat.getOpenId().then((openid) => {
-      console.log(openid)
+      // console.log(openid)
       _impleSendmessage(commit, openid, type, data)
         .then((response) => {
           resolve(response)

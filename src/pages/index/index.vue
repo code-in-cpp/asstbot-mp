@@ -8,12 +8,15 @@
           <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
               :messages="messages"/>
           </view>
+
         </block>
       </scroll-view>
     </view>
     <view class="footer">
       <command-area/>
     </view>
+    <!--<box-float :list="dataArray" :type="type"></box-float>-->
+    <box-float></box-float>
   </div>
 </template>
 
@@ -21,13 +24,25 @@
 import { mapState } from 'vuex'
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
+import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
 
 export default {
   data () {
     return {
       motto: 'Hello World',
-      userInfo: {}
+      userInfo: {},
+      dataArray: [
+        {
+          type: 'radio',
+          title: '您是男的还是女的呢？',
+          items: [
+            {caption: '男', value: '我是男的'},
+            {caption: '女', value: '我是女的'}
+          ]
+        }
+      ],
+      type: 'radio'
     }
   },
 
@@ -40,6 +55,7 @@ export default {
   components: {
     headerArea,
     commandArea,
+    boxFloat,
     msgList
   },
 

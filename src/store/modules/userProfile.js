@@ -1,7 +1,7 @@
 import wechat from './wechat'
 import config from '@/config.js'
 
-console.log(config)
+// console.log(config)
 const url = config.service.userInfoUrl
 
 const state = {
@@ -30,7 +30,7 @@ const actions = {
             commit('setAuth', true)
             wx.getUserInfo({
               success: function (res) {
-                console.log(res.userInfo)
+                // console.log(res.userInfo)
                 wechat.getOpenId()
                   .then((openid) => {
                     wx.request({
@@ -41,7 +41,7 @@ const actions = {
                       },
                       method: 'POST',
                       success: (response) => {
-                        console.log(response.data)
+                        // console.log(response.data)
                         commit('appendMessage', response.data)
                         resolve(response)
                       },

@@ -2,13 +2,13 @@
   <form report-submit="true" @submit="sendMessage">
     <view class="weui-flex">
       <view class="placeholder">
-        <button v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
+        <button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
       </view>
       <view class="weui-flex__item">
-        <i-input type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
+        <i-input class="height-line-height" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
       </view>
       <view class="placeholder">
-        <button class="input-widget" size="small" formType="submit" disabled="currentMessage==''">发送</button>
+        <button class="input-widget height-line-height" size="small" formType="submit" disabled="currentMessage==''">发送</button>
       </view>
     </view>
   </form>
@@ -52,4 +52,9 @@ export default {
   color:#fff!important;
   background:#2d8cf0!important
 }
+  .height-line-height{
+    height: 80rpx;
+    line-height: 80rpx;
+    box-sizing: border-box;
+  }
 </style>
