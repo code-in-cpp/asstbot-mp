@@ -8,7 +8,7 @@
         <i-input class="height-line-height" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
       </view>
       <view class="placeholder">
-        <button class="input-widget height-line-height" size="small" formType="submit">发送</button>
+        <button class="input-widget height-line-height" size="small" formType="submit" disabled="currentMessage==''">发送</button>
       </view>
     </view>
   </form>

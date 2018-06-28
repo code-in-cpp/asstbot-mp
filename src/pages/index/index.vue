@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <view class="content">
-      <scroll-view>
+      <scroll-view scroll-y='true' style="height: 100%">
         <header-area/>
         <block v-for="(messages, i) in messagesList" :key="i">
           <view>
@@ -104,8 +104,8 @@ export default {
 
 .content {
   flex: 1;
+  display: flex;
   background-color: rgb(249, 249, 249);
-  height: auto;
 }
 
 .footer {
