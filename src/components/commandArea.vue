@@ -4,11 +4,11 @@
       <view class="placeholder">
         <button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
       </view>
-      <view class="weui-flex__item">
-        <i-input class="height-line-height" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
+      <view class="weui-flex__item height-line-height">
+        <i-input v-if="!activeAction" class="height-line-height" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
       </view>
       <view class="placeholder">
-        <button class="input-widget height-line-height" size="small" formType="submit" disabled="currentMessage==''">发送</button>
+        <button class="input-widget height-line-height" size="small" formType="submit" :disabled="currentMessage==''">发送</button>
       </view>
     </view>
   </form>
@@ -27,7 +27,8 @@ export default {
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed
-    })
+    }),
+    activeAction: state => state.$store.getters.activeAction
   },
   methods: {
     updateUserInfo (ev) {
@@ -51,6 +52,10 @@ export default {
   max-height: 80rpx;
   color:#fff!important;
   background:#2d8cf0!important
+}
+.input-widget:disabled{
+  background: rgba(168,167,165,0.09)!important;
+  padding-left: 20px;
 }
   .height-line-height{
     height: 80rpx;

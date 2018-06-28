@@ -100,6 +100,7 @@
           this.optionObject = val.to ? val.msgs[val.msgs.length - 1] : ''
           if (val.to) {
             if ((this.optionObject.type === 'imageUploader')) {
+              this.indicator = this.optionObject.indicator
               setTimeout(() => {
                 this.imgFlag = true
               }, 1000)
@@ -142,10 +143,10 @@
       },
       getCropperImage () {
         wecropper.getCropperImage()
-          .then((src) => {
-            this.$store.dispatch('uploadImage', src).then(res => {
+          .then((filePath) => {
+            console.log(filePath)
+            this.$store.dispatch('uploadImage', {filePath, indicator: this.indicator}).then(res => {
               this.imgFlag = false
-              console.log(this.imgFlag)
             }).catch(err => {
               this.imgFlag = false
               console.log(err)
@@ -196,6 +197,8 @@
   .cropper-buttons .upload, .cropper-buttons .getCropperImage{
     width: 50%;
     text-align: center;
+    background: #000;
+    color: #fff;
   }
 
   .cropper{

@@ -9,7 +9,17 @@ const state = {
 }
 
 const getters = {
-
+  activeAction: state => {
+    let list = state.data[state.data.length - 1]
+    if (list && list.to) {
+      let len = list.msgs.length - 1
+      let type = list.msgs[len].type
+      if (type === 'radio' || type === 'imageUploader') {
+        return true
+      }
+    }
+    return false
+  }
 }
 
 const mutations = {
@@ -75,8 +85,8 @@ const actions = {
   sendQuery ({commit}, query) {
     return _sendmessage(commit, 'text', {query})
   },
-  sendImage ({commit}, url) {
-    return _sendmessage(commit, 'image', {url})
+  sendImage ({commit}, {url, indicator}) {
+    return _sendmessage(commit, 'image', {url, indicator})
   }
 }
 

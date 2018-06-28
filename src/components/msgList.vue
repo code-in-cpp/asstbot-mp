@@ -2,12 +2,12 @@
   <block>
     <block v-if="outgoing">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
-        <user-say-image :Url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
+        <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
     </block>
     <block v-else>
       <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
 
-        <view class="weui-flex">
+        <view class="weui-flex word-text">
           <view style="padding: 3px 10px;width: 40rpx">
             <image :src="bodAvatar" class="small-avatar" v-if="i==msgs.length-1"/>
           </view>
@@ -78,5 +78,8 @@ export default {
   height: 50rpx!important;
   border-radius: 50%;
 }
+  .word-text{
+    padding-bottom: 10px;
+  }
 
 </style>

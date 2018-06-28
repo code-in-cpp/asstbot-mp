@@ -1,5 +1,5 @@
 <template>
-  <view class="wrapper">
+  <view class="wrapper word-text">
     <image :src="url" class="outgoing">发送图片</image>
   </view>
 </template>
@@ -20,7 +20,10 @@
     display: flex;
     flex-direction: row-reverse;
   }
-
+.word-text{
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
   .outgoing {
     height: 100px;
     width: 100px;

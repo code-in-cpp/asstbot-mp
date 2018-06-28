@@ -1,5 +1,5 @@
 <template>
-  <view class="wrapper">
+  <view class="wrapper word-text">
     <view class="outgoing">
       {{content}}
     </view>
@@ -17,7 +17,9 @@ export default {
   display: flex;
   flex-direction: row-reverse;
 }
-
+.word-text{
+  padding-bottom: 10px;
+}
 .outgoing {
   padding: 10px;
   border: solid #2b85e4 1px;
