@@ -15,7 +15,6 @@ const mutations = {
 
 const actions = {
   uploadImage ({dispatch, commit}, {filePath, indicator}) {
-    console.log(filePath, indicator)
     return new Promise((resolve, reject) => {
       wx.uploadFile({
         url,

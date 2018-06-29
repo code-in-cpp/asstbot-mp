@@ -12,7 +12,7 @@
         我可以做很多事情哦
       </view>
     </view>
-  </view>  
+  </view>
 </template>
 
 <script>
@@ -38,13 +38,14 @@ export default {
 .header {
   display: flex;
   flex-direction: column;
-  width: 100%
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 .header-item {
   width: 100%;
   text-align: center;
-  
+
 }
 
 .title {

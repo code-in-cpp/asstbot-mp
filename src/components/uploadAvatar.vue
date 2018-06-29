@@ -1,41 +1,5 @@
-<!--<template>-->
-  <!--<view @click="selectImage" class="imageCut">-->
-      <!--1111-->
-  <!--</view>-->
-<!--</template>-->
-
-<!--<script>-->
-  <!--export default {-->
-    <!--name: 'uploadImage',-->
-    <!--methods: {-->
-    <!--},-->
-    <!--created () {-->
-      <!--wx.chooseImage({-->
-        <!--count: 1, // 默认9-->
-        <!--sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有-->
-        <!--sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有-->
-        <!--success: function (res) {-->
-          <!--console.log(res)-->
-          <!--// console.log(res)-->
-          <!--// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片-->
-          <!--// var tempFilePaths = res.tempFilePaths-->
-        <!--}-->
-      <!--})-->
-    <!--}-->
-  <!--}-->
-<!--</script>-->
-
-<!--<style scoped>-->
-  <!--.imageCut{-->
-    <!--display: flex;-->
-    <!--height: 100vh;-->
-    <!--background: aqua;-->
-  <!--}-->
-<!--</style>-->
-
-
 <template>
-  <view  class="boxFloat" :class="{'top_0':imgFlag}">
+  <view  class="boxFloat" :class="{'top_0':optionObject.type === 'imageUploader'}">
     <mpvue-cropper
       ref="cropper"
       :option="cropperOpt"
@@ -60,7 +24,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   import MpvueCropper from 'mpvue-cropper'
 
   let wecropper
@@ -88,31 +52,17 @@
         imgFlag: false
       }
     },
-    name: 'uploadImage',
+    name: 'uploadAvatar',
 
     components: {
       MpvueCropper
     },
-
-    watch: {
-      list: {
-        handler: function (val, oldval) {
-          this.optionObject = val.to ? val.msgs[val.msgs.length - 1] : ''
-          if (val.to) {
-            if ((this.optionObject.type === 'imageUploader')) {
-              this.indicator = this.optionObject.indicator
-              setTimeout(() => {
-                this.imgFlag = true
-              }, 1000)
-            }
-          }
-        },
-        deep: true
-      }
-    },
     computed: {
       ...mapState({
         list: state => state.messages.data[state.messages.data.length - 1]
+      }),
+      ...mapGetters({
+        optionObject: 'messageAction'
       })
     },
     methods: {
@@ -144,11 +94,11 @@
       getCropperImage () {
         wecropper.getCropperImage()
           .then((filePath) => {
-            console.log(filePath)
-            this.$store.dispatch('uploadImage', {filePath, indicator: this.indicator}).then(res => {
-              this.imgFlag = false
+            // console.log(filePath)
+            this.$store.dispatch('uploadImage', {filePath, indicator: this.optionObject.indicator}).then(res => {
+              // this.imgFlag = false
             }).catch(err => {
-              this.imgFlag = false
+              // this.imgFlag = false
               console.log(err)
             })
             // wx.previewImage({

@@ -7,7 +7,12 @@ const state = {
   data: [
   ]
 }
-
+/*
+* messageAction 获取messagelist的最后一条数据
+* typeStatus 获取最后一条数据的类型
+* activeAction 获取最后一条数据的类型radio和imageUploader（后续可能有扩展）返回true，否则返回false
+* messageAction 可以解决上诉所有问题
+* */
 const getters = {
   activeAction: state => {
     let list = state.data[state.data.length - 1]
@@ -19,6 +24,45 @@ const getters = {
       }
     }
     return false
+  },
+  typeStatus: state => {
+    let list = [...state.data].slice(-1).pop()
+    if (list && list.to) {
+      let type = [...list.msgs].slice(-1).pop()
+      return type.type
+    } else {
+      return list ? list.type ? list.type : 'text' : 'text'
+    }
+  },
+  messageAction: state => {
+    let list = [...state.data].slice(-1).pop()
+    if (list && list.to) {
+      return [...list.msgs].slice(-1).pop()
+    } else {
+      let objType = Object.prototype.toString.call(list).slice(8, -1)
+      switch (objType) {
+        case 'Array' :
+          return {
+            title: '',
+            type: 'text',
+            items: '',
+            ...[...list].slice(-1).pop()
+          }
+        case 'Object':
+          return {
+            title: '',
+            type: 'text',
+            items: '',
+            ...list
+          }
+        default:
+          return {
+            title: '',
+            type: 'text',
+            items: ''
+          }
+      }
+    }
   }
 }
 

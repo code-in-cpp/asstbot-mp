@@ -1,11 +1,12 @@
 <template>
   <form report-submit="true" @submit="sendMessage">
-    <view class="weui-flex">
+    <view class="weui-flex container-box">
       <view class="placeholder">
         <button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
       </view>
       <view class="weui-flex__item height-line-height">
-        <i-input v-if="!activeAction" class="height-line-height" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
+        <i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
+        <!--<textarea v-if="!activeAction" class="height-line-height word-textarea" :value="currentMessage" bindinput="valueChange" placeholder="请输入消息" />-->
       </view>
       <view class="placeholder">
         <button class="input-widget height-line-height" size="small" formType="submit" :disabled="currentMessage==''">发送</button>
@@ -57,8 +58,20 @@ export default {
   padding-left: 20px;
 }
   .height-line-height{
-    height: 80rpx;
+    /*height: 80rpx;*/
     line-height: 80rpx;
     box-sizing: border-box;
+  }
+  .container-box{
+    align-items: flex-end;
+  }
+  .word-break{
+    word-wrap: normal;
+    word-break: keep-all;
+  }
+  .word-textarea{
+    height: auto;
+    min-height: 44px;
+    padding-left: 10px;
   }
 </style>

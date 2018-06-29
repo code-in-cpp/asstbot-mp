@@ -17,7 +17,7 @@
     </view>
     <!--<box-float :list="dataArray" :type="type"></box-float>-->
     <box-float></box-float>
-    <upload-image></upload-image>
+    <upload-avatar></upload-avatar>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
 import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
-import uploadImage from '@/components/uploadImage'
+import uploadAvatar from '@/components/uploadAvatar'
 
 export default {
   computed: {
@@ -42,7 +42,7 @@ export default {
     commandArea,
     boxFloat,
     msgList,
-    uploadImage
+    uploadAvatar
   },
 
   methods: {
