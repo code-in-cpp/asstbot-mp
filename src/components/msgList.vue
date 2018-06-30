@@ -5,13 +5,15 @@
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
     </block>
     <block v-else>
-      <block  v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
-        <view class="weui-flex word-text">
-          <view style="padding: 3px 10px;width: 40rpx">
-            <image :src="bodAvatar" class="small-avatar" v-if="i==0"/>
-          </view>
-          <view>
-            <bot-say-text :content="msg.reply"></bot-say-text>
+      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
+        <view class="weui-flex word-text left-block">
+          <view class="left-item">
+            <view style="padding: 3px 10px;width: 40rpx">
+              <image :src="bodAvatar" class="small-avatar" v-if="i==0"/>
+            </view>
+            <view>
+              <bot-say-text :content="msg.reply"></bot-say-text>
+            </view>
           </view>
         </view>
       </block>
@@ -80,5 +82,11 @@ export default {
   .word-text{
     padding-bottom: 10px;
   }
-
+  .left-block{
+    display: flex;
+  }
+  .left-item{
+    max-width: 80%;
+    display: flex;
+  }
 </style>

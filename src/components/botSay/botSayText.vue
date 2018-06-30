@@ -20,6 +20,5 @@ export default {
   display: inline-block;
   font-size: 12px;
   max-width: 90%;
-  
 }
 </style>

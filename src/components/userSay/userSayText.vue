@@ -1,6 +1,6 @@
 <template>
-  <view class="wrapper word-text">
-    <view class="outgoing">
+  <view class="wrapper word-text right-block">
+    <view class="outgoing right-item">
       {{content}}
     </view>
   </view>
@@ -28,4 +28,11 @@ export default {
   font-size: 12px;
   margin-right: 5px;
 }
+  .right-block{
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .right-item{
+    max-width: 70%;
+  }
 </style>
