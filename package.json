@@ -14,7 +14,8 @@
     "mpvue": "^1.0.10",
     "mpvue-cropper": "0.0.8",
     "vuetify": "^1.0.17",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "weui-wxss": "^1.1.1"
   },
   "devDependencies": {
     "mpvue-loader": "^1.0.13",
