@@ -76,6 +76,7 @@ export default {
         }
       })
     },
+
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
