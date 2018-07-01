@@ -9,11 +9,22 @@ const getters = {
     let ret = []
     for (let index in state.result) {
       let item = state.result[index][0]
-      console.log(item)
-      let summary = { name: item.responder, score: item.score }
-      console.log(summary)
+      let summary = { id: item.id, name: item.responder, score: item.score }
       ret.push(summary)
     }
+    return ret
+  },
+
+  getSurveyAnswer: state => (id) => {
+    let ret = []
+    for (let index in state.result) {
+      let item = state.result[index][0]
+      if (item.id === id) {
+        ret = item.answers
+        break
+      }
+    }
+    console.log(ret)
     return ret
   }
 }

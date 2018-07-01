@@ -5,7 +5,7 @@
         <image :src="bodAvatar" class="large-avatar"/>
         </view>
         <view class="header-item">
-        <text class="title">{{bodName}}</text>
+        <text class="title">{{id}}</text>
         </view>
     </view>
 
@@ -32,16 +32,20 @@ import { mapState } from 'vuex'
 export default {
 
   data: {
-    bodName: '王博'
+    id: '王博'
   },
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar
-    })
+    }),
+    surveySummary () {
+      return this.$store.getters.getSurveyAnswer(this.id)
+    }
   },
 
   onLoad (option) {
-    this.bodName = option.name
+    console.log(option.id)
+    this.id = option.id
   }
 }
 </script>
