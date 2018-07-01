@@ -11,7 +11,7 @@
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
     </view>
-    <view class="weui-cells__title">答题结果:</view>
+    <!--<view class="weui-cells__title">答题结果:</view>-->
     <view class="content">
       <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
@@ -25,7 +25,7 @@
               </view>
           </view>
       </scroll-view>
-    </view>    
+    </view>
 </view>
 </template>
 
@@ -94,7 +94,7 @@ export default {
   border-radius: 50%;
 }
 .weui-panel__bd{
-  display : flex ; 
+  display : flex ;
   flex-flow : row;
   padding :15px;
 }
@@ -117,12 +117,12 @@ export default {
 }
 
 .weui-cell__bd {
-  display : flex ; 
+  display : flex ;
   flex-flow: row;
 }
 
 .weui-cell__ft {
-  display : flex ; 
+  display : flex ;
   flex-flow: row;
   color: black;
   padding-top: 5px;

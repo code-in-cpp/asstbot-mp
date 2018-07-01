@@ -10,7 +10,8 @@
         <view class="weui-flex word-text left-block">
           <view class="left-item">
             <view style="padding: 3px 10px;width: 40rpx">
-              <image :src="bodAvatar" class="small-avatar" v-if="i==0"/>
+              <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
+              <bod-avatar :url="bodAvatar" size="30"  v-if="i==0"/>
             </view>
             <view>
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>

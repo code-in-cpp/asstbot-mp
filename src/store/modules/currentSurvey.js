@@ -39,7 +39,7 @@ function getFreeRange (maxCount, occupiedRanges) {
         }
         j++
       }
-      return { min: i, max: j-1 }
+      return { min: i, max: j - 1 }
     }
   }
 

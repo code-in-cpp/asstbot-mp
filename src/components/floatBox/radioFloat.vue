@@ -11,7 +11,7 @@
             <radio-group @change="selectOption">
               <view class="selectRadio" v-for="option in list.items" :key="item">
                 <label class="selectlabel">
-                  <radio :value="option.value">{{option.caption}}</radio>
+                  <radio class="radioItem" :value="option.value"></radio><view class="radioValue">{{option.caption}}</view>
                 </label>
               </view>
             </radio-group>
@@ -102,11 +102,20 @@
     width:120rpx;
   }
   .selectRadio{
-    height:80rpx;
+    /*height:80rpx;*/
     line-height: 80rpx;
     padding-left: 30rpx;
   }
   .selectlabel{
     display: block;
+    padding-left: 60rpx;
+  }
+  .radioItem{
+    width:60rpx;
+    margin-left: -60rpx;
+    vertical-align: top;
+  }
+  .radioValue{
+    display: inline-block;
   }
 </style>
