@@ -1,7 +1,7 @@
 import wechat from './wechat'
 import config from '@/config.js'
 
-const url = config.service.messageUrl
+const url = `${config.service.hostRoot}/chatbot/survey`
 
 const state = {
   data: [
@@ -16,7 +16,7 @@ const state = {
 const getters = {
   activeAction: state => {
     let list = state.data[state.data.length - 1]
-    if (list && list.to) {
+    if (list && list.to && list.msgs && list.msgs.length > 0) {
       let len = list.msgs.length - 1
       let type = list.msgs[len].type
       if (type === 'radio' || type === 'imageUploader') {
@@ -131,6 +131,9 @@ const actions = {
   },
   sendImage ({commit}, {url, indicator}) {
     return _sendmessage(commit, 'image', {url, indicator})
+  },
+  start ({commit}) {
+    return _sendmessage(commit, 'start', {id: 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a'})
   }
 }
 

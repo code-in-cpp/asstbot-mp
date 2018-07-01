@@ -70,7 +70,7 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
-    this.$store.dispatch('login')
+    this.$store.dispatch('start')
   },
 
   onShow () {
@@ -79,20 +79,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.page {
-  display: flex;
-  height: 100% !important;
-  flex-direction: column;
-}
-
-.content {
-  flex: 1;
-  display: flex;
-  background-color: rgb(249, 249, 249);
-}
-
-.footer {
-  background-color: rgb(249, 249, 249);
-}
+<style scoped
 </style>

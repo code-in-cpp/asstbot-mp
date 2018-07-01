@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "flyio": "^0.5.9",
     "mpvue": "^1.0.10",
     "mpvue-cropper": "0.0.8",
     "vuetify": "^1.0.17",

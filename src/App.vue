@@ -13,7 +13,11 @@ export default {
 
 <style>
 page{
-  height: 100% !important
+  height: 100% !important;
+  background-color:#F8F8F8;
+  font-size:16px;
+  font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+
 }
 
 .weui-flex {
@@ -38,5 +42,21 @@ page{
   -moz-transition: width 2s;
   -webkit-transition: width 2s;
   -o-transition: width 2s;
+}
+
+.page {
+  display: flex;
+  height: 100% !important;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  background-color: rgb(249, 249, 249);
+}
+
+.footer {
+  background-color: rgb(249, 249, 249);
 }
 </style>
