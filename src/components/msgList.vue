@@ -11,7 +11,7 @@
           <view class="left-item">
             <view style="padding: 3px 10px;width: 40rpx">
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
-              <bod-avatar :url="bodAvatar" size="30"  v-if="i==0"/>
+              <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
             <view>
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
@@ -32,6 +32,7 @@ import userSayAllow from '@/components/userSay/userSayAllow'
 import botSayText from '@/components/botSay/botSayText'
 import botSayUserAuth from '@/components/botSay/botSayUserAuth'
 import botSayNew from '@/components/botSay/botSayNew'
+import botAvatar from '@/components/bodAvatar'
 
 import { mapState } from 'vuex'
 
@@ -53,6 +54,10 @@ export default {
     receiving: {
       type: Boolean,
       default: true
+    },
+    survey: {
+      type: Object,
+      default: {}
     }
   },
 
@@ -68,7 +73,8 @@ export default {
     userSayAllow,
     botSayText,
     botSayUserAuth,
-    botSayNew
+    botSayNew,
+    botAvatar
   },
 
   created () {

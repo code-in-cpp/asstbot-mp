@@ -26,6 +26,7 @@
           </view>
       </scroll-view>
     </view>
+    <view class="foot">@@@</view>
 </view>
 </template>
 
@@ -73,7 +74,10 @@ export default {
 </script>
 
 <style>
-
+.page{
+  display: flex;
+  flex-direction: column;
+}
 .icon-error {
   padding-left: 5pt;
   padding-top: 10px;
@@ -99,6 +103,7 @@ export default {
   display : flex ;
   flex-flow : row;
   padding :15px;
+  border-bottom: 1rpx solid #dadada;
 }
 
 .weui-media-box__desc {
@@ -138,7 +143,8 @@ export default {
 }
 
 .content {
-  flex-direction: column
+  flex-direction: column;
+  flex:1
 }
 
 .footer {
@@ -168,5 +174,10 @@ export default {
   color: #D9D9D9;
   left: 30rpx;
 } */
+  .foot{
+    background: #f8f8f8;
+    line-height: 80rpx;
+    height:80rpx;
+  }
 
 </style>
