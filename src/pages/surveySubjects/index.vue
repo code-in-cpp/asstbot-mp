@@ -39,7 +39,7 @@
                       </view>
                     </view>
                   </view>
-                  
+
                 </view>
                 <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
               </block>
@@ -55,7 +55,7 @@
             <view v-if="activeIndex == 1">
               <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
                 <view class="subject-divider"></view>
-                <view class="weui-cells__title">            
+                <view class="weui-cells__title">
                   <view class="weui-cell" >
                     <view class="weui-cell__bd">
                       <view class="weui-label">评语分类 {{i+1}}</view>
@@ -104,16 +104,22 @@
                   <view class="weui-cell__bd">添加评语分类</view>
                 </view>
               </view>
-            </view>        
+            </view>
           </scroll-view>
         </view>
       </view>
     </view>
-    <view class="footer">
-      <view class="page__bd page__bd_spacing">
-          <button class="weui-btn mini-btn" open-type="share" type="primary" size="default"> 发布 </button>
-          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="default">保存 </button>
-          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="default">清空</button>
+    <view class="footer bottom_button">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
+        </view>
       </view>
     </view>
   </view>
@@ -223,14 +229,10 @@ export default {
 .content {
   flex-direction: column;
 }
-.page__bd_spacing{
-  padding-top  : 20rpx;
-  padding-left : 40rpx;
-  padding-right: 20rpx;
-  border: 1px;
-}
+
 .mini-btn{
-    margin-right: 40rpx;
+    width: 30%;
+    margin-right: 20rpx;
 }
 .weui-select {
   border-right: 0 !important;
@@ -239,4 +241,18 @@ export default {
 .subject-divider {
   margin-top: 10px;
 }
+
+.bottom_button {
+  margin: 40rpx 15rpx
+}
+
+.bottom_button .weui-btn {
+  width: 210rpx;
+  line-height: 2
+}
+
+.iconfont {
+  display: inline-block
+}
+
 </style>

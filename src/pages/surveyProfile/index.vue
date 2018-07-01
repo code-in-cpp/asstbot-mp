@@ -2,12 +2,12 @@
   <view class="page">
     <view class="content">
       <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
+        <view class="weui-cell weui-cell_input ">
           <view class="weui-cell__bd avatar-uploader">
             <view @click="chooseImage">
               <bod-avatar :url="avatarUrl" size="100"/>
             </view>
-            <view class="avatar-badge">
+            <view class="avatar-badge"  @click="chooseImage">
               <i-icon type="editor" size="20"/>
             </view>
             <button class="weui-btn" type="default" size="mini"
@@ -131,12 +131,16 @@ export default {
 .avatar-uploader {
   text-align: center;
   position: relative;
+  margin-top: 30rpx;
+}
+.avatar-uploader .weui-btn {
+  margin-top: 5rpx;
 }
 
 .avatar-badge {
   position: absolute;
-  top: .4em;
-  right: 7.9em;
+  top: 5rpx;
+  right: 238rpx;
 }
 
 </style>

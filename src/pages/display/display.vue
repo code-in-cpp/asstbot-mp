@@ -1,5 +1,6 @@
 <template>
 <view class="page">
+    <page-title :title="survey.title"/>
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
@@ -21,28 +22,37 @@
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
-    <scroll-view scroll-y="true" class="responsor-list weui-cells content">
-        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-            </view>
-            <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
-        </navigator>
+      <view class="content">
+      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
+          <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__hd">
+                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+              </view>
+              <view class="weui-cell__bd">{{item.name}}</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
+          </navigator>
 
-        <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
-            <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-            </view>
-            <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft">{{item.score}}</view>
+          <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
+              <view class="weui-cell__hd">
+                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+              </view>
+              <view class="weui-cell__bd">{{item.name}}</view>
+              <view class="weui-cell__ft">{{item.score}}</view>
+          </view>
+      </scroll-view>
+    </view>
+    <view class="footer bottom_button">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
-    </scroll-view>
-
-    <view class="button-sp-area">
-        <button class="weui-btn btn" type="warn" @click="deleteSurvey" size="mini"> <zan-icon type="close" /> 删除</button>
-        <button class="weui-btn btn greybtn" type="default" @click="editSurvey" size="mini"> <zan-icon type="edit" /> 编辑</button>
-        <button class="weui-btn btn" open-type="share" type="primary" size="mini"> <i-icon type="share_fill" /> 发布</button>
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
+        </view>
+      </view>
     </view>
 </view>
 </template>
@@ -60,10 +70,7 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => {
-        wx.setNavigationBarTitle({title: state.surveyResult.survey.title})
-        return state.surveyResult.survey
-      }
+      survey: state => state.surveyResult.survey
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
@@ -140,7 +147,6 @@ export default {
 }
 
 .responsor-list{
-  height: 400rpx!important;
   border-width:medium;
   border-color:grey;
   display: flex;
@@ -179,7 +185,13 @@ export default {
   color: #999999;
 }
 
-.weui-cells__title{
+.bottom_button {
+  margin: 40rpx 15rpx
+}
+
+.bottom_button .weui-btn {
+  width: 210rpx;
+  line-height: 2
 }
 
 
@@ -196,8 +208,11 @@ export default {
   /*color: #FFF;*/
 }
 .greybtn{
-  background-color: #e9e9e9;
+  background-color: #ffffff;
 }
 
+.iconfont {
+  display: inline-block
+}
 
 </style>

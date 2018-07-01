@@ -8,7 +8,7 @@ export default {
   config: {
     navigationBarTitleText: '创建问卷机器人',
     'usingComponents': {
-      'i-icon': '../../../static/iview/icon/index'
+      // 'i-icon': '../../../static/iview/icon/index'
     }
   }
 }
