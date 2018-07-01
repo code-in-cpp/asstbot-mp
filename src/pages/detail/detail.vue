@@ -5,20 +5,16 @@
         <image :src="bodAvatar" class="large-avatar"/>
         </view>
         <view class="header-item">
-        <text class="title">{{id}}</text>
+        <text class="title">{{name}}</text>
         </view>
     </view>
 
     <view class="page__bd">
     <view class="weui-cells__title">答题结果</view>
     <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell">
-            <view class="weui-cell__bd">我的星座是哪个星座</view>
-            <view class="weui-cell__ft">白羊座</view>
-        </view>
-        <view class="weui-cell">
-            <view class="weui-cell__bd">我最喜欢吃的是什么</view>
-            <view class="weui-cell__ft">肉夹馍, 凉皮</view>
+        <view v-for="item in surveyAnswers" :key="item.id" class="weui-cell">
+            <view class="weui-cell__bd">{{item.correct}}</view>
+            <view class="weui-cell__ft">{{item.value}}</view>
         </view>
     </view>
     </view>
@@ -30,15 +26,15 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-
   data: {
-    id: '王博'
+    id: '01',
+    name: '王博'
   },
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar
     }),
-    surveySummary () {
+    surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.id)
     }
   },
@@ -46,6 +42,7 @@ export default {
   onLoad (option) {
     console.log(option.id)
     this.id = option.id
+    this.name = option.name
   }
 }
 </script>
