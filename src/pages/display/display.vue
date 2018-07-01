@@ -6,7 +6,7 @@
     </view>
         <view class="weui-cells__title">完成答卷的好友列表</view>
         <view class="weui-cells weui-cells_after-title">
-            <navigator v-for="item in survey_result" :url="'../detail/main?name='+item.name" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <navigator v-for="item in surveySummary" :url="'../detail/main?name='+item.name" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__hd">
                     <image :src="bodAvatar" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
                 </view>
@@ -19,20 +19,22 @@
 
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   data: {
-    survey_result: [
-      {name: '王博', score: 2},
-      {name: '赵永刚', score: 3}
-    ]
   },
   computed: {
     ...mapState({
-      bodAvatar: state => state.bodProfile.avatar,
-      bodName: state => state.bodProfile.name
+      bodAvatar: state => state.bodProfile.avatar
+    }),
+    ...mapGetters({
+      surveySummary: 'surveySummary'
     })
+  },
+
+  mounted () {
+    this.$store.dispatch('querySurveyResult', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
   }
 }
 </script>

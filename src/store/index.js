@@ -5,6 +5,7 @@ import bodProfile from './modules/bodProfile'
 import userProfile from './modules/userProfile'
 import messages from './modules/messages'
 import image from './modules/image'
+import surveyResult from './modules/surveyResult'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     bodProfile,
     userProfile,
     messages,
-    image
+    image,
+    surveyResult
   },
   strict: debug
 })
