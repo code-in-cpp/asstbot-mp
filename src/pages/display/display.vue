@@ -35,6 +35,7 @@ export default {
 
   mounted () {
     this.$store.dispatch('querySurveyResult', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
+    this.$store.dispatch('querySurveyById', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
   }
 }
 </script>

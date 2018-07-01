@@ -1,7 +1,9 @@
-const surveyUrl = 'https://xiaodamp.cn/asstbot/survey/result'
+const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
+const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 
 const state = {
-  result: []
+  result: [],
+  subjects: []
 }
 
 const getters = {
@@ -26,7 +28,7 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let item = {id: index + 1, correct: true, value: ''}
+      let item = {id: index + 1, correct: true, value: '', question: state.subjects[index].question}
       let answer = answers[index].result
       for (let j in answer) {
         let element = answer[j]
@@ -43,6 +45,9 @@ const getters = {
 const mutations = {
   updateResult (state, result) {
     state.result = result
+  },
+  updateSubjects (state, result) {
+    state.subjects = result
   }
 }
 
@@ -50,7 +55,7 @@ const actions = {
   querySurveyResult ({commit}, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({
-        url: surveyUrl,
+        url: surveyResultUrl,
         data: {
           surveyId: surveyId
         },
@@ -58,6 +63,28 @@ const actions = {
           if (response.statusCode === 200) {
             console.log(response.data)
             commit('updateResult', response.data.result)
+            resolve(response)
+          } else {
+            resolve('')
+          }
+        },
+        faile: (err) => {
+          reject(err)
+        }
+      })
+    })
+  },
+  querySurveyById ({commit}, surveyId) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: surveyUrl,
+        data: {
+          id: surveyId
+        },
+        success: (response) => {
+          if (response.statusCode === 200) {
+            console.log(response.data.result.subjects)
+            commit('updateSubjects', response.data.result.subjects)
             resolve(response)
           } else {
             resolve('')
