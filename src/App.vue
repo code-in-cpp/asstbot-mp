@@ -59,4 +59,10 @@ page{
 .footer {
   background-color: rgb(249, 249, 249);
 }
+
+.small-avatar {
+  width: 50rpx!important;
+  height: 50rpx!important;
+  border-radius: 50%;
+}
 </style>

@@ -2,9 +2,9 @@
 <view class="page">
     <view class="header">
         <view class="header-item">
-        <image :src="bodAvatar" class="middle-avatar"/>
+        <bod-avatar :url="survey.avatarUrl" size="80"/>
         </view>
-        <view class="header-item">{{title}}</view>
+        <view class="header-item">{{survey.title}}</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids">
@@ -51,7 +51,7 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      title: state => state.surveyResult.survey.title
+      survey: state => state.surveyResult.survey
     }),
     ...mapGetters({
       surveySummary: 'surveySummary'
