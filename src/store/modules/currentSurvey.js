@@ -25,7 +25,11 @@ const mutations = {
     state.survey.conclusions.splice(index, 1)
   },
   addSubject (state) {
-    state.survey.subjects.push({type: 'radio', question: '', answers: []})
+    state.survey.subjects.push({
+      id: state.survey.subjects.length + 1,
+      type: 'radio',
+      question: '',
+      answers: []})
   },
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
@@ -34,6 +38,8 @@ const mutations = {
     state.survey.subjects[index].type = type
   },
   updateSubjectQuestion (state, {index, question}) {
+    console.log({index, question})
+    console.log(state.survey.subjects[index])
     state.survey.subjects[index].question = question
   },
   addAnswer (state, subjectIndex) {
