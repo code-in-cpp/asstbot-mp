@@ -13,9 +13,9 @@
     <view class="weui-cells__title">已创建的机器人</view>
     <view class="weui-cells weui-cells_after-title">
       <block v-for="(survey, i) in surveyList" :key="i">
-        <navigator :url="'/pages/display/main?id='+survey.id+'&title='+survey.title" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
+        <navigator :url="'/pages/display/main?id='+survey.id" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
           <view class="weui-cell__hd">
-            <i-icon type="editor"  size="28"/>
+            <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
           </view>
           <view class="weui-cell__bd weui-media-box weui-media-box_small-appmsg">
             <view class="weui-media-box__bd ">

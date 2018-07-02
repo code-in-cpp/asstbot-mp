@@ -2,9 +2,9 @@
 <view class="page">
     <view class="header">
         <view class="header-item">
-        <image :src="bodAvatar" class="middle-avatar"/>
+        <bod-avatar :url="survey.avatarUrl" size="80"/>
         </view>
-        <view class="header-item">{{title}}</view>
+        <view class="header-item">{{survey.title}}</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids">
@@ -34,10 +34,10 @@
         <button class="weui-btn" type="default">编辑</button>
         <button class="weui-btn" type="warn">删除</button> -->
 
-        <button class="weui-btn mini-btn" type="default" size="mini">发布</button>
+        <button class="weui-btn mini-btn" open-type="share" type="default" size="mini">发布</button>
         <button class="weui-btn mini-btn" type="default" size="mini">导出</button>
-        <button class="weui-btn mini-btn" type="default" size="mini">编辑</button>
-        <button class="weui-btn mini-btn" type="warn" size="mini">删除</button>
+        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini">编辑</button>
+        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini">删除</button>
     </view>
 </view>
 </template>
@@ -54,11 +54,28 @@ export default {
   },
   computed: {
     ...mapState({
-      bodAvatar: state => state.bodProfile.avatar
+      bodAvatar: state => state.bodProfile.avatar,
+      survey: state => state.surveyResult.survey
     }),
     ...mapGetters({
       surveySummary: 'surveySummary'
     })
+  },
+  methods: {
+    editSurvey () {
+      wx.navigateTo({
+        url: `/pages/surveySubjects/main?id=${this.surveyId}`
+      })
+    },
+    deleteSurvey () {
+      console.log('deleteSurvey')
+      this.$store.dispatch('deleteSurvey', this.surveyId)
+        .then(() => {
+          wx.navigateBack({
+            delta: 2
+          })
+        })
+    }
   },
   onShareAppMessage (res) {
     if (res.from === 'button') {
@@ -80,10 +97,10 @@ export default {
       this.title = '测测你有多了解我？'
       console.log('error: page receive no survey id!')
     }
-  },
-  mounted () {
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
+  },
+  mounted () {
   }
 }
 </script>

@@ -78,6 +78,23 @@ const actions = {
             })
         })
     })
+  },
+
+  deleteSurvey ({dispatch, commit}, id) {
+    return new Promise((resolve, reject) => {
+      wechat.getOpenId()
+        .then((userId) => {
+          fly.delete(`${url}?id=${id}`)
+            .then((response) => {
+              dispatch('retrieveSurvey').then(() => {
+                resolve()
+              })
+            })
+            .fail((err) => {
+              reject(err)
+            })
+        })
+    })
   }
 }
 

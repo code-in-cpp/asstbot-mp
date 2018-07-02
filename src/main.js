@@ -2,10 +2,13 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
+import bodAvatar from '@/components/bodAvatar'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.prototype.$store = store
+
+Vue.component('bod-avatar', bodAvatar)
 
 const app = new Vue(App)
 app.$mount()

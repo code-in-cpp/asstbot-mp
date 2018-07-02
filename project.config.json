@@ -2,7 +2,7 @@
 	"description": "项目配置文件。",
 	"setting": {
 		"urlCheck": true,
-		"es6": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
@@ -30,14 +30,7 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "share into",
-					"pathName": "pages/index/main",
-					"query": "id=survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a"
-				}
-			]
+			"list": []
 		}
 	}
 }

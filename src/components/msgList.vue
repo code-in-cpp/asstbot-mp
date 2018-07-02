@@ -74,11 +74,7 @@ export default {
 .message-wrapper{
   margin-bottom: 10px;
 }
-.small-avatar {
-  width: 50rpx!important;
-  height: 50rpx!important;
-  border-radius: 50%;
-}
+
   .word-text{
     padding-bottom: 10px;
   }
