@@ -44,8 +44,8 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   data: {
-    surveyId: 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421',
-    title: '测评：谁是最了解你的朋友',
+    surveyId: '',
+    title: '',
     grids: [ { id: 0, desc: '答题人数', value: 10 }, { id: 0, desc: '答对数目', value: 4 }, { id: 0, desc: '答错数目', value: 6 } ]
   },
   computed: {
@@ -56,7 +56,7 @@ export default {
       surveySummary: 'surveySummary'
     })
   },
-  onShareAppMessage: function (res) {
+  onShareAppMessage (res) {
     if (res.from === 'button') {
       console.log(res.target)
     }
@@ -64,6 +64,16 @@ export default {
       title: this.title,
       path: '/pages/index/main?id=' + this.surveyId,
       imageUrl: this.bodAvatar
+    }
+  },
+  onLoad (option) {
+    if (option.id) {
+      this.surveyId = option.id
+      this.title = option.title
+    } else {
+      this.surveyId = 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421'
+      this.title = '测测你有多了解我？'
+      console.log('error: page receive no survey id!')
     }
   },
   mounted () {

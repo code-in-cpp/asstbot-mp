@@ -36,7 +36,6 @@ export default {
       scrollToView: state => `bottom${state.messages.data.length - 1}`
     })
   },
-
   components: {
     headerArea,
     commandArea,
@@ -73,7 +72,6 @@ export default {
   },
 
   onShow () {
-
   },
 
   onLoad (option) {
