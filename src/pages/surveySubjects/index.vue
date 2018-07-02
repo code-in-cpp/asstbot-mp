@@ -80,7 +80,7 @@
                 </view>
                 <view class="weui-cell__bd">
                   <input class="weui-input" type="text" placeholder="请输入问题" :value="subject.question"
-                    @change="updateSubjectQuestion({index: i, question: subject.question})"/>
+                    @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
                 </view>
               </view>
               <view class="weui-cell weui-cell_input" >
