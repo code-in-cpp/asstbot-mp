@@ -82,9 +82,9 @@ export default {
       console.log(res.target)
     }
     return {
-      title: this.title,
+      title: this.survey.title,
       path: '/pages/index/main?id=' + this.surveyId,
-      imageUrl: this.bodAvatar
+      imageUrl: this.survey.avatarUrl
     }
   },
   onLoad (option) {
