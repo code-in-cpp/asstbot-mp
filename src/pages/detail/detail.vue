@@ -6,11 +6,10 @@
             <view class="responser-name" >王博</view>
         </view>
         <view class="weui-media-box__bd">
-            <view class="weui-media-box__title">答对 5 题</view>
-            <view class="weui-media-box__desc"> 评语： 你对我的了解让我吃惊，你绝对是我的好基友！</view>
+            <view class="weui-media-box__title">{{score}}</view>
+            <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
         </view>
     </view>
-
     <view class="page__bd">
     <view class="weui-cells__title">答题结果</view>
     <view class="weui-cells weui-cells_after-title">
@@ -31,7 +30,8 @@ import { mapState } from 'vuex'
 export default {
   data: {
     id: '01',
-    name: '王博'
+    name: '王博',
+    score: ''
   },
   computed: {
     ...mapState({
@@ -39,6 +39,9 @@ export default {
     }),
     surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.id)
+    },
+    surveyConclusion () {
+      return this.$store.getters.getConclusion(this.id)
     }
   },
 
@@ -46,6 +49,7 @@ export default {
     console.log(option.id)
     this.id = option.id
     this.name = option.name
+    this.score = option.score
   }
 }
 </script>
