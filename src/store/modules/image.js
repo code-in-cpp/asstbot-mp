@@ -14,7 +14,7 @@ const mutations = {
 }
 
 const actions = {
-  uploadImage ({dispatch, commit}, {filePath, indicator}) {
+  uploadImageWithIndicator ({dispatch, commit}, {filePath, indicator}) {
     return new Promise((resolve, reject) => {
       wx.uploadFile({
         url,
@@ -27,6 +27,23 @@ const actions = {
         },
         fail: function (error) {
           reject(error)
+        }
+      })
+    })
+  },
+
+  uploadImage ({commit}, filePath) {
+    return new Promise((resolve, reject) => {
+      wx.uploadFile({
+        url,
+        filePath,
+        name: 'file',
+        success: (res) => {
+          const remoteUrl = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
+          resolve(remoteUrl)
+        },
+        fial: (err) => {
+          reject(err)
         }
       })
     })

@@ -1,5 +1,16 @@
 <template>
   <view class="page">
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
+        </view>
+        <view class="weui-cell__bd">
+            <view>{{survey.title}}</view>
+            <view style="font-size: 13px;color: #888888;">{{survey.intro}}</view>
+        </view>
+      </view>
+    </view>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%">
         <view class="weui-cells__title">结论</view>
@@ -36,7 +47,7 @@
               </view>
               <view class="weui-cell weui-cell_input" >
                 <view class="weui-cell__hd">
-                  <view class="weui-label">结论</view>
+                  <view class="weui-label">结果</view>
                 </view>
                 <view class="weui-cell__bd">
                   <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
@@ -46,7 +57,7 @@
             </view>
           </block>
           <view class="weui-cell weui-cell_link" @click="addConclusion">
-            <view class="weui-cell__bd">添加结论</view>
+            <view class="weui-cell__bd">添加结果</view>
           </view>
         </view>
         <view class="weui-cells__title">题目</view>
@@ -135,6 +146,10 @@ export default {
 
   computed: {
     ...mapState({
+      displayAvatar: state => {
+        var surveyAvatarUrl = state.currentSurvey.survey.avatarUrl || ''
+        return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
+      },
       survey: state => state.currentSurvey.survey,
       conclusions: state => state.currentSurvey.survey.conclusions,
       subjects: state => state.currentSurvey.survey.subjects,

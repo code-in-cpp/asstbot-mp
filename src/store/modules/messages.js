@@ -132,8 +132,8 @@ const actions = {
   sendImage ({commit}, {url, indicator}) {
     return _sendmessage(commit, 'image', {url, indicator})
   },
-  start ({commit}) {
-    return _sendmessage(commit, 'start', {id: 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a'})
+  start ({commit}, id) {
+    return _sendmessage(commit, 'start', {id})
   }
 }
 
