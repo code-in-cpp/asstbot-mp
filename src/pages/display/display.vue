@@ -20,7 +20,7 @@
     <view class="weui-cells weui-cells_after-title">
         <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+                <image :src="bodAvatar" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
@@ -137,9 +137,9 @@ export default {
 }
 
 .page__bd_spacing{
-  padding-top  : 20px;
-  padding-left : 20px;
-  padding-right: 20px;
+  padding-top  : 20rpx;
+  padding-left : 40rpx;
+  padding-right: 20rpx;
   border: 1px;
 }
 
