@@ -11,7 +11,7 @@ const getters = {
     let ret = []
     for (let index in state.result) {
       let item = state.result[index]
-      let summary = { id: item.id, name: item.responder, score: item.score }
+      let summary = { id: item.id, name: item.responder.nickName, score: item.score }
       ret.push(summary)
     }
     return ret

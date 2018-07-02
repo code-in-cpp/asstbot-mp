@@ -1,11 +1,13 @@
 <template>
 <view class="page">
-    <view class="header">
-        <view class="header-item">
-        <image :src="bodAvatar" class="large-avatar"/>
+    <view class="weui-panel__bd">
+        <view class="weui-media-box__hd ">
+            <image :src="bodAvatar" class="middle-avatar"/>
+            <view class="responser-name" >王博</view>
         </view>
-        <view class="header-item">
-        <text class="title">{{name}}</text>
+        <view class="weui-media-box__bd">
+            <view class="weui-media-box__title">答对 5 题</view>
+            <view class="weui-media-box__desc"> 评语： 你对我的了解让我吃惊，你绝对是我的好基友！</view>
         </view>
     </view>
 
@@ -15,6 +17,7 @@
         <view v-for="item in surveyAnswers" :key="item.id" class="weui-cell">
             <view class="weui-cell__bd">{{item.question}}</view>
             <view class="weui-cell__ft">{{item.value}}</view>
+            <icon type="cancel" class="weui-error" size="18"></icon>
         </view>
     </view>
     </view>
@@ -48,16 +51,32 @@ export default {
 </script>
 
 <style>
-.header {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-bottom: 10px;
+.weui-error {
+  padding-left: 5pt;
+}
+.weui-media-box__bd{
+  padding-right: 30rpx;
+  padding-left: 50rpx;
+  padding-top: 50rpx;
 }
 
-.header-item {
-  width: 100%;
-  text-align: center;
+.middle-avatar {
+  width: 160rpx!important;
+  height: 160rpx!important;
+  border-radius: 50%;
+}
+.weui-panel__bd{
+  display : flex ; 
+  flex-flow : row;
+  padding :15px;
+}
 
+.weui-media-box__desc {
+  padding-top: 20rpx;
+}
+
+.responser-name {
+  padding-top: 0px;
+  text-align: center;
 }
 </style>
