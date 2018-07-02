@@ -16,7 +16,7 @@
         <view v-for="item in surveyAnswers" :key="item.id" class="weui-cell">
             <view class="weui-cell__bd">{{item.question}}</view>
             <view class="weui-cell__ft">{{item.value}}</view>
-            <icon type="cancel" class="weui-error" size="18"></icon>
+            <icon type="success_no_circle" class="weui-error" size="18"></icon>
         </view>
     </view>
     </view>
