@@ -4,7 +4,7 @@
         <view class="header-item">
         <image :src="bodAvatar" class="middle-avatar"/>
         </view>
-        <view class="header-item">测评：谁是最了解你的朋友</view>
+        <view class="header-item">{{title}}</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids">
@@ -27,7 +27,7 @@
         </navigator>
     </view>
     <view class="page__bd page__bd_spacing">
-        <button class="weui-btn" type="primary">分享</button>
+        <button class="weui-btn" open-type="share" type="primary">分享</button>
         <button class="weui-btn" type="default">编辑</button>
         <button class="weui-btn" type="warn">删除</button>
 
@@ -44,6 +44,8 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   data: {
+    surveyId: '',
+    title: '',
     grids: [ { id: 0, desc: '答题人数', value: 10 }, { id: 0, desc: '答对数目', value: 4 }, { id: 0, desc: '答错数目', value: 6 } ]
   },
   computed: {
@@ -54,7 +56,26 @@ export default {
       surveySummary: 'surveySummary'
     })
   },
-
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    return {
+      title: this.title,
+      path: '/pages/index/main?id=' + this.surveyId,
+      imageUrl: this.bodAvatar
+    }
+  },
+  onLoad (option) {
+    if (option.id) {
+      this.surveyId = option.id
+      this.title = option.title
+    } else {
+      this.surveyId = 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421'
+      this.title = '测测你有多了解我？'
+      console.log('error: page receive no survey id!')
+    }
+  },
   mounted () {
     this.$store.dispatch('querySurveyResult', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
     this.$store.dispatch('querySurveyById', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')

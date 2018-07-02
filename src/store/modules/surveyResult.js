@@ -3,7 +3,8 @@ const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 
 const state = {
   result: [],
-  subjects: []
+  subjects: [],
+  survey: {}
 }
 
 const getters = {
@@ -48,6 +49,9 @@ const mutations = {
   },
   updateSubjects (state, result) {
     state.subjects = result
+  },
+  updateSurvey (state, survey) {
+    state.survey = survey
   }
 }
 
@@ -65,7 +69,7 @@ const actions = {
             commit('updateResult', response.data.result)
             resolve(response)
           } else {
-            resolve('')
+            reject(response)
           }
         },
         faile: (err) => {
@@ -87,7 +91,7 @@ const actions = {
             commit('updateSubjects', response.data.result.subjects)
             resolve(response)
           } else {
-            resolve('')
+            reject(response)
           }
         },
         faile: (err) => {

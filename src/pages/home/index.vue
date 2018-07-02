@@ -10,10 +10,10 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </navigator>
     </view>
-    <view class="weui-cells__title">你的机器人</view>
+    <view class="weui-cells__title">已创建的机器人</view>
     <view class="weui-cells weui-cells_after-title">
       <block v-for="(survey, i) in surveyList" :key="i">
-        <navigator :url="'/pages/surveySubjects/main?id='+survey.id" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
+        <navigator :url="'/pages/display/main?id='+survey.id+'&title='+survey.title" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
           <view class="weui-cell__hd">
             <i-icon type="editor"  size="28"/>
           </view>
