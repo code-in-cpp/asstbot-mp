@@ -95,7 +95,7 @@
         wecropper.getCropperImage()
           .then((filePath) => {
             // console.log(filePath)
-            this.$store.dispatch('uploadImage', {filePath, indicator: this.optionObject.indicator}).then(res => {
+            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
               // this.imgFlag = false
             }).catch(err => {
               // this.imgFlag = false
