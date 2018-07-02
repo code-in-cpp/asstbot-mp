@@ -28,8 +28,8 @@
     </view>
     <view class="page__bd page__bd_spacing">
         <button class="weui-btn" open-type="share" type="primary">分享</button>
-        <button class="weui-btn" type="default">编辑</button>
-        <button class="weui-btn" type="warn">删除</button>
+        <button class="weui-btn" type="default" @click="editSurvey">编辑</button>
+        <button class="weui-btn" type="warn" @click="deleteSurvey">删除</button>
 
         <!-- <button class="weui-btn mini-btn" type="primary" size="mini">分享</button>
         <button class="weui-btn mini-btn" type="default" size="mini">编辑</button>
@@ -50,11 +50,28 @@ export default {
   },
   computed: {
     ...mapState({
-      bodAvatar: state => state.bodProfile.avatar
+      bodAvatar: state => state.bodProfile.avatar,
+      title: state => state.surveyResult.survey.title
     }),
     ...mapGetters({
       surveySummary: 'surveySummary'
     })
+  },
+  methods: {
+    editSurvey () {
+      wx.navigateTo({
+        url: `/pages/surveySubjects/main?id=${this.surveyId}`
+      })
+    },
+    deleteSurvey () {
+      console.log('deleteSurvey')
+      this.$store.dispatch('deleteSurvey', this.surveyId)
+        .then(() => {
+          wx.navigateBack({
+            delta: 2
+          })
+        })
+    }
   },
   onShareAppMessage (res) {
     if (res.from === 'button') {
@@ -69,16 +86,15 @@ export default {
   onLoad (option) {
     if (option.id) {
       this.surveyId = option.id
-      this.title = option.title
     } else {
       this.surveyId = 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421'
       this.title = '测测你有多了解我？'
       console.log('error: page receive no survey id!')
     }
+    this.$store.dispatch('querySurveyResult', this.surveyId)
+    this.$store.dispatch('querySurveyById', this.surveyId)
   },
   mounted () {
-    this.$store.dispatch('querySurveyResult', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
-    this.$store.dispatch('querySurveyById', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
   }
 }
 </script>

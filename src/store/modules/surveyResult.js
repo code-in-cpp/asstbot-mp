@@ -50,7 +50,7 @@ const mutations = {
   updateSubjects (state, result) {
     state.subjects = result
   },
-  updateSurvey (state, survey) {
+  updateSurveyInResult (state, survey) {
     state.survey = survey
   }
 }
@@ -89,6 +89,7 @@ const actions = {
           if (response.statusCode === 200) {
             console.log(response.data.result.subjects)
             commit('updateSubjects', response.data.result.subjects)
+            commit('updateSurveyInResult', response.data.result)
             resolve(response)
           } else {
             reject(response)
