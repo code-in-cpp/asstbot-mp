@@ -41,7 +41,6 @@ export default {
       falg: 'activeAction'
     })
   },
-
   components: {
     headerArea,
     commandArea,
@@ -76,11 +75,17 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
-    this.$store.dispatch('start')
   },
 
   onShow () {
+  },
 
+  onLoad (option) {
+    if (option.id) {
+      this.$store.dispatch('start', option.id)
+    } else {
+      this.$store.dispatch('start', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
+    }
   }
 }
 </script>

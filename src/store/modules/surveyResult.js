@@ -3,7 +3,8 @@ const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 
 const state = {
   result: [],
-  subjects: []
+  subjects: [],
+  survey: {}
 }
 
 const getters = {
@@ -11,8 +12,16 @@ const getters = {
     let ret = []
     for (let index in state.result) {
       let item = state.result[index]
-      let summary = { id: item.id, name: item.responder, score: item.score }
+      let summary = { id: item.id, name: item.responder.nickName, score: '答对' + item.score + '题', avatarUrl: item.responder.avatarUrl }
       ret.push(summary)
+    }
+
+    var defaultSummary = { id: '', name: '', score: '', avatarUrl: '' }
+
+    if (ret.length < 5) {
+      for (var i = ret.length; i < 5; i++) {
+        ret.push(defaultSummary)
+      }
     }
     return ret
   },
@@ -28,7 +37,7 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let item = {id: index + 1, correct: true, value: '', question: state.subjects[index].question}
+      let item = { id: index + 1, correct: true, value: '', question: state.survey.subjects[index].question }
       let answer = answers[index].result
       for (let j in answer) {
         let element = answer[j]
@@ -39,6 +48,28 @@ const getters = {
     }
     console.log(ret)
     return ret
+  },
+
+  getConclusion: state => (id) => {
+    let score = ''
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        score = item.score
+        break
+      }
+    }
+    console.log('comming here ')
+    console.log(state.survey)
+    let conclusions = state.survey.conclusions
+    let ret = '没有找个合适的结论'
+    for (let index in conclusions) {
+      let conclusion = conclusions[index]
+      if (score > conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
+        ret = conclusion.text
+      }
+    }
+    return ret
   }
 }
 
@@ -48,11 +79,14 @@ const mutations = {
   },
   updateSubjects (state, result) {
     state.subjects = result
+  },
+  updateSurveyInResult (state, survey) {
+    state.survey = survey
   }
 }
 
 const actions = {
-  querySurveyResult ({commit}, surveyId) {
+  querySurveyResult ({ commit }, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({
         url: surveyResultUrl,
@@ -65,7 +99,7 @@ const actions = {
             commit('updateResult', response.data.result)
             resolve(response)
           } else {
-            resolve('')
+            reject(response)
           }
         },
         faile: (err) => {
@@ -74,7 +108,7 @@ const actions = {
       })
     })
   },
-  querySurveyById ({commit}, surveyId) {
+  querySurveyById ({ commit }, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({
         url: surveyUrl,
@@ -84,10 +118,10 @@ const actions = {
         success: (response) => {
           if (response.statusCode === 200) {
             console.log(response.data.result.subjects)
-            commit('updateSubjects', response.data.result.subjects)
+            commit('updateSurveyInResult', response.data.result)
             resolve(response)
           } else {
-            resolve('')
+            reject(response)
           }
         },
         faile: (err) => {
