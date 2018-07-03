@@ -12,22 +12,24 @@
         </block>
       </scroll-view>
     </view>
+    <view class="sustainBox" :class="{'height_40': falg }"></view>
     <view class="footer">
       <command-area/>
     </view>
-    <!--<box-float :list="dataArray" :type="type"></box-float>-->
-    <box-float></box-float>
-    <upload-avatar></upload-avatar>
+    <!--<box-float></box-float>-->
+    <!--<upload-avatar></upload-avatar>-->
+    <float-index></float-index>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
-import boxFloat from '@/components/boxFloat'
+// import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
-import uploadAvatar from '@/components/uploadAvatar'
+// import uploadAvatar from '@/components/uploadAvatar'
+import floatIndex from '@/components/floatIndex'
 
 export default {
   data () {
@@ -39,14 +41,18 @@ export default {
     ...mapState({
       messagesList: state => state.messages.data,
       scrollToView: state => `bottom${state.messages.data.length - 1}`
+    }),
+    ...mapGetters({
+      falg: 'activeAction'
     })
   },
   components: {
     headerArea,
     commandArea,
-    boxFloat,
-    msgList,
-    uploadAvatar
+    // boxFloat,
+    floatIndex,
+    msgList
+    // uploadAvatar,
   },
 
   methods: {
@@ -94,5 +100,13 @@ export default {
 }
 </script>
 
-<style scoped
+<style scoped>
+  .sustainBox{
+    width:100%;
+    height:0;
+    background: transparent;
+  }
+  .height_40{
+    height:540rpx;
+  }
 </style>
