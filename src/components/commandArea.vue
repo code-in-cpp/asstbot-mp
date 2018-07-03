@@ -1,15 +1,15 @@
 <template>
-  <form report-submit="true" @submit="sendMessage">
+  <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex container-box">
       <view class="placeholder">
         <button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
       </view>
-      <view class="weui-flex__item height-line-height">
-        <i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />
-        <!--<textarea v-if="!activeAction" class="height-line-height word-textarea" :value="currentMessage" bindinput="valueChange" placeholder="请输入消息" />-->
+      <view class="weui-flex__item height-line-height command-box">
+        <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
+        <textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange"  auto-height @focus="focusActive"/>
       </view>
       <view class="placeholder">
-        <button class="input-widget height-line-height" size="small" formType="submit" :disabled="currentMessage==''">发送</button>
+        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="currentMessage=='' || focusFlag">发送</button>
       </view>
     </view>
   </form>
@@ -20,7 +20,9 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      currentMessage: ''
+      currentMessage: '请输入消息',
+      rowHeight: '0rpx',
+      focusFlag: true
     }
   },
 
@@ -35,11 +37,21 @@ export default {
       this.$store.dispatch('updateUserInfo')
     },
     valueChange (ev) {
-      this.currentMessage = ev.mp.detail.detail.value
+      this.currentMessage = ev.mp.detail.value
+      console.log(this.currentMessage, this.focusFlag)
     },
     sendMessage (ev) {
       this.$store.dispatch('sendQuery', this.currentMessage)
       this.currentMessage = ''
+    },
+    rowChange (e) {
+      this.rowHeight = e.mp.detail.heightRpx + 'rpx'
+    },
+    focusActive () {
+      if (this.focusFlag) {
+        this.currentMessage = ''
+        this.focusFlag = false
+      }
     }
   }
 }
@@ -64,14 +76,29 @@ export default {
   }
   .container-box{
     align-items: flex-end;
+    background: #ccc;
   }
   .word-break{
-    word-wrap: normal;
-    word-break: keep-all;
+    /*word-wrap: normal;*/
+    word-break: break-word;
   }
   .word-textarea{
     height: auto;
-    min-height: 44px;
-    padding-left: 10px;
+    background: #fff;
+    min-height: 72rpx;
+    padding-left: 10rpx;
+    line-height: 72rpx;
+  }
+  .buttonSend[disabled]{
+    background: #999!important;
+  }
+  .command-box{
+    padding: 4rpx 8rpx;
+  }
+  .command-text{
+    border: 1rpx solid #dadada;
+    box-sizing: border-box;
+    width:100%;
+    height:100%;
   }
 </style>

@@ -19,7 +19,7 @@ const getters = {
     if (list && list.to && list.msgs && list.msgs.length > 0) {
       let len = list.msgs.length - 1
       let type = list.msgs[len].type
-      if (type === 'radio' || type === 'imageUploader') {
+      if (type === 'radio' || type === 'imageUploader' || type === 'checkbox') {
         return true
       }
     }
