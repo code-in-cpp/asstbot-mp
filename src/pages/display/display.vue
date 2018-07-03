@@ -25,13 +25,17 @@
             <view class="weui-cell__bd">{{item.name}}</view>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
         </navigator>
+
+        <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
+            <view class="weui-cell__hd">
+                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+            </view>
+            <view class="weui-cell__bd">{{item.name}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
+        </view>
     </scroll-view>
     
     <view class="page__bd page__bd_spacing">
-        <!-- <button class="weui-btn" open-type="share" type="primary">分享</button>
-        <button class="weui-btn" type="default">编辑</button>
-        <button class="weui-btn" type="warn">删除</button> -->
-
         <button class="weui-btn mini-btn" open-type="share" type="default" size="mini">发布</button>
         <button class="weui-btn mini-btn" type="default" size="mini">导出</button>
         <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini">编辑</button>
@@ -56,7 +60,8 @@ export default {
       survey: state => state.surveyResult.survey
     }),
     ...mapGetters({
-      surveySummary: 'surveySummary'
+      surveySummary: 'surveySummary',
+      emptySurveyAnswer: 'emptySurveyAnswer'
     })
   },
   methods: {

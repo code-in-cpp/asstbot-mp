@@ -12,14 +12,21 @@ const getters = {
     let ret = []
     for (let index in state.result) {
       let item = state.result[index]
-      let summary = { id: item.id, name: item.responder.nickName, score: '答对' + item.score + '题', avatarUrl: item.responder.avatarUrl }
+      let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
+      let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/avatar.png' : item.responder.avatarUrl
+      userAvatarUrl = '/static/image/avatar.png'
+      let summary = { id: item.id, name: nickName, score: '答对' + item.score + '题', avatarUrl: userAvatarUrl }
       ret.push(summary)
     }
 
-    var defaultSummary = { id: '', name: '', score: '', avatarUrl: '' }
+    return ret
+  },
 
-    if (ret.length < 5) {
-      for (var i = ret.length; i < 5; i++) {
+  emptySurveyAnswer: state => {
+    let ret = []
+    var defaultSummary = { id: '', name: '', score: '', avatarUrl: '' }
+    if (state.result.length < 5) {
+      for (var i = state.result.length; i < 5; i++) {
         ret.push(defaultSummary)
       }
     }
