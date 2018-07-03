@@ -2,7 +2,7 @@
   <div class="page">
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
-        <header-area/>
+        <header-area :surveyData="survey"/>
         <block v-for="(messages, i) in messagesList" :key="i">
           <view :id="i">
           <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
@@ -32,6 +32,11 @@ import msgList from '@/components/msgList'
 import floatIndex from '@/components/floatIndex'
 
 export default {
+  data () {
+    return {
+      survey: {}
+    }
+  },
   computed: {
     ...mapState({
       messagesList: state => state.messages.data,
@@ -83,8 +88,13 @@ export default {
   onLoad (option) {
     if (option.id) {
       this.$store.dispatch('start', option.id)
-    } else {
-      this.$store.dispatch('start', 'survey-fc1d3800-7b7a-11e8-95df-55eac717ac5a')
+      this.$store.dispatch('retrieveSurveyById', option.id)
+        .then((survey) => {
+          this.survey = survey
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

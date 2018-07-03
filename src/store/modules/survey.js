@@ -95,6 +95,23 @@ const actions = {
             })
         })
     })
+  },
+
+  retrieveSurveyById ({commit}, id) {
+    return new Promise((resolve, reject) => {
+      fly.get(url, {id})
+        .then((response) => {
+          console.log(response)
+          if (response.status === 200) {
+            resolve(response.data.result)
+          } else {
+            reject(response)
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
