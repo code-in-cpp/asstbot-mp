@@ -6,14 +6,17 @@
         <view class="sure" @click="selectItem()">确定</view>
       </view>
       <scroll-view scroll-y=true class="ulBox">
-        <ul class="boxItemBox">
-          <li class="item" v-for="(option, value) in list.items" :key="item">
-            <label @click="selectOption(option.value)">
-              <input type="radio">
-              {{option.caption}}
-            </label>
-          </li>
-        </ul>
+        <!--<ul class="boxItemBox">-->
+          <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
+            <radio-group @change="selectOption">
+              <view  v-for="option in list.items" :key="item">
+                <label>
+                  <radio :value="option.value">{{option.caption}}</radio>
+                </label>
+              </view>
+            </radio-group>
+          <!--</li>-->
+        <!--</ul>-->
       </scroll-view>
     </view>
   </view>
@@ -26,8 +29,8 @@
       selectItem (value) {
         this.$store.dispatch('sendQuery', this.value)
       },
-      selectOption (value) {
-        this.value = value
+      selectOption (e) {
+        this.value = e.mp.detail.value
       }
     },
     props: [

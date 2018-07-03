@@ -6,11 +6,16 @@
         <button class="sure"  @click="selectItem()">确定</button>
       </view>
       <scroll-view scroll-y=true class="ulBox">
-        <ul class="boxItemBox">
-          <li class="item" v-for="(option, value) in list.items" :key="item">
-            <label @click="selectOption(option.caption)"><input type="checkbox">{{option.caption}}</label>
-          </li>
-        </ul>
+        <!--<ul class="boxItemBox">-->
+          <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
+        <checkbox-group @change="selectOption">
+          <view v-for="option in list.items" :key="item">
+            <label><checkbox :value="option.value">{{option.caption}}</checkbox></label>
+          </view>
+        </checkbox-group>
+
+          <!--</li>-->
+        <!--</ul>-->
       </scroll-view>
     </view>
   </view>
@@ -30,12 +35,8 @@
           this.$store.dispatch('sendQuery', queryString)
         }
       },
-      selectOption (caption) {
-        if (this.isIn(this.captionArray, caption)) {
-          this.deleteItem(this.captionArray, caption)
-        } else {
-          this.captionArray = [...this.captionArray, caption]
-        }
+      selectOption (e) {
+        this.captionArray = [...e.mp.detail.value]
       },
       deleteItem (array, item) {
         for (let i = 0; i < array.length; i++) {
