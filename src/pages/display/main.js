@@ -12,7 +12,8 @@ export default {
       'i-input': '../../../static/iview/input/index',
       'i-avatar': '../../../static/iview/avatar/index',
       'i-row': '../../../static/iview/row/index',
-      'i-col': '../../../static/iview/col/index'
+      'i-col': '../../../static/iview/col/index',
+      'zan-icon': '../../../static/zanui/icon/index'
     },
     page: {
       'enablePullDownRefresh': false
