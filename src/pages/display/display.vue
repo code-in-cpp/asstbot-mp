@@ -72,12 +72,24 @@ export default {
     },
     deleteSurvey () {
       console.log('deleteSurvey')
-      this.$store.dispatch('deleteSurvey', this.surveyId)
-        .then(() => {
-          wx.navigateBack({
-            delta: 2
-          })
-        })
+      wx.showModal({
+        title: '确认删除',
+        content: '删除机器人会有影响',
+        confirmText: '确认',
+        cancelText: '取消',
+        success: function (res) {
+          if (res.confirm) {
+            this.$store.dispatch('deleteSurvey', this.surveyId)
+              .then(() => {
+                wx.navigateBack({
+                  delta: 2
+                })
+              })
+          } else {
+            console.log('用户点击辅助操作')
+          }
+        }
+      })
     }
   },
   onShareAppMessage (res) {

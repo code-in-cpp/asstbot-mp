@@ -1,39 +1,35 @@
 <template>
   <view class="header">
     <view class="header-item">
-      <image :src="bodAvatar" class="large-avatar"/>
+      <bod-avatar :url="surveyData.avatarUrl" size="80"/>
     </view>
-    <view class="header-item">
+    <!-- <view class="header-item">
       <text class="title">{{bodName}}</text>
-    </view>
+    </view> -->
     <view class="header-item discription">
       <view class="talking"></view>
       <view class="">
-        我可以做很多事情哦
+        {{surveyData.title}}
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
+  props: {
+    surveyData: {
+      type: Object,
+      default: {
+      }
+    }
+  },
   computed: {
-    ...mapState({
-      bodAvatar: state => state.bodProfile.avatar,
-      bodName: state => state.bodProfile.name
-    })
   }
 }
 </script>
 
 <style>
-.large-avatar {
-  width: 160rpx!important;
-  height: 160rpx!important;
-  border-radius: 50%;
-}
 
 .header {
   display: flex;
