@@ -14,7 +14,9 @@ const getters = {
       let item = state.result[index]
       let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
       let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/avatar.png' : item.responder.avatarUrl
-      userAvatarUrl = '/static/image/avatar.png'
+      if (userAvatarUrl.indexOf('localhost') > 0) {
+        userAvatarUrl = '/static/image/avatar.png'
+      }
       let summary = { id: item.id, name: nickName, score: '答对' + item.score + '题', avatarUrl: userAvatarUrl }
       ret.push(summary)
     }
