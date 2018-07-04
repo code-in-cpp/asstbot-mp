@@ -80,14 +80,14 @@ export default {
     },
     deleteSurvey () {
       console.log('deleteSurvey')
+      let that = this
       wx.showModal({
-        title: '确认删除',
-        content: '删除机器人会有影响',
+        title: '您确认要删除吗？',
         confirmText: '确认',
         cancelText: '取消',
         success: function (res) {
           if (res.confirm) {
-            this.$store.dispatch('deleteSurvey', this.surveyId)
+            that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
                 wx.navigateBack({
                   delta: 2
