@@ -13,53 +13,6 @@
     </view>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%">
-        <view class="weui-cells__title">结论</view>
-        <view class="weui-cells weui-cells_after-title">
-          <block v-for="(conclusion, i) in conclusions" :key="conclusion">
-            <view class="weui-cells__title">            
-              <view class="weui-cell" >
-                <view class="weui-cell__bd">
-                  <view class="weui-label">结论 {{i+1}}</view>
-                </view>
-                <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeConclusion(i)">删除</button>
-                </view>
-              </view>
-            </view>
-            <view class="weui-cells weui-cells_after-title">
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最低得分</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.min"
-                    @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最高得分</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.max"
-                    @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">结果</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
-                     @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-                </view>
-              </view>
-            </view>
-          </block>
-          <view class="weui-cell weui-cell_link" @click="addConclusion">
-            <view class="weui-cell__bd">添加结果</view>
-          </view>
-        </view>
         <view class="weui-cells__title">题目</view>
         <view class="weui-cells weui-cells_after-title">
           <block v-for="(subject, i) in subjects" :key="subject">
@@ -121,7 +74,54 @@
           <view class="weui-cell weui-cell_link" @click="addSubject">
             <view class="weui-cell__bd">添加题目</view>
           </view>
-        </view>  
+        </view>
+        <view class="weui-cells__title">评语</view>
+        <view class="weui-cells weui-cells_after-title">
+          <block v-for="(conclusion, i) in conclusions" :key="conclusion">
+            <view class="weui-cells__title">            
+              <view class="weui-cell" >
+                <view class="weui-cell__bd">
+                  <view class="weui-label">评语分类 {{i+1}}</view>
+                </view>
+                <view class="weui-cell__ft">
+                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeConclusion(i)">删除</button>
+                </view>
+              </view>
+            </view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">最少答对题数</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.min"
+                    @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">最多答对题数</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.max"
+                    @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">评语内容</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
+                     @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+                </view>
+              </view>
+            </view>
+          </block>
+          <view class="weui-cell weui-cell_link" @click="addConclusion">
+            <view class="weui-cell__bd">添加评语分类</view>
+          </view>
+        </view>        
       </scroll-view>
     </view>
     <view class="footer">
