@@ -9,15 +9,15 @@
     <view class="page__bd">
         <view class="weui-grids">
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title"  style="color:red;">{{commitToday}}</view>
+                <view class="weui-grid__title">{{commitToday}}</view>
                 <view class="weui-grid__label">今日提交</view>
             </navigator>
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title" style="color:green;" >{{commitCount}}</view>
+                <view class="weui-grid__title" >{{commitCount}}</view>
                 <view class="weui-grid__label">提交总数</view>
             </navigator>
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title" style="color:blue;">{{reviewCount}}</view>
+                <view class="weui-grid__title">{{reviewCount}}</view>
                 <view class="weui-grid__label">浏览总数</view>
             </navigator>
         </view>
@@ -42,9 +42,9 @@
     </scroll-view>
     
     <view class="page__bd page__bd_spacing">
-        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><zan-icon type="success"></zan-icon> 发布</button>
-        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit"></zan-icon> 编辑</button>
-        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close"></zan-icon> 删除</button>
+        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布</button>
+        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit" /> 编辑</button>
+        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close" /> 删除</button>
     </view>
 </view>
 </template>
@@ -80,14 +80,14 @@ export default {
     },
     deleteSurvey () {
       console.log('deleteSurvey')
+      let that = this
       wx.showModal({
-        title: '确认删除',
-        content: '删除机器人会有影响',
+        title: '您确认要删除吗？',
         confirmText: '确认',
         cancelText: '取消',
         success: function (res) {
           if (res.confirm) {
-            this.$store.dispatch('deleteSurvey', this.surveyId)
+            that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
                 wx.navigateBack({
                   delta: 2
@@ -181,6 +181,7 @@ export default {
   font-size: 24px;
   font-weight: bold;  
   text-align: center;
+  color: #666666;
 }
 
 .button-sp-area{
