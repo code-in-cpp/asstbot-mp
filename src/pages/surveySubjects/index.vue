@@ -47,28 +47,7 @@
                 </view>
               </view>
               <view class="weui-cells__title">答案列表</view>
-              <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input" v-for="(answer, j) in subject.answers" :key="j">
-                  <view class="weui-cell__hd">
-                    <view class="weui-label">答案 {{j+1}}</view>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="请输入答案" 
-                      @change="updateAnswerValue({subject: i, answer: j, value: $event.mp.detail.value})"
-                      :value="answer.value"/>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <switch @change="updateAnswerCorrect({subject: i, answer: j, value: $event.mp.detail.value})" 
-                      :checked="answer.correct"></switch>
-                  </view>
-                  <view class="weui-cell__ft">
-                    <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeAnswer({subject:i, answer:j})">删除</button>
-                  </view>
-                </view>
-                <view class="weui-cell weui-cell_link" @click="addAnswer(i)">
-                  <view class="weui-cell__bd">添加答案</view>
-                </view>
-              </view>
+              <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
             </view>
           </block>
           <view class="weui-cell weui-cell_link" @click="addSubject">
@@ -136,6 +115,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import editAnswer from '@/components/editAnswer'
 
 const subjectType = ['radio', 'checkbox', 'text']
 const subjectTypeName = ['单选', '多选', '问答']
@@ -166,6 +146,10 @@ export default {
     })
   },
 
+  components: {
+    editAnswer
+  },
+
   methods: {
     ...mapMutations([
       'updateCurrentSurvey',
@@ -187,8 +171,8 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack({
-            delta: 1
+          wx.navigateTo({
+            url: `/pages/home/main`
           })
         })
     }
@@ -206,10 +190,11 @@ export default {
     if (res.from === 'button') {
       console.log(res.target)
     }
+    let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack({
-            delta: 1
+          wx.navigateTo({
+            url: `/pages/display/main?id=${surveyId}`
           })
         })
     return {

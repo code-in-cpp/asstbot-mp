@@ -39,6 +39,20 @@ const mutations = {
     state.survey.conclusions = []
   },
   updateSubjectType (state, {index, type}) {
+    var oldType = state.survey.subjects[index].type
+    if (type === 'radio' && oldType !== 'radio') {
+      var findFirstRadio = false
+      var answers = state.survey.subjects[index].answers
+      answers = answers.map((answer) => {
+        if (answer.correct && !findFirstRadio) {
+          findFirstRadio = true
+        } else {
+          answer.correct = false
+        }
+        return answer
+      })
+      state.survey.subjects[index].answers = answers
+    }
     state.survey.subjects[index].type = type
   },
   updateSubjectQuestion (state, {index, question}) {
@@ -47,6 +61,7 @@ const mutations = {
     state.survey.subjects[index].question = question
   },
   addAnswer (state, subjectIndex) {
+    console.log(subjectIndex)
     state.survey.subjects[subjectIndex].answers.push({value: '', correct: false})
   },
   removeAnswer (state, {subject, answer}) {
