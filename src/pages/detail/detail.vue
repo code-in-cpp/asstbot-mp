@@ -17,15 +17,14 @@
             <view class="weui-cell__bd"><bot-say-text :content="item.question"></bot-say-text></view>
             <view class="weui-cell__ft">
               <user-say-text :content="item.value"></user-say-text>
-              <icon type="success_no_circle" class="weui-error" size="18"></icon>
+              <i-icon v-if="item.correct" type="right" color="green" size="24" />
+              <i-icon v-else type="close" color="red" size="22" />
             </view>
         </view>
     </view>
     </view>
-
 </view>
 </template>
-
 
 <script>
 import { mapState } from 'vuex'
@@ -64,6 +63,7 @@ export default {
 </script>
 
 <style>
+
 .weui-error {
   padding-left: 5pt;
 }
