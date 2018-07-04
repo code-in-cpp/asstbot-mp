@@ -8,6 +8,7 @@
         <view class="weui-media-box__bd">
             <view class="weui-media-box__title">{{score}}</view>
             <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
+            <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
     </view>
     <view class="page__bd">
@@ -45,6 +46,9 @@ export default {
     },
     surveyConclusion () {
       return this.$store.getters.getConclusion(this.id)
+    },
+    getCreateTime () {
+      return this.$store.getters.getCreateTime(this.id)
     }
   },
 

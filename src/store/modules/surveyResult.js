@@ -74,6 +74,16 @@ const getters = {
     return ret
   },
 
+  getCreateTime: state => (id) => {
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        return item.created_at
+      }
+    }
+    return date.toLocaleDateString().replace('/', '-')
+  },
+
   getConclusion: state => (id) => {
     let score = ''
     for (let index in state.result) {
@@ -83,8 +93,6 @@ const getters = {
         break
       }
     }
-    console.log('comming here ')
-    console.log(state.survey)
     let conclusions = state.survey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
