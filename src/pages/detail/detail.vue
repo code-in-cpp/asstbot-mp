@@ -13,7 +13,7 @@
     </view>
     <view class="page__bd">
     <view class="weui-cells__title">答题结果</view>
-    <view class="weui-cells weui-cells_after-title">
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
         <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
             <view class="weui-cell__bd">
               <bot-say-text :content="item.question"></bot-say-text>
@@ -24,7 +24,7 @@
               <i-icon v-else type="close" class="icon-error" color="red" size="20" />
             </view>
         </view>
-    </view>
+    </scroll-view>
     </view>
 </view>
 </template>
@@ -130,7 +130,8 @@ export default {
 }
 
 .weui-cells {
-  background-color:#EEEEEE
+  background-color:#EEEEEE;
+  height:300px;
 }
 
 /* .detail-cell:before {
