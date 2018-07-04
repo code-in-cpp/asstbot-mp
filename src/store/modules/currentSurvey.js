@@ -1,3 +1,51 @@
+function getInitArray (max, value) {
+  let arr = new Array(max)
+  for (let i = 0; i < max; i++) {
+    arr[i] = value
+  }
+  return arr
+}
+
+function verifyRanges (max, ranges) {
+  if (!ranges || ranges.length === 0) return true
+  if (max <= 0) return false
+  let arr = getInitArray(max, false)
+  for (let range of ranges) {
+    if (range[0] >= range[1]) return false
+    if (range[0] < 0 || range[0] >= max) return false
+    if (range[1] < 1 || range[1] > max) return false
+    for (let i = range[0]; i < range[1]; i++) {
+      if (arr[i]) return false
+      arr[i] = true
+    }
+  }
+  return true
+}
+
+function getFreeRange (maxCount, occupiedRanges) {
+  if (!verifyRanges(maxCount, occupiedRanges)) return { min: 0, max: 0 }
+  let arr = getInitArray(maxCount, false)
+  for (let range of occupiedRanges) {
+    for (let i = range[0]; i < range[1]; i++) {
+      arr[i] = true
+    }
+  }
+  for (let i = 0; i < maxCount; i++) {
+    if (!arr[i]) {
+      let j = i + 1
+      while (j < maxCount) {
+        if (arr[j]) {
+          break
+        }
+        j++
+      }
+      return { min: i, max: j }
+    }
+  }
+
+  return { min: 0, max: 0 }
+}
+
 const state = {
   survey: {}
 }
@@ -19,7 +67,9 @@ const mutations = {
     state.survey.conclusions[index].text = text
   },
   addConclusion (state) {
-    state.survey.conclusions.push({ scoreRange: {min: 0, max: 0}, text: '' })
+    let subjectCount = state.survey.subjects.length
+    let range = getFreeRange(subjectCount, state.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
+    state.survey.conclusions.push({ scoreRange: {min: range.min, max: range.max}, text: '' })
   },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
@@ -34,7 +84,25 @@ const mutations = {
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
   },
+  clearSurvey (state) {
+    state.survey.subjects = []
+    state.survey.conclusions = []
+  },
   updateSubjectType (state, {index, type}) {
+    var oldType = state.survey.subjects[index].type
+    if (type === 'radio' && oldType !== 'radio') {
+      var findFirstRadio = false
+      var answers = state.survey.subjects[index].answers
+      answers = answers.map((answer) => {
+        if (answer.correct && !findFirstRadio) {
+          findFirstRadio = true
+        } else {
+          answer.correct = false
+        }
+        return answer
+      })
+      state.survey.subjects[index].answers = answers
+    }
     state.survey.subjects[index].type = type
   },
   updateSubjectQuestion (state, {index, question}) {
@@ -43,6 +111,7 @@ const mutations = {
     state.survey.subjects[index].question = question
   },
   addAnswer (state, subjectIndex) {
+    console.log(subjectIndex)
     state.survey.subjects[subjectIndex].answers.push({value: '', correct: false})
   },
   removeAnswer (state, {subject, answer}) {

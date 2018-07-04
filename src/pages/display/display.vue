@@ -8,19 +8,25 @@
     </view>
     <view class="page__bd">
         <view class="weui-grids">
-            <block v-for="item in grids" :key="item.id">
-                <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                    <view class="weui-grid__label">{{item.value}}</view>
-                    <view class="weui-grid__label">{{item.desc}}</view>
-                </navigator>
-            </block>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title">{{commitToday}}</view>
+                <view class="weui-grid__label">今日提交</view>
+            </navigator>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title" >{{commitCount}}</view>
+                <view class="weui-grid__label">提交总数</view>
+            </navigator>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title">{{reviewCount}}</view>
+                <view class="weui-grid__label">浏览总数</view>
+            </navigator>
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
     <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
@@ -28,17 +34,17 @@
 
         <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
             <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
+            <view class="weui-cell__ft">{{item.score}}</view>
         </view>
     </scroll-view>
     
     <view class="page__bd page__bd_spacing">
-        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><zan-icon type="success"></zan-icon> 发布</button>
-        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit"></zan-icon> 编辑</button>
-        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close"></zan-icon> 删除</button>
+        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布</button>
+        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit" /> 编辑</button>
+        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close" /> 删除</button>
     </view>
 </view>
 </template>
@@ -51,7 +57,7 @@ export default {
   data: {
     surveyId: '',
     title: '',
-    grids: [ { id: 0, desc: '答题人数', value: 10 }, { id: 0, desc: '答对数目', value: 4 }, { id: 0, desc: '答错数目', value: 6 } ]
+    grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ]
   },
   computed: {
     ...mapState({
@@ -60,32 +66,36 @@ export default {
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
-      emptySurveyAnswer: 'emptySurveyAnswer'
+      emptySurveyAnswer: 'emptySurveyAnswer',
+      commitToday: 'commitToday',
+      commitCount: 'commitCount',
+      reviewCount: 'reviewCount'
     })
   },
   methods: {
     editSurvey () {
+      let surveyId = this.surveyId
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${this.surveyId}`
+        url: `/pages/surveySubjects/main?id=${surveyId}`
       })
     },
     deleteSurvey () {
       console.log('deleteSurvey')
+      let that = this
       wx.showModal({
-        title: '确认删除',
-        content: '删除机器人会有影响',
+        title: '您确认要删除吗？',
         confirmText: '确认',
         cancelText: '取消',
         success: function (res) {
           if (res.confirm) {
-            this.$store.dispatch('deleteSurvey', this.surveyId)
+            that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
-                wx.navigateBack({
-                  delta: 2
+                wx.navigateTo({
+                  url: `/pages/home/main`
                 })
               })
           } else {
-            console.log('用户点击辅助操作')
+            console.log('用户点击取消操作')
           }
         }
       })
@@ -120,6 +130,14 @@ export default {
 </script>
 
 <style>
+.user-avator-icon{
+  margin-right: 5px;
+  vertical-align: middle;
+  width:20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
 .responsor-list{
   height: 220px;
   border-width:medium;
@@ -163,16 +181,16 @@ export default {
   border: 1px;
 }
 
-.next-tap{
-  background-color:0xffffff;
-  display: flex;
-  flex-direction: row-reverse;
-  /* position:right; */
+.weui-grid{
+  height: 80px;
+  padding-top  :10px;
 }
 
-.next-butten{
-  position:fixed
-
+.weui-grid__title{
+  font-size: 24px;
+  font-weight: bold;  
+  text-align: center;
+  color: #666666;
 }
 
 .button-sp-area{

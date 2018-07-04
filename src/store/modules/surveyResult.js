@@ -1,5 +1,6 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
+var date = new Date()
 
 const state = {
   result: [],
@@ -13,7 +14,7 @@ const getters = {
     for (let index in state.result) {
       let item = state.result[index]
       let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
-      let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/avatar.png' : item.responder.avatarUrl
+      let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/nobody3.png' : item.responder.avatarUrl
       if (userAvatarUrl.indexOf('localhost') > 0) {
         userAvatarUrl = '/static/image/avatar.png'
       }
@@ -22,6 +23,18 @@ const getters = {
     }
 
     return ret
+  },
+
+  commitToday: state => {
+    let currentTime = date.toLocaleDateString().replace('/', '-')
+    let todayResult = state.result.filter(item => { return item.created_at.indexOf(currentTime) >= 0 })
+    return todayResult.length
+  },
+  commitCount: state => {
+    return state.result.length
+  },
+  reviewCount: state => {
+    return state.result.length
   },
 
   emptySurveyAnswer: state => {
@@ -48,15 +61,27 @@ const getters = {
     for (let index in answers) {
       let item = { id: index + 1, correct: true, value: '', question: state.survey.subjects[index].question }
       let answer = answers[index].result
+      let spilterCh = ''
       for (let j in answer) {
         let element = answer[j]
         item.correct = element.correct && item.correct
-        item.value = item.value + element.value
+        item.value = item.value + spilterCh + element.value
+        spilterCh = '，'
       }
       ret.push(item)
     }
     console.log(ret)
     return ret
+  },
+
+  getCreateTime: state => (id) => {
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        return item.created_at
+      }
+    }
+    return date.toLocaleDateString().replace('/', '-')
   },
 
   getConclusion: state => (id) => {
@@ -68,8 +93,6 @@ const getters = {
         break
       }
     }
-    console.log('comming here ')
-    console.log(state.survey)
     let conclusions = state.survey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {

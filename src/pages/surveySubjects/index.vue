@@ -13,53 +13,6 @@
     </view>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%">
-        <view class="weui-cells__title">结论</view>
-        <view class="weui-cells weui-cells_after-title">
-          <block v-for="(conclusion, i) in conclusions" :key="conclusion">
-            <view class="weui-cells__title">            
-              <view class="weui-cell" >
-                <view class="weui-cell__bd">
-                  <view class="weui-label">结论 {{i+1}}</view>
-                </view>
-                <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeConclusion(i)">删除</button>
-                </view>
-              </view>
-            </view>
-            <view class="weui-cells weui-cells_after-title">
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最低得分</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.min"
-                    @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最高得分</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.max"
-                    @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">结果</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
-                     @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-                </view>
-              </view>
-            </view>
-          </block>
-          <view class="weui-cell weui-cell_link" @click="addConclusion">
-            <view class="weui-cell__bd">添加结果</view>
-          </view>
-        </view>
         <view class="weui-cells__title">题目</view>
         <view class="weui-cells weui-cells_after-title">
           <block v-for="(subject, i) in subjects" :key="subject">
@@ -69,7 +22,9 @@
                   <view class="weui-label">题目 {{i+1}}</view>
                 </view>
                 <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeSubject(i)">删除</button>
+                  <view @click="removeSubject(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
                 </view>
               </view>
             </view>
@@ -94,44 +49,77 @@
                 </view>
               </view>
               <view class="weui-cells__title">答案列表</view>
-              <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input" v-for="(answer, j) in subject.answers" :key="j">
-                  <view class="weui-cell__hd">
-                    <view class="weui-label">答案 {{j+1}}</view>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="请输入答案" 
-                      @change="updateAnswerValue({subject: i, answer: j, value: $event.mp.detail.value})"
-                      :value="answer.value"/>
-                  </view>
-                  <view class="weui-cell__bd">
-                    <switch @change="updateAnswerCorrect({subject: i, answer: j, value: $event.mp.detail.value})" 
-                      :checked="answer.correct"></switch>
-                  </view>
-                  <view class="weui-cell__ft">
-                    <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeAnswer({subject:i, answer:j})">删除</button>
-                  </view>
-                </view>
-                <view class="weui-cell weui-cell_link" @click="addAnswer(i)">
-                  <view class="weui-cell__bd">添加答案</view>
-                </view>
-              </view>
+              <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
             </view>
           </block>
           <view class="weui-cell weui-cell_link" @click="addSubject">
             <view class="weui-cell__bd">添加题目</view>
           </view>
-        </view>  
+        </view>
+        <view class="weui-cells__title">评语</view>
+        <view class="weui-cells weui-cells_after-title">
+          <block v-for="(conclusion, i) in conclusions" :key="conclusion">
+            <view class="weui-cells__title">            
+              <view class="weui-cell" >
+                <view class="weui-cell__bd">
+                  <view class="weui-label">评语分类 {{i+1}}</view>
+                </view>
+                <view class="weui-cell__ft">
+                  <view @click="removeConclusion(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">最少答对题数</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
+                    @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">最多答对题数</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
+                    @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_input" >
+                <view class="weui-cell__hd">
+                  <view class="weui-label">评语内容</view>
+                </view>
+                <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
+                     @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+                </view>
+              </view>
+            </view>
+          </block>
+          <view class="weui-cell weui-cell_link" @click="addConclusion">
+            <view class="weui-cell__bd">添加评语分类</view>
+          </view>
+        </view>        
       </scroll-view>
     </view>
     <view class="footer">
-      <button class="weui-btn" type="primary" @click="saveBot">保存配置</button>
+      <view class="page__bd page__bd_spacing">
+          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="mini"><zan-icon type="close" /> 清空</button>
+          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="mini"><zan-icon type="completed" /> 保存 </button>
+          <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布 </button>
+      </view>      
     </view>
   </view>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import editAnswer from '@/components/editAnswer'
 
 const subjectType = ['radio', 'checkbox', 'text']
 const subjectTypeName = ['单选', '多选', '问答']
@@ -162,6 +150,10 @@ export default {
     })
   },
 
+  components: {
+    editAnswer
+  },
+
   methods: {
     ...mapMutations([
       'updateCurrentSurvey',
@@ -171,6 +163,7 @@ export default {
       'addConclusion',
       'removeConclusion',
       'addSubject',
+      'clearSurvey',
       'removeSubject',
       'updateSubjectType',
       'updateSubjectQuestion',
@@ -179,11 +172,11 @@ export default {
       'updateAnswerValue',
       'updateAnswerCorrect'
     ]),
-    saveBot () {
+    saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack({
-            delta: 1
+          wx.navigateTo({
+            url: `/pages/home/main`
           })
         })
     }
@@ -195,6 +188,24 @@ export default {
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
     this.updateCurrentSurvey(survey)
+  },
+
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    let surveyId = this.survey.id
+    this.$store.dispatch('editSurvey', this.survey)
+        .then(() => {
+          wx.navigateTo({
+            url: `/pages/display/main?id=${surveyId}`
+          })
+        })
+    return {
+      title: this.survey.title,
+      path: '/pages/index/main?id=' + this.survey.id,
+      imageUrl: this.survey.avatarUrl
+    }
   }
 }
 </script>
@@ -203,5 +214,13 @@ export default {
 .content {
   flex-direction: column;
 }
-
+.page__bd_spacing{
+  padding-top  : 20rpx;
+  padding-left : 40rpx;
+  padding-right: 20rpx;
+  border: 1px;
+}
+.mini-btn{
+    margin-right: 20px;
+}
 </style>
