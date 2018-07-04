@@ -18,7 +18,12 @@ export default {
   background-color: #f8f8f9;
   width: auto!important;
   display: inline-block;
-  font-size: 12px;
+  font-size: 28rpx;
   max-width: 90%;
 }
+  .userinfo{
+    font-size:24rpx;
+    color:#999;
+    margin-top:20rpx;
+  }
 </style>

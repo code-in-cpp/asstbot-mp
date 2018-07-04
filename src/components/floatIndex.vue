@@ -11,19 +11,30 @@
   import radioFloat from '@/components/floatBox/radioFloat'
   // import imageFloat from '@/components/floatBox/imageFloat'
   import avatarFloat from '@/components/floatBox/avatarFloat'
-  import { mapGetters } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
 
   export default {
     name: 'floatIndex',
+    data: {
+
+    },
     components: {
       radioFloat,
       checkboxFloat,
       avatarFloat
     },
     computed: {
+      ...mapState({
+        messagesList: state => state.messages.data
+      }),
       ...mapGetters({
         list: 'messageAction'
       })
+    },
+    created () {
+      this.newUser = {
+        type: 'getUserInfo'
+      }
     }
   }
 </script>

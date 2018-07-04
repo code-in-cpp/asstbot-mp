@@ -1,5 +1,5 @@
 <template>
-  <view class="boxFloat" :class="{'top_0':list.type === 'checkbox'}">
+  <view class="boxFloat" :class="{'top_0':(list.type === 'checkbox' && flag)}">
     <view class="boxItems">
       <view class="boxItemTitle">
         <view>{{list.title}}</view>
@@ -24,8 +24,11 @@
 <script>
   export default {
     name: 'checkboxFloat',
-    data: {
-      captionArray: []
+    data () {
+      return {
+        captionArray: [],
+        flag: false
+      }
     },
     methods: {
       selectItem () {
@@ -37,26 +40,17 @@
       },
       selectOption (e) {
         this.captionArray = [...e.mp.detail.value]
-      },
-      deleteItem (array, item) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] === item) {
-            array.splice(i, 1)
-          }
-        }
-      },
-      isIn (array, item) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] === item) {
-            return true
-          }
-        }
-        return false
       }
     },
     props: [
       'list'
-    ]
+    ],
+    created () {
+      const that = this
+      setTimeout(function () {
+        that.flag = true
+      }, 50)
+    }
   }
 </script>
 

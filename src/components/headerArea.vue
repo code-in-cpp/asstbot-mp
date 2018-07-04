@@ -7,7 +7,7 @@
       <text class="title">{{bodName}}</text>
     </view> -->
     <view class="header-item discription">
-      <view class="talking"></view>
+      <!--<view class="talking"></view>-->
       <view class="">
         {{surveyData.title}}
       </view>
@@ -49,7 +49,7 @@ export default {
 }
 
 .discription {
-  font-size: 12px;
+  font-size: 28rpx;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -61,7 +61,7 @@ export default {
   vertical-align: middle;
 } */
 .talking {
-  background-color:currentColor;
+  background-color:green;
   display:inline-block;
   width:24rpx;
   height:24rpx;
@@ -71,7 +71,7 @@ export default {
   border-radius:50%;
   -webkit-animation:loader-09 1.0s infinite ease-in-out;
   animation:loader-09 1.0s infinite ease-in-out;
-  margin-top:6rpx;
+  margin-top:10rpx;
 
 }
 

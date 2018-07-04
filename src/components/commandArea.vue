@@ -1,12 +1,12 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex container-box">
-      <view class="placeholder">
-        <button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>
-      </view>
+      <!--<view class="placeholder">-->
+        <!--<button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>-->
+      <!--</view>-->
       <view class="weui-flex__item height-line-height command-box">
         <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12"/>
+        <textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"/>
       </view>
       <view class="placeholder">
         <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="currentMessage=='' || focusFlag">发送</button>
@@ -38,7 +38,6 @@ export default {
     },
     valueChange (ev) {
       this.currentMessage = ev.mp.detail.value
-      console.log(this.currentMessage, this.focusFlag)
     },
     sendMessage (ev) {
       this.$store.dispatch('sendQuery', this.currentMessage)

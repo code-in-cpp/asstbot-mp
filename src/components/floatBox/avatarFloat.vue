@@ -1,5 +1,5 @@
 <template>
-  <view  class="boxFloat" :class="{'top_0':list.type === 'imageUploader'}">
+  <view  class="boxFloat" :class="{'top_0':(list.type === 'imageUploader' && flag)}">
     <mpvue-cropper
       ref="cropper"
       :option="cropperOpt"
@@ -47,7 +47,8 @@
             width: 300,
             height: 300
           }
-        }
+        },
+        flag: false
       }
     },
     name: 'uploadAvatar',
@@ -103,6 +104,13 @@
             console.error('获取图片失败')
           })
       }
+    },
+
+    created () {
+      const that = this
+      setTimeout(function () {
+        that.flag = true
+      }, 50)
     },
 
     mounted () {

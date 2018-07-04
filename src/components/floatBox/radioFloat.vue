@@ -1,5 +1,5 @@
 <template>
-  <view class="boxFloat" :class="{'top_0':list.type === 'radio'}">
+  <view class="boxFloat" :class="{'top_0':(list.type === 'radio' && flag)}">
     <view class="boxItems">
       <view class="boxItemTitle">
         <view>{{list.title}}</view>
@@ -25,6 +25,11 @@
 <script>
   export default {
     name: 'boxFloat',
+    data () {
+      return {
+        flag: false
+      }
+    },
     methods: {
       selectItem (value) {
         this.$store.dispatch('sendQuery', this.value)
@@ -35,7 +40,13 @@
     },
     props: [
       'list'
-    ]
+    ],
+    created () {
+      const that = this
+      setTimeout(function () {
+        that.flag = true
+      }, 50)
+    }
   }
 </script>
 

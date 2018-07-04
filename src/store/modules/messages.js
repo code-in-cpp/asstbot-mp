@@ -81,9 +81,19 @@ var _impleSendmessage = (commit, id, type, data) => {
     type,
     data
   }
-
+  const responseMessage = {
+    to: {
+      id: ''
+    },
+    msgs: [
+      {type: data.type, reply: data.content}
+    ]
+  }
+  if (data.type === 'getUserinfo') {
+    commit('appendMessage', responseMessage)
+    return
+  }
   commit('appendMessage', message)
-
   return new Promise((resolve, reject) => {
     wx.request({
       url,
@@ -134,6 +144,9 @@ const actions = {
   },
   start ({commit}, id) {
     return _sendmessage(commit, 'start', {id})
+  },
+  getUserinfo ({commit}, data) {
+    return _sendmessage(commit, 'getUserinfo', data)
   }
 }
 

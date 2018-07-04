@@ -25,7 +25,7 @@ export default {
   border: solid #2b85e4 1px;
   border-radius: 15px 15px 0 15px;
   background-color: #91c4f7;
-  font-size: 12px;
+  font-size: 28rpx;
   margin-right: 5px;
 }
   .right-block{
