@@ -125,7 +125,11 @@
       </scroll-view>
     </view>
     <view class="footer">
-      <button class="weui-btn" type="primary" @click="saveBot">保存配置</button>
+      <view class="page__bd page__bd_spacing">
+          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="mini"><zan-icon type="close" /> 清空</button>
+          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="mini"><zan-icon type="completed" /> 保存 </button>
+          <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布 </button>
+      </view>      
     </view>
   </view>
 </template>
@@ -179,7 +183,7 @@ export default {
       'updateAnswerValue',
       'updateAnswerCorrect'
     ]),
-    saveBot () {
+    saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
           wx.navigateBack({
@@ -189,12 +193,43 @@ export default {
     }
   },
 
+  clearSurvey () {
+    console.log('clearSurvey')
+    let that = this
+    wx.showModal({
+      title: '您确认要清空当前配置吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success: function (res) {
+        if (res.confirm) {
+          that.survey.subjects = []
+          that.survey.conclusions = []
+          that.$store.dispatch('editSurvey', this.survey)
+        } else {
+          console.log('用户点击取消操作')
+        }
+      }
+    })
+  },
+
   created () {
   },
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
     this.updateCurrentSurvey(survey)
+  },
+
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    this.$store.dispatch('editSurvey', this.survey)
+    return {
+      title: this.survey.title,
+      path: '/pages/index/main?id=' + this.survey.id,
+      imageUrl: this.survey.avatarUrl
+    }
   }
 }
 </script>
@@ -203,5 +238,13 @@ export default {
 .content {
   flex-direction: column;
 }
-
+.page__bd_spacing{
+  padding-top  : 20rpx;
+  padding-left : 40rpx;
+  padding-right: 20rpx;
+  border: 1px;
+}
+.mini-btn{
+    margin-right: 20px;
+}
 </style>
