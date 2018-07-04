@@ -89,8 +89,8 @@ export default {
           if (res.confirm) {
             that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
-                wx.navigateBack({
-                  delta: 2
+                wx.navigateTo({
+                  url: `/pages/home/main`
                 })
               })
           } else {

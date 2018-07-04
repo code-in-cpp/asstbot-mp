@@ -185,10 +185,11 @@ export default {
       'updateAnswerCorrect'
     ]),
     saveSurvey () {
+      let surveyId = this.survey.id
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack({
-            delta: 1
+          wx.navigateTo({
+            url: `/pages/display/main?id=${surveyId}`
           })
         })
     }
@@ -206,10 +207,11 @@ export default {
     if (res.from === 'button') {
       console.log(res.target)
     }
+    let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack({
-            delta: 1
+          wx.navigateTo({
+            url: `/pages/display/main?id=${surveyId}`
           })
         })
     return {
