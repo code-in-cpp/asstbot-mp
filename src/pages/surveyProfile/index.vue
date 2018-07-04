@@ -8,18 +8,13 @@
               <bod-avatar :url="avatarUrl" size="100"/>
             </view>
             <view class="avatar-badge">
-              <i-icon type="editor" size="15" color="red"/>
+              <i-icon type="editor" size="20"/>
             </view>
-
             <button class="weui-btn mini-btn" type="default" size="mini"
               open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的头像</button>
           </view>
-
-
         </view>
-      </view>
-
-            
+      </view>     
       <view class="weui-cells__title">标题</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
