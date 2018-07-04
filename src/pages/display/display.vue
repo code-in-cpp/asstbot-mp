@@ -94,7 +94,7 @@ export default {
                 })
               })
           } else {
-            console.log('用户点击辅助操作')
+            console.log('用户点击取消操作')
           }
         }
       })

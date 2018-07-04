@@ -175,6 +175,7 @@ export default {
       'addConclusion',
       'removeConclusion',
       'addSubject',
+      'clearSurvey',
       'removeSubject',
       'updateSubjectType',
       'updateSubjectQuestion',
@@ -193,25 +194,6 @@ export default {
     }
   },
 
-  clearSurvey () {
-    console.log('clearSurvey')
-    let that = this
-    wx.showModal({
-      title: '您确认要清空当前配置吗？',
-      confirmText: '确认',
-      cancelText: '取消',
-      success: function (res) {
-        if (res.confirm) {
-          that.survey.subjects = []
-          that.survey.conclusions = []
-          that.$store.dispatch('editSurvey', this.survey)
-        } else {
-          console.log('用户点击取消操作')
-        }
-      }
-    })
-  },
-
   created () {
   },
 
@@ -225,6 +207,11 @@ export default {
       console.log(res.target)
     }
     this.$store.dispatch('editSurvey', this.survey)
+        .then(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        })
     return {
       title: this.survey.title,
       path: '/pages/index/main?id=' + this.survey.id,
