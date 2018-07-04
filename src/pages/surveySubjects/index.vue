@@ -125,7 +125,11 @@
       </scroll-view>
     </view>
     <view class="footer">
-      <button class="weui-btn" type="primary" @click="saveBot">保存配置</button>
+      <!-- <button class="weui-btn" type="primary" @click="saveBot">保存配置</button> -->
+      <view class="page__bd page__bd_spacing">
+          <button class="weui-btn mini-btn" type="default" @click="saveBot" size="mini"><zan-icon type="completed" /> 保存 </button>
+          <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布 </button>
+      </view>      
     </view>
   </view>
 </template>
@@ -195,6 +199,17 @@ export default {
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
     this.updateCurrentSurvey(survey)
+  },
+
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    return {
+      title: this.survey.title,
+      path: '/pages/index/main?id=' + this.surveyId,
+      imageUrl: this.survey.avatarUrl
+    }
   }
 }
 </script>
@@ -203,5 +218,13 @@ export default {
 .content {
   flex-direction: column;
 }
-
+.page__bd_spacing{
+  padding-top  : 20rpx;
+  padding-left : 40rpx;
+  padding-right: 20rpx;
+  border: 1px;
+}
+.mini-btn{
+    margin-right: 20px;
+}
 </style>

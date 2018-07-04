@@ -42,9 +42,9 @@
     </scroll-view>
     
     <view class="page__bd page__bd_spacing">
-        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><zan-icon type="success"></zan-icon> 发布</button>
-        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit"></zan-icon> 编辑</button>
-        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close"></zan-icon> 删除</button>
+        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布</button>
+        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit" /> 编辑</button>
+        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close" /> 删除</button>
     </view>
 </view>
 </template>

@@ -8,6 +8,7 @@ app.$mount()
 export default {
   config: {
     'usingComponents': {
+      'i-icon': '../../../static/iview/icon/index',
       'i-button': '../../../static/iview/button/index',
       'i-input': '../../../static/iview/input/index',
       'i-avatar': '../../../static/iview/avatar/index',
