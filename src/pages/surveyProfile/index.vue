@@ -11,7 +11,7 @@
               <i-icon type="editor" size="20"/>
             </view>
             <button class="weui-btn mini-btn" type="default" size="mini"
-              open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的头像</button>
+              open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
           </view>
         </view>
       </view>     

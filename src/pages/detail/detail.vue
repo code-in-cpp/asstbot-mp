@@ -2,8 +2,8 @@
 <view class="page">
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
-            <image :src="bodAvatar" class="middle-avatar"/>
-            <view class="responser-name" >王博</view>
+            <image :src="avatarUrl" class="middle-avatar"/>
+            <view class="responser-name" >{{name}}</view>
         </view>
         <view class="weui-media-box__bd">
             <view class="weui-media-box__title">{{score}}</view>
@@ -15,11 +15,13 @@
     <view class="weui-cells__title">答题结果</view>
     <view class="weui-cells weui-cells_after-title">
         <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
-            <view class="weui-cell__bd"><bot-say-text :content="item.question"></bot-say-text></view>
+            <view class="weui-cell__bd">
+              <bot-say-text :content="item.question"></bot-say-text>
+            </view>
             <view class="weui-cell__ft">
               <user-say-text :content="item.value"></user-say-text>
-              <i-icon v-if="item.correct" type="right" color="green" size="24" />
-              <i-icon v-else type="close" color="red" size="22" />
+              <i-icon v-if="item.correct" type="right" class="icon-right" color="green" size="24" />
+              <i-icon v-else type="close" class="icon-error" color="red" size="20" />
             </view>
         </view>
     </view>
@@ -35,7 +37,8 @@ export default {
   data: {
     id: '01',
     name: '王博',
-    score: ''
+    score: '',
+    avatarUrl: ''
   },
   computed: {
     ...mapState({
@@ -57,6 +60,7 @@ export default {
     this.id = option.id
     this.name = option.name
     this.score = option.score
+    this.avatarUrl = option.avatarUrl
   },
 
   components: {
@@ -68,9 +72,16 @@ export default {
 
 <style>
 
-.weui-error {
+.icon-error {
   padding-left: 5pt;
+  padding-top: 10px;
 }
+
+.icon-right {
+  padding-left: 5pt;
+  padding-top: 5px;
+}
+
 .weui-media-box__bd{
   padding-right: 30rpx;
   padding-left: 50rpx;
@@ -105,14 +116,24 @@ export default {
   align-items:center;
 }
 
+.weui-cell__bd {
+  display : flex ; 
+  flex-flow: row;
+}
+
 .weui-cell__ft {
   display : flex ; 
   flex-flow: row;
   color: black;
+  padding-top: 5px;
   justify-content: flex-end;
 }
 
-.detail-cell:before {
+.weui-cells {
+  background-color:#EEEEEE
+}
+
+/* .detail-cell:before {
   content: " ";
   position: absolute;
   left: 0;
@@ -122,6 +143,6 @@ export default {
   border-top: 1rpx solid #D9D9D9;
   color: #D9D9D9;
   left: 30rpx;
-}
+} */
 
 </style>

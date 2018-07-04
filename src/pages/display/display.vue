@@ -24,9 +24,9 @@
     </view>
     <view class="weui-cells__title">答卷列表:</view>
     <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
@@ -34,7 +34,7 @@
 
         <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
             <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
             <view class="weui-cell__ft">{{item.score}}</view>
@@ -74,8 +74,9 @@ export default {
   },
   methods: {
     editSurvey () {
+      let surveyId = this.surveyId
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${this.surveyId}`
+        url: `/pages/surveySubjects/main?id=${surveyId}`
       })
     },
     deleteSurvey () {
@@ -89,12 +90,12 @@ export default {
           if (res.confirm) {
             that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
-                wx.navigateBack({
-                  delta: 2
+                wx.navigateTo({
+                  url: `/pages/home/main`
                 })
               })
           } else {
-            console.log('用户点击辅助操作')
+            console.log('用户点击取消操作')
           }
         }
       })
@@ -129,6 +130,14 @@ export default {
 </script>
 
 <style>
+.user-avator-icon{
+  margin-right: 5px;
+  vertical-align: middle;
+  width:20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
 .responsor-list{
   height: 220px;
   border-width:medium;
