@@ -8,12 +8,18 @@
     </view>
     <view class="page__bd">
         <view class="weui-grids">
-            <block v-for="item in grids" :key="item.id">
-                <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                    <view class="weui-grid__label">{{item.value}}</view>
-                    <view class="weui-grid__label">{{item.desc}}</view>
-                </navigator>
-            </block>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title"  style="color:red;">{{commitToday}}</view>
+                <view class="weui-grid__label">今日提交</view>
+            </navigator>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title" style="color:green;" >{{commitCount}}</view>
+                <view class="weui-grid__label">提交总数</view>
+            </navigator>
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                <view class="weui-grid__title" style="color:blue;">{{reviewCount}}</view>
+                <view class="weui-grid__label">浏览总数</view>
+            </navigator>
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
@@ -31,7 +37,7 @@
                 <image :src="item.avatarUrl" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
             </view>
             <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
+            <view class="weui-cell__ft">{{item.score}}</view>
         </view>
     </scroll-view>
     
@@ -51,7 +57,7 @@ export default {
   data: {
     surveyId: '',
     title: '',
-    grids: [ { id: 0, desc: '答题人数', value: 10 }, { id: 0, desc: '答对数目', value: 4 }, { id: 0, desc: '答错数目', value: 6 } ]
+    grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ]
   },
   computed: {
     ...mapState({
@@ -60,7 +66,10 @@ export default {
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
-      emptySurveyAnswer: 'emptySurveyAnswer'
+      emptySurveyAnswer: 'emptySurveyAnswer',
+      commitToday: 'commitToday',
+      commitCount: 'commitCount',
+      reviewCount: 'reviewCount'
     })
   },
   methods: {
@@ -163,16 +172,15 @@ export default {
   border: 1px;
 }
 
-.next-tap{
-  background-color:0xffffff;
-  display: flex;
-  flex-direction: row-reverse;
-  /* position:right; */
+.weui-grid{
+  height: 80px;
+  padding-top  :10px;
 }
 
-.next-butten{
-  position:fixed
-
+.weui-grid__title{
+  font-size: 24px;
+  font-weight: bold;  
+  text-align: center;
 }
 
 .button-sp-area{
