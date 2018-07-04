@@ -1,5 +1,6 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
+var date = new Date()
 
 const state = {
   result: [],
@@ -22,6 +23,18 @@ const getters = {
     }
 
     return ret
+  },
+
+  commitToday: state => {
+    let currentTime = date.toLocaleDateString().replace('/', '-')
+    let todayResult = state.result.filter(item => { return item.created_at.indexOf(currentTime) >= 0 })
+    return todayResult.length
+  },
+  commitCount: state => {
+    return state.result.length
+  },
+  reviewCount: state => {
+    return state.result.length
   },
 
   emptySurveyAnswer: state => {
