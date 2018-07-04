@@ -11,21 +11,21 @@
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
     </view>
-    <view class="page__bd">
-    <view class="weui-cells__title">答题结果</view>
-    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-        <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
-            <view class="weui-cell__bd">
-              <bot-say-text :content="item.question"></bot-say-text>
-            </view>
-            <view class="weui-cell__ft">
-              <user-say-text :content="item.value"></user-say-text>
-              <i-icon v-if="item.correct" type="right" class="icon-right" color="green" size="24" />
-              <i-icon v-else type="close" class="icon-error" color="red" size="20" />
-            </view>
-        </view>
-    </scroll-view>
-    </view>
+    <view class="weui-cells__title">答题结果:</view>
+    <view class="content">
+      <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
+          <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
+              <view class="weui-cell__bd">
+                <bot-say-text :content="item.question"></bot-say-text>
+              </view>
+              <view class="weui-cell__ft">
+                <user-say-text :content="item.value"></user-say-text>
+                <i-icon v-if="item.correct" type="right" class="icon-right" color="green" size="24" />
+                <i-icon v-else type="close" class="icon-error" color="red" size="20" />
+              </view>
+          </view>
+      </scroll-view>
+    </view>    
 </view>
 </template>
 
@@ -131,8 +131,21 @@ export default {
 
 .weui-cells {
   background-color:#EEEEEE;
-  height:300px;
+  /* height:300px; */
+  /* flex:1 */
 }
+
+.content {
+  flex-direction: column
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+
 
 /* .detail-cell:before {
   content: " ";
