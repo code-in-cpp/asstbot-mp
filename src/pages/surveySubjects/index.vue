@@ -185,11 +185,10 @@ export default {
       'updateAnswerCorrect'
     ]),
     saveSurvey () {
-      let surveyId = this.survey.id
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
           wx.navigateTo({
-            url: `/pages/display/main?id=${surveyId}`
+            url: `/pages/home/main`
           })
         })
     }
