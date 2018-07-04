@@ -61,10 +61,12 @@ const getters = {
     for (let index in answers) {
       let item = { id: index + 1, correct: true, value: '', question: state.survey.subjects[index].question }
       let answer = answers[index].result
+      let spilterCh = ''
       for (let j in answer) {
         let element = answer[j]
         item.correct = element.correct && item.correct
-        item.value = item.value + element.value
+        item.value = item.value + spilterCh + element.value
+        spilterCh = '，'
       }
       ret.push(item)
     }
