@@ -6,7 +6,7 @@ app.$mount()
 
 export default {
   config: {
-    navigationBarTitleText: '机器人列表',
+    navigationBarTitleText: '我的机器人',
     'usingComponents': {
       'i-icon': '../../../static/iview/icon/index'
     }

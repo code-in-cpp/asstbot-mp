@@ -9,15 +9,15 @@
     <view class="page__bd">
         <view class="weui-grids">
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title"  style="color:red;">{{commitToday}}</view>
+                <view class="weui-grid__title">{{commitToday}}</view>
                 <view class="weui-grid__label">今日提交</view>
             </navigator>
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title" style="color:green;" >{{commitCount}}</view>
+                <view class="weui-grid__title" >{{commitCount}}</view>
                 <view class="weui-grid__label">提交总数</view>
             </navigator>
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title" style="color:blue;">{{reviewCount}}</view>
+                <view class="weui-grid__title">{{reviewCount}}</view>
                 <view class="weui-grid__label">浏览总数</view>
             </navigator>
         </view>
@@ -181,6 +181,7 @@ export default {
   font-size: 24px;
   font-weight: bold;  
   text-align: center;
+  color: #666666;
 }
 
 .button-sp-area{

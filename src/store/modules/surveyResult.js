@@ -16,7 +16,7 @@ const getters = {
       let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
       let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/avatar.png' : item.responder.avatarUrl
       if (userAvatarUrl.indexOf('localhost') > 0) {
-        userAvatarUrl = '/static/image/avatar.png'
+        userAvatarUrl = '/static/image/nobody.png'
       }
       let summary = { id: item.id, name: nickName, score: '答对' + item.score + '题', avatarUrl: userAvatarUrl }
       ret.push(summary)
@@ -74,6 +74,16 @@ const getters = {
     return ret
   },
 
+  getCreateTime: state => (id) => {
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        return item.created_at
+      }
+    }
+    return date.toLocaleDateString().replace('/', '-')
+  },
+
   getConclusion: state => (id) => {
     let score = ''
     for (let index in state.result) {
@@ -83,8 +93,6 @@ const getters = {
         break
       }
     }
-    console.log('comming here ')
-    console.log(state.survey)
     let conclusions = state.survey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
