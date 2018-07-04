@@ -77,7 +77,7 @@
                   <view class="weui-label">最少答对题数</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.min"
+                  <input class="weui-input" type="number" placeholder="" :value="conclusion.scoreRange.min"
                     @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
                 </view>
               </view>
@@ -86,7 +86,7 @@
                   <view class="weui-label">最多答对题数</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.max"
+                  <input class="weui-input" type="number" placeholder="" :value="conclusion.scoreRange.max"
                     @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
                 </view>
               </view>
