@@ -22,7 +22,9 @@
                   <view class="weui-label">题目 {{i+1}}</view>
                 </view>
                 <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeSubject(i)">删除</button>
+                  <view @click="removeSubject(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
                 </view>
               </view>
             </view>
@@ -63,7 +65,9 @@
                   <view class="weui-label">评语分类 {{i+1}}</view>
                 </view>
                 <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeConclusion(i)">删除</button>
+                  <view @click="removeConclusion(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
                 </view>
               </view>
             </view>
@@ -73,7 +77,7 @@
                   <view class="weui-label">最少答对题数</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.min"
+                  <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
                     @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
                 </view>
               </view>
@@ -82,7 +86,7 @@
                   <view class="weui-label">最多答对题数</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" placeholder="0" :value="conclusion.scoreRange.max"
+                  <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
                     @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
                 </view>
               </view>

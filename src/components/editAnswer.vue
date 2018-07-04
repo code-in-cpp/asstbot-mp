@@ -12,7 +12,6 @@
               <icon class="" type="success_no_circle" size="15" v-if="answer.correct"></icon>
             </view>
           </view>
- 
         </block>
       </view>
       <view class="weui-cell__bd">
@@ -27,7 +26,7 @@
       </view>
     </label>
     <view class="weui-cell weui-cell_link">
-        <view class="weui-cell__bd" @click="addAnswer(subjectIndex)">添加更多</view>
+      <view class="weui-cell__bd" @click="addAnswer(subjectIndex)">添加答案</view>
     </view>
   </view>
 </template>
@@ -48,6 +47,10 @@ export default {
 
   computed: {
     answers () {
+      let survey = this.$store.state.currentSurvey.survey
+      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+        return []
+      }
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
     }
   },
@@ -81,6 +84,10 @@ export default {
 </script>
 
 <style>
+.weui-check__label {
+  padding: 5px 30px;
+}
+
 .checkbox-icon-box {
   border: solid 1px #666;
   height: 15px;
