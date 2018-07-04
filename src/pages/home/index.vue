@@ -1,31 +1,28 @@
 <template>
   <view class="page">
-    <view class="weui-cells__title">添加</view>
-    <view class="weui-cells weui-cells_after-title">
-      <navigator url="/pages/surveyProfile/main?action=create" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @click="createBot">
-        <view class="weui-cell__hd">
-          <i-icon type="add" size="28" />
-        </view>
-        <view class="weui-cell__bd">创建机器人</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-      </navigator>
-    </view>
     <view class="weui-cells__title">已创建的机器人</view>
-    <view class="weui-cells weui-cells_after-title">
-      <block v-for="(survey, i) in surveyList" :key="i">
-        <navigator :url="'/pages/display/main?id='+survey.id" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
-          <view class="weui-cell__hd">
-            <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
-          </view>
-          <view class="weui-cell__bd weui-media-box weui-media-box_small-appmsg">
-            <view class="weui-media-box__bd ">
-              <view class="weui-media-box__title">{{survey.title}}</view>
-              <view class="weui-media-box__desc">{{survey.created_at}}</view>
-            </view>
-          </view>
-          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-        </navigator>
-      </block>
+    <view class="content">
+      <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
+        <view class="weui-cells weui-cells_after-title">
+          <block v-for="(survey, i) in surveyList" :key="i">
+            <navigator :url="'/pages/display/main?id='+survey.id" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
+              <view class="weui-cell__hd">
+                <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
+              </view>
+              <view class="weui-cell__bd ">
+                <view class="bot-info">
+                  <view class="weui-media-box__title">{{survey.title}}</view>
+                  <view class="weui-media-box__desc">{{survey.intro}}</view>
+                </view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="footer">
+      <button class="weui-btn" type="primary" @click="toCreateBot">创建问卷机器人</button>
     </view>
   </view>
 </template>
@@ -47,8 +44,10 @@ export default {
   },
 
   methods: {
-    createBot (ev) {
-      console.log(ev)
+    toCreateBot (ev) {
+      wx.navigateTo({
+        url: `/pages/surveyProfile/main?action=create`
+      })
     }
   },
 
@@ -59,16 +58,9 @@ export default {
 </script>
 
 <style>
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
+.bot-info {
+  min-height: 70rpx
 }
-
-.log-item {
-  margin: 10rpx;
-}
-
 .avatar {
   border-radius: 50%;
   width: 60px;

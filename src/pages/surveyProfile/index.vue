@@ -1,32 +1,31 @@
 <template>
   <view class="page">
     <view class="content">
-      <view class="weui-cells__title">机器人</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-                <view class="weui-label">名字</view>
+          <view class="weui-cell__bd avatar-uploader">
+            <view @click="chooseImage">
+              <bod-avatar :url="avatarUrl" size="100"/>
             </view>
-            <view class="weui-cell__bd">
-                <input class="weui-input" v-model="title" placeholder="请输入机器人的名字"/>
+            <view class="avatar-badge">
+              <i-icon type="editor" size="15" color="red"/>
             </view>
+
+            <button class="weui-btn mini-btn" type="default" size="mini"
+              open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的头像</button>
+          </view>
+
+
         </view>
       </view>
-      <view class="weui-cells__title">头像</view>
+
+            
+      <view class="weui-cells__title">标题</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
-          <view class="weui-uploader__files">
-            <view class="uploader weui-uploader__file" @click="chooseImage" v-if="avatarUrl!==''">
-              <image class="weui-uploader__img" :src="avatarUrl" mode="aspectFill" />
+            <view class="weui-cell__bd">
+                <input class="weui-input" v-model="title" placeholder="请输入标题"/>
             </view>
-            <view class="uploader weui-uploader__input-box" v-else>
-              <view class="weui-uploader__input" @click="chooseImage"></view>
-            </view>
-            <view >
-              <button class="weui-btn mini-btn" type="default" size="mini"
-                open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的头像</button>
-            </view>
-          </view>
         </view>
       </view>
       <view class="weui-cells__title">简介</view>
@@ -54,7 +53,7 @@
       </view> -->
     </view>
     <view class="footer">
-      <button class="weui-btn" type="primary" @click="createBot">创建机器人</button>
+      <button class="weui-btn" type="primary" @click="createBot" :disabled="dataValid">创建</button>
     </view>
   </view>
 </template>
@@ -76,6 +75,9 @@ export default {
   },
 
   computed: {
+    dataValid () {
+      return this.title.length === 0
+    }
   },
 
   methods: {
@@ -131,9 +133,15 @@ export default {
 .content {
   flex-direction: column;
 }
-.uploader {
-  margin: 5rpx!important;
-  border: solid rgb(197, 194, 194) 1px
+.avatar-uploader {
+  text-align: center;
+  position: relative;
+}
+
+.avatar-badge {
+  position: absolute;
+  top: .4em;
+  right: 7.9em;
 }
 
 </style>

@@ -34,6 +34,10 @@ const mutations = {
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
   },
+  clearSurvey (state) {
+    state.survey.subjects = []
+    state.survey.conclusions = []
+  },
   updateSubjectType (state, {index, type}) {
     state.survey.subjects[index].type = type
   },
