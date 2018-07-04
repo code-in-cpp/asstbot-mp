@@ -13,10 +13,12 @@
     <view class="page__bd">
     <view class="weui-cells__title">答题结果</view>
     <view class="weui-cells weui-cells_after-title">
-        <view v-for="item in surveyAnswers" :key="item.id" class="weui-cell">
-            <view class="weui-cell__bd">{{item.question}}</view>
-            <view class="weui-cell__ft">{{item.value}}</view>
-            <icon type="success_no_circle" class="weui-error" size="18"></icon>
+        <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
+            <view class="weui-cell__bd"><bot-say-text :content="item.question"></bot-say-text></view>
+            <view class="weui-cell__ft">
+              <user-say-text :content="item.value"></user-say-text>
+              <icon type="success_no_circle" class="weui-error" size="18"></icon>
+            </view>
         </view>
     </view>
     </view>
@@ -27,6 +29,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import userSayText from '@/components/userSay/userSayText'
+import botSayText from '@/components/botSay/botSayText'
 export default {
   data: {
     id: '01',
@@ -50,6 +54,11 @@ export default {
     this.id = option.id
     this.name = option.name
     this.score = option.score
+  },
+
+  components: {
+    userSayText,
+    botSayText
   }
 }
 </script>
@@ -83,4 +92,32 @@ export default {
   padding-top: 0px;
   text-align: center;
 }
+
+.detail-cell {
+  padding:20rpx 30rpx;
+  position:relative;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+  align-items:center;
+}
+
+.weui-cell__ft {
+  display : flex ; 
+  flex-flow: row;
+  color: black;
+  justify-content: flex-end;
+}
+
+.detail-cell:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 2rpx;
+  border-top: 1rpx solid #D9D9D9;
+  color: #D9D9D9;
+  left: 30rpx;
+}
+
 </style>
