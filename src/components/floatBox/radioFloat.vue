@@ -9,8 +9,8 @@
         <!--<ul class="boxItemBox">-->
           <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
             <radio-group @change="selectOption">
-              <view  v-for="option in list.items" :key="item">
-                <label>
+              <view class="selectRadio" v-for="option in list.items" :key="item">
+                <label class="selectlabel">
                   <radio :value="option.value">{{option.caption}}</radio>
                 </label>
               </view>
@@ -82,5 +82,13 @@
     float: right;
     margin-top: -80rpx;
     margin-right: 20rpx;
+  }
+  .selectRadio{
+    height:80rpx;
+    line-height: 80rpx;
+    padding-left: 30rpx;
+  }
+  .selectlabel{
+    display: block;
   }
 </style>

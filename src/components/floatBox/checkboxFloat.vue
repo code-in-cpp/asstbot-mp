@@ -3,14 +3,14 @@
     <view class="boxItems">
       <view class="boxItemTitle">
         <view>{{list.title}}</view>
-        <button class="sure"  @click="selectItem()">确定</button>
+        <view class="sure"  @click="selectItem()">确定</view>
       </view>
       <scroll-view scroll-y=true class="ulBox">
         <!--<ul class="boxItemBox">-->
           <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
         <checkbox-group @change="selectOption">
-          <view v-for="option in list.items" :key="item">
-            <label><checkbox :value="option.value">{{option.caption}}</checkbox></label>
+          <view class="selectRadio" v-for="option in list.items" :key="item">
+            <label class="selectlabel"><checkbox :value="option.value">{{option.caption}}</checkbox></label>
           </view>
         </checkbox-group>
 
@@ -103,5 +103,13 @@
     float: right;
     margin-top: -80rpx;
     margin-right: 20rpx;
+  }
+  .selectRadio{
+    height:80rpx;
+    line-height: 80rpx;
+    padding-left: 30rpx;
+  }
+  .selectlabel{
+    display: block;
   }
 </style>

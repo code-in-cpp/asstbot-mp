@@ -109,4 +109,8 @@ export default {
   .height_40{
     height:540rpx;
   }
+  .footer{
+    /*position: fixed;*/
+    /*bottom: 0*/
+  }
 </style>
