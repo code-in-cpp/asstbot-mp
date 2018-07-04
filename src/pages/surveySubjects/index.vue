@@ -22,7 +22,9 @@
                   <view class="weui-label">题目 {{i+1}}</view>
                 </view>
                 <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeSubject(i)">删除</button>
+                  <view @click="removeSubject(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
                 </view>
               </view>
             </view>
@@ -63,7 +65,9 @@
                   <view class="weui-label">评语分类 {{i+1}}</view>
                 </view>
                 <view class="weui-cell__ft">
-                  <button class="weui-btn mini-btn" type="warn" size="mini" @click="removeConclusion(i)">删除</button>
+                  <view @click="removeConclusion(i)">
+                    <i-icon type="trash" size="25"/>
+                  </view>
                 </view>
               </view>
             </view>
