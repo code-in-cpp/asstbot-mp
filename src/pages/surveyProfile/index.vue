@@ -10,11 +10,11 @@
             <view class="avatar-badge">
               <i-icon type="editor" size="20"/>
             </view>
-            <button class="weui-btn mini-btn" type="default" size="mini"
+            <button class="weui-btn" type="default" size="mini"
               open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
           </view>
         </view>
-      </view>     
+      </view>
       <view class="weui-cells__title">标题</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
@@ -47,7 +47,7 @@
           </radio-group>
       </view> -->
     </view>
-    <view class="footer">
+    <view class="bottom_button">
       <button class="weui-btn" type="primary" @click="createBot" :disabled="dataValid">创建</button>
     </view>
   </view>

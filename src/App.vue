@@ -65,4 +65,17 @@ page{
   height: 50rpx!important;
   border-radius: 50%;
 }
+
+.bottom_button{
+  margin-bottom: 80rpx;
+  margin-left: 80rpx;
+  margin-right: 80rpx;
+}
+.page__bd_spacing{
+  padding-top  : 20rpx;
+  padding-left : 40rpx;
+  padding-right: 40rpx;
+  border: 2rpx;
+}
+
 </style>

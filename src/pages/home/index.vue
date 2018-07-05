@@ -21,8 +21,8 @@
         </view>
       </scroll-view>
     </view>
-    <view class="footer">
-      <button class="weui-btn" type="primary" @click="toCreateBot">创建问卷机器人</button>
+    <view class="bottom_button">
+      <button class="weui-btn" type="primary" size="default" @click="toCreateBot">创建问卷机器人</button>
     </view>
   </view>
 </template>
@@ -67,5 +67,4 @@ export default {
   height: 60px;
   overflow: hidden;
 }
-
 </style>

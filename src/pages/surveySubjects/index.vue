@@ -16,7 +16,7 @@
         <view class="weui-cells__title">题目</view>
         <view class="weui-cells weui-cells_after-title">
           <block v-for="(subject, i) in subjects" :key="subject">
-            <view class="weui-cells__title">            
+            <view class="weui-cells__title">
               <view class="weui-cell" >
                 <view class="weui-cell__bd">
                   <view class="weui-label">题目 {{i+1}}</view>
@@ -59,7 +59,7 @@
         <view class="weui-cells__title">评语</view>
         <view class="weui-cells weui-cells_after-title">
           <block v-for="(conclusion, i) in conclusions" :key="conclusion">
-            <view class="weui-cells__title">            
+            <view class="weui-cells__title">
               <view class="weui-cell" >
                 <view class="weui-cell__bd">
                   <view class="weui-label">评语分类 {{i+1}}</view>
@@ -104,15 +104,15 @@
           <view class="weui-cell weui-cell_link" @click="addConclusion">
             <view class="weui-cell__bd">添加评语分类</view>
           </view>
-        </view>        
+        </view>
       </scroll-view>
     </view>
     <view class="footer">
       <view class="page__bd page__bd_spacing">
-          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="mini"><zan-icon type="close" /> 清空</button>
-          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="mini"><zan-icon type="completed" /> 保存 </button>
-          <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布 </button>
-      </view>      
+          <button class="weui-btn mini-btn" open-type="share" type="primary" size="default"> 发布 </button>
+          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="default">保存 </button>
+          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="default">清空</button>
+      </view>
     </view>
   </view>
 </template>
@@ -221,6 +221,6 @@ export default {
   border: 1px;
 }
 .mini-btn{
-    margin-right: 20px;
+    margin-right: 40rpx;
 }
 </style>

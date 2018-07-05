@@ -39,10 +39,10 @@
         </view>
     </scroll-view>
 
-    <view class="page__bd page__bd_spacing">
-        <button class="weui-btn mini-btn" open-type="share" type="primary" size="default"> 发布</button>
-        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="default"> 编辑</button>
-        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="default">删除</button>
+    <view class="button-sp-area">
+        <button class="weui-btn botton_spacing" open-type="share" type="primary" size="default"> 发布</button>
+        <button class="weui-btn botton_spacing" type="default" @click="editSurvey" size="default"> 编辑</button>
+        <button class="weui-btn botton_spacing" type="warn" @click="deleteSurvey" size="default">删除</button>
     </view>
 </view>
 </template>
@@ -122,7 +122,6 @@ export default {
       this.title = '测测你有多了解我？'
       console.log('error: page receive no survey id!')
     }
-
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
   },
@@ -164,13 +163,6 @@ export default {
   display: inline-block;
 }
 
-.page__bd_spacing{
-  padding-top  : 20rpx;
-  padding-left : 40rpx;
-  padding-right: 20rpx;
-  border: 2rpx;
-}
-
 .weui-grid{
   height: 160rpx;
   padding-top  :20rpx;
@@ -187,12 +179,14 @@ export default {
   color: #999999;
 }
 .button-sp-area{
-    margin: 0 auto;
-    padding-top: 30rpx;
-    width: 60%;
+    padding-top: 40rpx;
 }
-.mini-btn{
-    margin-right: 40rpx;
+
+.botton_spacing
+{
+    margin-right: 80rpx;
+    margin-left: 80rpx;
 }
+
 
 </style>
