@@ -3,7 +3,7 @@
     <view class="boxItems">
       <view class="boxItemTitle">
         <view>{{list.title}}</view>
-        <view class="sure" @click="selectItem()">确定</view>
+        <button :disabled="!value" class="sure" @click="selectItem()">确定</button>
       </view>
       <scroll-view scroll-y=true class="ulBox">
         <!--<ul class="boxItemBox">-->
@@ -27,7 +27,8 @@
     name: 'boxFloat',
     data () {
       return {
-        flag: false
+        flag: false,
+        value: ''
       }
     },
     methods: {
@@ -91,8 +92,13 @@
   }
   .sure{
     float: right;
-    margin-top: -80rpx;
+    margin-top: -72rpx;
     margin-right: 20rpx;
+    background:#fff;
+    padding:0;
+    line-height:64rpx;
+    font-size:28rpx;
+    width:120rpx;
   }
   .selectRadio{
     height:80rpx;

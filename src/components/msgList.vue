@@ -5,7 +5,7 @@
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo'">
+      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end'">
         <view class="weui-flex word-text left-block">
           <view class="left-item">
             <view style="padding: 3px 10px;width: 40rpx">
@@ -13,7 +13,7 @@
             </view>
             <view>
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
-              <bot-say-new :content="msg.reply" v-else-if="msg.type=='end'"></bot-say-new>
+              <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
               <bot-say-text :content="msg.reply" v-else></bot-say-text>
             </view>
           </view>
