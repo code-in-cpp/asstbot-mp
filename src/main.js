@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
+import '@/../static/font/iconfont.wxss'
 import bodAvatar from '@/components/bodAvatar'
 
 Vue.config.productionTip = false

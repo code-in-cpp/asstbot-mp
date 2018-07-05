@@ -9,7 +9,7 @@
         <!--<ul class="boxItemBox">-->
           <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
         <checkbox-group @change="selectOption">
-          <view class="selectRadio" v-for="option in list.items" :key="item">
+          <view class="selectRadio" v-for="option in list.items" :key="option">
             <label class="selectlabel"><checkbox :value="option.value">{{option.caption}}</checkbox></label>
           </view>
         </checkbox-group>
