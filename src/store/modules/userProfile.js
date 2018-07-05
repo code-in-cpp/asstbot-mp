@@ -54,6 +54,7 @@ const actions = {
             })
           } else {
             commit('setAuth', false)
+            reject(response)
           }
         }
       })

@@ -40,7 +40,7 @@
             <view class="weui-cell__ft">{{item.score}}</view>
         </view>
     </scroll-view>
-    
+
     <view class="page__bd page__bd_spacing">
         <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布</button>
         <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit" /> 编辑</button>
@@ -188,7 +188,7 @@ export default {
 
 .weui-grid__title{
   font-size: 24px;
-  font-weight: bold;  
+  font-weight: bold;
   text-align: center;
   color: #666666;
 }

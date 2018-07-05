@@ -87,6 +87,12 @@ export default {
   },
 
   onLoad (option) {
+    // const complate = wx.getStorageSync('complate')
+    // if (complate === 'success') {
+    //   wx.navigateTo({
+    //     url: '../display/main'
+    //   })
+    // }
     if (option.id) {
       this.$store.dispatch('setId', option.id)
       this.$store.dispatch('retrieveSurveyById', option.id)
@@ -96,11 +102,17 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-      if (this.userAuthed) {
-        this.$store.dispatch('start', option.id)
-      } else {
+      this.$store.dispatch('updateUserInfo').then((res) => {
+        console.log(111)
+        if (this.userAuthed) {
+          this.$store.dispatch('start', option.id)
+        } else {
+          this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+        }
+      }).catch((err) => {
         this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-      }
+        console.log(err)
+      })
     }
   }
 }

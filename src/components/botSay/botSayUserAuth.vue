@@ -1,6 +1,6 @@
 <template>
   <view class="authContainer">
-    <view class="authWord">{{content}}</view>
+    <view class="incoming">{{content}}</view>
     <view class="authBox">
       <button class="height-line-height authBtn">拒绝</button>
       <button class="height-line-height authBtn green" open-type="getUserInfo" @getuserinfo="updateUserInfo">允许</button>
@@ -34,11 +34,19 @@
 <style scoped>
   .authBox{
     display: flex;
+    margin-top: 20rpx;
   }
   .authBtn{
-    width:50%;
+    width:120rpx;
     margin:0;
-    background: #fff;
+    background:#fff;
+    border-radius:20rpx;
+    padding:0;
+    font-size:28rpx;
+    margin-right:20rpx;
+  }
+  .authBtn:after{
+    border:none
   }
   .height-line-height{
     height:80rpx;
@@ -48,11 +56,20 @@
     -webkit-border-radius: 10rpx;
     -moz-border-radius: 10rpx;
     border-radius: 10rpx;
-    background: #fff;
   }
   .authWord{
     padding: 30rpx;
     font-size: 28rpx;
+  }
+  .incoming {
+    padding: 10px;
+    border: solid #dddee1 1px;
+    border-radius: 15px 15px 15px 0;
+    background-color: #f8f8f9;
+    width: auto!important;
+    display: inline-block;
+    font-size: 28rpx;
+    max-width: 90%;
   }
   .green{
     color: #62ff12;
