@@ -1,10 +1,9 @@
 <template>
 <view class="page">
-    <view class="header">
-        <view class="header-item">
-          <bod-avatar :url="survey.avatarUrl" size="80"/>
-        </view>
+    <view class="header-item">
+      <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
+
     <view class="page__bd">
         <view class="weui-grids">
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
@@ -41,9 +40,9 @@
     </scroll-view>
 
     <view class="page__bd page__bd_spacing">
-        <button class="weui-btn mini-btn" open-type="share" type="primary" size="mini"><i-icon type="share_fill" /> 发布</button>
-        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="mini"><zan-icon type="edit" /> 编辑</button>
-        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="mini"><zan-icon type="close" /> 删除</button>
+        <button class="weui-btn mini-btn" open-type="share" type="primary" size="default"> 发布</button>
+        <button class="weui-btn mini-btn" type="default" @click="editSurvey" size="default"> 编辑</button>
+        <button class="weui-btn mini-btn" type="warn" @click="deleteSurvey" size="default">删除</button>
     </view>
 </view>
 </template>
@@ -142,9 +141,11 @@ export default {
 }
 
 .responsor-list{
-  height: 220px;
+  height: 400rpx!important;
   border-width:medium;
   border-color:grey;
+  display: flex;
+  flex-direction: column;
 }
 
 .middle-avatar {
@@ -153,24 +154,10 @@ export default {
   border-radius: 50%;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-bottom: 20rpx;
-}
-
 .header-item {
-  width: 100%;
+  margin-top: 20rpx;
   text-align: center;
 
-}
-
-.scroll-view_tab_comtainer {
-    width: 100%;
-    background-color: #F5F5F5;
-    padding: 20rpx 0 0;
-    white-space: nowrap;
 }
 
 .scroll-view_tab{
@@ -181,7 +168,7 @@ export default {
   padding-top  : 20rpx;
   padding-left : 40rpx;
   padding-right: 20rpx;
-  border: 1px;
+  border: 2rpx;
 }
 
 .weui-grid{
@@ -193,9 +180,12 @@ export default {
   font-size: 48rpx;
   font-weight: bold;
   text-align: center;
-  color: #666666;
 }
 
+.weui-grid__label{
+  text-align: center;
+  color: #999999;
+}
 .button-sp-area{
     margin: 0 auto;
     padding-top: 30rpx;
@@ -204,7 +194,5 @@ export default {
 .mini-btn{
     margin-right: 40rpx;
 }
-.header-item{
-  margin-top: 40rpx;
-}
+
 </style>
