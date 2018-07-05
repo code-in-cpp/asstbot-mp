@@ -103,7 +103,6 @@ export default {
           console.log(err)
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
-        console.log(111)
         if (this.userAuthed) {
           this.$store.dispatch('start', option.id)
         } else {
