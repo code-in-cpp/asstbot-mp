@@ -5,14 +5,16 @@
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text'">
+      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end'">
         <view class="weui-flex word-text left-block">
           <view class="left-item">
             <view style="padding: 3px 10px;width: 40rpx">
               <image :src="bodAvatar" class="small-avatar" v-if="i==0"/>
             </view>
             <view>
-              <bot-say-text :content="msg.reply"></bot-say-text>
+              <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
+              <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
+              <bot-say-text :content="msg.reply" v-else></bot-say-text>
             </view>
           </view>
         </view>
@@ -23,8 +25,10 @@
 
 <script>
 import userSayText from '@/components/userSay/userSayText'
-import botSayText from '@/components/botSay/botSayText'
 import userSayImage from '@/components/userSay/userSayImage'
+import botSayText from '@/components/botSay/botSayText'
+import botSayUserAuth from '@/components/botSay/botSayUserAuth'
+import botSayNew from '@/components/botSay/botSayNew'
 
 import { mapState } from 'vuex'
 
@@ -58,11 +62,12 @@ export default {
   components: {
     userSayText,
     botSayText,
-    userSayImage
+    userSayImage,
+    botSayUserAuth,
+    botSayNew
   },
 
-  mounted () {
-    // console.log('mounted')
+  created () {
   }
 }
 </script>

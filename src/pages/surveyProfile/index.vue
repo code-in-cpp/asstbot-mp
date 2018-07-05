@@ -101,7 +101,7 @@ export default {
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
+        sourceType: ['camera'],
         success: res => {
           // this.avatarUrl = res.tempFilePaths
           this.$store.dispatch('uploadImage', res.tempFilePaths[0])

@@ -40,7 +40,8 @@ export default {
   computed: {
     ...mapState({
       messagesList: state => state.messages.data,
-      scrollToView: state => `bottom${state.messages.data.length - 1}`
+      scrollToView: state => `bottom${state.messages.data.length - 1}`,
+      userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
       falg: 'activeAction'
@@ -87,7 +88,7 @@ export default {
 
   onLoad (option) {
     if (option.id) {
-      this.$store.dispatch('start', option.id)
+      this.$store.dispatch('setId', option.id)
       this.$store.dispatch('retrieveSurveyById', option.id)
         .then((survey) => {
           this.survey = survey
@@ -95,6 +96,11 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+      if (this.userAuthed) {
+        this.$store.dispatch('start', option.id)
+      } else {
+        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+      }
     }
   }
 }
@@ -105,6 +111,7 @@ export default {
     width:100%;
     height:0;
     background: transparent;
+    /*transition: height .5s linear .5s;*/
   }
   .height_40{
     height:540rpx;

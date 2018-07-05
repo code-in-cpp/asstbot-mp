@@ -1,9 +1,9 @@
 <template>
-  <view class="boxFloat" :class="{'top_0':list.type === 'checkbox'}">
+  <view class="boxFloat" :class="{'top_0':(list.type === 'checkbox' && flag)}">
     <view class="boxItems">
       <view class="boxItemTitle">
         <view>{{list.title}}</view>
-        <view class="sure"  @click="selectItem()">确定</view>
+        <button :disabled="!captionArray.length" class="sure"  @click="selectItem()">确定</button>
       </view>
       <scroll-view scroll-y=true class="ulBox">
         <!--<ul class="boxItemBox">-->
@@ -24,8 +24,11 @@
 <script>
   export default {
     name: 'checkboxFloat',
-    data: {
-      captionArray: []
+    data () {
+      return {
+        captionArray: [],
+        flag: false
+      }
     },
     methods: {
       selectItem () {
@@ -37,26 +40,17 @@
       },
       selectOption (e) {
         this.captionArray = [...e.mp.detail.value]
-      },
-      deleteItem (array, item) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] === item) {
-            array.splice(i, 1)
-          }
-        }
-      },
-      isIn (array, item) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] === item) {
-            return true
-          }
-        }
-        return false
       }
     },
     props: [
       'list'
-    ]
+    ],
+    created () {
+      const that = this
+      setTimeout(function () {
+        that.flag = true
+      }, 50)
+    }
   }
 </script>
 
@@ -101,8 +95,13 @@
   }
   .sure{
     float: right;
-    margin-top: -80rpx;
+    margin-top: -72rpx;
     margin-right: 20rpx;
+    background:#fff;
+    padding:0;
+    line-height:64rpx;
+    font-size:28rpx;
+    width:120rpx;
   }
   .selectRadio{
     height:80rpx;

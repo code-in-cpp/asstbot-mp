@@ -8,6 +8,7 @@ import image from './modules/image'
 import survey from './modules/survey'
 import currentSurvey from './modules/currentSurvey'
 import surveyResult from './modules/surveyResult'
+import id from './modules/id'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export default new Vuex.Store({
     image,
     survey,
     currentSurvey,
-    surveyResult
+    surveyResult,
+    id
   },
   strict: debug
 })

@@ -47,6 +47,10 @@ export default {
 
   computed: {
     answers () {
+      let survey = this.$store.state.currentSurvey.survey
+      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+        return []
+      }
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
     }
   },
