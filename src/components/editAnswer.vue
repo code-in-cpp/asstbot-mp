@@ -9,7 +9,7 @@
         <block v-else-if="type=='checkbox'">
           <view class="checkbox-icon-box__wrapper">
             <view class="checkbox-icon-box">
-              <icon class="" type="success_no_circle" size="15" v-if="answer.correct"></icon>
+              <i class="icon iconfont icon-right" v-if="answer.correct"></i>
             </view>
           </view>
         </block>
@@ -21,7 +21,7 @@
       </view>
       <view class="weui-cell__ft">
         <view @click="removeAnswer({subject:subjectIndex, answer:index})">
-          <i-icon type="trash" size="25"/>
+          <i class="icon iconfont icon-trash"></i>
         </view>
       </view>
     </label>
@@ -90,15 +90,19 @@ export default {
 
 .checkbox-icon-box {
   border: solid 1px #666;
-  height: 15px;
-  width: 15px;
+  height: 36rpx;
+  width: 36rpx;
   margin-right:9.2rpx;
   margin-left: 9.2rpx;
+  overflow: hidden;
 }
 .checkbox-icon-box__wrapper {
   padding-right:0.35em;
 }
-.checkbox-icon-box icon {
-  display: block;
+.checkbox-icon-box .icon-right {
+  background-color: #1AAD19;
+  color: white;
+  font-size: 32rpx;
+  vertical-align: middle;
 }
 </style>

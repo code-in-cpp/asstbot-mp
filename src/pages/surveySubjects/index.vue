@@ -23,7 +23,7 @@
                 </view>
                 <view class="weui-cell__ft">
                   <view @click="removeSubject(i)">
-                    <i-icon type="trash" size="25"/>
+                    <i class="icon iconfont icon-trash"></i>
                   </view>
                 </view>
               </view>
@@ -66,7 +66,7 @@
                 </view>
                 <view class="weui-cell__ft">
                   <view @click="removeConclusion(i)">
-                    <i-icon type="trash" size="25"/>
+                    <i class="icon iconfont icon-trash"></i>
                   </view>
                 </view>
               </view>

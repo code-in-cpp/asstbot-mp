@@ -2,9 +2,8 @@
 <view class="page">
     <view class="header">
         <view class="header-item">
-        <bod-avatar :url="survey.avatarUrl" size="80"/>
+          <bod-avatar :url="survey.avatarUrl" size="80"/>
         </view>
-        <view class="header-item">{{survey.title}}</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids">
@@ -62,7 +61,10 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => state.surveyResult.survey
+      survey: state => {
+        wx.setNavigationBarTitle({title: state.surveyResult.survey.title})
+        return state.surveyResult.survey
+      }
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
@@ -121,6 +123,7 @@ export default {
       this.title = '测测你有多了解我？'
       console.log('error: page receive no survey id!')
     }
+
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
   },
@@ -131,10 +134,10 @@ export default {
 
 <style>
 .user-avator-icon{
-  margin-right: 5px;
+  margin-right: 10rpx;
   vertical-align: middle;
-  width:20px;
-  height: 20px;
+  width:40rpx;
+  height: 40rpx;
   border-radius: 50%;
 }
 
@@ -154,7 +157,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-bottom: 10px;
+  padding-bottom: 20rpx;
 }
 
 .header-item {
@@ -182,12 +185,12 @@ export default {
 }
 
 .weui-grid{
-  height: 80px;
-  padding-top  :10px;
+  height: 160rpx;
+  padding-top  :20rpx;
 }
 
 .weui-grid__title{
-  font-size: 24px;
+  font-size: 48rpx;
   font-weight: bold;
   text-align: center;
   color: #666666;
@@ -195,11 +198,13 @@ export default {
 
 .button-sp-area{
     margin: 0 auto;
-    padding-top: 15px;
+    padding-top: 30rpx;
     width: 60%;
 }
 .mini-btn{
-    margin-right: 20px;
+    margin-right: 40rpx;
 }
-
+.header-item{
+  margin-top: 40rpx;
+}
 </style>
