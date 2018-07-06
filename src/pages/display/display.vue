@@ -21,7 +21,7 @@
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
-    <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
+    <scroll-view scroll-y="true" class="responsor-list weui-cells content">
         <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <view class="weui-cell__hd">
                 <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
@@ -40,9 +40,9 @@
     </scroll-view>
 
     <view class="button-sp-area">
-        <button class="weui-btn botton_spacing" open-type="share" type="primary" size="default"> 发布</button>
-        <button class="weui-btn botton_spacing" type="default" @click="editSurvey" size="default"> 编辑</button>
-        <button class="weui-btn botton_spacing" type="warn" @click="deleteSurvey" size="default">删除</button>
+        <button class="weui-btn btn" type="warn" @click="deleteSurvey" size="mini"> <zan-icon type="close" /> 删除</button>
+        <button class="weui-btn btn greybtn" type="default" @click="editSurvey" size="mini"> <zan-icon type="edit" /> 编辑</button>
+        <button class="weui-btn btn" open-type="share" type="primary" size="mini"> <i-icon type="share_fill" /> 发布</button>
     </view>
 </view>
 </template>
@@ -178,14 +178,25 @@ export default {
   text-align: center;
   color: #999999;
 }
-.button-sp-area{
-    padding-top: 40rpx;
+
+.weui-cells__title{
 }
 
-.botton_spacing
-{
-    margin-right: 80rpx;
-    margin-left: 80rpx;
+
+.button-sp-area{
+    padding-left: 40rpx;
+    padding-bottom: 40rpx;
+}
+
+
+.btn {
+  width: 30%;
+  margin-right: 20rpx;
+  /*background-color: #FFCC00;*/
+  /*color: #FFF;*/
+}
+.greybtn{
+  background-color: #e9e9e9;
 }
 
 
