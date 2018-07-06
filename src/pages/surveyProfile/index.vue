@@ -120,6 +120,10 @@ export default {
   },
 
   created () {
+  },
+  onShow () {
+    this.title = ''
+    this.welcomeText = ''
   }
 }
 </script>

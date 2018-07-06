@@ -6,10 +6,12 @@
       <!--</view>-->
       <view class="weui-flex__item height-line-height command-box">
         <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"/>
+        <textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="placeholder">
-        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="currentMessage=='' || focusFlag">发送</button>
+        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="currentMessage=='' || focusFlag">
+          <i class="icon iconfont icon-arrows"></i>
+        </button>
       </view>
     </view>
   </form>
@@ -37,6 +39,8 @@ export default {
       this.$store.dispatch('updateUserInfo')
     },
     valueChange (ev) {
+      console.log(ev.mp.detail.value.indexOf('\n'))
+      // if (ev.mp.detail.cursor)
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
@@ -51,6 +55,9 @@ export default {
         this.currentMessage = ''
         this.focusFlag = false
       }
+    },
+    keyEvnet (e) {
+      console.log(e)
     }
   }
 }
