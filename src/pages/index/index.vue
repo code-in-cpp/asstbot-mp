@@ -1,11 +1,12 @@
 <template>
   <div class="page">
+    <page-title :title="survey.title"/>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
         <header-area :surveyData="survey"/>
         <block v-for="(messages, i) in messagesList" :key="i">
           <view :id="i">
-          <msg-list :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
+          <msg-list :survey="survey" :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
               :messages="messages"/>
           </view>
           <view :id="'bottom'+i"></view>
@@ -26,6 +27,7 @@
 import { mapState, mapGetters } from 'vuex'
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
+import pageTitle from '@/components/pageTitle'
 // import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
 // import uploadAvatar from '@/components/uploadAvatar'
@@ -52,6 +54,7 @@ export default {
     commandArea,
     // boxFloat,
     floatIndex,
+    pageTitle,
     msgList
     // uploadAvatar,
   },
@@ -94,15 +97,13 @@ export default {
     //     url: '../display/main'
     //   })
     // }
-    console.log(option)
-    if (option.id) {
-      this.$store.dispatch('setId', option.id)
-      this.$store.dispatch('retrieveSurveyById', option.id)
+    const surveyId = option.id ? option.id : option.scene
+
+    if (surveyId) {
+      this.$store.dispatch('setId', surveyId)
+      this.$store.dispatch('retrieveSurveyById', surveyId)
         .then((survey) => {
           this.survey = survey
-          wx.setNavigationBarTitle({
-            title: survey.title
-          })
         })
         .catch((err) => {
           console.log(err)
@@ -110,7 +111,7 @@ export default {
       this.$store.dispatch('updateUserInfo').then((res) => {
         console.log(this.userAuthed)
         if (this.userAuthed) {
-          this.$store.dispatch('start', option.id)
+          this.$store.dispatch('start', surveyId)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }

@@ -24,12 +24,13 @@
     padding-bottom: 10px;
   }
   .outgoing {
-    padding: 10px;
-    border: solid #2b85e4 1px;
-    border-radius: 15px 15px 0 15px;
-    background-color: #519cf7;
-    font-size: 28rpx;
-    margin-right: 5px;
+    padding:20rpx;
+    border:solid #81d4f4 1rpx;
+    border-radius:30rpx 30rpx 0 30rpx;
+    background-color:#b3e5fc;
+    font-size:28rpx;
+    margin-right:10rpx;
+    text-align:left;
   }
   .right-block{
     display: flex;

@@ -37,6 +37,13 @@
 					"pathName": "pages/index/main",
 					"query": "id=survey-61ff3bf0-80d0-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "xj",
+					"pathName": "pages/index/main",
+					"query": "id=survey-f519fb00-7f72-11e8-b56b-594b8a930fa4",
+					"scene": "1008"
 				}
 			]
 		}

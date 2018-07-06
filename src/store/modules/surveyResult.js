@@ -63,6 +63,9 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
+      if (state.curSurvey.subjects.length <= index) {
+        break
+      }
       let item = { id: index + 1, correct: true, value: '', question: state.curSurvey.subjects[index].question }
       let answer = answers[index].result
       let spilterCh = ''
@@ -186,6 +189,7 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
+            console.log('query survey by:' + surveyId)
             console.log(response.data.result)
             commit('updateSurveyInResult', response.data.result)
             resolve(response.data.result)
