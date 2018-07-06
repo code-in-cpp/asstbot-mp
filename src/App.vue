@@ -78,7 +78,7 @@ page{
 }
 
 .weui-btn .iconfont {
-  margin-right: 10px;
+  margin-right: 20rpx;
 
 .button_icon{
   margin-right: 20rpx;
