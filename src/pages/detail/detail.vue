@@ -11,7 +11,6 @@
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
     </view>
-    <view class="weui-cells__title">答题结果:</view>
     <view class="content">
       <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
