@@ -114,9 +114,9 @@ export default {
       console.log(res.target)
     }
     return {
-      title: this.curSurvey.title,
+      title: this.survey.title,
       path: '/pages/index/main?id=' + this.surveyId,
-      imageUrl: this.curSurvey.avatarUrl
+      imageUrl: this.survey.avatarUrl
     }
   },
   onLoad (option) {
