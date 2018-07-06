@@ -19,8 +19,8 @@
               </view>
               <view class="weui-cell__ft">
                 <user-say-text :content="item.value"></user-say-text>
-                <i-icon v-if="item.correct" type="right" class="icon-right" color="green" size="24" />
-                <i-icon v-else type="close" class="icon-error" color="red" size="20" />
+                <i class="icon iconfont icon-right" v-if="item.correct"></i>
+                <i class="icon iconfont icon-close" v-else></i>
               </view>
           </view>
       </scroll-view>
@@ -32,6 +32,7 @@
 import { mapState } from 'vuex'
 import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
+import { formatTime } from '@/utils/index'
 export default {
   data: {
     id: '01',
@@ -50,7 +51,7 @@ export default {
       return this.$store.getters.getConclusion(this.id)
     },
     getCreateTime () {
-      return this.$store.getters.getCreateTime(this.id)
+      return formatTime(new Date(this.$store.getters.getCreateTime(this.id)))
     }
   },
 
@@ -144,7 +145,15 @@ export default {
   width: 100%;
 }
 
+ .icon-right {
+   font-size: 60rpx;
+   color: green;
+ }
 
+ .icon-close {
+   font-size: 50rpx;
+   color: red;
+ }
 
 /* .detail-cell:before {
   content: " ";
