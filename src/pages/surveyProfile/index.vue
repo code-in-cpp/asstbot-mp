@@ -8,7 +8,7 @@
               <bod-avatar :url="avatarUrl" size="100"/>
             </view>
             <view class="avatar-badge"  @click="chooseImage">
-              <i-icon type="editor" size="20"/>
+              <i class="icon iconfont icon-editor" style="font-size: 28rpx"></i>
             </view>
             <button class="weui-btn" type="default" size="mini"
               open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
@@ -140,7 +140,8 @@ export default {
 .avatar-badge {
   position: absolute;
   top: 5rpx;
-  right: 238rpx;
+  right: 270rpx;
+  
 }
 
 </style>
