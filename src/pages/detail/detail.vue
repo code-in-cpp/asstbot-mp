@@ -45,7 +45,7 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => state.surveyResult.survey
+      survey: state => state.surveyResult.curSurvey
     }),
     surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.resultId)
