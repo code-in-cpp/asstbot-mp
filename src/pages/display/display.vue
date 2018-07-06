@@ -43,16 +43,16 @@
     <view class="footer bottom_button">
       <view class="weui-flex">
         <view class="weui-flex__item">
-          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
+          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
         </view>
         <view class="weui-flex__item">
           <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
         </view>
       </view>
-    </view>    
+    </view>
 </view>
 </template>
 
@@ -210,7 +210,7 @@ export default {
   /*color: #FFF;*/
 }
 .greybtn{
-  background-color: #e9e9e9;
+  background-color: #ffffff;
 }
 
 .iconfont {
