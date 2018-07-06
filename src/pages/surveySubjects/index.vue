@@ -12,100 +12,102 @@
       </view>
     </view>
     <view class="content">
-      <scroll-view scroll-y='true' style="height: 100%">
-        <view class="weui-cells__title">题目</view>
-        <view class="weui-cells weui-cells_after-title">
-          <block v-for="(subject, i) in subjects" :key="subject">
-            <view class="weui-cells__title">
-              <view class="weui-cell" >
-                <view class="weui-cell__bd">
-                  <view class="weui-label">题目 {{i+1}}</view>
+      <view class="weui-tab">
+        <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
+        <view class="weui-tab__panel">
+          <scroll-view scroll-y='true' style="height: 100%">
+            <view v-if="activeIndex == 0">
+              <block v-for="(subject, i) in subjects" :key="subject">
+                <view class="subject-divider"></view>
+                <view class="weui-cells weui-cells_after-title">
+                  <view class="weui-cell weui-cell_input subject-area" >
+                    <view class="weui-cell__hd">
+                      <view class="weui-label">题目 {{i+1}}</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                      <input class="weui-input" type="text" placeholder="请输入问题" :value="subject.question"
+                        @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
+                    </view>
+                    <view class="weui-cell__ft">
+                      <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
+                        <view class="weui-select">{{typeNames[i]}}</view>
+                      </picker>
+                    </view>
+                    <view class="weui-cell__ft">
+                      <view @click="removeSubject(i)">
+                        <i class="icon iconfont icon-trash"></i>
+                      </view>
+                    </view>
+                  </view>
+                  
                 </view>
-                <view class="weui-cell__ft">
-                  <view @click="removeSubject(i)">
-                    <i class="icon iconfont icon-trash"></i>
+                <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
+              </block>
+              <view class="subject-divider"></view>
+              <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell" @click="addSubject">
+                  <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+                  <view class="weui-cell__bd">添加题目</view>
+                </view>
+              </view>
+            </view>
+
+            <view v-if="activeIndex == 1">
+              <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
+                <view class="subject-divider"></view>
+                <view class="weui-cells__title">            
+                  <view class="weui-cell" >
+                    <view class="weui-cell__bd">
+                      <view class="weui-label">评语分类 {{i+1}}</view>
+                    </view>
+                    <view class="weui-cell__ft">
+                      <view @click="removeConclusion(i)">
+                        <i class="icon iconfont icon-trash"></i>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view class="weui-cells weui-cells_after-title">
+                  <view class="weui-cell weui-cell_input" >
+                    <view class="weui-cell__hd">
+                      <view class="weui-label">最少答对题数</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                      <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
+                        @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
+                    </view>
+                  </view>
+                  <view class="weui-cell weui-cell_input" >
+                    <view class="weui-cell__hd">
+                      <view class="weui-label">最多答对题数</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                      <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
+                        @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
+                    </view>
+                  </view>
+                  <view class="weui-cell weui-cell_input" >
+                    <view class="weui-cell__hd">
+                      <view class="weui-label">评语内容</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                      <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
+                        @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+                    </view>
                   </view>
                 </view>
               </view>
-            </view>
-            <view class="weui-cells weui-cells_after-title">
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">题目</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="text" placeholder="请输入问题" :value="subject.question"
-                    @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
+              <view class="subject-divider"></view>
+              <view class="weui-cells weui-cells_after-title" >
+                <view class="weui-cell" @click="addConclusion">
+                  <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+                  <view class="weui-cell__bd">添加评语分类</view>
                 </view>
               </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">类型</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
-                    <view class="weui-select">{{typeNames[i]}}</view>
-                  </picker>
-                </view>
-              </view>
-              <view class="weui-cells__title">答案列表</view>
-              <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
-            </view>
-          </block>
-          <view class="weui-cell weui-cell_link" @click="addSubject">
-            <view class="weui-cell__bd">添加题目</view>
-          </view>
+            </view>        
+          </scroll-view>
         </view>
-        <view class="weui-cells__title">评语</view>
-        <view class="weui-cells weui-cells_after-title">
-          <block v-for="(conclusion, i) in conclusions" :key="conclusion">
-            <view class="weui-cells__title">
-              <view class="weui-cell" >
-                <view class="weui-cell__bd">
-                  <view class="weui-label">评语分类 {{i+1}}</view>
-                </view>
-                <view class="weui-cell__ft">
-                  <view @click="removeConclusion(i)">
-                    <i class="icon iconfont icon-trash"></i>
-                  </view>
-                </view>
-              </view>
-            </view>
-            <view class="weui-cells weui-cells_after-title">
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最少答对题数</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
-                    @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">最多答对题数</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
-                    @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
-                </view>
-              </view>
-              <view class="weui-cell weui-cell_input" >
-                <view class="weui-cell__hd">
-                  <view class="weui-label">评语内容</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
-                     @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-                </view>
-              </view>
-            </view>
-          </block>
-          <view class="weui-cell weui-cell_link" @click="addConclusion">
-            <view class="weui-cell__bd">添加评语分类</view>
-          </view>
-        </view>
-      </scroll-view>
+      </view>
     </view>
     <view class="footer">
       <view class="page__bd page__bd_spacing">
@@ -120,6 +122,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import editAnswer from '@/components/editAnswer'
+import navBar from '@/components/navBar'
 
 const subjectType = ['radio', 'checkbox', 'text']
 const subjectTypeName = ['单选', '多选', '问答']
@@ -128,7 +131,9 @@ export default {
   data () {
     return {
       subjectTypeName: subjectTypeName,
-      subjectType: subjectType
+      subjectType: subjectType,
+      items: ['题目', '评语'],
+      activeIndex: 0
     }
   },
 
@@ -151,7 +156,8 @@ export default {
   },
 
   components: {
-    editAnswer
+    editAnswer,
+    navBar
   },
 
   methods: {
@@ -179,6 +185,9 @@ export default {
             url: `/pages/home/main`
           })
         })
+    },
+    tabActive (event) {
+      this.activeIndex = event
     }
   },
 
@@ -222,5 +231,12 @@ export default {
 }
 .mini-btn{
     margin-right: 40rpx;
+}
+.weui-select {
+  border-right: 0 !important;
+}
+
+.subject-divider {
+  margin-top: 10px;
 }
 </style>
