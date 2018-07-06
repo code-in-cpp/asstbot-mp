@@ -6,12 +6,12 @@
     <!-- <view class="header-item">
       <text class="title">{{bodName}}</text>
     </view> -->
-    <view class="header-item discription">
-      <!--<view class="talking"></view>-->
-      <view class="">
-        {{surveyData.title}}
-      </view>
-    </view>
+    <!--<view class="header-item discription">-->
+      <!--&lt;!&ndash;<view class="talking"></view>&ndash;&gt;-->
+      <!--<view class="">-->
+        <!--{{surveyData.title}}-->
+      <!--</view>-->
+    <!--</view>-->
   </view>
 </template>
 

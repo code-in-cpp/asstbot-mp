@@ -24,7 +24,7 @@ export default {
   padding: 10px;
   border: solid #2b85e4 1px;
   border-radius: 15px 15px 0 15px;
-  background-color: #91c4f7;
+  background-color: #519cf7;
   font-size: 28rpx;
   margin-right: 5px;
 }

@@ -98,6 +98,9 @@ export default {
       this.$store.dispatch('retrieveSurveyById', option.id)
         .then((survey) => {
           this.survey = survey
+          wx.setNavigationBarTitle({
+            title: survey.title
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -125,7 +128,7 @@ export default {
     /*transition: height .5s linear .5s;*/
   }
   .height_40{
-    height:540rpx;
+    height: 620rpx;
   }
   .footer{
     /*position: fixed;*/
