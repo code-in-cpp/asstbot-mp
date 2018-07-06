@@ -36,7 +36,8 @@ import floatIndex from '@/components/floatIndex'
 export default {
   data () {
     return {
-      survey: {}
+      survey: {},
+      isIphoneX: false
     }
   },
   computed: {
@@ -64,6 +65,21 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
+    getDeviceType () {
+      wx.getSystemInfo({
+        success: (res) => {
+          if (res.model.search('iPhone X') !== -1) {
+            this.isIphoneX = true
+            console.log('getDeviceType, iphone X')
+          } else {
+            this.isIphoneX = false
+            console.log('getDeviceType, not iphone X')
+          }
+          this.$store.dispatch('update_device_info', this.isIphoneX)
+        }
+      })
+    },
+
     getUserInfo () {
       // 调用登录接口
       wx.login({
@@ -85,6 +101,7 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
+    this.getDeviceType()
   },
 
   onShow () {

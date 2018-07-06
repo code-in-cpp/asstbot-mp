@@ -1,6 +1,6 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <view class="weui-flex container-box">
+    <view class="weui-flex container-box" :class="[is_iphonex ? 'iphonex_padding' : '']">
       <!--<view class="placeholder">-->
         <!--<button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>-->
       <!--</view>-->
@@ -30,7 +30,8 @@ export default {
 
   computed: {
     ...mapState({
-      userAuthed: state => state.userProfile.authed
+      userAuthed: state => state.userProfile.authed,
+      is_iphonex: state => state.iphonex.is_iphonex
     }),
     activeAction: state => state.$store.getters.activeAction
   },
@@ -106,5 +107,8 @@ export default {
     box-sizing: border-box;
     width:100%;
     height:100%;
+  }
+  .iphonex_padding{
+    margin-bottom: 68rpx;
   }
 </style>
