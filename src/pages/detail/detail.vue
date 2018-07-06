@@ -1,5 +1,6 @@
 <template>
-<view class="page">
+  <view class="page">
+    <page-title :title="survey.title"/>
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
             <image :src="avatarUrl" class="middle-avatar"/>
@@ -42,7 +43,8 @@ export default {
   },
   computed: {
     ...mapState({
-      bodAvatar: state => state.bodProfile.avatar
+      bodAvatar: state => state.bodProfile.avatar,
+      survey: state => state.surveyResult.survey
     }),
     surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.id)

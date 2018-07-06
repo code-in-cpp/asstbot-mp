@@ -1,5 +1,6 @@
 <template>
 <view class="page">
+    <page-title :title="survey.title"/>
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
@@ -69,10 +70,7 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => {
-        wx.setNavigationBarTitle({title: state.surveyResult.survey.title})
-        return state.surveyResult.survey
-      }
+      survey: state => state.surveyResult.survey
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
