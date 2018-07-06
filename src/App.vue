@@ -76,4 +76,8 @@ page{
   border: 2rpx;
 }
 
+.weui-btn .iconfont {
+  margin-right: 10px;
+}
+
 </style>

@@ -21,7 +21,7 @@
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
-    <view class="content">
+      <view class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
           <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__hd">
@@ -40,20 +40,19 @@
           </view>
       </scroll-view>
     </view>
-
     <view class="footer bottom_button">
       <view class="weui-flex">
-        <view class="weui-flex__item">
-          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
-        </view>
         <view class="weui-flex__item">
           <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
-      </view>        
-    </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
+        </view>
+      </view>
+    </view>    
 </view>
 </template>
 
@@ -195,6 +194,23 @@ export default {
 .bottom_button .weui-btn {
   width: 210rpx;
   line-height: 2
+}
+
+
+.button-sp-area{
+    padding-left: 40rpx;
+    padding-bottom: 40rpx;
+}
+
+
+.btn {
+  width: 30%;
+  margin-right: 20rpx;
+  /*background-color: #FFCC00;*/
+  /*color: #FFF;*/
+}
+.greybtn{
+  background-color: #e9e9e9;
 }
 
 .iconfont {
