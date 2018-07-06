@@ -93,9 +93,11 @@ export default {
     //     url: '../display/main'
     //   })
     // }
-    if (option.id) {
-      this.$store.dispatch('setId', option.id)
-      this.$store.dispatch('retrieveSurveyById', option.id)
+    const surveyId = option.id ? option.id : option.scene
+
+    if (surveyId) {
+      this.$store.dispatch('setId', surveyId)
+      this.$store.dispatch('retrieveSurveyById', surveyId)
         .then((survey) => {
           this.survey = survey
           wx.setNavigationBarTitle({
@@ -107,7 +109,7 @@ export default {
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
         if (this.userAuthed) {
-          this.$store.dispatch('start', option.id)
+          this.$store.dispatch('start', surveyId)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }
