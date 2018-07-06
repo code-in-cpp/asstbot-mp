@@ -73,11 +73,15 @@ page{
   padding-top  : 20rpx;
   padding-left : 40rpx;
   padding-right: 40rpx;
+  padding-bottom: 40rpx;
   border: 2rpx;
 }
 
 .weui-btn .iconfont {
   margin-right: 10px;
+
+.button_icon{
+  margin-right: 20rpx;
 }
 
 </style>
