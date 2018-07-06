@@ -93,6 +93,10 @@ var _impleSendmessage = (commit, id, type, data) => {
     commit('appendMessage', responseMessage)
     return
   }
+  if (type === 'allow') {
+    commit('appendMessage', message)
+    return
+  }
   commit('appendMessage', message)
   return new Promise((resolve, reject) => {
     wx.request({
@@ -147,6 +151,9 @@ const actions = {
   },
   getUserinfo ({commit}, data) {
     return _sendmessage(commit, 'getUserinfo', data)
+  },
+  allowPermise ({commit}, data) {
+    return _sendmessage(commit, 'allow', data)
   }
 }
 

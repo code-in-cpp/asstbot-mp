@@ -1,11 +1,11 @@
 <template>
   <block>
     <view class="weui-cells weui-cells_after-title">
-      <label class="weui-cell weui-check__label">
-        <view class="weui-cell__ft"  @click="addAnswer(subjectIndex)">
+      <label class="weui-cell weui-check__label" @click="addAnswer(subjectIndex)">
+        <view class="weui-cell__ft"  >
           <i class="icon iconfont icon-add"></i>
         </view>
-        <view class="weui-cell__ft"  @click="addAnswer(subjectIndex)">
+        <view class="weui-cell__ft">
           添加答案
         </view>
       </label>
@@ -92,7 +92,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+view {
+  font-size: 28rpx;
+}
+
+.weui-cells:before {
+  border-top: 0rpx;
+}
+
 .weui-check__label {
   padding: 5px 30px;
 }

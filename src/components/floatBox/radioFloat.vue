@@ -54,12 +54,12 @@
 <style scoped>
   .boxFloat{
     height:100vh;
-    background:rgba(0,0,0,.5);
     position:fixed;
     z-index: 10;
     top:100vh;
     width:100%;
     transition:top .5s;
+    background: transparent;
     /*display: none;*/
   }
   .top_0{
@@ -67,18 +67,19 @@
     /*display: block;*/
   }
   .boxItems{
+    position: absolute;
+    bottom:0;
     background: #fff;
     height: 700rpx;
-    margin-top: 50vh;
-    padding-top: 40px;
-    box-sizing: border-box;
-    font-size: 16px;
+    font-size: 32rpx;
+    overflow: hidden;
+    width:100%;
   }
   .boxItemTitle{
-    border-bottom: 1px solid #dadada;
-    padding-left: 15px;
-    line-height: 40px;
-    margin-top: -40px;
+    border-bottom: 1rpx solid #dadada;
+    padding-left: 30rpx;
+    line-height: 80rpx;
+    /*margin-top: -40px;*/
   }
   .ulBox{
     height:100%;

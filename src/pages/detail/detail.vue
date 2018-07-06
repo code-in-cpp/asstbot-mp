@@ -2,8 +2,8 @@
 <view class="page">
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
-            <image :src="avatarUrl" class="middle-avatar"/>
-            <view class="responser-name" >{{name}}</view>
+            <image :src="responderAvator" class="middle-avatar"/>
+            <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
             <view class="weui-media-box__title">答对 {{score}} 题</view>
@@ -11,7 +11,6 @@
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
     </view>
-    <view class="weui-cells__title">答题结果:</view>
     <view class="content">
       <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
@@ -20,8 +19,8 @@
               </view>
               <view class="weui-cell__ft">
                 <user-say-text :content="item.value"></user-say-text>
-                <i-icon v-if="item.correct" type="right" class="icon-right" color="green" size="24" />
-                <i-icon v-else type="close" class="icon-error" color="red" size="20" />
+                <i class="icon iconfont icon-right" v-if="item.correct"></i>
+                <i class="icon iconfont icon-close" v-else></i>
               </view>
           </view>
       </scroll-view>
@@ -33,9 +32,11 @@
 import { mapState } from 'vuex'
 import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
+import { formatTime } from '@/utils/index'
 export default {
   data: {
-    id: '01',
+    resultId: '01',
+    surveyId: '',
     name: '王博',
     score: '',
     avatarUrl: ''
@@ -45,23 +46,28 @@ export default {
       bodAvatar: state => state.bodProfile.avatar
     }),
     surveyAnswers () {
-      return this.$store.getters.getSurveyAnswer(this.id)
+      return this.$store.getters.getSurveyAnswer(this.resultId)
     },
     surveyConclusion () {
-      return this.$store.getters.getConclusion(this.id)
+      return this.$store.getters.getConclusion(this.resultId)
+    },
+    responderName () {
+      return this.$store.getters.getResponderName(this.resultId)
+    },
+    responderAvator () {
+      return this.$store.getters.getResponderAvator(this.resultId)
     },
     getCreateTime () {
-      return this.$store.getters.getCreateTime(this.id)
+      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId)))
     }
   },
 
   onLoad (option) {
-    console.log(option.id)
-    this.id = option.id
-    this.name = option.name
+    console.log(option.surveyId)
+    this.resultId = option.resultId
     this.score = option.score
-    this.avatarUrl = option.avatarUrl
-    this.$store.dispatch('querySurveyById', this.id)
+    this.surveyId = option.surveyId
+    this.$store.dispatch('querySurveyById', this.surveyId)
   },
 
   components: {
@@ -146,7 +152,15 @@ export default {
   width: 100%;
 }
 
+ .icon-right {
+   font-size: 60rpx;
+   color: green;
+ }
 
+ .icon-close {
+   font-size: 50rpx;
+   color: red;
+ }
 
 /* .detail-cell:before {
   content: " ";

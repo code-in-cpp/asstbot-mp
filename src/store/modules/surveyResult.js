@@ -7,7 +7,7 @@ const state = {
   result: [],
   subjects: [],
   replySurveys: [],
-  survey: {}
+  curSurvey: {}
 }
 
 const getters = {
@@ -53,7 +53,7 @@ const getters = {
   getSurveyAnswer: state => (id) => {
     let answers = []
     console.log('getSurveyAnswer ')
-    console.log(state.result)
+    console.log(state.curSurvey)
     for (let index in state.result) {
       let item = state.result[index]
       if (item.id === id) {
@@ -63,7 +63,7 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let item = { id: index + 1, correct: true, value: '', question: state.survey.subjects[index].question }
+      let item = { id: index + 1, correct: true, value: '', question: state.curSurvey.subjects[index].question }
       let answer = answers[index].result
       let spilterCh = ''
       for (let j in answer) {
@@ -76,6 +76,28 @@ const getters = {
     }
     console.log(ret)
     return ret
+  },
+
+  getResponderName: state => (id) => {
+    let responder = {}
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        responder = item.responder
+      }
+    }
+    return (!responder.nickName || responder.nickName === '') ? '匿名' : responder.nickName
+  },
+
+  getResponderAvator: state => (id) => {
+    let responder = {}
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        responder = item.responder
+      }
+    }
+    return (!responder.avatarUrl || responder.avatarUrl === '') ? '/static/image/nobody3.png' : responder.avatarUrl
   },
 
   getCreateTime: state => (id) => {
@@ -97,7 +119,7 @@ const getters = {
         break
       }
     }
-    let conclusions = state.survey.conclusions
+    let conclusions = state.curSurvey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
       let conclusion = conclusions[index]
@@ -122,7 +144,7 @@ const mutations = {
     state.subjects = result
   },
   updateSurveyInResult (state, survey) {
-    state.survey = survey
+    state.curSurvey = survey
   },
   resetReplySurveys (state) {
     state.replySurveys = []
@@ -164,6 +186,7 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
+            console.log(response.data.result)
             commit('updateSurveyInResult', response.data.result)
             resolve(response.data.result)
           } else {
@@ -192,10 +215,6 @@ const actions = {
                 let surveyId = item.surveyId
                 dispatch('querySurveyById', surveyId)
                   .then(survey => {
-                    let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
-                    let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/nobody3.png' : item.responder.avatarUrl
-                    survey.userNickName = nickName
-                    survey.userAvatarUrl = userAvatarUrl
                     survey.resultId = item.id
                     survey.score = item.score
                     commit('addReplySurveys', survey)

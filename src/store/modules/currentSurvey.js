@@ -11,10 +11,10 @@ function verifyRanges (max, ranges) {
   if (max <= 0) return false
   let arr = getInitArray(max, false)
   for (let range of ranges) {
-    if (range[0] >= range[1]) return false
+    if (range[0] > range[1]) return false
     if (range[0] < 0 || range[0] >= max) return false
-    if (range[1] < 1 || range[1] > max) return false
-    for (let i = range[0]; i < range[1]; i++) {
+    if (range[1] < 0 || range[1] >= max) return false
+    for (let i = range[0]; i <= range[1]; i++) {
       if (arr[i]) return false
       arr[i] = true
     }
@@ -26,7 +26,7 @@ function getFreeRange (maxCount, occupiedRanges) {
   if (!verifyRanges(maxCount, occupiedRanges)) return { min: 0, max: 0 }
   let arr = getInitArray(maxCount, false)
   for (let range of occupiedRanges) {
-    for (let i = range[0]; i < range[1]; i++) {
+    for (let i = range[0]; i <= range[1]; i++) {
       arr[i] = true
     }
   }
@@ -39,7 +39,7 @@ function getFreeRange (maxCount, occupiedRanges) {
         }
         j++
       }
-      return { min: i, max: j }
+      return { min: i, max: j - 1 }
     }
   }
 

@@ -21,28 +21,37 @@
         </view>
     </view>
     <view class="weui-cells__title">答卷列表:</view>
-    <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-        <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-            </view>
-            <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">答对 {{item.score}} 题</view>
-        </navigator>
+      <view class="content">
+      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
+          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__hd">
+                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+              </view>
+              <view class="weui-cell__bd">{{item.name}}</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access">答对 {{item.score}} 题</view>
+          </navigator>
 
-        <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
-            <view class="weui-cell__hd">
-                <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-            </view>
-            <view class="weui-cell__bd">{{item.name}}</view>
-            <view class="weui-cell__ft">{{item.score}}</view>
+          <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
+              <view class="weui-cell__hd">
+                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+              </view>
+              <view class="weui-cell__bd">{{item.name}}</view>
+              <view class="weui-cell__ft">{{item.score}}</view>
+          </view>
+      </scroll-view>
+    </view>
+    <view class="footer bottom_button">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
-    </scroll-view>
-
-    <view class="button-sp-area">
-        <button class="weui-btn botton_spacing" open-type="share" type="primary" size="default"> 发布</button>
-        <button class="weui-btn botton_spacing" type="default" @click="editSurvey" size="default"> 编辑</button>
-        <button class="weui-btn botton_spacing" type="warn" @click="deleteSurvey" size="default">删除</button>
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
+        </view>
+      </view>
     </view>
 </view>
 </template>
@@ -61,8 +70,8 @@ export default {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
       survey: state => {
-        wx.setNavigationBarTitle({title: state.surveyResult.survey.title})
-        return state.surveyResult.survey
+        wx.setNavigationBarTitle({title: state.surveyResult.curSurvey.title})
+        return state.surveyResult.curSurvey
       }
     }),
     ...mapGetters({
@@ -107,9 +116,9 @@ export default {
       console.log(res.target)
     }
     return {
-      title: this.survey.title,
+      title: this.curSurvey.title,
       path: '/pages/index/main?id=' + this.surveyId,
-      imageUrl: this.survey.avatarUrl
+      imageUrl: this.curSurvey.avatarUrl
     }
   },
   onLoad (option) {
@@ -140,7 +149,6 @@ export default {
 }
 
 .responsor-list{
-  height: 400rpx!important;
   border-width:medium;
   border-color:grey;
   display: flex;
@@ -178,15 +186,35 @@ export default {
   text-align: center;
   color: #999999;
 }
+
+.bottom_button {
+  margin: 40rpx 15rpx
+}
+
+.bottom_button .weui-btn {
+  width: 210rpx;
+  line-height: 2
+}
+
+
 .button-sp-area{
-    padding-top: 40rpx;
+    padding-left: 40rpx;
+    padding-bottom: 40rpx;
 }
 
-.botton_spacing
-{
-    margin-right: 80rpx;
-    margin-left: 80rpx;
+
+.btn {
+  width: 30%;
+  margin-right: 20rpx;
+  /*background-color: #FFCC00;*/
+  /*color: #FFF;*/
+}
+.greybtn{
+  background-color: #ffffff;
 }
 
+.iconfont {
+  display: inline-block
+}
 
 </style>

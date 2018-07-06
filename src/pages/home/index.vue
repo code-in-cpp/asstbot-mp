@@ -26,7 +26,7 @@
               <view v-if="activeIndex == 1"> 
                 <view class="weui-cells weui-cells_after-title">
                 <block v-for="survey in replySurveys" :key="survey.id">
-                  <navigator :url="'/pages/detail/main?id='+survey.resultId+'&name='+survey.userNickName+'&score='+survey.score+'&avatarUrl=' + survey.userAvatarUrl" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
+                  <navigator :url="'/pages/detail/main?resultId='+survey.resultId+'&surveyId='+survey.id+'&score='+survey.score" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
                     <view class="weui-cell__hd">
                       <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
                     </view>
@@ -45,8 +45,7 @@
         </view>
       </view>
     </view>
-
-    <view class="bottom_button">
+    <view class="footer bottom_button">
       <button class="weui-btn" type="primary" size="default" @click="toCreateBot">创建问卷机器人</button>
     </view>
   </view>
@@ -109,8 +108,8 @@ export default {
 }
 .avatar {
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 120rpx;
+  height: 120rpx;
   overflow: hidden;
 }
 </style>
