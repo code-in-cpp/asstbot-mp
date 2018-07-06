@@ -1,7 +1,7 @@
 <template>
   <view>
-    <view class="incoming">{{content}}</view>
-    <view class="createNew"><navigator url="../home/main">赶快来创建自己的机器人吧</navigator></view>
+    <view class="incoming space">感谢您的参与，您可以单击按钮创建自己的问卷机器人</view>
+    <view class="createNew"><navigator url="../home/main">创建问卷</navigator></view>
     <!--<view @click="toNewRobot" class="createNew">赶快来创建自己的机器人吧</view>-->
   </view>
 </template>
@@ -32,6 +32,7 @@
   border-radius:10rpx;
   font-size:28rpx;
   line-height:72rpx;
+  text-align: center;
 }
 .incoming {
   padding: 10px;
@@ -43,5 +44,8 @@
   font-size: 28rpx;
   max-width: 90%;
   background: #fff;
+}
+.space {
+  margin-bottom: 40rpx;
 }
 </style>
