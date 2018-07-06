@@ -8,8 +8,8 @@ export default {
   config: {
     navigationBarTitleText: '编辑机器人',
     'usingComponents': {
-      'i-icon': '../../../static/iview/icon/index',
-      'zan-icon': '../../../static/zanui/icon/index'
+      // 'i-icon': '../../../static/iview/icon/index',
+      // 'zan-icon': '../../../static/zanui/icon/index'
     }
   }
 }

@@ -1,5 +1,6 @@
 <template>
-<view class="page">
+  <view class="page">
+    <page-title :title="survey.title"/>
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
             <image :src="responderAvator" class="middle-avatar"/>
@@ -24,7 +25,7 @@
               </view>
           </view>
       </scroll-view>
-    </view>    
+    </view>
 </view>
 </template>
 
@@ -43,7 +44,8 @@ export default {
   },
   computed: {
     ...mapState({
-      bodAvatar: state => state.bodProfile.avatar
+      bodAvatar: state => state.bodProfile.avatar,
+      survey: state => state.surveyResult.survey
     }),
     surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.resultId)
@@ -101,7 +103,7 @@ export default {
   border-radius: 50%;
 }
 .weui-panel__bd{
-  display : flex ; 
+  display : flex ;
   flex-flow : row;
   padding :15px;
 }
@@ -124,12 +126,12 @@ export default {
 }
 
 .weui-cell__bd {
-  display : flex ; 
+  display : flex ;
   flex-flow: row;
 }
 
 .weui-cell__ft {
-  display : flex ; 
+  display : flex ;
   flex-flow: row;
   color: black;
   padding-top: 5px;

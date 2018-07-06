@@ -10,7 +10,7 @@
           <!--<li class="item" v-for="(option, value) in list.items" :key="item">-->
         <checkbox-group @change="selectOption">
           <view class="selectRadio" v-for="option in list.items" :key="option">
-            <label class="selectlabel"><checkbox :value="option.value">{{option.caption}}</checkbox></label>
+            <label class="selectlabel"><checkbox class="radioItem" :value="option.value"></checkbox><view class="radioValue">{{option.caption}}</view></label>
           </view>
         </checkbox-group>
 
@@ -105,11 +105,20 @@
     width:120rpx;
   }
   .selectRadio{
-    height:80rpx;
+    /*height:80rpx;*/
     line-height: 80rpx;
     padding-left: 30rpx;
   }
   .selectlabel{
     display: block;
+    padding-left: 60rpx;
+  }
+  .radioItem{
+    width:60rpx;
+    margin-left: -60rpx;
+    vertical-align: top;
+  }
+  .radioValue{
+    display: inline-block;
   }
 </style>
