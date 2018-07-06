@@ -67,9 +67,7 @@ page{
 }
 
 .bottom_button{
-  margin-bottom: 80rpx;
-  margin-left: 80rpx;
-  margin-right: 80rpx;
+  margin: 40rpx 80rpx;
 }
 .page__bd_spacing{
   padding-top  : 20rpx;

@@ -21,7 +21,7 @@
         </view>
       </scroll-view>
     </view>
-    <view class="bottom_button">
+    <view class="footer bottom_button">
       <button class="weui-btn" type="primary" size="default" @click="toCreateBot">创建问卷机器人</button>
     </view>
   </view>

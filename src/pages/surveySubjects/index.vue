@@ -109,12 +109,18 @@
         </view>
       </view>
     </view>
-    <view class="footer">
-      <view class="page__bd page__bd_spacing">
-          <button class="weui-btn mini-btn" open-type="share" type="primary" size="default"> 发布 </button>
-          <button class="weui-btn mini-btn" type="default" @click="saveSurvey" size="default">保存 </button>
-          <button class="weui-btn mini-btn" type="warn" @click="clearSurvey" size="default">清空</button>
-      </view>
+    <view class="footer bottom_button">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
+        </view>
+      </view>        
     </view>
   </view>
 </template>
@@ -238,5 +244,18 @@ export default {
 
 .subject-divider {
   margin-top: 10px;
+}
+
+.bottom_button {
+  margin: 40rpx 15rpx
+}
+
+.bottom_button .weui-btn {
+  width: 210rpx;
+  line-height: 2
+}
+
+.iconfont {
+  display: inline-block
 }
 </style>
