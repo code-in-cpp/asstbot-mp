@@ -1,10 +1,12 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 var date = new Date()
+import wechat from './wechat'
 
 const state = {
   result: [],
   subjects: [],
+  replySurveys: [],
   survey: {}
 }
 
@@ -18,7 +20,7 @@ const getters = {
       if (userAvatarUrl.indexOf('localhost') > 0) {
         userAvatarUrl = '/static/image/avatar.png'
       }
-      let summary = { id: item.id, name: nickName, score: '答对' + item.score + '题', avatarUrl: userAvatarUrl }
+      let summary = { id: item.id, name: nickName, score: item.score, avatarUrl: userAvatarUrl }
       ret.push(summary)
     }
 
@@ -50,6 +52,8 @@ const getters = {
 
   getSurveyAnswer: state => (id) => {
     let answers = []
+    console.log('getSurveyAnswer ')
+    console.log(state.result)
     for (let index in state.result) {
       let item = state.result[index]
       if (item.id === id) {
@@ -102,6 +106,11 @@ const getters = {
       }
     }
     return ret
+  },
+  getReplySurveys: state => {
+    console.log('query reply surveys')
+    console.log(state.replySurveys)
+    return state.replySurveys
   }
 }
 
@@ -114,6 +123,12 @@ const mutations = {
   },
   updateSurveyInResult (state, survey) {
     state.survey = survey
+  },
+  resetReplySurveys (state) {
+    state.replySurveys = []
+  },
+  addReplySurveys (state, survey) {
+    state.replySurveys.push(survey)
   }
 }
 
@@ -149,9 +164,8 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
-            console.log(response.data.result.subjects)
             commit('updateSurveyInResult', response.data.result)
-            resolve(response)
+            resolve(response.data.result)
           } else {
             reject(response)
           }
@@ -160,6 +174,40 @@ const actions = {
           reject(err)
         }
       })
+    })
+  },
+  querySurveyResultByUser ({dispatch, commit}) {
+    return new Promise((resolve, reject) => {
+      wechat.getOpenId()
+        .then((userId) => {
+          wx.request({
+            url: surveyResultUrl,
+            data: {
+              userId: userId
+            },
+            success: (response) => {
+              commit('updateResult', response.data.result)
+              commit('resetReplySurveys')
+              response.data.result.map(item => {
+                let surveyId = item.surveyId
+                dispatch('querySurveyById', surveyId)
+                  .then(survey => {
+                    let nickName = (!item.responder.nickName || item.responder.nickName === '') ? '匿名' : item.responder.nickName
+                    let userAvatarUrl = (!item.responder.avatarUrl || item.responder.avatarUrl === '') ? '/static/image/nobody3.png' : item.responder.avatarUrl
+                    survey.userNickName = nickName
+                    survey.userAvatarUrl = userAvatarUrl
+                    survey.resultId = item.id
+                    survey.score = item.score
+                    commit('addReplySurveys', survey)
+                  })
+              })
+              resolve(response)
+            },
+            faile: (err) => {
+              reject(err)
+            }
+          })
+        })
     })
   }
 }

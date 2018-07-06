@@ -6,7 +6,7 @@
             <view class="responser-name" >{{name}}</view>
         </view>
         <view class="weui-media-box__bd">
-            <view class="weui-media-box__title">{{score}}</view>
+            <view class="weui-media-box__title">答对 {{score}} 题</view>
             <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
@@ -61,6 +61,7 @@ export default {
     this.name = option.name
     this.score = option.score
     this.avatarUrl = option.avatarUrl
+    this.$store.dispatch('querySurveyById', this.id)
   },
 
   components: {
