@@ -1,5 +1,7 @@
 <template>
+  
   <view class="page">
+
     <view class="weui-cells">
       <view class="weui-cell">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">

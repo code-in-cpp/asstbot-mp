@@ -55,7 +55,7 @@ const getters = {
 
 const mutations = {
   updateCurrentSurvey (state, survey) {
-    state.survey = survey
+    state.survey = JSON.parse(JSON.stringify(survey))
   },
   updateConclusionMinScore (state, {index, value}) {
     state.survey.conclusions[index].scoreRange.min = value
