@@ -4,12 +4,14 @@ import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
 import '@/../static/font/iconfont.wxss'
 import bodAvatar from '@/components/bodAvatar'
+import pageTitle from '@/components/pageTitle'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.prototype.$store = store
 
 Vue.component('bod-avatar', bodAvatar)
+Vue.component('page-title', pageTitle)
 
 const app = new Vue(App)
 app.$mount()

@@ -78,10 +78,24 @@ page{
 }
 
 .weui-btn .iconfont {
-  margin-right: 20rpx;
+  margin-right: 20 rpx;
+}
 
 .button_icon{
   margin-right: 20rpx;
+}
+
+.incoming {
+  padding: 20rpx;
+  margin-left: 20rpx;
+  border: solid #dddee1 1px;
+  border-radius: 15px 15px 15px 0;
+  /*background-color: #f8f8f9;*/
+  width: auto!important;
+  display: inline-block;
+  font-size: 28rpx;
+  max-width: 90%;
+  background: #fff;
 }
 
 </style>

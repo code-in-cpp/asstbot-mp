@@ -1,11 +1,13 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 var date = new Date()
+import wechat from './wechat'
 
 const state = {
   result: [],
   subjects: [],
-  survey: {}
+  replySurveys: [],
+  curSurvey: {}
 }
 
 const getters = {
@@ -18,7 +20,7 @@ const getters = {
       if (userAvatarUrl.indexOf('localhost') > 0) {
         userAvatarUrl = '/static/image/avatar.png'
       }
-      let summary = { id: item.id, name: nickName, score: '答对' + item.score + '题', avatarUrl: userAvatarUrl }
+      let summary = { id: item.id, name: nickName, score: item.score, avatarUrl: userAvatarUrl }
       ret.push(summary)
     }
 
@@ -50,6 +52,8 @@ const getters = {
 
   getSurveyAnswer: state => (id) => {
     let answers = []
+    console.log('getSurveyAnswer ')
+    console.log(state.curSurvey)
     for (let index in state.result) {
       let item = state.result[index]
       if (item.id === id) {
@@ -59,7 +63,10 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let item = { id: index + 1, correct: true, value: '', question: state.survey.subjects[index].question }
+      if (state.curSurvey.subjects.length <= index) {
+        break
+      }
+      let item = { id: index + 1, correct: true, value: '', question: state.curSurvey.subjects[index].question }
       let answer = answers[index].result
       let spilterCh = ''
       for (let j in answer) {
@@ -72,6 +79,28 @@ const getters = {
     }
     console.log(ret)
     return ret
+  },
+
+  getResponderName: state => (id) => {
+    let responder = {}
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        responder = item.responder
+      }
+    }
+    return (!responder.nickName || responder.nickName === '') ? '匿名' : responder.nickName
+  },
+
+  getResponderAvator: state => (id) => {
+    let responder = {}
+    for (let index in state.result) {
+      let item = state.result[index]
+      if (item.id === id) {
+        responder = item.responder
+      }
+    }
+    return (!responder.avatarUrl || responder.avatarUrl === '') ? '/static/image/nobody3.png' : responder.avatarUrl
   },
 
   getCreateTime: state => (id) => {
@@ -93,7 +122,7 @@ const getters = {
         break
       }
     }
-    let conclusions = state.survey.conclusions
+    let conclusions = state.curSurvey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
       let conclusion = conclusions[index]
@@ -102,6 +131,11 @@ const getters = {
       }
     }
     return ret
+  },
+  getReplySurveys: state => {
+    console.log('query reply surveys')
+    console.log(state.replySurveys)
+    return state.replySurveys
   }
 }
 
@@ -113,7 +147,13 @@ const mutations = {
     state.subjects = result
   },
   updateSurveyInResult (state, survey) {
-    state.survey = survey
+    state.curSurvey = survey
+  },
+  resetReplySurveys (state) {
+    state.replySurveys = []
+  },
+  addReplySurveys (state, survey) {
+    state.replySurveys.push(survey)
   }
 }
 
@@ -149,9 +189,10 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
-            console.log(response.data.result.subjects)
+            console.log('query survey by:' + surveyId)
+            console.log(response.data.result)
             commit('updateSurveyInResult', response.data.result)
-            resolve(response)
+            resolve(response.data.result)
           } else {
             reject(response)
           }
@@ -160,6 +201,36 @@ const actions = {
           reject(err)
         }
       })
+    })
+  },
+  querySurveyResultByUser ({dispatch, commit}) {
+    return new Promise((resolve, reject) => {
+      wechat.getOpenId()
+        .then((userId) => {
+          wx.request({
+            url: surveyResultUrl,
+            data: {
+              userId: userId
+            },
+            success: (response) => {
+              commit('updateResult', response.data.result)
+              commit('resetReplySurveys')
+              response.data.result.map(item => {
+                let surveyId = item.surveyId
+                dispatch('querySurveyById', surveyId)
+                  .then(survey => {
+                    survey.resultId = item.id
+                    survey.score = item.score
+                    commit('addReplySurveys', survey)
+                  })
+              })
+              resolve(response)
+            },
+            faile: (err) => {
+              reject(err)
+            }
+          })
+        })
     })
   }
 }

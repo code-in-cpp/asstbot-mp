@@ -73,6 +73,7 @@ export default {
         }
       })
     },
+
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
@@ -108,12 +109,14 @@ export default {
           console.log(err)
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
+        console.log(this.userAuthed)
         if (this.userAuthed) {
           this.$store.dispatch('start', surveyId)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }
       }).catch((err) => {
+        console.log(1111, err)
         this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         console.log(err)
       })
@@ -127,7 +130,7 @@ export default {
     width:100%;
     height:0;
     background: transparent;
-    /*transition: height .5s linear .5s;*/
+    /*transition: height .5s linear .1s;*/
   }
   .height_40{
     height: 620rpx;

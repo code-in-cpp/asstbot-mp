@@ -1,5 +1,6 @@
 <template>
 <view class="page">
+    <page-title :title="survey.title"/>
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
@@ -23,12 +24,12 @@
     <view class="weui-cells__title">答卷列表:</view>
       <view class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-          <navigator v-for="item in surveySummary" :url="'../detail/main?id='+item.id+'&name='+item.name+'&score='+item.score+'&avatarUrl=' + item.avatarUrl" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__hd">
                   <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
               </view>
               <view class="weui-cell__bd">{{item.name}}</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">{{item.score}}</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access">答对 {{item.score}} 题</view>
           </navigator>
 
           <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
@@ -69,10 +70,7 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => {
-        wx.setNavigationBarTitle({title: state.surveyResult.survey.title})
-        return state.surveyResult.survey
-      }
+      survey: state => state.surveyResult.curSurvey
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',

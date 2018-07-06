@@ -5,7 +5,7 @@
         <view class="weui-cell__ft"  >
           <i class="icon iconfont icon-add"></i>
         </view>
-        <view class="weui-cell__ft"  @click="addAnswer(subjectIndex)">
+        <view class="weui-cell__ft">
           添加答案
         </view>
       </label>
