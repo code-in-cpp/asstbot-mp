@@ -84,7 +84,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    // this.getUserInfo()
   },
 
   onShow () {
@@ -108,14 +108,12 @@ export default {
           console.log(err)
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
-        console.log(this.userAuthed)
         if (this.userAuthed) {
           this.$store.dispatch('start', option.id)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }
       }).catch((err) => {
-        console.log(1111, err)
         this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         console.log(err)
       })
