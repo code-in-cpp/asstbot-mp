@@ -58,7 +58,7 @@ import { mapState, mapGetters } from 'vuex'
 import navBar from '@/components/navBar'
 
 const surveyType = ['exam', 'poll', 'inquiry']
-const surveyTypeName = ['答卷', '投票', '问卷']
+const surveyTypeName = ['答卷机器人', '投票机器人', '问卷机器人']
 
 export default {
   data () {
