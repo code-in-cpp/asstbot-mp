@@ -69,13 +69,12 @@ export default {
       wx.getSystemInfo({
         success: (res) => {
           if (res.model.search('iPhone X') !== -1) {
-            this.isIphoneX = true
-            console.log('getDeviceType, iphone X')
+            this.$store.dispatch('update_device_info', true)
+            // console.log('getDeviceType, iphone X')
           } else {
-            this.isIphoneX = false
-            console.log('getDeviceType, not iphone X')
+            this.$store.dispatch('update_device_info', false)
+            // console.log('getDeviceType, not iphone X')
           }
-          this.$store.dispatch('update_device_info', this.isIphoneX)
         }
       })
     },
