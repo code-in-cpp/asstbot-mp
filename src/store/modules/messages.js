@@ -25,6 +25,17 @@ const getters = {
     }
     return false
   },
+  textOrRadioAction: state => {
+    let list = state.data[state.data.length - 1]
+    if (list && list.to && list.msgs && list.msgs.length > 0) {
+      let len = list.msgs.length - 1
+      let type = list.msgs[len].type
+      if (type === 'imageUploader' || type === 'checkbox' || (type === 'radio' && list.msgs[len].items && list.msgs[len].items.length > 10)) {
+        return true
+      }
+    }
+    return false
+  },
   typeStatus: state => {
     let list = [...state.data].slice(-1).pop()
     if (list && list.to) {

@@ -47,7 +47,7 @@ export default {
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
-      falg: 'activeAction'
+      falg: 'textOrRadioAction'
     })
   },
   components: {
