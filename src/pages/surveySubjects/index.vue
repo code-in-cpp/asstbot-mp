@@ -15,8 +15,8 @@
     </view>
     <view class="content">
       <view class="weui-tab">
-        <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
-        <view class="weui-tab__panel">
+        <nav-bar v-if="type === 'exam'" :navItems="items" @tabActive="tabActive"></nav-bar>
+        <view v-bind:class="pollStyleClass">
           <scroll-view scroll-y='true' style="height: 100%">
             <view v-if="activeIndex == 0">
               <block v-for="(subject, i) in subjects" :key="subject">
@@ -41,9 +41,8 @@
                       </view>
                     </view>
                   </view>
-
                 </view>
-                <edit-answer :subjectIndex="i" :type="subject.type" ></edit-answer>
+                <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
               </block>
               <view class="subject-divider"></view>
               <view class="weui-cells weui-cells_after-title">
@@ -141,7 +140,8 @@ export default {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
       items: ['题目', '评语'],
-      activeIndex: 0
+      activeIndex: 0,
+      type: ''
     }
   },
 
@@ -160,7 +160,14 @@ export default {
           return subjectTypeName[index]
         })
       }
-    })
+    }),
+
+    pollStyleClass () {
+      if (this.type === 'poll') {
+        return 'weui-tab__panel poll-style'
+      }
+      return 'weui-tab__panel'
+    }
   },
 
   components: {
@@ -204,6 +211,9 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
+    console.log('current')
+    this.type = option.surveyType
+    console.log(this.type)
     this.updateCurrentSurvey(survey)
   },
 
@@ -228,6 +238,10 @@ export default {
 </script>
 
 <style>
+.poll-style {
+  padding-top: 10rpx;
+}
+
 .content {
   flex-direction: column;
 }

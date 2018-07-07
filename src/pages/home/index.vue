@@ -46,7 +46,9 @@
       </view>
     </view>
     <view class="footer bottom_button">
-      <button class="weui-btn" type="primary" size="default" @click="toCreateBot">创建问卷机器人</button>
+        <picker @change="updateSurveyType(surveyType[$event.mp.detail.value])" :value="exam" :range="surveyTypeName">
+          <button class="weui-btn" type="primary" size="default" >创建问卷机器人</button>
+        </picker>
     </view>
   </view>
 </template>
@@ -55,10 +57,15 @@
 import { mapState, mapGetters } from 'vuex'
 import navBar from '@/components/navBar'
 
+const surveyType = ['exam', 'poll', 'inquiry']
+const surveyTypeName = ['答卷机器人', '投票机器人', '问卷机器人']
+
 export default {
   data () {
     return {
       logs: [],
+      surveyTypeName: surveyTypeName,
+      surveyType: surveyType,
       items: ['已创建机器人', '已回复机器人'],
       activeIndex: 0
     }
@@ -87,6 +94,13 @@ export default {
 
     tabActive (event) {
       this.activeIndex = event
+    },
+
+    updateSurveyType (select) {
+      console.log(select)
+      wx.navigateTo({
+        url: `/pages/surveyProfile/main?action=create&surveyType=${select}`
+      })
     }
   },
 

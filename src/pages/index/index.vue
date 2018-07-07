@@ -69,30 +69,15 @@ export default {
       wx.getSystemInfo({
         success: (res) => {
           if (res.model.search('iPhone X') !== -1) {
-            this.isIphoneX = true
-            console.log('getDeviceType, iphone X')
+            this.$store.dispatch('update_device_info', true)
+            // console.log('getDeviceType, iphone X')
           } else {
-            this.isIphoneX = false
-            console.log('getDeviceType, not iphone X')
+            this.$store.dispatch('update_device_info', false)
+            // console.log('getDeviceType, not iphone X')
           }
-          this.$store.dispatch('update_device_info', this.isIphoneX)
         }
       })
     },
-
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
-    },
-
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
@@ -100,7 +85,6 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
     this.getDeviceType()
   },
 
