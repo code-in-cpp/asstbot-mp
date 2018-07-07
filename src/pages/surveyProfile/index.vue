@@ -86,7 +86,7 @@ export default {
         })
         .then((surveyId) => {
           wx.navigateTo({
-            url: `/pages/surveySubjects/main?id=${surveyId}`
+            url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=exam`
           })
         })
     },
