@@ -117,9 +117,7 @@ view {
   padding-right:0.35em;
 }
 .checkbox-icon-box .icon-right {
-  background-color: #1AAD19;
-  color: white;
-  font-size: 32rpx;
-  vertical-align: middle;
+  color: #1AAD19;
+  font-size: 40rpx;
 }
 </style>

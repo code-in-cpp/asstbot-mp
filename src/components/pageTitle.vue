@@ -21,6 +21,10 @@ export default {
 
   mounted () {
     wx.setNavigationBarTitle({title: this.title})
+  },
+
+  updated () {
+    wx.setNavigationBarTitle({title: this.title})
   }
 }
 </script>

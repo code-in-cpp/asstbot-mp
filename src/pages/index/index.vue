@@ -36,7 +36,8 @@ import floatIndex from '@/components/floatIndex'
 export default {
   data () {
     return {
-      survey: {}
+      survey: {},
+      isIphoneX: false
     }
   },
   computed: {
@@ -64,6 +65,21 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
+    getDeviceType () {
+      wx.getSystemInfo({
+        success: (res) => {
+          if (res.model.search('iPhone X') !== -1) {
+            this.isIphoneX = true
+            console.log('getDeviceType, iphone X')
+          } else {
+            this.isIphoneX = false
+            console.log('getDeviceType, not iphone X')
+          }
+          this.$store.dispatch('update_device_info', this.isIphoneX)
+        }
+      })
+    },
+
     getUserInfo () {
       // 调用登录接口
       wx.login({
@@ -85,6 +101,7 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     // this.getUserInfo()
+    this.getDeviceType()
   },
 
   onShow () {
@@ -97,10 +114,11 @@ export default {
     //     url: '../display/main'
     //   })
     // }
-    console.log(option)
-    if (option.id) {
-      this.$store.dispatch('setId', option.id)
-      this.$store.dispatch('retrieveSurveyById', option.id)
+    const surveyId = option.id ? option.id : option.scene
+
+    if (surveyId) {
+      this.$store.dispatch('setId', surveyId)
+      this.$store.dispatch('retrieveSurveyById', surveyId)
         .then((survey) => {
           this.survey = survey
         })
@@ -109,7 +127,7 @@ export default {
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
         if (this.userAuthed) {
-          this.$store.dispatch('start', option.id)
+          this.$store.dispatch('start', surveyId)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }
