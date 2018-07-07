@@ -65,7 +65,8 @@ export default {
       ],
       title: '',
       avatarUrl: '',
-      welcomeText: ''
+      welcomeText: '',
+      surveyType: 'exam'
     }
   },
 
@@ -77,16 +78,17 @@ export default {
 
   methods: {
     createBot (ev) {
+      let newSurveyType = this.surveyType
       this.$store.dispatch('createSurvey',
         {
           title: this.title,
-          type: 'exam',
+          type: this.surveyType,
           avatarUrl: this.avatarUrl,
           intro: this.welcomeText
         })
         .then((surveyId) => {
           wx.navigateTo({
-            url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=exam`
+            url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=${newSurveyType}`
           })
         })
     },
@@ -117,6 +119,11 @@ export default {
         this.avatarUrl = JSON.parse(userInfo).avatarUrl
       }
     }
+  },
+
+  onLoad (option) {
+    console.log('receive survey type :' + option.surveyType)
+    this.surveyType = option.surveyType
   },
 
   created () {
