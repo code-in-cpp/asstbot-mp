@@ -52,8 +52,6 @@ const getters = {
 
   getSurveyAnswer: state => (id) => {
     let answers = []
-    console.log('getSurveyAnswer ')
-    console.log(state.curSurvey)
     for (let index in state.result) {
       let item = state.result[index]
       if (item.id === id) {
@@ -77,7 +75,6 @@ const getters = {
       }
       ret.push(item)
     }
-    console.log(ret)
     return ret
   },
 
@@ -133,8 +130,6 @@ const getters = {
     return ret
   },
   getReplySurveys: state => {
-    console.log('query reply surveys')
-    console.log(state.replySurveys)
     return state.replySurveys
   }
 }
@@ -189,8 +184,6 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
-            console.log('query survey by:' + surveyId)
-            console.log(response.data.result)
             commit('updateSurveyInResult', response.data.result)
             resolve(response.data.result)
           } else {

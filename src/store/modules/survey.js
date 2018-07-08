@@ -101,7 +101,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       fly.get(url, {id})
         .then((response) => {
-          console.log(response)
           if (response.status === 200) {
             resolve(response.data.result)
           } else {

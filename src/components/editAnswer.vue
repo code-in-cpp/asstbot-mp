@@ -11,11 +11,11 @@
       </label>
       <label class="weui-cell weui-check__label" v-for="(answer, index) in answers" :key="index">
         <view class="weui-cell__hd weui-check__hd_in-checkbox" @click="toUpdateAnswerCorrect(index)">
-          <block v-if="type=='radio'">
+          <block v-if="type=='radio' && surveyType=='exam'">
             <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="answer.correct"></icon>
             <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-else></icon>
           </block>
-          <block v-else-if="type=='checkbox'">
+          <block v-else-if="type=='checkbox' && surveyType=='exam'">
             <view class="checkbox-icon-box__wrapper">
               <view class="checkbox-icon-box">
                 <i class="icon iconfont icon-right" v-if="answer.correct"></i>
@@ -51,6 +51,10 @@ export default {
     type: {
       type: String,
       default: 'radio'
+    },
+    surveyType: {
+      type: String,
+      default: 'exam'
     }
   },
 
@@ -117,9 +121,7 @@ view {
   padding-right:0.35em;
 }
 .checkbox-icon-box .icon-right {
-  background-color: #1AAD19;
-  color: white;
-  font-size: 32rpx;
-  vertical-align: middle;
+  color: #1AAD19;
+  font-size: 40rpx;
 }
 </style>

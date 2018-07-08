@@ -36,7 +36,8 @@ import floatIndex from '@/components/floatIndex'
 export default {
   data () {
     return {
-      survey: {}
+      survey: {},
+      isIphoneX: false
     }
   },
   computed: {
@@ -46,7 +47,7 @@ export default {
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
-      falg: 'activeAction'
+      falg: 'textOrRadioAction'
     })
   },
   components: {
@@ -64,19 +65,19 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
+    getDeviceType () {
+      wx.getSystemInfo({
+        success: (res) => {
+          if (res.model.search('iPhone X') !== -1) {
+            this.$store.dispatch('update_device_info', true)
+            // console.log('getDeviceType, iphone X')
+          } else {
+            this.$store.dispatch('update_device_info', false)
+            // console.log('getDeviceType, not iphone X')
+          }
         }
       })
     },
-
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
@@ -84,7 +85,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    this.getDeviceType()
   },
 
   onShow () {
@@ -109,14 +110,12 @@ export default {
           console.log(err)
         })
       this.$store.dispatch('updateUserInfo').then((res) => {
-        console.log(this.userAuthed)
         if (this.userAuthed) {
           this.$store.dispatch('start', surveyId)
         } else {
           this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         }
       }).catch((err) => {
-        console.log(1111, err)
         this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
         console.log(err)
       })

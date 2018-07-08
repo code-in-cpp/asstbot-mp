@@ -8,7 +8,7 @@
               <bod-avatar :url="avatarUrl" size="100"/>
             </view>
             <view class="avatar-badge"  @click="chooseImage">
-              <i-icon type="editor" size="20"/>
+              <i class="icon iconfont icon-editor" style="font-size: 28rpx"></i>
             </view>
             <button class="weui-btn" type="default" size="mini"
               open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
@@ -65,7 +65,8 @@ export default {
       ],
       title: '',
       avatarUrl: '',
-      welcomeText: ''
+      welcomeText: '',
+      surveyType: 'exam'
     }
   },
 
@@ -77,16 +78,17 @@ export default {
 
   methods: {
     createBot (ev) {
+      let newSurveyType = this.surveyType
       this.$store.dispatch('createSurvey',
         {
           title: this.title,
-          type: 'exam',
+          type: this.surveyType,
           avatarUrl: this.avatarUrl,
           intro: this.welcomeText
         })
         .then((surveyId) => {
           wx.navigateTo({
-            url: `/pages/surveySubjects/main?id=${surveyId}`
+            url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=${newSurveyType}`
           })
         })
     },
@@ -119,6 +121,11 @@ export default {
     }
   },
 
+  onLoad (option) {
+    console.log('receive survey type :' + option.surveyType)
+    this.surveyType = option.surveyType
+  },
+
   created () {
   },
   onShow () {
@@ -144,7 +151,8 @@ export default {
 .avatar-badge {
   position: absolute;
   top: 5rpx;
-  right: 238rpx;
+  right: 270rpx;
+  
 }
 
 </style>

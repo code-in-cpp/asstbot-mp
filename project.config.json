@@ -44,6 +44,20 @@
 					"pathName": "pages/index/main",
 					"query": "id=survey-f519fb00-7f72-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "问生活",
+					"pathName": "pages/index/main",
+					"query": "id=survey-6c6b9360-7f2f-11e8-b56b-594b8a930fa4",
+					"scene": "1008"
+				},
+				{
+					"id": 3,
+					"name": "多radio测试",
+					"pathName": "pages/index/main",
+					"query": "id=45e5c37081cb11e8a876e14a6ebd03a1",
+					"scene": "1008"
 				}
 			]
 		}

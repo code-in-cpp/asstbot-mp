@@ -15,13 +15,15 @@ export default {
 
   watch: {
     title: (newVal, oldVal) => {
-      console.log(this)
       wx.setNavigationBarTitle({title: newVal})
     }
   },
 
   mounted () {
-    console.log(this)
+    wx.setNavigationBarTitle({title: this.title})
+  },
+
+  updated () {
     wx.setNavigationBarTitle({title: this.title})
   }
 }

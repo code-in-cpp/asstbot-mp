@@ -20,9 +20,13 @@
               </view>
               <view class="weui-cell__ft">
                 <user-say-text :content="item.value"></user-say-text>
-                <i class="icon iconfont icon-right" v-if="item.correct"></i>
-                <i class="icon iconfont icon-close" v-else></i>
+                <view class="answer-correct">
+                  <i class="icon iconfont icon-right" v-if="item.correct"></i>
+                  <i class="icon iconfont icon-close" v-else></i>
+                </view>
               </view>
+
+
           </view>
       </scroll-view>
     </view>
@@ -81,6 +85,10 @@ export default {
 </script>
 
 <style>
+.answer-correct {
+  width: 60rpx;
+}
+
 .page{
   display: flex;
   flex-direction: column;
@@ -89,12 +97,6 @@ export default {
   padding-left: 5pt;
   padding-top: 10px;
 }
-
-.icon-right {
-  padding-left: 5pt;
-  padding-top: 5px;
-}
-
 .weui-media-box__bd{
   padding-right: 30rpx;
   padding-left: 50rpx;

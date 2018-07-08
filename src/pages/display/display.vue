@@ -83,8 +83,9 @@ export default {
   methods: {
     editSurvey () {
       let surveyId = this.surveyId
+      let surveyType = this.survey.type
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${surveyId}`
+        url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=${surveyType}`
       })
     },
     deleteSurvey () {
