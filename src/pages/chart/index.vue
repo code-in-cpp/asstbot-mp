@@ -1,7 +1,7 @@
 <template>
     <view class="container">
-         <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchStart"></canvas>
-         <canvas canvas-id="columnCanvas" class="canvas" style="height:300px" bindtouchstart="touchEnd"></canvas>
+         <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" @touchstart="touchStart"></canvas>
+         <canvas canvas-id="columnCanvas" class="canvas" style="height:300px" @touchstart="touchEnd"></canvas>
    </view>
 </template>
 
