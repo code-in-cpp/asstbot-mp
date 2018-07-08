@@ -132,7 +132,7 @@ export default {
     /*transition: height .5s linear .1s;*/
   }
   .height_40{
-    height: 620rpx;
+    height: 700rpx;
   }
   .footer{
     /*position: fixed;*/
