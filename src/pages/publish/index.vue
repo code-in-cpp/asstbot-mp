@@ -1,12 +1,11 @@
 <template>
   <view class="page">
-    <view class="bottom_button">
-      <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
-    </view>
+    <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
   </view>
 </template>
 
 <script>
+import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
 export default {
   data: {
@@ -15,6 +14,7 @@ export default {
   },
   methods: {
     publish () {
+      saveQrCodeToPhotosAlbum(this.surveyId)
     }
   },
   onLoad (option) {
