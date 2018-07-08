@@ -2,12 +2,14 @@ const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 var date = new Date()
 import wechat from './wechat'
+import WxCharts from '@/utils/wxcharts'
 
 const state = {
   result: [],
   subjects: [],
   replySurveys: [],
-  curSurvey: {}
+  curSurvey: {},
+  questionCharts: []
 }
 
 const getters = {
@@ -149,6 +151,9 @@ const mutations = {
   },
   addReplySurveys (state, survey) {
     state.replySurveys.push(survey)
+  },
+  updateQuestionCharts (state, charts) {
+    state.questionCharts = charts
   }
 }
 
@@ -224,6 +229,36 @@ const actions = {
             }
           })
         })
+    })
+  },
+  createSurveyCharts ({commit}) {
+    return new Promise((resolve, reject) => {
+      let charts = state.curSurvey.subjects.map(subject => {
+        let chartId = 'column_' + subject.id
+        console.log('creating :' + chartId)
+        return new WxCharts({
+          canvasId: chartId,
+          type: 'column',
+          categories: ['2012'],
+          series: [
+            {
+              name: '成交量1',
+              data: [20]
+            },
+            {
+              name: '成交量2',
+              data: [30]
+            }],
+          yAxis: {
+            format: function (val) {
+              return val
+            }
+          },
+          width: 320,
+          height: 200
+        })
+      })
+      commit('updateQuestionCharts', charts)
     })
   }
 }

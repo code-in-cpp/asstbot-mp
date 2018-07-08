@@ -4,7 +4,6 @@
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
-
     <view class="page__bd">
         <view class="weui-grids">
             <navigator url="" class="weui-grid" hover-class="weui-grid_active">
@@ -21,8 +20,8 @@
             </navigator>
         </view>
     </view>
-    <view class="weui-cells__title">答卷列表:</view>
-      <view class="content">
+    <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar>
+    <view v-if="activeIndex == 0" class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
           <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__hd">
@@ -41,6 +40,14 @@
           </view>
       </scroll-view>
     </view>
+   <view  v-if="activeIndex == 1" class ="content">
+     <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
+       <view v-for="item in getQuestions" :key="item" >
+        <view class="weui-cell__hd">问题{{item.id}}：{{item.question}} 【{{item.type}}】</view> 
+        <canvas :canvas-id="item.chartId" class="canvas" style="height:300px"></canvas>
+       </view> 
+     </scroll-view>   
+   </view>
     <view class="footer bottom_button">
       <view class="weui-flex">
         <view class="weui-flex__item">
@@ -60,11 +67,16 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-
+import WxCharts from '@/utils/wxcharts'
+import navBar from '@/components/navBar'
+const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答'}
+/* eslint-disable */
 export default {
   data: {
     surveyId: '',
     title: '',
+    navItems: ['答卷列表', '问题汇总'],
+    activeIndex: 0,
     grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ]
   },
   computed: {
@@ -78,7 +90,22 @@ export default {
       commitToday: 'commitToday',
       commitCount: 'commitCount',
       reviewCount: 'reviewCount'
-    })
+    }),
+
+    getQuestions(){
+      let that = this;
+      let questions = this.survey.subjects.map(subject => {
+        let chartId = 'column_' +subject.id
+        return {id:subject.id, question: subject.question, type: formatTypes[subject.type], chartId: chartId}
+      })
+      console.log('questions is :')
+      console.log(questions)
+      return questions
+    }
+  },
+
+  components: {
+    navBar
   },
   methods: {
     editSurvey () {
@@ -108,6 +135,19 @@ export default {
           }
         }
       })
+    },
+    tabActive (event) {
+      this.activeIndex = event
+    },
+
+    touchStart (e) {
+      console.log(e)
+      this.startTime = e.timeStamp
+    },
+
+    touchEnd (e) {
+      console.log(e)
+      this.endTime = e.timeStamp
     }
   },
   onShareAppMessage (res) {
@@ -120,6 +160,7 @@ export default {
       imageUrl: this.survey.avatarUrl
     }
   },
+
   onLoad (option) {
     if (option.id) {
       this.surveyId = option.id
@@ -131,7 +172,36 @@ export default {
       console.log('error: page receive no survey id!')
     }
     this.$store.dispatch('querySurveyResult', this.surveyId)
-    this.$store.dispatch('querySurveyById', this.surveyId)
+    // this.$store.dispatch('querySurveyById', this.surveyId)
+    this.$store.dispatch('querySurveyById', this.surveyId).then((retSurvey) =>{
+      console.log(retSurvey)
+      let charts = retSurvey.subjects.map(subject => {
+      let chartId = 'column_' + subject.id
+      console.log('creating :' + chartId)
+      return new WxCharts({
+        canvasId: chartId,
+        type: 'column',
+        categories: ['2012'],
+        series: [
+          {
+            name: '成交量1',
+            data: [20]
+          },
+          {
+            name: '成交量2',
+            data: [30]
+          }],
+        yAxis: {
+          format: function (val) {
+            return val
+          }
+        },
+        width: 320,
+        height: 200
+      })
+    }) 
+    })
+    //  this.$store.dispatch('createSurveyCharts')
   },
   mounted () {
   }
@@ -163,7 +233,10 @@ export default {
 .header-item {
   margin-top: 20rpx;
   text-align: center;
+}
 
+.weui-navbar{
+  position: relative;
 }
 
 .scroll-view_tab{

@@ -62,13 +62,19 @@ export default {
     new WxCharts({
         canvasId: 'columnCanvas',
         type: 'column',
-        categories: ['2012', '2013', '2014', '2015', '2016', '2017'],
+        categories: ['2012'],
         series: [{
             name: '成交量1',
-            data: [15, 20, 45, 37, 4, 80]
+            data: [20]
         }, {
             name: '成交量2',
-            data: [70, 40, 65, 100, 34, 18]
+            data: [30]
+        }, {
+            name: '成交量3',
+            data: [40]
+        }, {
+            name: '成交量4',
+            data: [70]
         }],
         yAxis: {
             format: function (val) {
