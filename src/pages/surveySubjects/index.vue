@@ -163,7 +163,7 @@ export default {
     }),
 
     pollStyleClass () {
-      if (this.type === 'poll') {
+      if (this.type !== 'exam') {
         return 'weui-tab__panel poll-style'
       }
       return 'weui-tab__panel'
