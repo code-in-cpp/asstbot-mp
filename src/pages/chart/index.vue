@@ -1,7 +1,7 @@
 <template>
     <view class="container">
-         <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
-         <canvas canvas-id="columnCanvas" class="canvas" style="height:300px" bindtouchstart="touchHandler"></canvas>
+         <canvas canvas-id="pieCanvas" class="canvas" style="height:300px" bindtouchstart="touchStart"></canvas>
+         <canvas canvas-id="columnCanvas" class="canvas" style="height:300px" bindtouchstart="touchEnd"></canvas>
    </view>
 </template>
 
@@ -20,6 +20,14 @@ export default {
   },
 
   methods: {
+    touchStart(e) {
+      console.log(e)
+      this.startTime = e.timeStamp;
+    },
+    touchEnd(e) {
+      console.log(e)
+      this.endTime = e.timeStamp;
+    }
   },
 
   onLoad (option) {
