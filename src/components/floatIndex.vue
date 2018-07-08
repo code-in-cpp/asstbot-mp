@@ -1,7 +1,7 @@
 <template>
   <view>
-    <radio-float v-if="list.type === 'radio'" :list="list"></radio-float>
-    <checkbox-float v-else-if="list.type === 'checkbox'" :list="list"></checkbox-float>
+    <radio-float v-if="list.type === 'radio' && list.items.length > 10" :list="list"></radio-float>
+    <checkbox-float v-if="list.type === 'checkbox'" :list="list"></checkbox-float>
     <avatar-float v-else-if="list.type === 'imageUploader'" :list="list"></avatar-float>
   </view>
 </template>
@@ -21,7 +21,6 @@
       radioFloat,
       checkboxFloat,
       avatarFloat
-      // getUserinfo
     },
     computed: {
       ...mapState({

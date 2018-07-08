@@ -64,7 +64,6 @@
   }
   .top_0{
     top: 0;
-    /*display: block;*/
   }
   .boxItems{
     position: absolute;
