@@ -14,6 +14,7 @@ export default {
     messageUrl: `${hostRoot}/chatbot`,
     openIdUrl: `${hostRoot}/openid`,
     userInfoUrl: `${hostRoot}/user/wechat`,
-    imageUrl: `${hostRoot}/image`
+    imageUrl: `${hostRoot}/image`,
+    qrcodeUrl: `${hostRoot}/qrcode`
   }
 }
