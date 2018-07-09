@@ -102,6 +102,7 @@ export default {
       })
       let configs = this.chartConfigs
       this.charts = configs.map( config => {
+          console.log('begin dram canvas .........')
           console.log(config)
           return new WxCharts(config)
         })
