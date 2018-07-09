@@ -13,7 +13,7 @@
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
-            <view>
+            <view class="botSayContainer">
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
               <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
               <bot-say-radio-select :content="msg.title" v-else-if="msg.type=='radio'" :options="msg.items"></bot-say-radio-select>
@@ -102,5 +102,9 @@ export default {
   .left-item{
     max-width: 80%;
     display: flex;
+    width:100%;
+  }
+  .botSayContainer{
+    width:100%
   }
 </style>

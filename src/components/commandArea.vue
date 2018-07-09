@@ -68,7 +68,8 @@ export default {
       }
     },
     keyEvnet (e) {
-      console.log(e)
+      this.$store.dispatch('sendQuery', this.currentMessage)
+      this.currentMessage = ''
     }
   }
 }
