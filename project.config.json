@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
@@ -57,6 +57,13 @@
 					"name": "多radio测试",
 					"pathName": "pages/index/main",
 					"query": "id=45e5c37081cb11e8a876e14a6ebd03a1",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "底部功能测试",
+					"pathName": "pages/index/main",
+					"query": "id=9be713b0831e11e897029b6204dd4fb1",
 					"scene": "1008"
 				}
 			]

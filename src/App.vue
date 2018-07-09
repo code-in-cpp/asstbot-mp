@@ -97,5 +97,14 @@ page{
   max-width: 90%;
   background: #fff;
 }
+.boxFloat{
+  width:100%;
+  height: 0rpx;
+  transition:height 0.5s;
+  background: transparent;
+}
+.top_0{
+  height: 700rpx;
+}
 
 </style>

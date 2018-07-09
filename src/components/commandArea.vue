@@ -36,7 +36,6 @@ export default {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
           let type = data[0].msgs.slice(-1)[0].type
-          console.log(type === 'text')
           return type === 'text'
         }
         return false

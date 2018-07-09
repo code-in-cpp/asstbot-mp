@@ -14,6 +14,11 @@
                   <radio class="radioItem" :value="option.value"></radio><view class="radioValue">{{option.caption}}</view>
                 </label>
               </view>
+              <view class="selectRadio">
+                <label class="selectlabel">
+                  <view class="radioItem"></view><view class="radioValue"></view>
+                </label>
+              </view>
             </radio-group>
           <!--</li>-->
         <!--</ul>-->
@@ -52,22 +57,7 @@
 </script>
 
 <style scoped>
-  .boxFloat{
-    height:100vh;
-    position:fixed;
-    z-index: 10;
-    top:100vh;
-    width:100%;
-    transition:top .5s;
-    background: transparent;
-    /*display: none;*/
-  }
-  .top_0{
-    top: 0;
-  }
   .boxItems{
-    position: absolute;
-    bottom:0;
     background: #fff;
     height: 700rpx;
     font-size: 32rpx;
