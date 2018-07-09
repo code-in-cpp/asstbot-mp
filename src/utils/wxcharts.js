@@ -286,7 +286,7 @@ function getDataRange(minData, maxData) {
 }
 
 function measureText(text) {
-    var fontSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+    var fontSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : config.fontSize;
 
     // wx canvas 未实现measureText方法, 此处自行实现
     text = String(text);
