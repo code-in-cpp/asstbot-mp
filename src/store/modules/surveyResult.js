@@ -260,7 +260,7 @@ const actions = {
                     return val
                   }
                 },
-                width: 3200,
+                width: 320,
                 height: 200
               }
               return config
