@@ -157,6 +157,9 @@ const actions = {
   sendImage ({commit}, {url, indicator}) {
     return _sendmessage(commit, 'image', {url, indicator})
   },
+  sendNlu ({commit}, {type, value, nlu, indicator}) {
+    return _sendmessage(commit, type, {value, indicator, nlu})
+  },
   start ({commit}, id) {
     return _sendmessage(commit, 'start', {id})
   },

@@ -131,8 +131,8 @@ import { mapState, mapMutations } from 'vuex'
 import editAnswer from '@/components/editAnswer'
 import navBar from '@/components/navBar'
 
-const subjectType = ['radio', 'checkbox', 'text']
-const subjectTypeName = ['单选', '多选', '问答']
+const subjectType = ['radio', 'checkbox', 'text', 'date']
+const subjectTypeName = ['单选', '多选', '问答', '日期']
 
 export default {
   data () {
