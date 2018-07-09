@@ -131,12 +131,10 @@ export default {
     },
     sendMessage (ev) {
       let nluType = this.nluType
-      console.log('send message : type = ' + nluType)
       if (nluType) {
         this.$store.dispatch('sendNlu', { type: nluType, value: this.currentMessage, nlu: true, indicator: this.indicator })
       } else {
         this.$store.dispatch('sendQuery', this.currentMessage)
-        console.log('dispatch message content = ' + this.currentMessage)
       }
       this.currentMessage = ''
     },
