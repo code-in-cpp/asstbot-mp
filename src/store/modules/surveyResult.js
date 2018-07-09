@@ -34,8 +34,11 @@ const getters = {
   },
 
   commitToday: state => {
-    let currentTime = date.toLocaleDateString().replace('/', '-')
-    let todayResult = state.result.filter(item => { return item.created_at.indexOf(currentTime) >= 0 })
+    let currentTime = date.toLocaleDateString().replace(new RegExp('/', 'gm'), '-')
+    console.log('current time:' + currentTime)
+    let todayResult = state.result.filter(item => {
+      return item.created_at.indexOf(currentTime) >= 0
+    })
     return todayResult.length
   },
   commitCount: state => {
