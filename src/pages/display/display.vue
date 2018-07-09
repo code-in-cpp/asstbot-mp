@@ -267,7 +267,7 @@ export default {
   height: 200px; */
   transform-origin :left top;
   width: 640px;
-  height: 400px;
+  height: 420px;
   transform: scale(0.5)
 }
 
