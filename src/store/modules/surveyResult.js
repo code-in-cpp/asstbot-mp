@@ -255,6 +255,11 @@ const actions = {
               // let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
               let datas2 = subject.answers.map(answer => { return answer.count })
               let categs = subject.answers.map(answer => { return answer.value })
+              if (categs.length === 0) {
+                console.log('has no valid answer')
+                categs = ['没有回复']
+                datas2 = [0]
+              }
               let config = {
                 canvasId: chartId,
                 type: 'column',
@@ -263,7 +268,9 @@ const actions = {
                 yAxis: {
                   format: function (val) {
                     return val
-                  }
+                  },
+                  min: -1,
+                  max: 4
                 },
                 xAxis: {
                   fontColor: '#000000'
