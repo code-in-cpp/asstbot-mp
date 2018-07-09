@@ -55,23 +55,7 @@
 </script>
 
 <style scoped>
-  .boxFloat{
-    height:100vh;
-    position:fixed;
-    z-index: 10;
-    top:100vh;
-    width:100%;
-    transition:top .5s;
-    background: transparent;
-    /*display: none;*/
-  }
-  .top_0{
-    top: 0;
-    /*display: block;*/
-  }
   .boxItems{
-    position: absolute;
-    bottom:0;
     background: #fff;
     height: 700rpx;
     font-size: 32rpx;

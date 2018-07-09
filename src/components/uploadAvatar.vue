@@ -161,18 +161,4 @@
     /*background-color: rgba(0, 0, 0, 0.95);*/
     /*color: #04b00f;*/
   }
-  .boxFloat{
-    height:100vh;
-    background:rgba(0,0,0,.5);
-    position:fixed;
-    z-index: 10;
-    top:100vh;
-    width:100%;
-    transition:top .5s;
-    /*display: none;*/
-  }
-  .top_0{
-    top: 0;
-    /*display: block;*/
-  }
 </style>

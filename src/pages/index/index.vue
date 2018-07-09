@@ -13,13 +13,10 @@
         </block>
       </scroll-view>
     </view>
-    <view class="sustainBox" :class="{'height_40': falg }"></view>
-    <view class="footer">
-      <command-area/>
+    <view class="footer" :class="{'height_700': !flag }">
+      <command-area v-if="flag"/>
+      <float-index v-else-if="!flag"></float-index>
     </view>
-    <!--<box-float></box-float>-->
-    <!--<upload-avatar></upload-avatar>-->
-    <float-index></float-index>
   </div>
 </template>
 
@@ -28,9 +25,7 @@ import { mapState, mapGetters } from 'vuex'
 import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
 import pageTitle from '@/components/pageTitle'
-// import boxFloat from '@/components/boxFloat'
 import msgList from '@/components/msgList'
-// import uploadAvatar from '@/components/uploadAvatar'
 import floatIndex from '@/components/floatIndex'
 
 export default {
@@ -43,7 +38,59 @@ export default {
   computed: {
     ...mapState({
       messagesList: state => state.messages.data,
-      scrollToView: state => `bottom${state.messages.data.length - 1}`,
+      flag: state => {
+        let data = state.messages.data.slice(-1)
+        if (data[0] && data[0].to) {
+          let type = data[0].msgs.slice(-1)[0].type
+          switch (type) {
+            case 'radio':
+              if (data[0].msgs.slice(-1)[0].items && data[0].msgs.slice(-1)[0].items.length > 10) {
+                return false
+              } else {
+                return true
+              }
+            case 'checkbox':
+              return false
+            default: {
+              return true
+            }
+          }
+        }
+        return true
+      },
+      scrollToView: state => {
+        // let isText = false
+        // let data = state.messages.data.slice(-1)
+        // if (data[0] && data[0].to) {
+        //   let type = data[0].msgs.slice(-1)[0].type
+        //   switch (type) {
+        //     case 'radio':
+        //       if (data[0].msgs.length > 10) {
+        //         isText = true
+        //       } else {
+        //         isText = false
+        //       }
+        //       break
+        //     case 'checkbox':
+        //       isText = true
+        //       break
+        //     default: {
+        //       isText = false
+        //     }
+        //   }
+        // } else {
+        //   isText = false
+        // }
+        // if (isText) {
+        //   setTimeout(function () {
+        //     console.log(`bottom${state.messages.data.length - 1}`)
+        //     return `bottom${state.messages.data.length - 1}`
+        //   }, 600)
+        // } else {
+        //   return `bottom${state.messages.data.length - 1}`
+        // }
+        return `bottom${state.messages.data.length - 1}`
+      },
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
@@ -125,17 +172,10 @@ export default {
 </script>
 
 <style scoped>
-  .sustainBox{
-    width:100%;
-    height:0;
-    background: transparent;
-    /*transition: height .5s linear .1s;*/
-  }
-  .height_40{
-    height: 700rpx;
-  }
   .footer{
-    /*position: fixed;*/
-    /*bottom: 0*/
+
+  }
+  .height_700{
+    height:700rpx
   }
 </style>
