@@ -10,10 +10,3 @@ export default {
 }
 </script>
 
-<style scoped>
-  .userinfo{
-    font-size:24rpx;
-    color:#999;
-    margin-top:20rpx;
-  }
-</style>

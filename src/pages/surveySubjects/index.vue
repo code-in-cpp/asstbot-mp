@@ -1,5 +1,5 @@
 <template>
-  
+
   <view class="page">
 
     <view class="weui-cells">
@@ -140,8 +140,7 @@ export default {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
       items: ['题目', '评语'],
-      activeIndex: 0,
-      type: ''
+      activeIndex: 0
     }
   },
 
@@ -152,6 +151,7 @@ export default {
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
       survey: state => state.currentSurvey.survey,
+      type: state => state.currentSurvey.survey.type,
       conclusions: state => state.currentSurvey.survey.conclusions,
       subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
@@ -196,9 +196,7 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateTo({
-            url: `/pages/home/main`
-          })
+          wx.navigateBack()
         })
     },
     tabActive (event) {
@@ -211,9 +209,6 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
-    console.log('current')
-    this.type = option.surveyType
-    console.log(this.type)
     this.updateCurrentSurvey(survey)
   },
 
