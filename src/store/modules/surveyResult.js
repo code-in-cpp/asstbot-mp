@@ -269,8 +269,8 @@ const actions = {
                   fontColor: '#000000'
                 },
                 legend: false,
-                width: 640,
-                height: 400,
+                width: 400,
+                height: 250,
                 dataLabel: true
               }
               return config

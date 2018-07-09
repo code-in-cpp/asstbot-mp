@@ -263,10 +263,11 @@ export default {
 
 .chart-canvas{
   /* height: 400rpx; */
-  width: 640px;
-  height: 600px;
+  width: 400px;
+  font-size: 40px;
+  height: 250px;
   transform-origin :left top;
-  transform: scale(0.5)
+  transform: scale(0.8)
 }
 
 .chart-canvas-view{
