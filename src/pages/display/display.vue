@@ -77,7 +77,7 @@ export default {
   data: {
     surveyId: '',
     title: '',
-    navItems: ['答卷列表', '问题汇总'],
+    navItems: ['答卷列表', '结果统计'],
     activeIndex: 0,
     grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ],
     charts: []
