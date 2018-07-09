@@ -42,9 +42,11 @@
     </view>
    <view  v-if="activeIndex == 1" class ="content">
      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-       <view v-for="item in getQuestions" :key="item" >
-        <view class="weui-cell__hd">问题{{item.id}}：{{item.question}} 【{{item.type}}】</view> 
-        <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
+       <view v-for="item in getQuestions" :key="item" class="chart-view-cell" >
+        <view class="chart-view-title">第{{item.id}}题：{{item.question}} 【{{item.type}}】</view> 
+        <view class="chart-canvas-view"> 
+          <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
+        </view>
        </view> 
      </scroll-view>   
    </view>
@@ -254,14 +256,43 @@ export default {
   line-height: 2
 }
 
-
 .button-sp-area{
-    padding-left: 40rpx;
-    padding-bottom: 40rpx;
+  padding-left: 40rpx;
+  padding-bottom: 40rpx;
 }
 
 .chart-canvas{
   height: 400rpx;
+}
+
+.chart-canvas-view{
+  padding-left: 40rpx;
+  padding-top: 40rpx;
+}
+
+.chart-view-title{
+  font-size: 28rpx;
+}
+
+.chart-view-cell {
+  padding: 20rpx 30rpx;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-view-cell:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 2rpx;
+  border-top: 1rpx solid #D9D9D9;
+  color: #D9D9D9;
+  left: 30rpx;
 }
 
 .btn {

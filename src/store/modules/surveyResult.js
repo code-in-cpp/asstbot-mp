@@ -253,10 +253,12 @@ const actions = {
             let configs = subjects.map(subject => {
               let chartId = 'column_' + subject.id
               let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+              // let datas2 = subject.answers.map(answer => { return answer.count })
+              // let categs = subject.answers.map(answer => { return answer.value })
               let config = {
                 canvasId: chartId,
                 type: 'column',
-                categories: ['2012'],
+                categories: [''],
                 series: datas,
                 yAxis: {
                   format: function (val) {
