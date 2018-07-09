@@ -262,7 +262,11 @@ export default {
 }
 
 .chart-canvas{
-  height: 400rpx;
+  /* height: 400rpx; */
+  width: 640px;
+  height: 600px;
+  transform-origin :left top;
+  transform: scale(0.5)
 }
 
 .chart-canvas-view{
@@ -280,6 +284,7 @@ export default {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  height: 260px;
   flex-direction: column;
 }
 

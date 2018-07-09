@@ -252,21 +252,26 @@ const actions = {
             let subjects = response.data.result.subjects
             let configs = subjects.map(subject => {
               let chartId = 'column_' + subject.id
-              let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
-              // let datas2 = subject.answers.map(answer => { return answer.count })
-              // let categs = subject.answers.map(answer => { return answer.value })
+              // let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+              let datas2 = subject.answers.map(answer => { return answer.count })
+              let categs = subject.answers.map(answer => { return answer.value })
               let config = {
                 canvasId: chartId,
                 type: 'column',
-                categories: [''],
-                series: datas,
+                categories: categs,
+                series: [{ name: '', data: datas2 }],
                 yAxis: {
                   format: function (val) {
                     return val
                   }
                 },
-                width: 320,
-                height: 200
+                xAxis: {
+                  fontColor: '#000000'
+                },
+                legend: false,
+                width: 640,
+                height: 400,
+                dataLabel: true
               }
               return config
             })
