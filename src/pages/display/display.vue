@@ -77,12 +77,14 @@ export default {
     title: '',
     navItems: ['答卷列表', '问题汇总'],
     activeIndex: 0,
-    grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ]
+    grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ],
+    charts: []
   },
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => state.surveyResult.curSurvey
+      survey: state => state.surveyResult.curSurvey,
+      chartConfigs: state => state.surveyResult.chartConfigs
     }),
     ...mapGetters({
       surveySummary: 'surveySummary',
@@ -95,9 +97,14 @@ export default {
     getQuestions(){
       let that = this;
       let questions = this.survey.subjects.map(subject => {
-        let chartId = 'column_' +subject.id
+        let chartId = 'column_' + subject.id
         return {id:subject.id, question: subject.question, type: formatTypes[subject.type], chartId: chartId}
       })
+      let configs = this.chartConfigs
+      this.charts = configs.map( config => {
+          console.log(config)
+          return new WxCharts(config)
+        })
       console.log('questions is :')
       console.log(questions)
       return questions
@@ -138,6 +145,13 @@ export default {
     },
     tabActive (event) {
       this.activeIndex = event
+      if(this.activeIndex == 1){
+        console.log('switch to charts tab')
+        this.charts.map( chart => {
+          console.log(chart)
+          chart.updateData()
+        })
+      }
     },
 
     touchStart (e) {
@@ -172,36 +186,8 @@ export default {
       console.log('error: page receive no survey id!')
     }
     this.$store.dispatch('querySurveyResult', this.surveyId)
-    // this.$store.dispatch('querySurveyById', this.surveyId)
-    this.$store.dispatch('querySurveyById', this.surveyId).then((retSurvey) =>{
-      console.log(retSurvey)
-      let charts = retSurvey.subjects.map(subject => {
-      let chartId = 'column_' + subject.id
-      console.log('creating :' + chartId)
-      return new WxCharts({
-        canvasId: chartId,
-        type: 'column',
-        categories: ['2012'],
-        series: [
-          {
-            name: '成交量1',
-            data: [20]
-          },
-          {
-            name: '成交量2',
-            data: [30]
-          }],
-        yAxis: {
-          format: function (val) {
-            return val
-          }
-        },
-        width: 320,
-        height: 200
-      })
-    }) 
-    })
-    //  this.$store.dispatch('createSurveyCharts')
+    this.$store.dispatch('querySurveyById', this.surveyId)
+    this.$store.dispatch('queryAnswerStatics', this.surveyId)
   },
   mounted () {
   }

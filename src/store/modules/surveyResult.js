@@ -1,18 +1,22 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
+const surveyStatisticUrl = 'https://xiaodamp.cn/asstbot/survey/statistic'
 var date = new Date()
 import wechat from './wechat'
-import WxCharts from '@/utils/wxcharts'
 
 const state = {
   result: [],
   subjects: [],
   replySurveys: [],
   curSurvey: {},
-  questionCharts: []
+  chartConfigs: []
 }
 
 const getters = {
+  chartCreateConfigs: state => {
+    return state.chartConfigs
+  },
+
   surveySummary: state => {
     let ret = []
     for (let index in state.result) {
@@ -152,8 +156,8 @@ const mutations = {
   addReplySurveys (state, survey) {
     state.replySurveys.push(survey)
   },
-  updateQuestionCharts (state, charts) {
-    state.questionCharts = charts
+  updateChartConfigs (state, charts) {
+    state.chartConfigs = charts
   }
 }
 
@@ -231,34 +235,48 @@ const actions = {
         })
     })
   },
-  createSurveyCharts ({commit}) {
+
+  queryAnswerStatics ({commit}, surveyId) {
     return new Promise((resolve, reject) => {
-      let charts = state.curSurvey.subjects.map(subject => {
-        let chartId = 'column_' + subject.id
-        console.log('creating :' + chartId)
-        return new WxCharts({
-          canvasId: chartId,
-          type: 'column',
-          categories: ['2012'],
-          series: [
-            {
-              name: '成交量1',
-              data: [20]
-            },
-            {
-              name: '成交量2',
-              data: [30]
-            }],
-          yAxis: {
-            format: function (val) {
-              return val
-            }
-          },
-          width: 320,
-          height: 200
-        })
+      wx.request({
+        url: surveyStatisticUrl,
+        data: {
+          surveyId: surveyId
+        },
+        success: (response) => {
+          if (response.statusCode === 200) {
+            console.log(response.data.result)
+            let subjects = response.data.result.subjects
+            let configs = subjects.map(subject => {
+              let chartId = 'column_' + subject.id
+              let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+              let config = {
+                canvasId: chartId,
+                type: 'column',
+                categories: ['2012'],
+                series: datas,
+                yAxis: {
+                  format: function (val) {
+                    return val
+                  }
+                },
+                width: 3200,
+                height: 200
+              }
+              return config
+            })
+            console.log('comming here .............')
+            console.log(configs)
+            commit('updateChartConfigs', configs)
+            resolve(configs)
+          } else {
+            reject(response)
+          }
+        },
+        faile: (err) => {
+          reject(err)
+        }
       })
-      commit('updateQuestionCharts', charts)
     })
   }
 }
