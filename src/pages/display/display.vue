@@ -44,7 +44,7 @@
      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
        <view v-for="item in getQuestions" :key="item" >
         <view class="weui-cell__hd">问题{{item.id}}：{{item.question}} 【{{item.type}}】</view> 
-        <canvas :canvas-id="item.chartId" class="canvas" style="height:300px"></canvas>
+        <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
        </view> 
      </scroll-view>   
    </view>
@@ -260,6 +260,9 @@ export default {
     padding-bottom: 40rpx;
 }
 
+.chart-canvas{
+  height: 400rpx;
+}
 
 .btn {
   width: 30%;
