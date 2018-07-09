@@ -78,7 +78,6 @@ export default {
 
   methods: {
     createBot (ev) {
-      let newSurveyType = this.surveyType
       this.$store.dispatch('createSurvey',
         {
           title: this.title,
@@ -87,8 +86,8 @@ export default {
           intro: this.welcomeText
         })
         .then((surveyId) => {
-          wx.navigateTo({
-            url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=${newSurveyType}`
+          wx.redirectTo({
+            url: `/pages/surveySubjects/main?id=${surveyId}`
           })
         })
     },

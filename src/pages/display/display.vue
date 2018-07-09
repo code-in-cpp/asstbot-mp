@@ -110,9 +110,8 @@ export default {
   methods: {
     editSurvey () {
       let surveyId = this.surveyId
-      let surveyType = this.survey.type
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${surveyId}&surveyType=${surveyType}`
+        url: `/pages/surveySubjects/main?id=${surveyId}`
       })
     },
     deleteSurvey () {
@@ -126,7 +125,7 @@ export default {
           if (res.confirm) {
             that.$store.dispatch('deleteSurvey', that.surveyId)
               .then(() => {
-                wx.navigateTo({
+                wx.reLaunch({
                   url: `/pages/home/main`
                 })
               })
