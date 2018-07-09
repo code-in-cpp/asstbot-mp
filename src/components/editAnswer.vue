@@ -1,14 +1,6 @@
 <template>
   <block>
     <view class="weui-cells weui-cells_after-title">
-      <label class="weui-cell weui-check__label" @click="addAnswer(subjectIndex)">
-        <view class="weui-cell__ft"  >
-          <i class="icon iconfont icon-add"></i>
-        </view>
-        <view class="weui-cell__ft">
-          添加答案
-        </view>
-      </label>
       <label class="weui-cell weui-check__label" v-for="(answer, index) in answers" :key="index">
         <view class="weui-cell__hd weui-check__hd_in-checkbox" @click="toUpdateAnswerCorrect(index)">
           <block v-if="type=='radio' && surveyType=='exam'">
@@ -32,6 +24,14 @@
           <view @click="removeAnswer({subject:subjectIndex, answer:index})">
             <i class="icon iconfont icon-trash"></i>
           </view>
+        </view>
+      </label>
+      <label class="weui-cell weui-check__label" @click="addAnswer(subjectIndex)">
+        <view class="weui-cell__ft"  >
+          <i class="icon iconfont icon-add"></i>
+        </view>
+        <view class="weui-cell__ft">
+          添加答案
         </view>
       </label>
 
