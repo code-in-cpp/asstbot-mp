@@ -19,7 +19,7 @@ const actions = {
       wx.uploadFile({
         url,
         filePath,
-        name: 'file',
+        name: 'image',
         success: function (res) {
           const url = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
           dispatch('sendImage', {url, indicator}).then(() => resolve())
@@ -37,7 +37,7 @@ const actions = {
       wx.uploadFile({
         url,
         filePath,
-        name: 'file',
+        name: 'image',
         success: (res) => {
           const remoteUrl = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
           resolve(remoteUrl)

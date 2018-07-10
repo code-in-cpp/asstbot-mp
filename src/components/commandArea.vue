@@ -159,13 +159,10 @@ export default {
       this.startRecordOperation()
     },
     stopRecord (e) {
-      if (this.recordStatus === 'inRecording') {
-        // this.$store.dispatch('sendQuery', recognizeText)
-      }
-      this.clearRecordStatus()
+      recorderManager.stop()
     },
     cancelRecord (e) {
-      this.clearRecordStatus()
+      recorderManager.stop()
     },
     recordOperation (e) {
       this.endRecordPageY = e.clientY
@@ -179,9 +176,9 @@ export default {
       this.recordStatus = 'readyToRecord'
       this.startRecordPageY = 0
       this.endRecordPageY = 0
-      recorderManager.stop()
     },
     startRecordOperation () {
+      let that = this
       recorderManager.onStart(() => {
         console.log('recorder start')
       })
@@ -191,6 +188,10 @@ export default {
       recorderManager.onStop((res) => {
         console.log('recorder stop', res)
         // const { tempFilePath } = res
+        if (that.recordStatus === 'inRecording') {
+          that.$store.dispatch('getAsrResult', res.tempFilePath)
+        }
+        that.clearRecordStatus()
       })
       recorderManager.onFrameRecorded((res) => {
         const { frameBuffer } = res
