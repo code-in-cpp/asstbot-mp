@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -64,6 +64,13 @@
 					"name": "底部功能测试",
 					"pathName": "pages/index/main",
 					"query": "id=9be713b0831e11e897029b6204dd4fb1",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "世界杯那天举行",
+					"pathName": "pages/index/main",
+					"query": "id=9d974f60835811e8b7cbe70458c2f037",
 					"scene": "1008"
 				}
 			]

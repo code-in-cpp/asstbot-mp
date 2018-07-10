@@ -16,7 +16,7 @@ const mutations = {
 }
 
 const actions = {
-  getAsrResult ({commit}, filePath) {
+  getAsrResult ({dispatch, commit}, filePath) {
     return new Promise((resolve, reject) => {
       wx.uploadFile({
         url,
@@ -26,7 +26,25 @@ const actions = {
         //   filename: filePath
         // },
         success: function (res) {
-          console.log(res)
+          if (res.statusCode === 200) {
+            var result = JSON.parse(res.data)
+            if (result.result && !result.result.err_no) {
+              console.log('result', result)
+              try {
+                var asr = result.result.result[0]
+                asr = asr.substr(0, asr.length - 1)
+                console.log(asr)
+                dispatch('sendSpeech', {url: hostRoot + result.url, asr, nlu: true})
+              } catch (err) {
+                reject(err)
+              }
+              resolve()
+            } else {
+              reject(new Error('语音识别错误'))
+            }
+          } else {
+            reject(new Error('文件上传失败'))
+          }
           resolve(res)
         },
         fail: function (error) {

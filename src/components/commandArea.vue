@@ -164,7 +164,21 @@ export default {
         console.log('recorder stop', res)
         // const { tempFilePath } = res
         if (that.recordStatus === 'inRecording') {
+          wx.showLoading({
+            title: '认真理解中',
+            mask: true
+          })
           that.$store.dispatch('getAsrResult', res.tempFilePath)
+            .then(() => {
+              wx.hideLoading()
+            })
+            .catch(() => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '没听懂:(',
+                icon: 'none'
+              })
+            })
         }
         that.clearRecordStatus()
       })
@@ -177,7 +191,7 @@ export default {
         duration: 60000,
         sampleRate: 16000,
         numberOfChannels: 1,
-        encodeBitRate: 96000,
+        encodeBitRate: 64000,
         format: 'mp3'
       }
 

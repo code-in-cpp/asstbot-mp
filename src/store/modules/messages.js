@@ -165,6 +165,9 @@ const actions = {
   },
   allowPermise ({commit}, data) {
     return _sendmessage(commit, 'allow', data)
+  },
+  sendSpeech ({commit}, {url, asr, nlu}) {
+    return _sendmessage(commit, 'speech', {url, asr, nlu})
   }
 }
 

@@ -3,7 +3,8 @@
     <block v-if="outgoing">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
-        <user-say-allow :content="messages.data.query" v-if="messages.type=='allow'"></user-say-allow>
+        <user-say-allow :content="messages.data.query" v-else-if="messages.type=='allow'"></user-say-allow>
+        <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
     </block>
     <block v-else>
       <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type == 'radio'">
@@ -30,6 +31,7 @@
 import userSayText from '@/components/userSay/userSayText'
 import userSayImage from '@/components/userSay/userSayImage'
 import userSayAllow from '@/components/userSay/userSayAllow'
+import userSaySpeech from '@/components/userSay/userSaySpeech'
 import botSayText from '@/components/botSay/botSayText'
 import botSayUserAuth from '@/components/botSay/botSayUserAuth'
 import botSayNew from '@/components/botSay/botSayNew'
@@ -73,6 +75,7 @@ export default {
     userSayText,
     userSayImage,
     userSayAllow,
+    userSaySpeech,
     botSayText,
     botSayUserAuth,
     botSayNew,
