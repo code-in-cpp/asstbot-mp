@@ -82,29 +82,9 @@ export default {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
           let type = data[0].msgs.slice(-1)[0].type
-          let nlu = data[0].msgs.slice(-1)[0].nlu
-          return (type === 'text') || nlu
+          return (type === 'text')
         }
         return false
-      },
-      nluType: state => {
-        let data = state.messages.data.slice(-1)
-        if (data[0] && data[0].to) {
-          let type = data[0].msgs.slice(-1)[0].type
-          let nlu = data[0].msgs.slice(-1)[0].nlu
-          if (nlu) {
-            if (type === 'date-picker') return 'date'
-            return type
-          }
-        }
-        return null
-      },
-      indicator: state => {
-        let data = state.messages.data.slice(-1)
-        if (data[0] && data[0].to) {
-          return data[0].msgs.slice(-1)[0].indicator
-        }
-        return null
       }
     }),
     recordOperationText () {
@@ -130,12 +110,7 @@ export default {
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
-      let nluType = this.nluType
-      if (nluType) {
-        this.$store.dispatch('sendNlu', { type: nluType, value: this.currentMessage, nlu: true, indicator: this.indicator })
-      } else {
-        this.$store.dispatch('sendQuery', this.currentMessage)
-      }
+      this.$store.dispatch('sendQuery', this.currentMessage)
       this.currentMessage = ''
     },
     rowChange (e) {
