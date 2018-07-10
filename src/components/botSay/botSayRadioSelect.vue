@@ -31,7 +31,7 @@
     methods: {
       selectOption (e) {
         this.flag = false
-        this.$store.dispatch('sendQuery', e.mp.detail.value)
+        this.$store.dispatch('sentRadioReply', {value: e.mp.detail.value})
       }
     }
   }

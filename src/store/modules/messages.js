@@ -157,6 +157,12 @@ const actions = {
   sendImage ({commit}, {url, indicator}) {
     return _sendmessage(commit, 'image', {url, indicator})
   },
+  sentRadioReply ({ commit }, data) {
+    return _sendmessage(commit, 'radio-reply', data)
+  },
+  sentCheckBoxReply ({ commit }, data) {
+    return _sendmessage(commit, 'checkbox-reply', data)
+  },
   start ({commit}, id) {
     return _sendmessage(commit, 'start', {id})
   },
