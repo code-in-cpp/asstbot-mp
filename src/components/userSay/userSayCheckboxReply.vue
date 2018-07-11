@@ -1,9 +1,22 @@
 <template>
-  <view class="wrapper word-text right-block">
-    <view class="outgoing right-item">
-      {{displayText}}
+  <block>
+    <view class="wrapper word-text right-block">
+      <view class="outgoing right-item">
+        {{displayText}}
+      </view>
     </view>
-  </view>
+    <view class="right-block">
+      <swiper>
+        <block v-for="item in imgUrls"  :key="item">
+          <swiper-item>
+            <image :src="item" class="image" mode="widthFix"/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+  </block>
+
 </template>
 
 <script>
@@ -16,9 +29,21 @@
     },
     computed: {
       displayText () {
-        return this.content.items.reduce((lhs, rhs) => {
-          return lhs.value + ',' + rhs.value
+        let str = ''
+        this.content.items.map(item => {
+          str += item.caption + ','
         })
+        return str.substring(0, str.length - 1)
+        // return this.content.items.reduce((lhs, rhs) => {
+        //   return lhs.value + ',' + rhs.value
+        // })
+      },
+      imgUrls () {
+        let arr = []
+        this.content.items.map(item => {
+          arr = [...arr, item.imageUrl]
+        })
+        return arr
       }
     },
     created () {
@@ -49,5 +74,8 @@
   }
   .right-item{
     max-width: 70%;
+  }
+  .image{
+    width:400rpx;
   }
 </style>

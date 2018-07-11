@@ -50,7 +50,7 @@
             @touchend="stopRecord">{{recordOperationText}}</button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
-        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="currentMessage=='' || focusFlag">
+        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
       </view>
@@ -85,6 +85,9 @@ export default {
           return (type === 'text')
         }
         return false
+      },
+      items: state => {
+        return state.inputValue.items
       }
     }),
     recordOperationText () {
@@ -98,7 +101,6 @@ export default {
     }
   },
   updated () {
-    // console.log(this.activeAction)
   },
   methods: {
     updateUserInfo (ev) {
@@ -110,8 +112,16 @@ export default {
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
-      this.$store.dispatch('sendQuery', this.currentMessage)
-      this.currentMessage = ''
+      if (this.currentMessage && !this.focusFlag) {
+        this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
+          this.$store.commit('clearState')
+        })
+        this.currentMessage = ''
+      } else {
+        this.$store.dispatch('sentCheckBoxReply', {items: this.items}).then(res => {
+          this.$store.commit('clearState')
+        })
+      }
     },
     rowChange (e) {
       this.rowHeight = e.mp.detail.heightRpx + 'rpx'
@@ -170,6 +180,7 @@ export default {
           })
           that.$store.dispatch('getAsrResult', res.tempFilePath)
             .then(() => {
+              that.$store.commit('clearState')
               wx.hideLoading()
             })
             .catch(() => {

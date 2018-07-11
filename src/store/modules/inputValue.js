@@ -1,12 +1,17 @@
 
-const state = {}
+const state = {
+  items: []
+}
 
 const getters = {
 }
 
 const mutations = {
-  updateData (state, obj) {
-    state.data = {...state.data, ...obj}
+  updateCheckboxData (state, obj) {
+    state.items = [...obj.items]
+  },
+  clearState (state) {
+    delete state.items
   }
 }
 
