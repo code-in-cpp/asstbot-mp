@@ -5,6 +5,8 @@
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
         <user-say-allow :content="messages.data.query" v-else-if="messages.type=='allow'"></user-say-allow>
         <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
+        <user-say-checkbox-reply :content="messages.data" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
+        <user-say-radio-reply :content="messages.data" v-else-if="messages.type=='radio-reply'"></user-say-radio-reply>
     </block>
     <block v-else>
       <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' ">
@@ -32,6 +34,8 @@ import userSayText from '@/components/userSay/userSayText'
 import userSayImage from '@/components/userSay/userSayImage'
 import userSayAllow from '@/components/userSay/userSayAllow'
 import userSaySpeech from '@/components/userSay/userSaySpeech'
+import userSayCheckboxReply from '@/components/userSay/userSayCheckboxReply'
+import userSayRadioReply from '@/components/userSay/userSayRadioReply'
 import botSayText from '@/components/botSay/botSayText'
 import botSayUserAuth from '@/components/botSay/botSayUserAuth'
 import botSayNew from '@/components/botSay/botSayNew'
@@ -76,6 +80,8 @@ export default {
     userSayImage,
     userSayAllow,
     userSaySpeech,
+    userSayCheckboxReply,
+    userSayRadioReply,
     botSayText,
     botSayUserAuth,
     botSayNew,
