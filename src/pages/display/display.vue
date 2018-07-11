@@ -181,6 +181,7 @@ export default {
       this.surveyId = 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421'
       this.title = '测测你有多了解我？'
     }
+    console.log('surveyId is:', this.surveyId)
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
     this.$store.dispatch('queryAnswerStatics', this.surveyId)

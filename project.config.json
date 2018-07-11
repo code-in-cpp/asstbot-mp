@@ -29,13 +29,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "调查问卷",
 					"pathName": "pages/index/main",
-					"query": "id=9896d49081dc11e8a876e14a6ebd03a1",
+					"query": "id=abecd7c0850011e8a0318908d5dcd721",
 					"scene": "1008"
 				},
 				{

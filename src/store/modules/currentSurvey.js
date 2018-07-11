@@ -120,10 +120,15 @@ const mutations = {
   addAnswer (state, subjectIndex) {
     let subject = state.survey.subjects[subjectIndex]
     let defaultValue = ''
+    let defaultCorrect = false
     if (subject.type === 'date') {
       defaultValue = '2018-07-12'
+      defaultCorrect = true
     }
-    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: false, imageUrl: ''})
+    if (subject.type === 'text') {
+      defaultCorrect = true
+    }
+    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: ''})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)
