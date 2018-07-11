@@ -1,7 +1,7 @@
 import wechat from './wechat'
 import config from '@/config.js'
 
-const url = `${config.service.hostRoot}/chatbot/survey`
+var url = `${config.service.hostRoot}/chatbot/survey`
 
 const state = {
   data: [
@@ -81,6 +81,12 @@ const mutations = {
   appendMessage (state, message) {
     const timestamp = new Date()
     state.data.push({timestamp, ...message})
+  },
+  talkToBotFather (state) {
+    url = `${config.service.hostRoot}/chatbot`
+  },
+  talkToSurveyBot (state) {
+    url = `${config.service.hostRoot}/chatbot/survey`
   }
 }
 
