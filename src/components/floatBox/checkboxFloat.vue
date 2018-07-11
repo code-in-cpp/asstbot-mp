@@ -33,9 +33,10 @@
     methods: {
       selectItem () {
         if (this.captionArray.length) {
-          const list = this.list
-          let queryString = list.prefix ? (list.postfix ? list.prefix + this.captionArray.join(list.split) + list.postfix : list.prefix + this.captionArray.join(list.split)) : (list.postfix ? this.captionArray.join(list.split) + list.postfix : this.captionArray.join(list.split))
-          this.$store.dispatch('sendQuery', queryString)
+          let items = this.captionArray.map(item => {
+            return {value: item}
+          })
+          this.$store.dispatch('sentCheckBoxReply', {items})
         }
       },
       selectOption (e) {

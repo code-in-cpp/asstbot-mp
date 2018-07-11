@@ -38,7 +38,8 @@
     },
     methods: {
       selectItem (value) {
-        this.$store.dispatch('sendQuery', this.value)
+        // this.$store.dispatch('sendQuery', this.value)
+        this.$store.dispatch('sentRadioReply', {value: this.value})
       },
       selectOption (e) {
         this.value = e.mp.detail.value

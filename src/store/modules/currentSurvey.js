@@ -104,6 +104,11 @@ const mutations = {
       state.survey.subjects[index].answers = answers
     }
     state.survey.subjects[index].type = type
+    if (type === 'date') {
+      state.survey.subjects[index].nlu = true
+    } else {
+      state.survey.subjects[index].nlu = false
+    }
   },
   updateSubjectQuestion (state, {index, question}) {
     state.survey.subjects[index].question = question

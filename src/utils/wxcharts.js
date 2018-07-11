@@ -19,7 +19,7 @@ var config = {
     yAxisTitleWidth: 15,
     padding: 12,
     columePadding: 3,
-    fontSize: 10,
+    fontSize: 24,
     dataPointShape: ['diamond', 'circle', 'triangle', 'rect'],
     colors: ['#7cb5ec', '#f7a35c', '#434348', '#90ed7d', '#f15c80', '#8085e9'],
     pieChartLinePadding: 25,
@@ -286,7 +286,7 @@ function getDataRange(minData, maxData) {
 }
 
 function measureText(text) {
-    var fontSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+    var fontSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : config.fontSize;
 
     // wx canvas 未实现measureText方法, 此处自行实现
     text = String(text);

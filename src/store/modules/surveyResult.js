@@ -34,8 +34,11 @@ const getters = {
   },
 
   commitToday: state => {
-    let currentTime = date.toLocaleDateString().replace('/', '-')
-    let todayResult = state.result.filter(item => { return item.created_at.indexOf(currentTime) >= 0 })
+    let currentTime = date.toLocaleDateString().replace(new RegExp('/', 'gm'), '-')
+    console.log('current time:' + currentTime)
+    let todayResult = state.result.filter(item => {
+      return item.created_at.indexOf(currentTime) >= 0
+    })
     return todayResult.length
   },
   commitCount: state => {
@@ -247,19 +250,35 @@ const actions = {
             let subjects = response.data.result.subjects
             let configs = subjects.map(subject => {
               let chartId = 'column_' + subject.id
-              let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+              // let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+              let datas2 = subject.answers.map(answer => { return answer.count })
+              let categs = subject.answers.map(answer => { return answer.value })
+              if (categs.length === 0) {
+                console.log('has no valid answer')
+                categs = ['没有回复']
+                datas2 = [0]
+              }
               let config = {
                 canvasId: chartId,
                 type: 'column',
-                categories: ['2012'],
-                series: datas,
+                categories: categs,
+                series: [{ name: '', data: datas2 }],
                 yAxis: {
                   format: function (val) {
                     return val
-                  }
+                  },
+                  min: -1,
+                  max: 4
                 },
-                width: 320,
-                height: 200
+                xAxis: {
+                  fontColor: '#000000'
+                },
+                legend: false,
+                width: 640,
+                height: 400,
+                extra: {
+                  column: { width: 50 }
+                }
               }
               return config
             })

@@ -19,10 +19,10 @@ app.$mount()
 export default {
   // 这个字段走 app.json
   config: {
-    pages: ['^pages/home/main', 'pages/display/main', 'pages/detail/main', 'pages/surveySubjects/main', 'pages/chart/main', 'pages/publish/main'],
+    pages: ['^pages/home/main', 'pages/display/main', 'pages/detail/main', 'pages/surveySubjects/main', 'pages/publish/main'],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '2C2D31',
+      navigationBarBackgroundColor: '#2C2D31',
       navigationBarTextStyle: 'white',
       enablePullDownRefresh: false
     }
