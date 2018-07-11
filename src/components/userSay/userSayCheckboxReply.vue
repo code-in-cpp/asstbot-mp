@@ -5,8 +5,8 @@
         {{displayText}}
       </view>
     </view>
-    <view class="right-block">
-      <swiper>
+    <view class="swiper-box">
+      <swiper class="swiper">
         <block v-for="item in imgUrls"  :key="item">
           <swiper-item>
             <image :src="item" class="image" mode="widthFix"/>
@@ -77,5 +77,13 @@
   }
   .image{
     width:400rpx;
+  }
+  .swiper-box{
+    text-align: right;
+  }
+  .swiper{
+    width:400rpx;
+    display:inline-block;
+    margin-right:10rpx;
   }
 </style>
