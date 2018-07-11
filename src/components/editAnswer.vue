@@ -16,12 +16,16 @@
           </block>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" :placeholder="'请输入答案'+(index+1)" 
+          <input class="weui-input" :placeholder="'请输入答案'+(index+1)"
             @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
                       :value="answer.value"/>
         </view>
+        <view class="icon-item-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+          <i v-show="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
+          <image v-show="answer.imageUrl" :src="answer.imageUrl"></image>
+        </view>
         <view class="weui-cell__ft">
-          <view @click="removeAnswer({subject:subjectIndex, answer:index})">
+          <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
             <i class="icon iconfont icon-trash"></i>
           </view>
         </view>
@@ -37,12 +41,16 @@
 
     </view>
   </block>
-  
+
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
 export default {
+  data () {
+    return {
+    }
+  },
   props: {
     subjectIndex: {
       type: Number,
@@ -64,6 +72,7 @@ export default {
       if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
         return []
       }
+      console.log(this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers)
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
     }
   },
@@ -73,7 +82,8 @@ export default {
       'addAnswer',
       'removeAnswer',
       'updateAnswerValue',
-      'updateAnswerCorrect'
+      'updateAnswerCorrect',
+      'updateAnswerImagePath'
     ]),
     toUpdateAnswerCorrect (index) {
       if (this.type === 'radio') {
@@ -91,6 +101,21 @@ export default {
           value: correct
         })
       }
+    },
+    addMedia (obj, e) {
+      const that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            that.$store.commit('updateAnswerImagePath', {...obj, value: res})
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      })
     }
   }
 }
@@ -123,5 +148,9 @@ view {
 .checkbox-icon-box .icon-right {
   color: #1AAD19;
   font-size: 40rpx;
+}
+.icon-item-style{
+  width:48rpx;
+  text-align: center;
 }
 </style>

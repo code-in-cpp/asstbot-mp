@@ -106,5 +106,11 @@ page{
 .top_0{
   height: 700rpx;
 }
+  .font-color{
+    color: #999;
+  }
+  .font-size{
+    font-size: 28rpx;
+  }
 
 </style>

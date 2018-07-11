@@ -13,9 +13,13 @@
         </block>
       </scroll-view>
     </view>
-    <view class="footer" :class="{'height_700': !flag }">
-      <command-area v-if="flag"/>
-      <float-index v-else-if="!flag"></float-index>
+    <!--<view class="footer" :class="{'height_700': !flag }">-->
+      <!--<command-area v-if="flag"/>-->
+      <!--<float-index v-else-if="!flag"></float-index>-->
+    <!--</view>-->
+    <view class="footer">
+      <select-box></select-box>
+      <command-area/>
     </view>
   </div>
 </template>
@@ -27,6 +31,7 @@ import headerArea from '@/components/headerArea'
 import pageTitle from '@/components/pageTitle'
 import msgList from '@/components/msgList'
 import floatIndex from '@/components/floatIndex'
+import selectBox from '@/components/selectBox'
 
 export default {
   data () {
@@ -103,7 +108,8 @@ export default {
     // boxFloat,
     floatIndex,
     pageTitle,
-    msgList
+    msgList,
+    selectBox
     // uploadAvatar,
   },
 

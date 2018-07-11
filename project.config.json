@@ -29,13 +29,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
 					"name": "调查问卷",
 					"pathName": "pages/index/main",
-					"query": "id=survey-6557cc50-7ddc-11e8-a737-bbef859bcb8d",
+					"query": "id=survey-5f936c50-8031-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
 				},
 				{
@@ -68,9 +68,9 @@
 				},
 				{
 					"id": -1,
-					"name": "世界杯那天举行",
-					"pathName": "pages/index/main",
-					"query": "id=9d974f60835811e8b7cbe70458c2f037",
+					"name": "测试加入图片的功能",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=survey-8a5de9f0-7e89-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
 				}
 			]

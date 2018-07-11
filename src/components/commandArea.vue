@@ -1,5 +1,5 @@
 <template>
-  <form report-submit="true" @submit="sendMessage" class="footer"  v-if="flag">
+  <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="record-status" v-if="recordStatus!='readyToRecord'">
       <block v-if="recordStatus=='inRecording'">
         <view class="weui-flex" style="width: 300rpx">
@@ -32,7 +32,7 @@
         </button>
         <button class="input-widget height-line-height default-widget" size="small" @click="voiceMode=false" v-else>
           <i class="icon iconfont .icon-keyboard"></i>
-        </button>        
+        </button>
       </view>
 
       <view class="weui-flex__item height-line-height command-box"  v-if="!voiceMode">
@@ -288,12 +288,12 @@ export default {
     width: 80rpx;
     height: 80rpx;
     background-color: #fff;
-  
-    border-radius: 100%; 
+
+    border-radius: 100%;
     -webkit-animation: scaleout 1.0s infinite ease-in-out;
     animation: scaleout 1.0s infinite ease-in-out;
   }
-  
+
   @-webkit-keyframes scaleout {
     0% { -webkit-transform: scale(0.0) }
     100% {
@@ -301,7 +301,7 @@ export default {
       opacity: 0;
     }
   }
- 
+
 @keyframes scaleout {
   0% {
     transform: scale(0.0);
