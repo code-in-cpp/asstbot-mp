@@ -151,36 +151,36 @@ export default {
     //     url: '../display/main'
     //   })
     // }
-    const surveyId = option.id ? option.id : option.scene
+    if (option.id) {
+      const scene = option.scene ? option.scene : 'publish'
+      this.$store.commit('talkToSurveyBot', {id: option.id, scene})
 
-    if (surveyId) {
-      this.$store.dispatch('setId', surveyId)
-      this.$store.dispatch('retrieveSurveyById', surveyId)
+      this.$store.dispatch('retrieveSurveyById', option.id)
         .then((survey) => {
           this.survey = survey
         })
         .catch((err) => {
           console.log(err)
         })
-      this.$store.dispatch('updateUserInfo').then((res) => {
-        if (this.userAuthed) {
-          this.$store.dispatch('start', surveyId)
-        } else {
-          this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-        }
-      }).catch((err) => {
-        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-        console.log(err)
-      })
+    } else {
+      this.$store.commit('talkToBotFather')
     }
+
+    this.$store.dispatch('updateUserInfo').then((res) => {
+      if (this.userAuthed) {
+        this.$store.dispatch('start')
+      } else {
+        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+      }
+    }).catch((err) => {
+      this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+      console.log(err)
+    })
   }
 }
 </script>
 
 <style scoped>
-  .footer{
-
-  }
   .height_700{
     height:700rpx
   }
