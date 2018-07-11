@@ -23,7 +23,7 @@
                 </block>
                 </view>
               </view>
-              <view v-if="activeIndex == 1"> 
+              <view v-if="activeIndex == 1">
                 <view class="weui-cells weui-cells_after-title">
                 <block v-for="survey in replySurveys" :key="survey.id">
                   <navigator :url="'/pages/detail/main?resultId='+survey.resultId+'&surveyId='+survey.id+'&score='+survey.score" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">

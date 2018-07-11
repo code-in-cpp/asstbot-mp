@@ -29,13 +29,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
 					"name": "调查问卷",
 					"pathName": "pages/index/main",
-					"query": "id=survey-7ea17cd0-7f6f-11e8-b56b-594b8a930fa4",
+					"query": "id=survey-5f936c50-8031-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
 				},
 				{
@@ -64,6 +64,13 @@
 					"name": "底部功能测试",
 					"pathName": "pages/index/main",
 					"query": "id=9be713b0831e11e897029b6204dd4fb1",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "测试加入图片的功能",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=survey-8a5de9f0-7e89-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
 				}
 			]

@@ -22,26 +22,30 @@
               <block v-for="(subject, i) in subjects" :key="subject">
                 <view class="subject-divider"></view>
                 <view class="weui-cells weui-cells_after-title">
-                  <view class="weui-cell weui-cell_input subject-area" >
-                    <view class="weui-cell__hd">
-                      <view class="weui-label">题目 {{i+1}}</view>
+                  <view class="weui-cell weui-cell_input subject-area subject-style font-size">
+                    <view class="weui-cell__hd subject-item-style">
+                      <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                     </view>
-                    <view class="weui-cell__bd">
-                      <input class="weui-input" type="text" placeholder="请输入问题" :value="subject.question"
+                    <view class="weui-cell__bd subject-item-style">
+                      <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" :value="subject.question"
                         @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
                     </view>
-                    <view class="weui-cell__ft">
+                    <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
+                      <i class="icon iconfont icon-picture font-color"></i>
+                    </view>
+                    <view class="weui-cell__ft subject-item-style">
                       <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
-                        <view class="weui-select">{{typeNames[i]}}</view>
+                        <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
                       </picker>
                     </view>
-                    <view class="weui-cell__ft">
-                      <view @click="removeSubject(i)">
+                    <view class="weui-cell__ft subject-item-style">
+                      <view class="icon-item-style" @click="removeSubject(i)">
                         <i class="icon iconfont icon-trash"></i>
                       </view>
                     </view>
                   </view>
                 </view>
+                <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl"></image-gallery>
                 <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
               </block>
               <view class="subject-divider"></view>
@@ -130,6 +134,7 @@
 import { mapState, mapMutations } from 'vuex'
 import editAnswer from '@/components/editAnswer'
 import navBar from '@/components/navBar'
+import imageGallery from '@/components/imageGallery'
 
 const subjectType = ['radio', 'checkbox', 'text']
 const subjectTypeName = ['单选', '多选', '问答']
@@ -172,7 +177,8 @@ export default {
 
   components: {
     editAnswer,
-    navBar
+    navBar,
+    imageGallery
   },
 
   methods: {
@@ -201,6 +207,21 @@ export default {
     },
     tabActive (event) {
       this.activeIndex = event
+    },
+    addMedia (index) {
+      const that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            that.$store.commit('updateSubjectQuestionImage', {index, imageUrl: res})
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      })
     }
   },
 
@@ -209,6 +230,13 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
+    survey.subjects.map(item => {
+      item.imageUrl = ''
+      item.answers.map(item => {
+        item.imageUrl = ''
+      })
+      return item
+    })
     this.updateCurrentSurvey(survey)
   },
 
@@ -263,7 +291,29 @@ export default {
 }
 
 .iconfont {
-  display: inline-block
+  display: inline-block;
+  font-size:40rpx!important;
 }
+  .subject-style{
+    height:92rpx;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .subject-item-style{
+    height:100%;
+    line-height: 92rpx;
+  }
+  .subject-title-style{
+    color:#999;
+    width:150rpx;
+  }
+  .icon-item-style{
+    width:48rpx;
+    text-align: center;
+  }
+  .subject-hieght-line{
+    height:100%;
+    line-height: 92rpx;
+  }
 
 </style>

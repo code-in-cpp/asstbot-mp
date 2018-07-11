@@ -43,10 +43,10 @@
    <view  v-if="activeIndex == 1" class ="content">
      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
        <view v-for="item in getQuestions" :key="item" >
-        <view class="weui-cell__hd">问题{{item.id}}：{{item.question}} 【{{item.type}}】</view> 
+        <view class="weui-cell__hd">问题{{item.id}}：{{item.question}} 【{{item.type}}】</view>
         <canvas :canvas-id="item.chartId" class="canvas" style="height:300px"></canvas>
-       </view> 
-     </scroll-view>   
+       </view>
+     </scroll-view>
    </view>
     <view class="footer bottom_button">
       <view class="weui-flex">
@@ -102,12 +102,8 @@ export default {
       })
       let configs = this.chartConfigs
       this.charts = configs.map( config => {
-          console.log('begin dram canvas .........')
-          console.log(config)
           return new WxCharts(config)
         })
-      console.log('questions is :')
-      console.log(questions)
       return questions
     }
   },
@@ -178,12 +174,10 @@ export default {
   onLoad (option) {
     if (option.id) {
       this.surveyId = option.id
-      console.log('surveyId:' + this.surveyId)
       this.title = option.title
     } else {
       this.surveyId = 'survey-652ea4d0-7dad-11e8-abe8-abb0bd666421'
       this.title = '测测你有多了解我？'
-      console.log('error: page receive no survey id!')
     }
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)

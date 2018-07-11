@@ -1,5 +1,6 @@
 <template>
-  <form report-submit="true" @submit="sendMessage" class="footer"  v-if="flag">
+  <!--<form report-submit="true" @submit="sendMessage" class="footer"  v-if="flag">-->
+  <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex container-box" :class="{iphonex_padding : is_iphonex}">
       <!--<view class="placeholder">-->
         <!--<button class="height-line-height" v-if="!userAuthed" open-type="getUserInfo" @getuserinfo="updateUserInfo">用户</button>-->

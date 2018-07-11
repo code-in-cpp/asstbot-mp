@@ -10,6 +10,7 @@ import currentSurvey from './modules/currentSurvey'
 import surveyResult from './modules/surveyResult'
 import id from './modules/id'
 import iphonex from './modules/iphonex'
+import inputValue from './modules/inputValue'
 
 Vue.use(Vuex)
 
@@ -26,7 +27,8 @@ export default new Vuex.Store({
     currentSurvey,
     surveyResult,
     id,
-    iphonex
+    iphonex,
+    inputValue
   },
   strict: debug
 })

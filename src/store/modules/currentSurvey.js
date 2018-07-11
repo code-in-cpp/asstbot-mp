@@ -106,22 +106,25 @@ const mutations = {
     state.survey.subjects[index].type = type
   },
   updateSubjectQuestion (state, {index, question}) {
-    console.log({index, question})
-    console.log(state.survey.subjects[index])
     state.survey.subjects[index].question = question
   },
+  updateSubjectQuestionImage (state, {index, imageUrl}) {
+    state.survey.subjects[index].imageUrl = imageUrl
+  },
   addAnswer (state, subjectIndex) {
-    console.log(subjectIndex)
     state.survey.subjects[subjectIndex].answers.push({value: '', correct: false})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)
   },
   updateAnswerValue (state, {subject, answer, value}) {
+    console.log(state)
     state.survey.subjects[subject].answers[answer].value = value
   },
+  updateAnswerImagePath (state, {subject, answer, value}) {
+    state.survey.subjects[subject].answers[answer].imageUrl = value
+  },
   updateAnswerCorrect (state, {subject, answer, value}) {
-    console.log({subject, answer, value})
     state.survey.subjects[subject].answers[answer].correct = value
   }
 }

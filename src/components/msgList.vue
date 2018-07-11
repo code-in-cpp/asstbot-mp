@@ -6,7 +6,7 @@
         <user-say-allow :content="messages.data.query" v-if="messages.type=='allow'"></user-say-allow>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type == 'radio'">
+      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' ">
         <view class="weui-flex word-text left-block">
           <view class="left-item">
             <view style="padding: 3px 10px;width: 40rpx">
@@ -16,7 +16,7 @@
             <view class="botSayContainer">
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
               <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
-              <bot-say-radio-select :content="msg.title" v-else-if="msg.type=='radio'" :options="msg.items"></bot-say-radio-select>
+              <!--<bot-say-radio-select :content="msg.title" v-else-if="msg.type=='radio'" :options="msg.items"></bot-say-radio-select>-->
               <bot-say-text :content="msg.reply" v-else></bot-say-text>
             </view>
           </view>

@@ -171,7 +171,6 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
-            console.log(response.data)
             commit('updateResult', response.data.result)
             resolve(response)
           } else {
@@ -245,7 +244,6 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
-            console.log(response.data.result)
             let subjects = response.data.result.subjects
             let configs = subjects.map(subject => {
               let chartId = 'column_' + subject.id
@@ -265,8 +263,6 @@ const actions = {
               }
               return config
             })
-            console.log('comming here .............')
-            console.log(configs)
             commit('updateChartConfigs', configs)
             resolve(configs)
           } else {
