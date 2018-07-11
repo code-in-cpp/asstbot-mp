@@ -23,6 +23,13 @@
               </view>
            </picker>  
           </block>
+          <block v-else-if="type=='location'">
+            <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
+              <view class="picker height-line-92">
+                {{answer.value}}
+              </view>
+            </picker>
+          </block>
           <block v-else>  
             <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
               @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
@@ -57,6 +64,8 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
+      region: ['广东', '广州', '海珠'],
+      customItem: '全部'
     }
   },
   props: {
@@ -109,6 +118,16 @@ export default {
           value: correct
         })
       }
+    },
+
+    updateRegionAnswer (index, value) {
+      console.log('region select:', index, 'value', value)
+      let location = value[0].replace('省', '') + '-' + value[1].replace('市', '')
+      this.updateAnswerValue({
+        subject: this.subjectIndex,
+        answer: index,
+        value: location
+      })
     },
 
     addMedia (obj, e) {

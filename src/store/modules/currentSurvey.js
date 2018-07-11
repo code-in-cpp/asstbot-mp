@@ -120,13 +120,15 @@ const mutations = {
   addAnswer (state, subjectIndex) {
     let subject = state.survey.subjects[subjectIndex]
     let defaultValue = ''
-    let defaultCorrect = false
+    let defaultCorrect = true
     if (subject.type === 'date') {
       defaultValue = '2018-07-12'
-      defaultCorrect = true
     }
-    if (subject.type === 'text') {
-      defaultCorrect = true
+    if (subject.type === 'location') {
+      defaultValue = '陕西-西安'
+    }
+    if (subject.type === 'radio' || subject.type === 'checkbox') {
+      defaultCorrect = false
     }
     state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: ''})
   },

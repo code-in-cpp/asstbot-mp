@@ -136,8 +136,8 @@ import editAnswer from '@/components/editAnswer'
 import navBar from '@/components/navBar'
 import imageGallery from '@/components/imageGallery'
 
-const subjectType = ['radio', 'checkbox', 'text', 'date']
-const subjectTypeName = ['单选', '多选', '问答', '日期']
+const subjectType = ['radio', 'checkbox', 'text', 'date', 'location']
+const subjectTypeName = ['单选', '多选', '问答', '日期', '地点']
 
 export default {
   data () {
