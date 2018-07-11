@@ -1,14 +1,14 @@
 <template>
   <view class="big-box">
-    <view class="option-container" v-for="option in list.items" :key="option" :class="{'have-image': option.imageUrl, 'no-image': !option.imageUrl}">
+    <label class="option-container" v-for="(option, index) in list.items" :key="option" :class="{'have-image': option.imageUrl, 'no-image': !option.imageUrl}" :for="'option' + index">
       <view class="image-box">
         <image class="image" :src="option.imageUrl"></image>
       </view>
       <view class="value">{{option.caption}}</view>
-    </view>
+    </label>
     <checkbox-group class="select-box" @change="selectOption">
-      <view class="selectRadio" v-for="option in list.items" :key="option">
-        <label class="selectlabel"><checkbox class="radioItem" :value="option"></checkbox></label>
+      <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
+        <checkbox  :id="'option' + index" class="radioItem" :value="option"></checkbox>
       </view>
     </checkbox-group>
   </view>
