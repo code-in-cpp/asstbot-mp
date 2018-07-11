@@ -79,6 +79,7 @@ const mutations = {
       id: state.survey.subjects.length + 1,
       type: 'radio',
       question: '',
+      imageUrl: '',
       answers: []})
   },
   removeSubject (state, index) {
@@ -117,7 +118,7 @@ const mutations = {
     state.survey.subjects[index].imageUrl = imageUrl
   },
   addAnswer (state, subjectIndex) {
-    state.survey.subjects[subjectIndex].answers.push({value: '', correct: false})
+    state.survey.subjects[subjectIndex].answers.push({value: '', correct: false, imageUrl: ''})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)
