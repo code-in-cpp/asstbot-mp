@@ -195,6 +195,7 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
+            console.log(response)
             commit('updateSurveyInResult', response.data.result)
             resolve(response.data.result)
           } else {

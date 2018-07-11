@@ -1,7 +1,12 @@
 <template>
-  <view class="wrapper word-text right-block">
-    <view class="outgoing right-item">
-      {{content.value}}
+  <view>
+    <view class="wrapper word-text right-block">
+      <view class="outgoing right-item">
+        {{content.value}}
+      </view>
+    </view>
+    <view class="right-block">
+      <image v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
     </view>
   </view>
 </template>
@@ -42,5 +47,9 @@
   }
   .right-item{
     max-width: 70%;
+  }
+  .image{
+    width: 400rpx;
+    margin-right: 10rpx;
   }
 </style>
