@@ -230,13 +230,16 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
-    survey.subjects.map(item => {
-      item.imageUrl = ''
-      item.answers.map(item => {
-        item.imageUrl = ''
+    if (survey.subjects.length) {
+      survey.subjects.map(item => {
+        item.imageUrl = item.imageUrl ? item.imageUrl : ''
+        item.answers.map(item => {
+          item.imageUrl = item.imageUrl ? item.imageUrl : ''
+        })
+        return item
       })
-      return item
-    })
+    }
+    console.log(survey)
     this.updateCurrentSurvey(survey)
   },
 

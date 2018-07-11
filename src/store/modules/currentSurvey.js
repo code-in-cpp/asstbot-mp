@@ -129,6 +129,7 @@ const mutations = {
   },
   updateAnswerImagePath (state, {subject, answer, value}) {
     state.survey.subjects[subject].answers[answer].imageUrl = value
+    console.log(state.survey)
   },
   updateAnswerCorrect (state, {subject, answer, value}) {
     state.survey.subjects[subject].answers[answer].correct = value

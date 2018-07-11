@@ -2,10 +2,10 @@
   <block>
     <view class="weui-cells weui-cells_after-title">
       <label class="weui-cell weui-check__label" v-for="(answer, index) in answers" :key="index">
-        <view class="weui-cell__hd weui-check__hd_in-checkbox" @click="toUpdateAnswerCorrect(index)">
+        <view class="weui-cell__hd weui-check__hd_in-checkbox font-style" @click="toUpdateAnswerCorrect(index)">
           <block v-if="type=='radio' && surveyType=='exam'">
-            <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="answer.correct"></icon>
-            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-else></icon>
+            <icon class="weui-icon-checkbox_success height-46" type="success" size="23" v-if="answer.correct"></icon>
+            <icon class="weui-icon-checkbox_circle height-46" type="circle" size="23" v-else></icon>
           </block>
           <block v-else-if="type=='checkbox' && surveyType=='exam'">
             <view class="checkbox-icon-box__wrapper">
@@ -15,16 +15,16 @@
             </view>
           </block>
         </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" :placeholder="'请输入答案'+(index+1)"
+        <view class="weui-cell__bd height-92">
+          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
             @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
                       :value="answer.value"/>
         </view>
-        <view class="icon-item-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
-          <i v-show="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
-          <image v-show="answer.imageUrl" :src="answer.imageUrl"></image>
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
+          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
-        <view class="weui-cell__ft">
+        <view class="weui-cell__ft font-style">
           <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
             <i class="icon iconfont icon-trash"></i>
           </view>
@@ -131,7 +131,7 @@ view {
 }
 
 .weui-check__label {
-  padding: 5px 30px;
+  padding: 0rpx 60rpx;
 }
 
 .checkbox-icon-box {
@@ -150,7 +150,28 @@ view {
   font-size: 40rpx;
 }
 .icon-item-style{
-  width:48rpx;
+  width:92rpx;
   text-align: center;
 }
+  .font-style{
+    height:92rpx;
+    width:92rpx;
+    line-height:92rpx;
+    text-align:center;
+  }
+  .answer-image{
+    width:100%;
+    height: 100%;
+    display: block;
+  }
+  .height-92{
+    height:92rpx;
+  }
+  .height-line-92{
+    height: 92rpx;
+    line-height: 92rpx;
+  }
+  .height-46{
+    height: 46rpx;
+  }
 </style>
