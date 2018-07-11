@@ -179,7 +179,7 @@ const actions = {
   },
   start ({commit}) {
     if (chatBot === 'surveyBot') {
-      _sendmessage(commit, 'start', {id: surveyId, scene: sceneMode})
+      _sendmessage(commit, 'dialog-start', {surveyId, scene: sceneMode})
     } else {
       _sendmessage(commit, 'login', {code: ''})
     }

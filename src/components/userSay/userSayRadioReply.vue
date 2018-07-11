@@ -1,9 +1,11 @@
 <template>
   <view>
     <view class="wrapper word-text right-block">
-      <view class="outgoing right-item">
-        {{content.value}}
-      </view>
+      <block v-if="content.caption">
+        <view class="outgoing right-item" >
+          {{content.caption}}
+        </view>
+      </block>
     </view>
     <view class="right-block">
       <image v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
