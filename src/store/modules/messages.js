@@ -2,6 +2,9 @@ import wechat from './wechat'
 import config from '@/config.js'
 
 var url = `${config.service.hostRoot}/chatbot/survey`
+var surveyId = ''
+var chatBot = 'surveyBot'
+var sceneMode = 'publish'
 
 const state = {
   data: [
@@ -83,10 +86,14 @@ const mutations = {
     state.data.push({timestamp, ...message})
   },
   talkToBotFather (state) {
+    chatBot = 'bodFather'
     url = `${config.service.hostRoot}/chatbot`
   },
-  talkToSurveyBot (state) {
+  talkToSurveyBot (state, {id, scene}) {
+    chatBot = 'surveyBot'
     url = `${config.service.hostRoot}/chatbot/survey`
+    surveyId = id
+    sceneMode = scene
   }
 }
 
@@ -169,8 +176,12 @@ const actions = {
   sentCheckBoxReply ({ commit }, data) {
     return _sendmessage(commit, 'checkbox-reply', data)
   },
-  start ({commit}, id) {
-    return _sendmessage(commit, 'start', {id})
+  start ({commit}) {
+    if (chatBot === 'surveyBot') {
+      _sendmessage(commit, 'start', {id: surveyId, scene: sceneMode})
+    } else {
+      _sendmessage(commit, 'login', {code: ''})
+    }
   },
   getUserinfo ({commit}, data) {
     return _sendmessage(commit, 'getUserinfo', data)
