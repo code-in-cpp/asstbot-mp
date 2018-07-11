@@ -105,6 +105,10 @@ export default {
   },
 
   created () {
+
+  },
+
+  onLoad () {
     this.$store.dispatch('retrieveSurvey')
     this.$store.dispatch('querySurveyResultByUser')
   }
