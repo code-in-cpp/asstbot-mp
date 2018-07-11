@@ -33,6 +33,7 @@
     display: flex;
     align-items: center;
     padding: 20rpx 0;
+    overflow: auto;
   }
   .image-box{
     overflow: hidden;
