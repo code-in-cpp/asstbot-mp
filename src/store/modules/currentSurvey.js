@@ -118,7 +118,19 @@ const mutations = {
     state.survey.subjects[index].imageUrl = imageUrl
   },
   addAnswer (state, subjectIndex) {
-    state.survey.subjects[subjectIndex].answers.push({value: '', correct: false, imageUrl: ''})
+    let subject = state.survey.subjects[subjectIndex]
+    let defaultValue = ''
+    let defaultCorrect = true
+    if (subject.type === 'date') {
+      defaultValue = '2018-07-12'
+    }
+    if (subject.type === 'location') {
+      defaultValue = '陕西-西安'
+    }
+    if (subject.type === 'radio' || subject.type === 'checkbox') {
+      defaultCorrect = false
+    }
+    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: ''})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)

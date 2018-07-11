@@ -16,9 +16,25 @@
           </block>
         </view>
         <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
-            @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
-                      :value="answer.value"/>
+          <block v-if="type=='date'">
+           <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})">
+              <view class="picker height-line-92">
+                 {{answer.value}}
+              </view>
+           </picker>  
+          </block>
+          <block v-else-if="type=='location'">
+            <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
+              <view class="picker height-line-92">
+                {{answer.value}}
+              </view>
+            </picker>
+          </block>
+          <block v-else>  
+            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+              @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                        :value="answer.value"/>
+          </block>           
         </view>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
@@ -38,7 +54,6 @@
           添加答案
         </view>
       </label>
-
     </view>
   </block>
 
@@ -49,6 +64,8 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
+      region: ['广东', '广州', '海珠'],
+      customItem: '全部'
     }
   },
   props: {
@@ -102,6 +119,17 @@ export default {
         })
       }
     },
+
+    updateRegionAnswer (index, value) {
+      console.log('region select:', index, 'value', value)
+      let location = value[0].replace('省', '') + '-' + value[1].replace('市', '')
+      this.updateAnswerValue({
+        subject: this.subjectIndex,
+        answer: index,
+        value: location
+      })
+    },
+
     addMedia (obj, e) {
       const that = this
       wx.chooseImage({
