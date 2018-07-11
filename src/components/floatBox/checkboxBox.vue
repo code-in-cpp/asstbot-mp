@@ -1,6 +1,6 @@
 <template>
   <view class="big-box">
-    <view class="option-container" :id="option`${$index}`" v-for="option in list.items" :key="option" :class="{'have-image': option.imageUrl, 'no-image': !option.imageUrl}">
+    <view class="option-container"  v-for="option in list.items" :key="option" :class="{'have-image': option.imageUrl, 'no-image': !option.imageUrl}">
       <view class="image-box">
         <image class="image" :src="option.imageUrl"></image>
       </view>
@@ -8,7 +8,7 @@
     </view>
     <checkbox-group class="select-box" @change="selectOption">
       <view class="selectRadio" v-for="option in list.items" :key="option">
-        <label :for="option`${$index}`" class="selectlabel"><checkbox class="radioItem" :value="option"></checkbox></label>
+        <!-- <label :for="option`${$index}`" class="selectlabel"><checkbox class="radioItem" :value="option"></checkbox></label> -->
       </view>
     </checkbox-group>
   </view>
