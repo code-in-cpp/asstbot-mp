@@ -114,6 +114,18 @@ const getters = {
     return title
   },
 
+  getSurveyResultType: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
+    let surveyType = 'exam'
+    for (let index in queryResults) {
+      let item = queryResults[index]
+      if (item.id === id) {
+        surveyType = item.survey.type
+      }
+    }
+    return surveyType
+  },
+
   getResponderAvator: state => (id, type) => {
     let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let responder = {}
