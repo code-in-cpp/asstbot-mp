@@ -20,10 +20,7 @@
     props: ['list'],
     methods: {
       selectItem (obj) {
-        console.log(obj)
         this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
-        // this.$store.commit('updateData', {...obj, type: 'radio'}
-        // this.$store.dispatch('sendQuery', obj.value)
       }
     }
   }

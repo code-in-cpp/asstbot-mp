@@ -1,14 +1,14 @@
 <template>
   <view class="big-box">
-    <view class="option-container" v-for="option in list.items" :key="option" :class="{'have-image': option.imageUrl, 'no-image': !option.imageUrl}">
-      <view class="image-box">
+    <label class="option-container" v-for="(option, index) in list.items" :key="option" :class="{'haveimage': option.imageUrl, 'no-image': !option.imageUrl}" :for="'option' + index">
+      <view class="image-box imageBox">
         <image class="image" :src="option.imageUrl"></image>
       </view>
       <view class="value">{{option.caption}}</view>
-    </view>
+    </label>
     <checkbox-group class="select-box" @change="selectOption">
-      <view class="selectRadio" v-for="option in list.items" :key="option">
-        <label class="selectlabel"><checkbox class="radioItem" :value="option"></checkbox></label>
+      <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
+        <checkbox  :id="'option' + index" class="radioItem" :value="index"></checkbox>
       </view>
     </checkbox-group>
   </view>
@@ -25,10 +25,11 @@
     props: ['list'],
     methods: {
       selectOption (e) {
-        console.log(e)
-        // this.value = obj.value
-        // this.$store.commit('updateData', {...obj, type: 'checkbox'})
-        // this.$store.dispatch('sendQuery', obj.value)
+        let arr = []
+        e.mp.detail.value.map(item => {
+          arr = [...arr, this.list.items[item]]
+        })
+        this.$store.commit('updateCheckboxData', {items: arr})
       }
     }
   }
@@ -39,24 +40,30 @@
     display: flex;
     align-items: center;
     padding: 20rpx 0;
+    overflow: auto;
   }
   .image-box{
     overflow: hidden;
-    height:100rpx;
+    height:300rpx;
+    width:300rpx;
   }
   .image{
     width:100%;
+    height: 100%;
   }
-  .hava-image{
-    width:40%;
-    border-radius: 6rpx;
+  .haveimage{
+    width:300rpx;
+    border-radius: 20rpx;
     padding: 10rpx;
+    height:400rpx;
+    border: 1rpx solid #dadada;
+    margin-right: 20rpx;
   }
-  .hava-image .image-box{
+  .haveimage .imageBox{
     display: block;
     width: 100%;
   }
-  .hava-image .value {
+  .haveimage .value {
     width:100%;
     word-wrap: break-word;
   }
