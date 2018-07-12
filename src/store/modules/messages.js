@@ -5,6 +5,7 @@ var url = `${config.service.hostRoot}/chatbot/survey`
 var surveyId = ''
 var chatBot = 'surveyBot'
 var sceneMode = 'publish'
+var backupMsg = []
 
 const state = {
   data: [
@@ -86,11 +87,18 @@ const mutations = {
     state.data.push({timestamp, ...message})
   },
   talkToBotFather (state) {
+    if (chatBot === 'surveyBot') {
+      state.data = [...backupMsg]
+    }
     chatBot = 'bodFather'
     url = `${config.service.hostRoot}/chatbot`
   },
   talkToSurveyBot (state, {id, scene}) {
     chatBot = 'surveyBot'
+    if (chatBot === 'bodFather') {
+      backupMsg = [...state.data]
+    }
+    state.data = []
     url = `${config.service.hostRoot}/chatbot/survey`
     surveyId = id
     sceneMode = scene
