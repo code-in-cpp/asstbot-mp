@@ -19,13 +19,15 @@
   }
 </script>
 
-<style scoped>
+
+<style lang="less">
+  @import "../../static/base";
 .imageGallery{
   text-align: center;
 }
   .image{
     display: inline-block;
     width:100%;
-    background: linear-gradient(red, pink);
+    background: @test-color;
   }
 </style>
