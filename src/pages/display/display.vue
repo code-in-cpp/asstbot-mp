@@ -20,15 +20,16 @@
             </navigator>
         </view>
     </view>
-    <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar>
-    <view v-if="activeIndex == 0" class="content">
+    <!-- <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar> -->
+    <view class = "weui-cells__title"> 答卷列表：</view>
+    <view class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&type=ask&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__hd">
                   <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
               </view>
               <view class="weui-cell__bd">{{item.name}}</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">答对 {{item.score}} 题</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"><view  v-if="survey.type==='exam'">答对 {{item.score}} 题</view></view>
           </navigator>
 
           <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
@@ -40,30 +41,25 @@
           </view>
       </scroll-view>
     </view>
-   <view  v-if="activeIndex == 1" class ="content">
-     <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-       <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
-        <view class="chart-view-title">第{{i+1}}题：{{item.question}} 【{{item.type}}】</view>
-        <view class="chart-canvas-view">
-          <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
-        </view>
-       </view>
-     </scroll-view>
-   </view>
     <view class="footer bottom_button">
       <view class="weui-flex">
-        <view class="weui-flex__item">
+        <scroll-view scroll-x  class="scroll-button-view">
+        <view class="scroll-button-item-view">
           <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
+          <button class="weui-btn" type="default" @click="chartStatics" size="mini"><i class="icon iconfont icon-stealth"></i>统计</button>
+        </view>
+        <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
           <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
         </view>
+      </scroll-view>
       </view>
     </view>
 </view>
@@ -72,9 +68,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import WxCharts from '@/utils/wxcharts'
 import navBar from '@/components/navBar'
-const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
+// const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
 /* eslint-disable */
 export default {
   data: {
@@ -97,20 +92,7 @@ export default {
       commitToday: 'commitToday',
       commitCount: 'commitCount',
       reviewCount: 'reviewCount'
-    }),
-
-    getQuestions(){
-      let that = this;
-      let questions = this.survey.subjects.map((subject, i) => {
-        let chartId = 'column_' + (i +1)
-        return {id:subject.id, question: subject.question, type: formatTypes[subject.type], chartId: chartId}
-      })
-      let configs = this.chartConfigs
-      this.charts = configs.map( config => {
-          return new WxCharts(config)
-        })
-      return questions
-    }
+    })
   },
 
   components: {
@@ -144,31 +126,15 @@ export default {
         }
       })
     },
-    tabActive (event) {
-      this.activeIndex = event
-      if(this.activeIndex == 1){
-        console.log('switch to charts tab')
-        this.charts.map( chart => {
-          console.log(chart)
-          chart.updateData()
-        })
-      }
-    },
-
-    touchStart (e) {
-      console.log(e)
-      this.startTime = e.timeStamp
-    },
-
-    touchEnd (e) {
-      console.log(e)
-      this.endTime = e.timeStamp
-    },
-
     selfTest () {
       wx.navigateTo({
         url: `/pages/index/main?id=${this.surveyId}&scene=test`
       })      
+    },
+    chartStatics() {
+      wx.navigateTo({
+        url: `/pages/chart/main?id=${this.surveyId}`
+      })
     }
   },
   onShareAppMessage (res) {
@@ -193,7 +159,6 @@ export default {
     console.log('surveyId is:', this.surveyId)
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
-    this.$store.dispatch('queryAnswerStatics', this.surveyId)
   },
   mounted () {
   }
@@ -265,45 +230,15 @@ export default {
   padding-bottom: 40rpx;
 }
 
-.chart-canvas{
-  /* height: 400rpx; */
-  /* width: 320px;
-  height: 200px; */
-  transform-origin :left top;
-  width: 640px;
-  height: 420px;
-  transform: scale(0.5)
+.scroll-button-view {
+  height:100rpx;
+  white-space:nowrap
 }
 
-.chart-canvas-view{
-  padding-left: 40rpx;
-  padding-top: 40rpx;
-}
-
-.chart-view-title{
-  font-size: 28rpx;
-}
-
-.chart-view-cell {
-  padding: 20rpx 30rpx;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  height: 250px;
-  flex-direction: column;
-}
-
-.chart-view-cell:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 2rpx;
-  border-top: 1rpx solid #D9D9D9;
-  color: #D9D9D9;
-  left: 30rpx;
+.scroll-button-item-view {
+  display:inline-block;
+  width:200rpx;
+  margin-left:20rpx;
 }
 
 .btn {
