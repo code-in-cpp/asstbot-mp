@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import navBar from '@/components/navBar'
 import createdSurvey from '@/components/createdSurvey'
 import visitedSurvey from '@/components/visitedSurvey'
@@ -56,10 +56,6 @@ export default {
   computed: {
     ...mapState({
       surveyList: state => state.survey.surveyList
-    }),
-
-    ...mapGetters({
-      replySurveys: 'getReplySurveys'
     })
   },
 

@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <page-title :title="survey.title"/>
+    <page-title :title="surveyTitle"/>
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
             <image :src="responderAvator" class="middle-avatar"/>
@@ -25,8 +25,6 @@
                   <i class="icon iconfont icon-close" v-else></i>
                 </view>
               </view>
-
-
           </view>
       </scroll-view>
     </view>
@@ -42,10 +40,9 @@ import { formatTime } from '@/utils/index'
 export default {
   data: {
     resultId: '01',
-    surveyId: '',
     name: '王博',
     score: '',
-    avatarUrl: ''
+    type: 'ask'
   },
   computed: {
     ...mapState({
@@ -53,28 +50,30 @@ export default {
       survey: state => state.surveyResult.curSurvey
     }),
     surveyAnswers () {
-      return this.$store.getters.getSurveyAnswer(this.resultId)
+      return this.$store.getters.getSurveyAnswer(this.resultId, this.type)
+    },
+    surveyTitle () {
+      return this.$store.getters.getSurveyResultTitle(this.resultId, this.type)
     },
     surveyConclusion () {
-      return this.$store.getters.getConclusion(this.resultId)
+      return this.$store.getters.getConclusion(this.resultId, this.type)
     },
     responderName () {
-      return this.$store.getters.getResponderName(this.resultId)
+      return this.$store.getters.getResponderName(this.resultId, this.type)
     },
     responderAvator () {
-      return this.$store.getters.getResponderAvator(this.resultId)
+      return this.$store.getters.getResponderAvator(this.resultId, this.type)
     },
     getCreateTime () {
-      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId)))
+      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId, this.type)))
     }
   },
 
   onLoad (option) {
-    console.log(option.surveyId)
+    console.log(option.resultId)
     this.resultId = option.resultId
     this.score = option.score
-    this.surveyId = option.surveyId
-    this.$store.dispatch('querySurveyById', this.surveyId)
+    this.type = option.type
   },
 
   components: {

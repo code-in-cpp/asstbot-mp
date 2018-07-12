@@ -24,7 +24,7 @@
     <view class = "weui-cells__title"> 答卷列表：</view>
     <view class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&type=ask&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <view class="weui-cell__hd">
                   <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
               </view>
@@ -68,9 +68,8 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import WxCharts from '@/utils/wxcharts'
 import navBar from '@/components/navBar'
-const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
+// const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
 /* eslint-disable */
 export default {
   data: {
@@ -93,20 +92,7 @@ export default {
       commitToday: 'commitToday',
       commitCount: 'commitCount',
       reviewCount: 'reviewCount'
-    }),
-
-    getQuestions(){
-      let that = this;
-      let questions = this.survey.subjects.map((subject, i) => {
-        let chartId = 'column_' + (i +1)
-        return {id:subject.id, question: subject.question, type: formatTypes[subject.type], chartId: chartId}
-      })
-      let configs = this.chartConfigs
-      this.charts = configs.map( config => {
-          return new WxCharts(config)
-        })
-      return questions
-    }
+    })
   },
 
   components: {
