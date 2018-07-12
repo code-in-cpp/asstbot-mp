@@ -113,4 +113,26 @@ page{
     font-size: 28rpx;
   }
 
+/* Bot Message Style  */
+.bot-message {
+  padding-bottom: 10px;
+  display: flex;
+
+}
+
+.bot-message .avatar-wrapper {
+  padding: 3px 10px;
+  width: 40rpx  
+}
+
+.bot-message .left-item{
+    max-width: 80%;
+    display: flex;
+    width:100%;
+  }
+  
+.bot-message .content{
+    width:100%
+  }
+
 </style>
