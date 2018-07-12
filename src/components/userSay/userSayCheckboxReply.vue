@@ -29,14 +29,18 @@
     },
     computed: {
       displayText () {
-        let str = ''
-        this.content.items.map(item => {
-          str += item.caption + ','
-        })
-        return str.substring(0, str.length - 1)
-        // return this.content.items.reduce((lhs, rhs) => {
-        //   return lhs.value + ',' + rhs.value
+        // let str = ''
+        // this.content.items.map(item => {
+        //   str += item.caption + ','
         // })
+        // return str.substring(0, str.length - 1)
+        return this.content.items.reduce((lhs, rhs) => {
+          if (lhs.caption) {
+            return lhs.caption + ',' + rhs.caption
+          } else {
+            return lhs + ',' + rhs.caption
+          }
+        })
       },
       imgUrls () {
         let arr = []
