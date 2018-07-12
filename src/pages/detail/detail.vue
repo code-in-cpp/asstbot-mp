@@ -7,7 +7,7 @@
             <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-            <view class="weui-media-box__title">答对 {{score}} 题</view>
+            <view class="weui-media-box__title" v-if="survey.type==='exam'">答对 {{score}} 题</view>
             <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
@@ -20,7 +20,7 @@
               </view>
               <view class="weui-cell__ft">
                 <user-say-text :content="item.value"></user-say-text>
-                <view class="answer-correct">
+                <view class="answer-correct"  v-if="survey.type==='exam'">
                   <i class="icon iconfont icon-right" v-if="item.correct"></i>
                   <i class="icon iconfont icon-close" v-else></i>
                 </view>

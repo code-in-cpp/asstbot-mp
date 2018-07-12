@@ -29,7 +29,7 @@
                   <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
               </view>
               <view class="weui-cell__bd">{{item.name}}</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">答对 {{item.score}} 题</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"><view  v-if="survey.type==='exam'">答对 {{item.score}} 题</view></view>
           </navigator>
 
           <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
