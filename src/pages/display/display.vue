@@ -43,23 +43,23 @@
     </view>
     <view class="footer bottom_button">
       <view class="weui-flex">
-        <!-- <scroll-view scroll-x> -->
-        <!-- <view class="weui-flex__item">
+        <scroll-view scroll-x  class="scroll-button-view">
+        <view class="scroll-button-item-view">
           <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
-        </view> -->
-        <view class="weui-flex__item">
+        </view>
+        <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="chartStatics" size="mini"><i class="icon iconfont icon-stealth"></i>统计</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
         </view>
-        <view class="weui-flex__item">
+        <view class="scroll-button-item-view">
           <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
         </view>
-      <!-- </scroll-view> -->
+      </scroll-view>
       </view>
     </view>
 </view>
@@ -245,26 +245,15 @@ export default {
   padding-bottom: 40rpx;
 }
 
-.chart-view-cell {
-  padding: 20rpx 30rpx;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  height: 250px;
-  flex-direction: column;
+.scroll-button-view {
+  height:100rpx;
+  white-space:nowrap
 }
 
-.chart-view-cell:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 2rpx;
-  border-top: 1rpx solid #D9D9D9;
-  color: #D9D9D9;
-  left: 30rpx;
+.scroll-button-item-view {
+  display:inline-block;
+  width:200rpx;
+  margin-left:20rpx;
 }
 
 .btn {
