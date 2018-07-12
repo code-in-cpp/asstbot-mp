@@ -1,6 +1,7 @@
 <template>
   <view class="big-box">
-    <label class="option-container" v-for="(option, index) in list.items" :key="option" :class="{'haveimage': option.imageUrl, 'no-image': !option.imageUrl}" :for="'option' + index">
+    <label class="option-container" v-for="(option, index) in list.items" :key="option"
+           :class="{'haveimage': option.imageUrl, 'no-image': !option.imageUrl, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
       <view class="image-box imageBox">
         <image class="image" :src="option.imageUrl"></image>
       </view>
@@ -18,7 +19,8 @@
   export default {
     data () {
       return {
-        value: ''
+        checkArr: [],
+        a: 1
       }
     },
     name: 'radioBox',
@@ -30,7 +32,21 @@
           arr = [...arr, this.list.items[item]]
         })
         this.$store.commit('updateCheckboxData', {items: arr})
+      },
+      checked (index) {
+        this.checkArr[index] = !this.checkArr[index]
+        this.a += 1
+        // option = {...option, checkFlag: !option.checkFlag}
+        // option.checkFlag = !option.checkFlag
+        // this.$set(option, 'checkFlag', !option.checkFlag)
+        // this.list.items[index] = {...this.list.items[index], checkFlag: !flag}
+        // console.log(this.flagArr)
       }
+    },
+    created () {
+      this.list.items.map(item => {
+        this.checkArr = [...this.checkArr, false]
+      })
     }
   }
 </script>
@@ -86,5 +102,8 @@
   }
   .select-box{
     display: none;
+  }
+  .checkMe{
+    border: 1rpx solid #188ae2;
   }
 </style>
