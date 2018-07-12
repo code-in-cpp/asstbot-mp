@@ -53,13 +53,16 @@
     <view class="footer bottom_button">
       <view class="weui-flex">
         <view class="weui-flex__item">
-          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
+          <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
+          <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
+        </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
         </view>
       </view>
     </view>
@@ -160,6 +163,12 @@ export default {
     touchEnd (e) {
       console.log(e)
       this.endTime = e.timeStamp
+    },
+
+    selfTest () {
+      wx.navigateTo({
+        url: `/pages/index/main?id=${this.surveyId}&scene=test`
+      })      
     }
   },
   onShareAppMessage (res) {
@@ -247,7 +256,7 @@ export default {
 }
 
 .bottom_button .weui-btn {
-  width: 210rpx;
+  width: 180rpx;
   line-height: 2
 }
 
