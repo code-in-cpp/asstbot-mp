@@ -21,6 +21,7 @@
         </view>
     </view>
     <!-- <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar> -->
+    <view class = "weui-cells__title"> 答卷列表：</view>
     <view class="content">
       <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
           <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&surveyId='+surveyId+'&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -42,15 +43,23 @@
     </view>
     <view class="footer bottom_button">
       <view class="weui-flex">
+        <!-- <scroll-view scroll-x> -->
+        <!-- <view class="weui-flex__item">
+          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
+        </view> -->
         <view class="weui-flex__item">
-          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
+          <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
+          <button class="weui-btn" type="default" @click="chartStatics" size="mini"><i class="icon iconfont icon-stealth"></i>统计</button>
         </view>
         <view class="weui-flex__item">
-          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
+          <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
         </view>
+        <view class="weui-flex__item">
+          <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
+        </view>
+      <!-- </scroll-view> -->
       </view>
     </view>
 </view>
@@ -129,6 +138,16 @@ export default {
             console.log('用户点击取消操作')
           }
         }
+      })
+    },
+    selfTest () {
+      wx.navigateTo({
+        url: `/pages/index/main?id=${this.surveyId}&scene=test`
+      })      
+    },
+    chartStatics() {
+      wx.navigateTo({
+        url: `/pages/chart/main?id=${this.surveyId}`
       })
     }
   },
@@ -217,7 +236,7 @@ export default {
 }
 
 .bottom_button .weui-btn {
-  width: 210rpx;
+  width: 180rpx;
   line-height: 2
 }
 

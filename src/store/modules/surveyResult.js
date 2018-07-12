@@ -274,8 +274,8 @@ const actions = {
                   fontColor: '#000000'
                 },
                 legend: false,
-                width: 640,
-                height: 400,
+                width: 320,
+                height: 200,
                 extra: {
                   column: { width: 50 }
                 }

@@ -4,27 +4,18 @@
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>
-   <view class ="content">
-       <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
+   <view class = "weui-cells__title"> 答卷列表：</view>
+   <view class ="body">
+    <view class="responsor-list weui-cells weui-cells_after-title">
+        <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
         <view class="chart-view-title">第{{i+1}}题：{{item.question}} 【{{item.type}}】</view>
         <view class="chart-canvas-view">
-          <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
+            <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
         </view>
-       </view>
-   </view>
-    <view class="footer bottom_button">
-      <view class="weui-flex">
-        <view class="weui-flex__item">
-          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="default"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
-        <view class="weui-flex__item">
-          <button class="weui-btn" type="default" @click="editSurvey" size="default"><i class="icon iconfont icon-editor"></i>编辑</button>
-        </view>
-        <view class="weui-flex__item">
-          <button class="weui-btn" open-type="share" type="primary" size="default"><i class="icon iconfont icon-share"></i>发布</button>
-        </view>
-      </view>
+        <button class="weui-btn" type="primary" @click="toDisplay" size="default" >返回</button>
     </view>
+   </view>
 </view>
 </template>
 
@@ -74,10 +65,10 @@ export default {
     navBar
   },
   methods: {
-    editSurvey () {
+    toDisplay () {
       let surveyId = this.surveyId
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${surveyId}`
+        url: `/pages/display/main?id=${this.surveyId}`
       })
     }
   },
@@ -107,6 +98,11 @@ export default {
   text-align: center;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
 .bottom_button {
   margin: 40rpx 15rpx
 }
@@ -116,14 +112,20 @@ export default {
   line-height: 2
 }
 
+.responsor-list{
+  border-width:medium;
+  border-color:grey;
+  flex-direction: column;
+}
+
 .chart-canvas{
   /* height: 400rpx; */
-  /* width: 320px;
-  height: 200px; */
-  transform-origin :left top;
-  width: 640px;
+  width: 640rpx;
+  height: 400rpx;
+  /* transform-origin :left top; */
+  /* width: 640px;
   height: 420px;
-  transform: scale(0.5)
+  transform: scale(0.5) */
 }
 
 .chart-canvas-view{
@@ -141,7 +143,8 @@ export default {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  height: 250px;
+  height: 480rpx;
+  display: block;
   flex-direction: column;
 }
 
