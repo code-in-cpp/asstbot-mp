@@ -5,7 +5,7 @@
         {{displayText}}
       </view>
     </view>
-    <view class="swiper-box">
+    <view class="swiper-box" v-if="imgUrls.length">
       <swiper class="swiper">
         <block v-for="item in imgUrls"  :key="item">
           <swiper-item>
@@ -45,7 +45,9 @@
       imgUrls () {
         let arr = []
         this.content.items.map(item => {
-          arr = [...arr, item.imageUrl]
+          if (item.imageUrl) {
+            arr = [...arr, item.imageUrl]
+          }
         })
         return arr
       }

@@ -113,7 +113,6 @@ var _impleSendmessage = (commit, id, type, data) => {
       {type: data.type, reply: data.content}
     ]
   }
-  console.log(message)
   if (data.type === 'getUserinfo') {
     commit('appendMessage', responseMessage)
     return

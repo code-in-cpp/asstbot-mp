@@ -12,6 +12,10 @@ export default {
 </script>
 
 <style>
+
+
+
+
 page{
   height: 100% !important;
   background-color:#F8F8F8;

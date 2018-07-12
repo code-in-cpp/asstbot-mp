@@ -1,11 +1,16 @@
 <template>
   <view class="big-box">
     <label class="option-container" v-for="(option, index) in list.items" :key="option"
-           :class="{'haveimage': option.imageUrl, 'no-image': !option.imageUrl, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
-      <view class="image-box imageBox">
-        <image class="image" :src="option.imageUrl"></image>
-      </view>
-      <view class="value">{{option.caption}}</view>
+           :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
+      <block v-if="option.imageUrl">
+        <view class="image-box imageBox">
+          <image class="image" :src="option.imageUrl"></image>
+        </view>
+        <view class="value">{{option.caption}}</view>
+      </block>
+      <block v-else>
+        <view class="value valueBox">{{option.caption}}</view>
+      </block>
     </label>
     <checkbox-group class="select-box" @change="selectOption">
       <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
@@ -25,6 +30,12 @@
     },
     name: 'radioBox',
     props: ['list'],
+    computed: {
+      havaImage: state => {
+        let a = state.list.items.find(item => !!item.imageUrl === true)
+        return a === undefined
+      }
+    },
     methods: {
       selectOption (e) {
         let arr = []
@@ -62,6 +73,8 @@
     overflow: hidden;
     height:300rpx;
     width:300rpx;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
   }
   .image{
     width:100%;
@@ -70,14 +83,12 @@
   .haveimage{
     width:300rpx;
     border-radius: 20rpx;
-    padding: 10rpx;
     height:400rpx;
     border: 1rpx solid #dadada;
     margin-right: 20rpx;
   }
   .haveimage .imageBox{
     display: block;
-    width: 100%;
   }
   .haveimage .value {
     width:100%;
@@ -105,5 +116,14 @@
   }
   .checkMe{
     border: 1rpx solid #188ae2;
+  }
+  .haveimage .valueBox{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+    width: 300rpx;
+    height: 400rpx;
   }
 </style>
