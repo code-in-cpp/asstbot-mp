@@ -1,13 +1,13 @@
 <template>
   <view class="page">
-    <page-title :title="survey.title"/>
+    <page-title :title="surveyTitle"/>
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
             <image :src="responderAvator" class="middle-avatar"/>
             <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-            <view class="weui-media-box__title">答对 {{score}} 题</view>
+            <view class="weui-media-box__title" v-if="surveyType==='exam'">答对 {{score}} 题</view>
             <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
             <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
@@ -20,13 +20,11 @@
               </view>
               <view class="weui-cell__ft">
                 <user-say-text :content="item.value"></user-say-text>
-                <view class="answer-correct">
+                <view class="answer-correct"  v-if="surveyType==='exam'">
                   <i class="icon iconfont icon-right" v-if="item.correct"></i>
                   <i class="icon iconfont icon-close" v-else></i>
                 </view>
               </view>
-
-
           </view>
       </scroll-view>
     </view>
@@ -42,10 +40,9 @@ import { formatTime } from '@/utils/index'
 export default {
   data: {
     resultId: '01',
-    surveyId: '',
     name: '王博',
     score: '',
-    avatarUrl: ''
+    type: 'ask'
   },
   computed: {
     ...mapState({
@@ -53,28 +50,33 @@ export default {
       survey: state => state.surveyResult.curSurvey
     }),
     surveyAnswers () {
-      return this.$store.getters.getSurveyAnswer(this.resultId)
+      return this.$store.getters.getSurveyAnswer(this.resultId, this.type)
+    },
+    surveyTitle () {
+      return this.$store.getters.getSurveyResultTitle(this.resultId, this.type)
     },
     surveyConclusion () {
-      return this.$store.getters.getConclusion(this.resultId)
+      return this.$store.getters.getConclusion(this.resultId, this.type)
+    },
+    surveyType () {
+      return this.$store.getters.getSurveyResultType(this.resultId, this.type)
     },
     responderName () {
-      return this.$store.getters.getResponderName(this.resultId)
+      return this.$store.getters.getResponderName(this.resultId, this.type)
     },
     responderAvator () {
-      return this.$store.getters.getResponderAvator(this.resultId)
+      return this.$store.getters.getResponderAvator(this.resultId, this.type)
     },
     getCreateTime () {
-      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId)))
+      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId, this.type)))
     }
   },
 
   onLoad (option) {
-    console.log(option.surveyId)
+    console.log(option.resultId)
     this.resultId = option.resultId
     this.score = option.score
-    this.surveyId = option.surveyId
-    this.$store.dispatch('querySurveyById', this.surveyId)
+    this.type = option.type
   },
 
   components: {

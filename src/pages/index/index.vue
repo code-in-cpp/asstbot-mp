@@ -11,6 +11,9 @@
           </view>
           <view :id="'bottom'+i"></view>
         </block>
+        <block v-if="waitingBotMessage">
+          <bot-msg-receiving/>
+        </block>
       </scroll-view>
     </view>
     <!--<view class="footer" :class="{'height_700': !flag }">-->
@@ -32,17 +35,22 @@ import pageTitle from '@/components/pageTitle'
 import msgList from '@/components/msgList'
 import floatIndex from '@/components/floatIndex'
 import selectBox from '@/components/selectBox'
+import botMsgReceiving from '@/components/botMsgReceiving'
 
 export default {
   data () {
     return {
       survey: {},
-      isIphoneX: false
+      isIphoneX: false,
+      waitingBotMessage: false,
+      messagesList: [],
+      lastShowMessage: {},
+      lastMessage: {}
     }
   },
   computed: {
     ...mapState({
-      messagesList: state => state.messages.data,
+      messages: state => state.messages.data,
       flag: state => {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
@@ -64,36 +72,6 @@ export default {
         return true
       },
       scrollToView: state => {
-        // let isText = false
-        // let data = state.messages.data.slice(-1)
-        // if (data[0] && data[0].to) {
-        //   let type = data[0].msgs.slice(-1)[0].type
-        //   switch (type) {
-        //     case 'radio':
-        //       if (data[0].msgs.length > 10) {
-        //         isText = true
-        //       } else {
-        //         isText = false
-        //       }
-        //       break
-        //     case 'checkbox':
-        //       isText = true
-        //       break
-        //     default: {
-        //       isText = false
-        //     }
-        //   }
-        // } else {
-        //   isText = false
-        // }
-        // if (isText) {
-        //   setTimeout(function () {
-        //     console.log(`bottom${state.messages.data.length - 1}`)
-        //     return `bottom${state.messages.data.length - 1}`
-        //   }, 600)
-        // } else {
-        //   return `bottom${state.messages.data.length - 1}`
-        // }
         return `bottom${state.messages.data.length - 1}`
       },
       userAuthed: state => state.userProfile.authed
@@ -102,6 +80,30 @@ export default {
       falg: 'textOrRadioAction'
     })
   },
+  watch: {
+    messages: function (val) {
+      let lastMessage = val.slice(-1)[0]
+      this.waitingBotMessage = true
+      if (lastMessage && lastMessage.to) {
+        this.lastMessage = lastMessage
+        this.messagesList = val.slice(0, -1)
+        this.lastShowMessage = {to: lastMessage.to, type: lastMessage.type, msgs: []}
+        this.pushMessageToShow()
+
+        var that = this
+
+        let interval = setInterval(() => {
+          if (!that.pushMessageToShow()) {
+            clearInterval(interval)
+            that.waitingBotMessage = false
+          }
+        }, 300)
+      } else {
+        this.messagesList = val
+        this.lastShowMessage = {}
+      }
+    }
+  },
   components: {
     headerArea,
     commandArea,
@@ -109,7 +111,8 @@ export default {
     floatIndex,
     pageTitle,
     msgList,
-    selectBox
+    selectBox,
+    botMsgReceiving
     // uploadAvatar,
   },
 
@@ -133,6 +136,14 @@ export default {
     },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
+    },
+    pushMessageToShow () {
+      if (this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
+        return false
+      }
+      this.lastShowMessage.msgs.push(this.lastMessage.msgs[this.lastShowMessage.msgs.length])
+      this.messagesList = [...this.messages.slice(0, -1), this.lastShowMessage]
+      return true
     }
   },
 

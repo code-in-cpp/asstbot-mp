@@ -1,5 +1,4 @@
 <template>
-  <block>
     <block v-if="outgoing">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
@@ -10,13 +9,13 @@
     </block>
     <block v-else>
       <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type=='image' ">
-        <view class="weui-flex word-text left-block">
+        <view class="weui-flex bot-message">
           <view class="left-item">
-            <view style="padding: 3px 10px;width: 40rpx">
+            <view class="avatar-wrapper">
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
-            <view class="botSayContainer">
+            <view class="content">
               <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
               <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
               <bot-say-image :content="msg.url" v-else-if="msg.type=='image'"></bot-say-image>
@@ -105,18 +104,23 @@ export default {
   margin-bottom: 10px;
 }
 
-  .word-text{
-    padding-bottom: 10px;
-  }
-  .left-block{
-    display: flex;
-  }
-  .left-item{
+.bot-message {
+  padding-bottom: 10px;
+  display: flex;
+
+}
+
+.bot-message .avatar-wrapper {
+  padding: 3px 10px;
+  width: 40rpx  
+}
+
+.bot-message .left-item{
     max-width: 80%;
     display: flex;
     width:100%;
   }
-  .botSayContainer{
+.bot-message .content{
     width:100%
   }
 </style>

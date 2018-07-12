@@ -59,21 +59,23 @@ const getters = {
     return ret
   },
 
-  getSurveyAnswer: state => (id) => {
+  getSurveyAnswer: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let answers = []
-    for (let index in state.result) {
-      let item = state.result[index]
+    let subjects = []
+    console.log('id', id)
+    console.log('quest', queryResults)
+    for (let index in queryResults) {
+      let item = queryResults[index]
       if (item.id === id) {
         answers = item.answers
+        subjects = item.survey.subjects
         break
       }
     }
     let ret = []
     for (let index in answers) {
-      if (state.curSurvey.subjects.length <= index) {
-        break
-      }
-      let item = { id: index + 1, correct: true, value: '', question: state.curSurvey.subjects[index].question }
+      let item = { id: index + 1, correct: true, value: '', question: subjects[index].question }
       let answer = answers[index].result
       let spilterCh = ''
       for (let j in answer) {
@@ -84,13 +86,15 @@ const getters = {
       }
       ret.push(item)
     }
+    console.log('rest ', ret)
     return ret
   },
 
-  getResponderName: state => (id) => {
+  getResponderName: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let responder = {}
-    for (let index in state.result) {
-      let item = state.result[index]
+    for (let index in queryResults) {
+      let item = queryResults[index]
       if (item.id === id) {
         responder = item.responder
       }
@@ -98,10 +102,35 @@ const getters = {
     return (!responder.nickName || responder.nickName === '') ? '匿名' : responder.nickName
   },
 
-  getResponderAvator: state => (id) => {
+  getSurveyResultTitle: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
+    let title = ''
+    for (let index in queryResults) {
+      let item = queryResults[index]
+      if (item.id === id) {
+        title = item.survey.title
+      }
+    }
+    return title
+  },
+
+  getSurveyResultType: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
+    let surveyType = 'exam'
+    for (let index in queryResults) {
+      let item = queryResults[index]
+      if (item.id === id) {
+        surveyType = item.survey.type
+      }
+    }
+    return surveyType
+  },
+
+  getResponderAvator: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let responder = {}
-    for (let index in state.result) {
-      let item = state.result[index]
+    for (let index in queryResults) {
+      let item = queryResults[index]
       if (item.id === id) {
         responder = item.responder
       }
@@ -109,9 +138,10 @@ const getters = {
     return (!responder.avatarUrl || responder.avatarUrl === '') ? '/static/image/nobody3.png' : responder.avatarUrl
   },
 
-  getCreateTime: state => (id) => {
-    for (let index in state.result) {
-      let item = state.result[index]
+  getCreateTime: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
+    for (let index in queryResults) {
+      let item = queryResults[index]
       if (item.id === id) {
         return item.created_at
       }
@@ -119,16 +149,18 @@ const getters = {
     return date.toLocaleDateString().replace('/', '-')
   },
 
-  getConclusion: state => (id) => {
+  getConclusion: state => (id, type) => {
+    let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let score = ''
-    for (let index in state.result) {
-      let item = state.result[index]
+    let conclusions = ''
+    for (let index in queryResults) {
+      let item = queryResults[index]
       if (item.id === id) {
         score = item.score
+        conclusions = item.survey.conclusions
         break
       }
     }
-    let conclusions = state.curSurvey.conclusions
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
       let conclusion = conclusions[index]
@@ -147,20 +179,17 @@ const mutations = {
   updateResult (state, result) {
     state.result = result
   },
-  updateSubjects (state, result) {
-    state.subjects = result
-  },
-  updateSurveyInResult (state, survey) {
+
+  updateCurSurvey (state, survey) {
     state.curSurvey = survey
   },
-  resetReplySurveys (state) {
-    state.replySurveys = []
-  },
-  addReplySurveys (state, survey) {
-    state.replySurveys.push(survey)
-  },
+
   updateChartConfigs (state, charts) {
     state.chartConfigs = charts
+  },
+
+  updateReplySurveys (state, result) {
+    state.replySurveys = result
   }
 }
 
@@ -174,6 +203,7 @@ const actions = {
         },
         success: (response) => {
           if (response.statusCode === 200) {
+            console.log('user survey result', response.data.result)
             commit('updateResult', response.data.result)
             resolve(response)
           } else {
@@ -196,7 +226,7 @@ const actions = {
         success: (response) => {
           if (response.statusCode === 200) {
             console.log(response)
-            commit('updateSurveyInResult', response.data.result)
+            commit('updateCurSurvey', response.data.result)
             resolve(response.data.result)
           } else {
             reject(response)
@@ -218,17 +248,8 @@ const actions = {
               userId: userId
             },
             success: (response) => {
-              commit('updateResult', response.data.result)
-              commit('resetReplySurveys')
-              response.data.result.map(item => {
-                let surveyId = item.surveyId
-                dispatch('querySurveyById', surveyId)
-                  .then(survey => {
-                    survey.resultId = item.id
-                    survey.score = item.score
-                    commit('addReplySurveys', survey)
-                  })
-              })
+              console.log('receive user reply survey', response.data.result)
+              commit('updateReplySurveys', response.data.result)
               resolve(response)
             },
             faile: (err) => {
@@ -274,8 +295,8 @@ const actions = {
                   fontColor: '#000000'
                 },
                 legend: false,
-                width: 640,
-                height: 400,
+                width: 320,
+                height: 200,
                 extra: {
                   column: { width: 50 }
                 }
