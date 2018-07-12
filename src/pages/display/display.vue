@@ -42,8 +42,8 @@
     </view>
    <view  v-if="activeIndex == 1" class ="content">
      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
-       <view v-for="item in getQuestions" :key="item" class="chart-view-cell" >
-        <view class="chart-view-title">第{{item.id}}题：{{item.question}} 【{{item.type}}】</view>
+       <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
+        <view class="chart-view-title">第{{i+1}}题：{{item.question}} 【{{item.type}}】</view>
         <view class="chart-canvas-view">
           <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
         </view>
@@ -71,7 +71,7 @@
 import { mapState, mapGetters } from 'vuex'
 import WxCharts from '@/utils/wxcharts'
 import navBar from '@/components/navBar'
-const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答'}
+const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
 /* eslint-disable */
 export default {
   data: {
@@ -98,8 +98,8 @@ export default {
 
     getQuestions(){
       let that = this;
-      let questions = this.survey.subjects.map(subject => {
-        let chartId = 'column_' + subject.id
+      let questions = this.survey.subjects.map((subject, i) => {
+        let chartId = 'column_' + (i +1)
         return {id:subject.id, question: subject.question, type: formatTypes[subject.type], chartId: chartId}
       })
       let configs = this.chartConfigs

@@ -249,9 +249,8 @@ const actions = {
         success: (response) => {
           if (response.statusCode === 200) {
             let subjects = response.data.result.subjects
-            let configs = subjects.map(subject => {
-              let chartId = 'column_' + subject.id
-              // let datas = subject.answers.map(answer => { return { name: answer.value, data: [answer.count] } })
+            let configs = subjects.map((subject, i) => {
+              let chartId = 'column_' + (i + 1)
               let datas2 = subject.answers.map(answer => { return answer.count })
               let categs = subject.answers.map(answer => { return answer.value })
               if (categs.length === 0) {
