@@ -21,7 +21,7 @@
 
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import WxCharts from '@/utils/wxcharts'
 import navBar from '@/components/navBar'
 const formatTypes = {'radio': '单选', 'checkbox': '多选', 'text': '问答', 'date': '时间', 'location': '地点'}
@@ -39,14 +39,6 @@ export default {
       survey: state => state.surveyResult.curSurvey,
       chartConfigs: state => state.surveyResult.chartConfigs
     }),
-    ...mapGetters({
-      surveySummary: 'surveySummary',
-      emptySurveyAnswer: 'emptySurveyAnswer',
-      commitToday: 'commitToday',
-      commitCount: 'commitCount',
-      reviewCount: 'reviewCount'
-    }),
-
     getQuestions(){
       let that = this;
       let questions = this.survey.subjects.map((subject, i) => {
@@ -82,7 +74,6 @@ export default {
       this.title = '测测你有多了解我？'
     }
     console.log('surveyId is:', this.surveyId)
-    this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
     this.$store.dispatch('queryAnswerStatics', this.surveyId)
   },

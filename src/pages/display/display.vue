@@ -173,7 +173,6 @@ export default {
     console.log('surveyId is:', this.surveyId)
     this.$store.dispatch('querySurveyResult', this.surveyId)
     this.$store.dispatch('querySurveyById', this.surveyId)
-    this.$store.dispatch('queryAnswerStatics', this.surveyId)
   },
   mounted () {
   }
