@@ -137,4 +137,10 @@ page{
     width:100%
   }
 
+
+/* animation */
+.transited {
+  -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
+  transition: .3s;
+}
 </style>

@@ -102,6 +102,34 @@ export default {
         this.messagesList = val
         this.lastShowMessage = {}
       }
+    },
+    'lastShowMessage.msgs': function (newVal) {
+      if (!this.lastShowMessage.to) {
+        return
+      }
+      let lastmsg = newVal.slice(-1)[0]
+      if (!lastmsg) {
+        return
+      }
+      if (lastmsg.type === 'redirect') {
+        if (lastmsg.url === 'view-survey') {
+          if (lastmsg.option.id === 'created') {
+            wx.navigateTo({
+              url: '/pages/createdSurvey/main'
+            })
+          } else {
+            wx.navigateTo({
+              url: '/pages/visitedSurvey/main'
+            })
+          }
+        } else if (lastmsg.url === 'create-survey') {
+          if (lastmsg.option.id) {
+            wx.navigateTo({
+              url: `/pages/surveySubjects/main?id=${lastmsg.option.id}`
+            })
+          }
+        }
+      }
     }
   },
   components: {
@@ -141,7 +169,7 @@ export default {
       if (this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
         return false
       }
-      this.lastShowMessage.msgs.push(this.lastMessage.msgs[this.lastShowMessage.msgs.length])
+      this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
       this.messagesList = [...this.messages.slice(0, -1), this.lastShowMessage]
       return true
     }
