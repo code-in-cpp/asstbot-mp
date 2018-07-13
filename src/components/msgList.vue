@@ -1,4 +1,5 @@
 <template>
+  <block>
     <block v-if="outgoing">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
@@ -8,7 +9,7 @@
         <user-say-radio-reply :content="messages.data" v-else-if="messages.type=='radio-reply'"></user-say-radio-reply>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type=='image' ">
+      <block v-for="(msg, i) in messages.msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type=='image' ">
         <view class="weui-flex bot-message">
           <view class="left-item">
             <view class="avatar-wrapper">
@@ -49,7 +50,6 @@ export default {
   data () {
     // console.log(this.messages)
     return {
-      msgs: this.messages.to ? this.messages.msgs.filter((msg) => msg.type !== 'checkbox') : undefined,
       receivingMsgId: this.messages.to ? this.messages.msgs.length : undefined,
       outgoing: this.messages.from !== undefined
     }

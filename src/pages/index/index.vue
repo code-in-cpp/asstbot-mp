@@ -123,9 +123,9 @@ export default {
             })
           }
         } else if (lastmsg.url === 'create-survey') {
-          if (option.id) {
+          if (lastmsg.option.id) {
             wx.navigateTo({
-              url: `/pages/surveySubjects/main?id=${option.id}`
+              url: `/pages/surveySubjects/main?id=${lastmsg.option.id}`
             })
           }
         }
@@ -169,7 +169,7 @@ export default {
       if (this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
         return false
       }
-      this.lastShowMessage.msgs.push(this.lastMessage.msgs[this.lastShowMessage.msgs.length])
+      this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
       this.messagesList = [...this.messages.slice(0, -1), this.lastShowMessage]
       return true
     }
