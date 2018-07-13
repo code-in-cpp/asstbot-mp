@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
-import '@/../static/font/iconfont.wxss'
+import '@/../static/font/iconfont.css'
 import bodAvatar from '@/components/bodAvatar'
 import pageTitle from '@/components/pageTitle'
 
@@ -19,7 +19,7 @@ app.$mount()
 export default {
   // 这个字段走 app.json
   config: {
-    pages: ['^pages/home/main'],
+    pages: ['^pages/index/main'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#2C2D31',
