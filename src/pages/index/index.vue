@@ -93,6 +93,9 @@ export default {
         var that = this
 
         let interval = setInterval(() => {
+          if (!that.lastShowMessage.msgs) {
+            clearInterval(interval)
+          }
           if (!that.pushMessageToShow()) {
             clearInterval(interval)
             that.waitingBotMessage = false
@@ -166,7 +169,8 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     pushMessageToShow () {
-      if (this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
+
+      if (!this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
         return false
       }
       this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
