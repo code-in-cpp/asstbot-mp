@@ -102,6 +102,34 @@ export default {
         this.messagesList = val
         this.lastShowMessage = {}
       }
+    },
+    'lastShowMessage.msgs': function (newVal) {
+      if (!this.lastShowMessage.to) {
+        return
+      }
+      let lastmsg = newVal.slice(-1)[0]
+      if (!lastmsg) {
+        return
+      }
+      if (lastmsg.type === 'redirect') {
+        if (lastmsg.url === 'view-survey') {
+          if (lastmsg.option.id === 'created') {
+            wx.navigateTo({
+              url: '/pages/createdSurvey/main'
+            })
+          } else {
+            wx.navigateTo({
+              url: '/pages/visitedSurvey/main'
+            })
+          }
+        } else if (lastmsg.url === 'create-survey') {
+          if (option.id) {
+            wx.navigateTo({
+              url: `/pages/surveySubjects/main?id=${option.id}`
+            })
+          }
+        }
+      }
     }
   },
   components: {

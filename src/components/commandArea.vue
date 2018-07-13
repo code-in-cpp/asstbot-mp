@@ -107,8 +107,6 @@ export default {
       this.$store.dispatch('updateUserInfo')
     },
     valueChange (ev) {
-      console.log(ev.mp.detail.value.indexOf('\n'))
-      // if (ev.mp.detail.cursor)
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
