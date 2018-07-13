@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style>
+
+
 page{
   height: 100% !important;
   background-color:#F8F8F8;
@@ -122,7 +124,7 @@ page{
 
 .bot-message .avatar-wrapper {
   padding: 3px 10px;
-  width: 40rpx  
+  width: 40rpx
 }
 
 .bot-message .left-item{

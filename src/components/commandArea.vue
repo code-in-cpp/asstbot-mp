@@ -108,6 +108,7 @@ export default {
     },
     valueChange (ev) {
       this.currentMessage = ev.mp.detail.value
+      console.log('当前的值change：' + this.currentMessage)
     },
     sendMessage (ev) {
       if (this.currentMessage && !this.focusFlag) {
@@ -131,9 +132,11 @@ export default {
       }
     },
     keyEvnet (e) {
-      this.$store.dispatch('sendQuery', this.currentMessage)
-      this.currentMessage = ''
-      console.log(e)
+      // console.log(this)
+      this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
+        this.currentMessage = ''
+      })
+      // this.currentMessage = ''
     },
     startRecord (e) {
       this.startRecordPageY = e.clientY
@@ -179,6 +182,7 @@ export default {
           that.$store.dispatch('getAsrResult', res.tempFilePath)
             .then(() => {
               that.$store.commit('clearState')
+              that.items = []
               wx.hideLoading()
             })
             .catch(() => {

@@ -1,10 +1,15 @@
 <template>
   <view class="big-box">
-    <view class="option-container" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': option.imageUrl, 'no-image': !option.imageUrl}">
-      <view class="image-box imageBox">
-        <image class="image" :src="option.imageUrl"></image>
-      </view>
-      <view class="value">{{option.caption}}</view>
+    <view class="option-container" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
+      <block v-if="option.imageUrl">
+        <view class="image-box imageBox">
+          <image class="image" :src="option.imageUrl">没有上传图片哦</image>
+        </view>
+        <view class="value">{{option.caption}}</view>
+      </block>
+      <block v-else>
+        <view class="value valueBox">{{option.caption}}</view>
+      </block>
     </view>
   </view>
 </template>
@@ -18,6 +23,12 @@
     },
     name: 'radioBox',
     props: ['list'],
+    computed: {
+      havaImage: state => {
+        let a = state.list.items.find(item => !!item.imageUrl === true)
+        return a === undefined
+      }
+    },
     methods: {
       selectItem (obj) {
         this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
@@ -36,15 +47,21 @@
   .image-box{
     overflow: hidden;
     height:300rpx;
+    width:300rpx;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
   }
   .image{
     width:100%;
     height:100%;
+    text-align: center;
+    line-height: 300rpx;
+    font-size: 28rpx;
+    color:#999;
   }
   .have{
     width:300rpx;
     border-radius:20rpx;
-    padding:10rpx;
     height:400rpx;
     border:1rpx solid #dadada;
     margin-right:20rpx;
@@ -73,5 +90,14 @@
     width: 100%;
     white-space: nowrap;
     padding:6rpx 20rpx;
+  }
+  .have .valueBox{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+    width: 300rpx;
+    height: 400rpx;
   }
 </style>
