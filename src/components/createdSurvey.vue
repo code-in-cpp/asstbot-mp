@@ -3,15 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view style="position: relative; overflow:hidden">
         <view class="weui-cell weui-cell_access" @click="toggleShortCut(i)" hover-class="weui-cell_active">
-          <view class="weui-cell__hd">
-            <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
-          </view>
-          <view class="weui-cell__bd ">
-            <view class="bot-info">
-              <view class="weui-media-box__title">{{survey.title}}</view>
-              <view class="weui-media-box__desc">{{survey.intro}}</view>
-            </view>
-          </view>
+          <survey-item :surveyInfo="survey" ></survey-item>
           <view class="weui-cell__ft weui-cell__ft_in-access">
           </view>
         </view>
@@ -54,6 +46,8 @@
 </template>
 
 <script>
+
+import surveyItem from '@/components/surveyItem'
 import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
@@ -69,6 +63,9 @@ export default {
     })
   },
 
+  components: {
+    surveyItem
+  },
   watch: {
     surveyList: function (val) {
       this.shortCutStatus = this.surveyList.map(() => {
