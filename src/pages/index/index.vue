@@ -169,7 +169,6 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     pushMessageToShow () {
-
       if (!this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
         return false
       }
