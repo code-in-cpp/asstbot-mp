@@ -84,6 +84,7 @@ export default {
     messages: function (val) {
       let lastMessage = val.slice(-1)[0]
       this.waitingBotMessage = true
+      let interval
       if (lastMessage && lastMessage.to) {
         this.lastMessage = lastMessage
         this.messagesList = val.slice(0, -1)
@@ -92,7 +93,7 @@ export default {
 
         var that = this
 
-        let interval = setInterval(() => {
+        interval = setInterval(() => {
           if (!that.lastShowMessage.msgs) {
             clearInterval(interval)
           }
@@ -104,6 +105,7 @@ export default {
       } else {
         this.messagesList = val
         this.lastShowMessage = {}
+        clearInterval(interval)
       }
     },
     'lastShowMessage.msgs': function (newVal) {
@@ -169,7 +171,7 @@ export default {
       console.log('clickHandle:', msg, ev)
     },
     pushMessageToShow () {
-      if (!this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
+      if (this.lastShowMessage.msgs.length >= this.lastMessage.msgs.length) {
         return false
       }
       this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
