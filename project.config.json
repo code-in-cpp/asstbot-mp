@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -71,6 +71,13 @@
 					"name": "测试加入图片的功能",
 					"pathName": "pages/surveySubjects/main",
 					"query": "id=survey-8a5de9f0-7e89-11e8-b56b-594b8a930fa4",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "调查问卷",
+					"pathName": "pages/index/main",
+					"query": "",
 					"scene": "1008"
 				}
 			]

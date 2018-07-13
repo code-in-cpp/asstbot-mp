@@ -28,6 +28,5 @@
   .image{
     display: inline-block;
     width:100%;
-    background: @test-color;
   }
 </style>
