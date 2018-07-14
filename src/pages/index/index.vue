@@ -82,33 +82,6 @@ export default {
     })
   },
   watch: {
-    // messages: function (val) {
-    //   let lastMessage = val.slice(-1)[0]
-    //   this.waitingBotMessage = true
-    //   let interval
-    //   if (lastMessage && lastMessage.to) {
-    //     this.lastMessage = lastMessage
-    //     this.messagesList = val.slice(0, -1)
-    //     this.lastShowMessage = {to: lastMessage.to, type: lastMessage.type, msgs: []}
-    //     this.pushMessageToShow()
-
-    //     var that = this
-
-    //     interval = setInterval(() => {
-    //       if (!that.lastShowMessage.msgs) {
-    //         clearInterval(interval)
-    //       }
-    //       if (!that.pushMessageToShow()) {
-    //         clearInterval(interval)
-    //         that.waitingBotMessage = false
-    //       }
-    //     }, 300)
-    //   } else {
-    //     this.messagesList = val
-    //     this.lastShowMessage = {}
-    //     clearInterval(interval)
-    //   }
-    // },
     'lastShowMessage.msgs': function (newVal) {
       if (!this.lastShowMessage.to) {
         return

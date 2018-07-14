@@ -11,22 +11,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import "../static/base.less";
 
 page{
   height: 100% !important;
   background-color:#F8F8F8;
   font-size:16px;
   font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
-
-}
-
-.weui-flex {
-    display: flex;
-}
-.weui-flex__item{
-    flex: 1;
 }
 
 .container {
@@ -90,14 +82,14 @@ page{
 .incoming {
   padding: 20rpx;
   margin-left: 20rpx;
-  border: solid #dddee1 1px;
+  border: solid @p-light-color 1px;
   border-radius: 15px 15px 15px 0;
   /*background-color: #f8f8f9;*/
   width: auto!important;
   display: inline-block;
   font-size: 28rpx;
   max-width: 90%;
-  background: #fff;
+  background: @incoming-color;
 }
 .boxFloat{
   width:100%;
@@ -108,12 +100,14 @@ page{
 .top_0{
   height: 700rpx;
 }
-  .font-color{
-    color: #999;
-  }
-  .font-size{
-    font-size: 28rpx;
-  }
+
+.font-color{
+  color: #999;
+}
+
+.font-size{
+  font-size: 28rpx;
+}
 
 /* Bot Message Style  */
 .bot-message {
@@ -135,12 +129,55 @@ page{
 
 .bot-message .content{
     width:100%
-  }
-
+}
 
 /* animation */
 .transited {
   -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
   transition: .3s;
+}
+
+.primary-color {
+  background-color: @p-color !important;
+  color: @text-on-p-color !important;
+}
+
+.primary-color.dark {
+  background-color: @p-dark-color !important;
+}
+
+.primary-color.light {
+  background-color: @p-light-color !important;
+}
+
+.secondary-color {
+  background-color: @s-color !important;
+  color: @text-on-s-color !important;
+}
+
+.secondary-color.dark {
+  background-color: @s-dark-color !important;
+}
+
+.secondary-color.light {
+  background-color: @s-light-color !important;
+}
+
+.third-color {
+  background-color: white;
+  color: black;
+}
+
+.warn-color {
+  background-color: @w-color !important;
+  color: white;
+}
+
+.warn-color.light {
+  background-color: @w-light-color !important;
+}
+
+.warn-color.black {
+  background-color: @w-dark-color !important;
 }
 </style>

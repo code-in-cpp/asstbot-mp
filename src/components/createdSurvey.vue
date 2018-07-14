@@ -15,7 +15,7 @@
           <view class="weui-cell__ft weui-cell__ft_in-access">
           </view>
         </view>
-        <view class="short-cut weui-flex transited" :class="shortCutStatus[i]">
+        <view class="short-cut weui-flex transited primary-color" :class="shortCutStatus[i]">
           <view class="weui-flex__item" @click="deletesurvey(i)">
             <i class="icon iconfont icon-trash"></i>
             <view class="desc">删除</view>
@@ -137,7 +137,6 @@ export default {
   right: 0;
   bottom: 0;
   height: 100%;
-  background-color: #666
 }
 
 .short-cut.hidden {

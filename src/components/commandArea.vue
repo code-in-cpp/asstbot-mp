@@ -1,6 +1,6 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <view class="record-status" v-if="recordStatus!='readyToRecord'">
+    <view class="record-status" v-if="recordStatus && recordStatus!='readyToRecord'">
       <block v-if="recordStatus=='inRecording'">
         <view class="weui-flex" style="width: 300rpx">
           <view class="weui-flex__item">
@@ -20,7 +20,7 @@
         <view>
           <i class="icon iconfont icon-undo"></i>
         </view>
-        <text style="background-color: red;">
+        <text class="warn-color light ">
           松开手指，取消发送
         </text>
       </block>
@@ -214,7 +214,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .input-widget {
   margin: 0!important;
   height: 100%;
@@ -301,7 +301,6 @@ export default {
     width: 80rpx;
     height: 80rpx;
     background-color: #fff;
-
     border-radius: 100%;
     -webkit-animation: scaleout 1.0s infinite ease-in-out;
     animation: scaleout 1.0s infinite ease-in-out;
