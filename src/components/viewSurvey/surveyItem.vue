@@ -1,16 +1,12 @@
 <template>
-  <view class="weui-cell">
-    <view class="weui-cell__hd">
-      <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
+  <view class="list-item">
+    <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
+    <view class="survey-info">
+      <view class="weui-media-box__title">{{surveyInfo.title}}</view>
+      <view class="weui-media-box__desc">{{surveyInfo.intro}}</view>
     </view>
-    <view class="weui-cell__bd ">
-      <view class="bot-info">
-        <view class="weui-media-box__title">{{surveyInfo.title}}</view>
-        <view class="weui-media-box__desc">{{surveyInfo.intro}}</view>
-      </view>
-    </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access">
-    </view>
+    <!--<view class="weui-cell__ft weui-cell__ft_in-access">-->
+    <!--</view>-->
   </view>
 </template>
 
@@ -31,9 +27,27 @@ export default {
 </script>
 
 <style scoped>
-survey_list_avata {
-  margin-left: 20rpx;
-  width: 120rpx;
-  height: 120rpx;
-}
+  .list-item {
+    margin-top: 10rpx;
+    margin-left: 20rpx;
+    width: 714rpx;
+    height: 132rpx;
+    border-bottom: #e9e9e9;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .survey-info {
+    flex: 1;
+    margin-left: 20rpx;
+  }
+
+  /*.bot-info .weui-media-box__title{*/
+    /*flex: 1;*/
+   /*}*/
+
+  /*.bot-info .weui-media-box__desc{*/
+    /*flex: 1*/
+  /*}*/
+
 </style>
