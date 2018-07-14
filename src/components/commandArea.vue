@@ -187,6 +187,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "../../static/base.less";
 
 .input-widget {
   margin: 0!important;
@@ -216,6 +217,6 @@ export default {
 }
 
 .input-widget .iconfont{
-  font-size: 40rpx!important;
+  font-size: @font-size-big!important;
 }
 </style>

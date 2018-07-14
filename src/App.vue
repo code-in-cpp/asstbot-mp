@@ -11,7 +11,7 @@ export default {
 page{
   height: 100% !important;
   background-color:#F8F8F8;
-  font-size:16px;
+  font-size:@font-size-middle;
   font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 
@@ -81,7 +81,7 @@ page{
   /*background-color: #f8f8f9;*/
   width: auto!important;
   display: inline-block;
-  font-size: 28rpx;
+  font-size: @font-size-small;
   max-width: 90%;
   background: @incoming-color;
 }
@@ -100,14 +100,13 @@ page{
 }
 
 .font-size{
-  font-size: 28rpx;
+  font-size: @font-size-small;
 }
 
 /* Bot Message Style  */
 .bot-message {
   padding-bottom: 10px;
   display: flex;
-
 }
 
 .bot-message .avatar-wrapper {
@@ -211,7 +210,7 @@ page{
   border-radius:30rpx 30rpx 0 30rpx;
   background-color: @s-light-color !important;
   color: @text-on-s-color !important;
-  font-size:28rpx;
+  font-size: @font-size-small;
   margin-right:10rpx;
   text-align:left;
 }

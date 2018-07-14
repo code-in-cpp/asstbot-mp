@@ -7,13 +7,14 @@
         <block v-for="(messages, i) in messagesList" :key="i">
           <view :id="i">
           <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-              :messages="messages"/>
+              :messages="messages" @renderComplete="scollToBottom"/>
           </view>
           <view :id="'bottom'+i"></view>
         </block>
         <block v-if="waitingBotMessage">
           <bot-msg-receiving/>
         </block>
+        <view id="bottom"></view>
       </scroll-view>
     </view>
     <view class="footer">
@@ -41,7 +42,8 @@ export default {
       waitingBotMessage: false,
       // messagesList: [],
       // lastShowMessage: {},
-      lastMessage: {}
+      lastMessage: {},
+      scrollToView: 'bottom'
     }
   },
   computed: {
@@ -68,9 +70,7 @@ export default {
         }
         return true
       },
-      scrollToView: state => {
-        return `bottom${state.messages.data.length - 1}`
-      },
+
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
@@ -78,6 +78,9 @@ export default {
     })
   },
   watch: {
+    messagesList: function (val) {
+      this.scrollToView = `bottom${val.length - 1}`
+    },
     'lastShowMessage.msgs': function (newVal) {
       if (!this.lastShowMessage.to) {
         return
@@ -140,13 +143,8 @@ export default {
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     },
-    pushMessageToShow () {
-      if (this.lastShowMessage.msgs.length >= this.lastMessage.msgs.length) {
-        return false
-      }
-      this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
-      this.messagesList = [...this.messages.slice(0, -1), this.lastShowMessage]
-      return true
+    scollToBottom () {
+      this.scrollToView = 'bottom'
     }
   },
 

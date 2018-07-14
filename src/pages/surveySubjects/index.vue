@@ -1,7 +1,5 @@
 <template>
-
   <view class="page">
-
     <view class="weui-cells">
       <view class="weui-cell">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
@@ -297,26 +295,26 @@ export default {
   display: inline-block;
   font-size:40rpx!important;
 }
-  .subject-style{
-    height:92rpx;
-    overflow: hidden;
-    box-sizing: border-box;
-  }
-  .subject-item-style{
-    height:100%;
-    line-height: 92rpx;
-  }
-  .subject-title-style{
-    color:#999;
-    width:150rpx;
-  }
-  .icon-item-style{
-    width:48rpx;
-    text-align: center;
-  }
-  .subject-hieght-line{
-    height:100%;
-    line-height: 92rpx;
-  }
+.subject-style{
+  height:92rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.subject-item-style{
+  height:100%;
+  line-height: 92rpx;
+}
+.subject-title-style{
+  color:#999;
+  width:150rpx;
+}
+.icon-item-style{
+  width:48rpx;
+  text-align: center;
+}
+.subject-hieght-line{
+  height:100%;
+  line-height: 92rpx;
+}
 
 </style>

@@ -130,7 +130,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../static/base.less";
 .short-cut {
   width: 600rpx;
   position: absolute;
@@ -162,13 +163,14 @@ export default {
   flex-direction: column;
   justify-content: space-around;
 }
+
 .short-cut .iconfont {
-  font-size: 50rpx;
+  font-size: @font-size-big ;
   color: white;
 }
 
 .short-cut .desc {
-  font-size: 28rpx;
+  font-size: @font-size-small;
   color: white;
 }
 

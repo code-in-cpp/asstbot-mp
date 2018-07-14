@@ -49,6 +49,6 @@ export default {
 }
 
 .record-status text {
-  font-size: 28rpx;
+  font-size: @font-size-small;
 }
 </style>

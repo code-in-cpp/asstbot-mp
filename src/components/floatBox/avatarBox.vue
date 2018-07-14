@@ -59,7 +59,7 @@
   @import "../../../static/base";
   .btn-style{
     width:auto;
-    font-size:28rpx;
+    font-size:@font-size-small;
     display:inline-block;
     margin-right: @btn-margin-right;
     background: @btn-background;

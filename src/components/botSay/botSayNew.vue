@@ -24,11 +24,12 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import "../../../static/base.less";
 .createNew{
   padding:0rpx 32rpx;
   border-radius:10rpx;
-  font-size:28rpx;
+  font-size:@font-size-small;
   line-height:72rpx;
   text-align: center;
 }

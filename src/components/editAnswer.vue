@@ -149,9 +149,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import "../../static/base.less";
+
 view {
-  font-size: 28rpx;
+  font-size: @font-size-small;
 }
 
 .weui-cells:before {

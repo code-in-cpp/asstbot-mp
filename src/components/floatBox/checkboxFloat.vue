@@ -55,55 +55,56 @@
   }
 </script>
 
-<style scoped>
-  .boxItems{
-    background: #fff;
-    height: 700rpx;
-    font-size: 32rpx;
-    overflow: hidden;
-    width: 100%;
-  }
-  .boxItemTitle{
-    border-bottom: 1rpx solid #dadada;
-    padding-left: 30rpx;
-    line-height: 80rpx;
-    /*margin-top: -40px;*/
-  }
-  .ulBox{
-    height:100%;
-  }
-  .boxItemBox{
+<style lang="less" scoped>
+@import "../../../static/base.less";
+.boxItems{
+  background: #fff;
+  height: 700rpx;
+  font-size: @font-size-middle;
+  overflow: hidden;
+  width: 100%;
+}
+.boxItemTitle{
+  border-bottom: 1rpx solid #dadada;
+  padding-left: 30rpx;
+  line-height: 80rpx;
+  /*margin-top: -40px;*/
+}
+.ulBox{
+  height:100%;
+}
+.boxItemBox{
 
-  }
-  .item{
-    padding-left: 15px;
-    line-height: 40px;
-  }
-  .sure{
-    float: right;
-    margin-top: -72rpx;
-    margin-right: 20rpx;
-    background:#fff;
-    padding:0;
-    line-height:64rpx;
-    font-size:28rpx;
-    width:120rpx;
-  }
-  .selectRadio{
-    /*height:80rpx;*/
-    line-height: 80rpx;
-    padding-left: 30rpx;
-  }
-  .selectlabel{
-    display: block;
-    padding-left: 60rpx;
-  }
-  .radioItem{
-    width:60rpx;
-    margin-left: -60rpx;
-    vertical-align: top;
-  }
-  .radioValue{
-    display: inline-block;
-  }
+}
+.item{
+  padding-left: 15px;
+  line-height: 40px;
+}
+.sure{
+  float: right;
+  margin-top: -72rpx;
+  margin-right: 20rpx;
+  background:#fff;
+  padding:0;
+  line-height:64rpx;
+  font-size: @font-size-small;
+  width:120rpx;
+}
+.selectRadio{
+  /*height:80rpx;*/
+  line-height: 80rpx;
+  padding-left: 30rpx;
+}
+.selectlabel{
+  display: block;
+  padding-left: 60rpx;
+}
+.radioItem{
+  width:60rpx;
+  margin-left: -60rpx;
+  vertical-align: top;
+}
+.radioValue{
+  display: inline-block;
+}
 </style>

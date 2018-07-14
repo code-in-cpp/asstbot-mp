@@ -22,12 +22,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../static/base.less";
+
 .box {
   display: block;
   width: 160rpx;
   height: 30rpx;
-  font-size: 30rpx;
+  font-size: @font-size-small;
   padding: 1em;
   position: relative;
   margin-bottom: .25em;
@@ -52,7 +54,7 @@ export default {
 }
 
 .loader-13 {
-  color: blue;
+  color: @s-color;
   position: relative;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);

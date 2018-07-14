@@ -76,6 +76,7 @@ export default {
       let interval = setInterval(() => {
         that.received++
         if (that.received >= that.displayIncomingMsgs.length || !that.lastBotMsg) {
+          that.$emit('renderComplete')
           clearInterval(interval)
         }
       }, 300)

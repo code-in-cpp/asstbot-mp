@@ -165,7 +165,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../../static/base.less";
 .user-avator-icon{
   margin-right: 10rpx;
   vertical-align: middle;
@@ -206,7 +207,7 @@ export default {
 }
 
 .weui-grid__title{
-  font-size: 48rpx;
+  font-size: @font-size-big;
   font-weight: bold;
   text-align: center;
 }

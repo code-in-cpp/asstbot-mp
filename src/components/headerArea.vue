@@ -19,9 +19,8 @@ export default {
   }
 }
 </script>
-
-<style>
-
+<style lang="less">
+@import "../../static/base.less";
 .header {
   display: flex;
   flex-direction: column;
@@ -40,7 +39,7 @@ export default {
 }
 
 .discription {
-  font-size: 28rpx;
+  font-size: @font-size-small;
   display: flex;
   flex-direction: row;
   justify-content: center;

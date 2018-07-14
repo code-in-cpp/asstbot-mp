@@ -38,37 +38,35 @@
   }
 </script>
 
-<style scoped>
-  .authBox{
-    display: flex;
-    margin-top: 20rpx;
-  }
+<style lang="less" scoped>
+@import "../../../static/base.less";
 
-  .authBtn{
-    width:120rpx;
-    margin:0;
-    padding:0;
-    font-size:28rpx;
-    margin-right:20rpx;
-  }
-  .authBtn:after{
-    border:none
-  }
-  .height-line-height{
-    height:80rpx;
-    line-height: 80rpx;
-  }
-  .authContainer{
-    -webkit-border-radius: 10rpx;
-    -moz-border-radius: 10rpx;
-    border-radius: 10rpx;
-  }
-  .authWord{
-    padding: 30rpx;
-    font-size: 28rpx;
-  }
+.authBox{
+  display: flex;
+  margin-top: 20rpx;
+}
 
-  .green{
-    color: #62ff12;
-  }
+.authBtn{
+  width:120rpx;
+  margin:0;
+  padding:0;
+  font-size:@font-size-small;
+  margin-right:20rpx;
+}
+.authBtn:after{
+  border:none
+}
+.height-line-height{
+  height:80rpx;
+  line-height: 80rpx;
+}
+.authContainer{
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  border-radius: 10rpx;
+}
+.authWord{
+  padding: 30rpx;
+  font-size: @font-size-small;
+}
 </style>
