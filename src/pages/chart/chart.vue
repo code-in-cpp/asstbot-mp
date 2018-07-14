@@ -154,13 +154,7 @@ export default {
 .btn {
   width: 30%;
   margin-right: 20rpx;
-  /*background-color: #FFCC00;*/
-  /*color: #FFF;*/
 }
-.greybtn{
-  background-color: #ffffff;
-}
-
 .iconfont {
   display: inline-block
 }

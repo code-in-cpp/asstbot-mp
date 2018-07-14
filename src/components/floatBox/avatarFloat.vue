@@ -157,9 +157,4 @@
     top: 0;
     left: 0;
   }
-
-  .cropper-buttons{
-    /*background-color: rgba(0, 0, 0, 0.95);*/
-    /*color: #04b00f;*/
-  }
 </style>

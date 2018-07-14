@@ -147,6 +147,21 @@ page{
   background-color: @p-light-color !important;
 }
 
+.primary-color.revert {
+  color: @p-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.primary-color.light.revert {
+  color: @p-light-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.primary-color.dark.revert {
+  color: @p-dark-color !important;
+  background-color: @text-on-p-color !important;
+}
+
 .secondary-color,
 .form-control.secondary-color.light:active {
   background-color: @s-color !important;
@@ -161,9 +176,19 @@ page{
   background-color: @s-light-color !important;
 }
 
-.third-color {
-  background-color: white;
-  color: black;
+.secondary-color.revert {
+  color: @s-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.secondary-color.light.revert {
+  color: @s-light-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.secondary-color.dark.revert {
+  color: @s-dark-color !important;
+  background-color: @text-on-p-color !important;
 }
 
 .warn-color {
@@ -177,5 +202,17 @@ page{
 
 .warn-color.black {
   background-color: @w-dark-color !important;
+}
+
+/* outgoing message style */
+.outgoing {
+  padding:20rpx;
+  border:solid #81d4f4 1rpx;
+  border-radius:30rpx 30rpx 0 30rpx;
+  background-color: @s-light-color !important;
+  color: @text-on-s-color !important;
+  font-size:28rpx;
+  margin-right:10rpx;
+  text-align:left;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <view class="wrapper word-text">
-    <image :src="url" class="outgoing">发送图片</image>
+    <image :src="url" class="outgoing"/>
   </view>
 </template>
 

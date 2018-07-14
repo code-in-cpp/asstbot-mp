@@ -1,7 +1,7 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <view style="position: relative;">
+      <view style="position: relative; overflow:hidden">
         <view class="weui-cell weui-cell_access" @click="toggleShortCut(i)" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
             <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
@@ -15,32 +15,32 @@
           <view class="weui-cell__ft weui-cell__ft_in-access">
           </view>
         </view>
-        <view class="short-cut weui-flex transited primary-color" :class="shortCutStatus[i]">
-          <view class="weui-flex__item" @click="deletesurvey(i)">
+        <view class="short-cut weui-flex transited " :class="shortCutStatus[i]">
+          <view class="weui-flex__item secondary-color  dark form-control" @click="deletesurvey(i)">
             <i class="icon iconfont icon-trash"></i>
             <view class="desc">删除</view>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item secondary-color dark form-control">
             <i class="icon iconfont icon-setup" @click="editsurvey(i)"></i>
             <view class="desc">编辑</view>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item secondary-color dark form-control">
             <i class="icon iconfont icon-browse" @click="browsesurvey(i)"></i>
             <view class="desc">查看</view>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item secondary-color dark form-control">
             <i class="icon iconfont icon-share" @click="toShareSurvey(i)"></i>
             <view class="desc">分享</view>
           </view>
-          <view class="weui-flex__item share">
-            <button open-type="share">
+          <view class="weui-flex__item share primary-color light">
+            <button class="primary-color form-control" open-type="share">
               <view>
                 <image src='../../static/image/weixin.png' />
               </view>
             </button>
           </view>
-          <view class="weui-flex__item share">
-            <button>
+          <view class="weui-flex__item share primary-color light">
+            <button class="primary-color form-control">
               <view>
                 <image src='../../static/image/moment.png'/>
               </view>
@@ -92,7 +92,7 @@ export default {
         if (index === i) {
           return val === 'show' ? 'show-more' : 'show'
         } else {
-          return 'hide'
+          return 'hidden'
         }
       })
       this.$emit('readtoshare', this.surveyList[index])
@@ -170,10 +170,6 @@ export default {
 .short-cut .desc {
   font-size: 28rpx;
   color: white;
-}
-
-.short-cut .weui-flex__item:active{
-  background-color: #333
 }
 
 .short-cut .weui-flex__item.share image{

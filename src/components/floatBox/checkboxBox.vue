@@ -93,8 +93,6 @@
     width: auto;
     border-radius: 10rpx;
     padding:5rpx;
-    background: #ffffff;
-    color: #333333;
     margin-left: 30rpx;
   }
   .no-image .image-box{

@@ -12,7 +12,7 @@
       </view>
 
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class=" word-textarea word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class=" word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item "  v-else>
          <button class="input-widget .form-control .secondary-color" :class="recordStatus=='readyToRecord'?'':'dark'"
@@ -201,7 +201,6 @@ export default {
 
 .word-textarea{
   height: auto;
-  background: #fff;
   min-height: 74rpx;
   padding-left: 10rpx;
   line-height: 74rpx;
