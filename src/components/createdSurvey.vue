@@ -47,7 +47,7 @@
 
 <script>
 
-import surveyItem from '@/components/surveyItem'
+import surveyItem from '@/components/viewSurvey/surveyItem'
 import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 

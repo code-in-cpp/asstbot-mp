@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="weui-cell__hd">
-      <bod-avatar size="60" :url="surveyInfo.avatarUrl"></bod-avatar>
+      <view-avatar url="surveyInfo.avatarUrl"></view-avatar>
     </view>
     <view class="weui-cell__bd ">
       <view class="bot-info">
@@ -14,14 +14,18 @@
   </view>
 </template>
 
+
 <script>
+import viewAvatar from '@/components/viewSurvey/viewAvatar'
 export default {
   props: {
     surveyInfo: {
       type: Object,
-      default: {
-      }
+      default: {}
     }
+  },
+  components: {
+    viewAvatar
   }
 }
 </script>
