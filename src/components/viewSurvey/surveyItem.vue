@@ -5,7 +5,7 @@
       <top-label :title="99"></top-label>
     </view>
     <view class="survey-info">
-      <view class="da-title survey-title">{{surveyInfo.title}}</view>
+      <view class="da-title survey-title" :class="isActive? 'active-title': '' ">{{surveyInfo.title}}</view>
       <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
     </view>
   </view>
@@ -20,6 +20,10 @@ export default {
     surveyInfo: {
       type: Object,
       default: {}
+    },
+    isActive: {
+      default: false,
+      type: Boolean
     }
   },
   components: {
@@ -53,6 +57,9 @@ export default {
     color: @p-dark-color;
   }
 
+  .active-title {
+    color: @s-dark-color;
+  }
   .survey-desc {
     color: #999999;
     margin-top: 10rpx;

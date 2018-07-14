@@ -1,46 +1,10 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <view style="position: relative; overflow:hidden">
-        <view class="weui-cell weui-cell_access" @click="toggleShortCut(i)" hover-class="weui-cell_active">
+      <view>
+        <view  @click="selected(i)" @touchmove="touchMove(i)">
+          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
         </view>
-        <view >
-          <survey-item :surveyInfo="survey" ></survey-item>
-          <view class="weui-cell__ft weui-cell__ft_in-access">
-          </view>
-        </view>
-        <!--<view class="short-cut weui-flex transited primary-color" :class="shortCutStatus[i]">-->
-          <!--<view class="weui-flex__item" @click="deletesurvey(i)">-->
-            <!--<i class="icon iconfont icon-trash"></i>-->
-            <!--<view class="desc">删除</view>-->
-          <!--</view>-->
-          <!--<view class="weui-flex__item">-->
-            <!--<i class="icon iconfont icon-setup" @click="editsurvey(i)"></i>-->
-            <!--<view class="desc">编辑</view>-->
-          <!--</view>-->
-          <!--<view class="weui-flex__item">-->
-            <!--<i class="icon iconfont icon-browse" @click="browsesurvey(i)"></i>-->
-            <!--<view class="desc">查看</view>-->
-          <!--</view>-->
-          <!--<view class="weui-flex__item">-->
-            <!--<i class="icon iconfont icon-share" @click="toShareSurvey(i)"></i>-->
-            <!--<view class="desc">分享</view>-->
-          <!--</view>-->
-          <!--<view class="weui-flex__item share">-->
-            <!--<button open-type="share">-->
-              <!--<view>-->
-                <!--<image src='../../static/image/weixin.png' />-->
-              <!--</view>-->
-            <!--</button>-->
-          <!--</view>-->
-          <!--<view class="weui-flex__item share">-->
-            <!--<button>-->
-              <!--<view>-->
-                <!--<image src='../../static/image/moment.png'/>-->
-              <!--</view>-->
-            <!--</button>-->
-          <!--</view>-->
-        <!--</view>-->
       </view>
     </block>
   </view>
@@ -55,9 +19,20 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      shortCutStatus: []
+      selected_index: 0,
+      should_pop: false
     }
   },
+  methods: {
+    selected (index) {
+      this.selected_index = index
+    },
+    touchMove (index) {
+      this.selected_index = index
+      this.should_pop = true
+    }
+  },
+
   computed: {
     ...mapState({
       surveyList: state => state.survey.surveyList
@@ -67,61 +42,6 @@ export default {
   components: {
     surveyItem
   },
-  watch: {
-    surveyList: function (val) {
-      this.shortCutStatus = this.surveyList.map(() => {
-        return 'hidden'
-      })
-    }
-  },
-
-  methods: {
-    toggleShortCut (index) {
-      this.shortCutStatus = this.shortCutStatus.map((val, i) => {
-        if (index === i) {
-          return val !== 'hidden' ? 'hidden' : 'show'
-        } else {
-          return 'hidden'
-        }
-      })
-    },
-    toShareSurvey (index) {
-      this.shortCutStatus = this.shortCutStatus.map((val, i) => {
-        if (index === i) {
-          return val === 'show' ? 'show-more' : 'show'
-        } else {
-          return 'hidden'
-        }
-      })
-      this.$emit('readtoshare', this.surveyList[index])
-    },
-    deletesurvey (index) {
-      let that = this
-      wx.showModal({
-        title: '您确认要删除吗？',
-        confirmText: '确认',
-        cancelText: '取消',
-        success: function (res) {
-          if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', that.surveyList[index].id)
-          } else {
-            console.log('用户点击取消操作')
-          }
-        }
-      })
-    },
-    editsurvey (index) {
-      wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${this.surveyList[index].id}`
-      })
-    },
-    browsesurvey (index) {
-      wx.navigateTo({
-        url: `/pages/display/main?id=${this.surveyList[index].id}`
-      })
-    }
-  },
-
   onLoad () {
     this.$store.dispatch('retrieveSurvey')
   }
