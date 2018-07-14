@@ -1,6 +1,5 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <record-status :recordStatus="recordStatus"></record-status>
     <view class="weui-flex primary-color light" :class="{iphonex_padding : is_iphonex}">
       <view class="placeholder">
         <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
@@ -10,16 +9,11 @@
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
-
       <view class="weui-flex__item"  v-if="!voiceMode">
         <textarea class=" word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item "  v-else>
-         <button class="input-widget .form-control .secondary-color" :class="recordStatus=='readyToRecord'?'':'dark'"
-            @touchstart="startRecord"
-            @touchcancel="cancelRecord"
-            @touchmove="recordOperation"
-            @touchend="stopRecord">{{recordOperationText}}</button>
+         <record-button></record-button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
         <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
@@ -31,8 +25,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-
-const recorderManager = wx.getRecorderManager()
+import recordButton from './widget/recordButton'
 
 export default {
   data () {
@@ -40,10 +33,7 @@ export default {
       currentMessage: '请输入消息',
       rowHeight: '0rpx',
       focusFlag: true,
-      voiceMode: false,
-      recordStatus: 'readyToRecord',
-      startRecordPageY: 0,
-      endRecordPageY: 0
+      voiceMode: false
     }
   },
   computed: {
@@ -61,19 +51,13 @@ export default {
       items: state => {
         return state.inputValue.items
       }
-    }),
-    recordOperationText () {
-      if (this.recordStatus === 'readyToRecord') {
-        return '按住 说话'
-      } else if (this.recordStatus === 'readyToCancel') {
-        return '松开手指，取消发送'
-      } else {
-        return '松开 结束'
-      }
-    }
+    })
   },
-  updated () {
+
+  components: {
+    recordButton
   },
+
   methods: {
     updateUserInfo (ev) {
       this.$store.dispatch('updateUserInfo')
@@ -104,83 +88,9 @@ export default {
       }
     },
     keyEvnet (e) {
-      // console.log(this)
       this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
         this.currentMessage = ''
       })
-      // this.currentMessage = ''
-    },
-    startRecord (e) {
-      this.startRecordPageY = e.clientY
-      this.endRecordPageY = e.clientY
-      this.recordStatus = 'inRecording'
-      this.startRecordOperation()
-    },
-    stopRecord (e) {
-      recorderManager.stop()
-    },
-    cancelRecord (e) {
-      recorderManager.stop()
-    },
-    recordOperation (e) {
-      this.endRecordPageY = e.clientY
-      if (this.endRecordPageY - this.startRecordPageY < -50) {
-        this.recordStatus = 'readyToCancel'
-      } else {
-        this.recordStatus = 'inRecording'
-      }
-    },
-    clearRecordStatus () {
-      this.recordStatus = 'readyToRecord'
-      this.startRecordPageY = 0
-      this.endRecordPageY = 0
-    },
-    startRecordOperation () {
-      let that = this
-      recorderManager.onStart(() => {
-        console.log('recorder start')
-      })
-      recorderManager.onPause(() => {
-        console.log('recorder pause')
-      })
-      recorderManager.onStop((res) => {
-        console.log('recorder stop', res)
-        // const { tempFilePath } = res
-        if (that.recordStatus === 'inRecording') {
-          wx.showLoading({
-            title: '认真理解中',
-            mask: true
-          })
-          that.$store.dispatch('getAsrResult', res.tempFilePath)
-            .then(() => {
-              that.$store.commit('clearState')
-              that.items = []
-              wx.hideLoading()
-            })
-            .catch(() => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '没听懂:(',
-                icon: 'none'
-              })
-            })
-        }
-        that.clearRecordStatus()
-      })
-      recorderManager.onFrameRecorded((res) => {
-        const { frameBuffer } = res
-        console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-      })
-
-      const options = {
-        duration: 60000,
-        sampleRate: 16000,
-        numberOfChannels: 1,
-        encodeBitRate: 64000,
-        format: 'mp3'
-      }
-
-      recorderManager.start(options)
     }
   }
 }
