@@ -1,7 +1,8 @@
 <template>
   <view class="list-item">
-    <view>
+    <view class="label-wrapper">
       <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
+      <top-label :title="99"></top-label>
     </view>
     <view class="survey-info">
       <view class="da-title survey-title">{{surveyInfo.title}}</view>
@@ -13,6 +14,7 @@
 
 <script>
 import viewAvatar from '@/components/viewSurvey/viewAvatar'
+import topLabel from '@/components/viewSurvey/topLabel'
 export default {
   props: {
     surveyInfo: {
@@ -21,7 +23,8 @@ export default {
     }
   },
   components: {
-    viewAvatar
+    viewAvatar,
+    topLabel
   }
 }
 </script>
@@ -56,4 +59,7 @@ export default {
     -webkit-line-clamp: 2;
   }
 
+  .label-wrapper {
+    position: relative;
+  }
 </style>
