@@ -1,12 +1,12 @@
 <template>
   <view class="list-item">
-    <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
-    <view class="survey-info">
-      <view class="weui-media-box__title">{{surveyInfo.title}}</view>
-      <view class="weui-media-box__desc">{{surveyInfo.intro}}</view>
+    <view>
+      <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
     </view>
-    <!--<view class="weui-cell__ft weui-cell__ft_in-access">-->
-    <!--</view>-->
+    <view class="survey-info">
+      <view class="da-title survey-title">{{surveyInfo.title}}</view>
+      <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
+    </view>
   </view>
 </template>
 
@@ -26,28 +26,34 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+  @import "../../../static/base.less";
   .list-item {
     margin-top: 10rpx;
-    margin-left: 20rpx;
-    width: 714rpx;
-    height: 132rpx;
-    border-bottom: #e9e9e9;
+    margin-left: 10rpx;
+    margin-right: 100rpx;
+    width: 730rpx;
+    height: 130rpx;
+    border-bottom: 2rpx solid;
+    border-bottom-color: @btn-border-color;
     display: flex;
     flex-direction: row;
   }
 
   .survey-info {
-    flex: 1;
     margin-left: 20rpx;
+    margin-right: 20rpx;
+    width: 560rpx;
   }
 
-  /*.bot-info .weui-media-box__title{*/
-    /*flex: 1;*/
-   /*}*/
+  .survey-title {
+    color: @p-dark-color;
+  }
 
-  /*.bot-info .weui-media-box__desc{*/
-    /*flex: 1*/
-  /*}*/
+  .survey-desc {
+    color: #999999;
+    margin-top: 10rpx;
+    -webkit-line-clamp: 2;
+  }
 
 </style>

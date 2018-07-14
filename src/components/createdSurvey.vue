@@ -9,38 +9,38 @@
           <view class="weui-cell__ft weui-cell__ft_in-access">
           </view>
         </view>
-        <view class="short-cut weui-flex transited " :class="shortCutStatus[i]">
-          <view class="weui-flex__item secondary-color  dark form-control" @click="deletesurvey(i)">
-            <i class="icon iconfont icon-trash"></i>
-            <view class="desc">删除</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-setup" @click="editsurvey(i)"></i>
-            <view class="desc">编辑</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-browse" @click="browsesurvey(i)"></i>
-            <view class="desc">查看</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-share" @click="toShareSurvey(i)"></i>
-            <view class="desc">分享</view>
-          </view>
-          <view class="weui-flex__item share primary-color light">
-            <button class="primary-color form-control" open-type="share">
-              <view>
-                <image src='../../static/image/weixin.png' />
-              </view>
-            </button>
-          </view>
-          <view class="weui-flex__item share primary-color light">
-            <button class="primary-color form-control">
-              <view>
-                <image src='../../static/image/moment.png'/>
-              </view>
-            </button>
-          </view>
-        </view>
+        <!--<view class="short-cut weui-flex transited primary-color" :class="shortCutStatus[i]">-->
+          <!--<view class="weui-flex__item" @click="deletesurvey(i)">-->
+            <!--<i class="icon iconfont icon-trash"></i>-->
+            <!--<view class="desc">删除</view>-->
+          <!--</view>-->
+          <!--<view class="weui-flex__item">-->
+            <!--<i class="icon iconfont icon-setup" @click="editsurvey(i)"></i>-->
+            <!--<view class="desc">编辑</view>-->
+          <!--</view>-->
+          <!--<view class="weui-flex__item">-->
+            <!--<i class="icon iconfont icon-browse" @click="browsesurvey(i)"></i>-->
+            <!--<view class="desc">查看</view>-->
+          <!--</view>-->
+          <!--<view class="weui-flex__item">-->
+            <!--<i class="icon iconfont icon-share" @click="toShareSurvey(i)"></i>-->
+            <!--<view class="desc">分享</view>-->
+          <!--</view>-->
+          <!--<view class="weui-flex__item share">-->
+            <!--<button open-type="share">-->
+              <!--<view>-->
+                <!--<image src='../../static/image/weixin.png' />-->
+              <!--</view>-->
+            <!--</button>-->
+          <!--</view>-->
+          <!--<view class="weui-flex__item share">-->
+            <!--<button>-->
+              <!--<view>-->
+                <!--<image src='../../static/image/moment.png'/>-->
+              <!--</view>-->
+            <!--</button>-->
+          <!--</view>-->
+        <!--</view>-->
       </view>
     </block>
   </view>
