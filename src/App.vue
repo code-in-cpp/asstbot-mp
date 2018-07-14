@@ -1,12 +1,6 @@
 <script>
 export default {
   created () {
-    // 调用API从本地缓存中获取数据
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // console.log('app created and cache logs by setStorageSync')
   }
 }
 </script>
@@ -142,24 +136,28 @@ page{
   color: @text-on-p-color !important;
 }
 
-.primary-color.dark {
+.primary-color.dark, .form-control.primary-color:active {
   background-color: @p-dark-color !important;
 }
 
-.primary-color.light {
+.primary-color.light,
+.form-control.primary-color:disabled,
+.form-control.secondary-color[disabled],
+.form-control.secondary-color:disabled {
   background-color: @p-light-color !important;
 }
 
-.secondary-color {
+.secondary-color,
+.form-control.secondary-color.light:active {
   background-color: @s-color !important;
   color: @text-on-s-color !important;
 }
 
-.secondary-color.dark {
+.secondary-color.dark, .form-control.secondary-color:active {
   background-color: @s-dark-color !important;
 }
 
-.secondary-color.light {
+.secondary-color.light{
   background-color: @s-light-color !important;
 }
 

@@ -2,8 +2,8 @@
   <view class="authContainer">
     <view class="incoming">{{content}}</view>
     <view class="authBox">
-      <button @click="refuse" class="height-line-height authBtn">拒绝</button>
-      <button class="height-line-height authBtn" open-type="getUserInfo" @getuserinfo="updateUserInfo">允许</button>
+      <button @click="refuse" class="height-line-height authBtn primary-color light form-control">拒绝</button>
+      <button class="height-line-height authBtn secondary-color light form-control" open-type="getUserInfo" @getuserinfo="updateUserInfo">允许</button>
     </view>
   </view>
 </template>
@@ -43,11 +43,10 @@
     display: flex;
     margin-top: 20rpx;
   }
+
   .authBtn{
     width:120rpx;
     margin:0;
-    background:#fff;
-    border-radius:20rpx;
     padding:0;
     font-size:28rpx;
     margin-right:20rpx;

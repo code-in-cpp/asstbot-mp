@@ -16,10 +16,6 @@
         </block>
       </scroll-view>
     </view>
-    <!--<view class="footer" :class="{'height_700': !flag }">-->
-      <!--<command-area v-if="flag"/>-->
-      <!--<float-index v-else-if="!flag"></float-index>-->
-    <!--</view>-->
     <view class="footer">
       <select-box></select-box>
       <command-area/>
@@ -163,12 +159,6 @@ export default {
   },
 
   onLoad (option) {
-    // const complate = wx.getStorageSync('complate')
-    // if (complate === 'success') {
-    //   wx.navigateTo({
-    //     url: '../display/main'
-    //   })
-    // }
     if (option.id) {
       const scene = option.scene ? option.scene : 'publish'
       this.$store.commit('talkToSurveyBot', {id: option.id, scene})

@@ -1,6 +1,6 @@
 <template>
   <view class="big-box">
-    <view class="option-container" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
+    <view class="option-container secondary-color light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
       <block v-if="option.imageUrl">
         <view class="image-box imageBox">
           <image class="image" :src="option.imageUrl">没有上传图片哦</image>
@@ -78,9 +78,6 @@
     width: auto;
     border-radius: 10rpx;
     padding:5rpx;
-    background: #ffffff;
-    color: #333333;
-    border: 1rpx solid #333333;
     margin-left: 30rpx;
   }
   .no-image>.image-box{

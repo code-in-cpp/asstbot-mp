@@ -1,6 +1,6 @@
 <template>
   <view class="big-box">
-    <label class="option-container" v-for="(option, index) in list.items" :key="option"
+    <label class="option-container secondary-color form-control" v-for="(option, index) in list.items" :key="option"
            :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
       <block v-if="option.imageUrl">
         <view class="image-box imageBox">
@@ -47,11 +47,6 @@
       checked (index) {
         this.checkArr[index] = !this.checkArr[index]
         this.a += 1
-        // option = {...option, checkFlag: !option.checkFlag}
-        // option.checkFlag = !option.checkFlag
-        // this.$set(option, 'checkFlag', !option.checkFlag)
-        // this.list.items[index] = {...this.list.items[index], checkFlag: !flag}
-        // console.log(this.flagArr)
       }
     },
     created () {

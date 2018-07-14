@@ -1,25 +1,10 @@
 <template>
-  <block>
+<block>
     <block v-if="outgoing">
         <user-say-message :messages="messages"></user-say-message>
     </block>
-    <block v-else-if="!lastBotMsg">
-      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
-        <view class="weui-flex bot-message">
-          <view class="left-item">
-            <view class="avatar-wrapper">
-              <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
-              <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
-            </view>
-            <view class="content">
-              <bot-say-message :msg="msg"/>
-            </view>
-          </view>
-        </view>
-      </block>
-    </block>
     <block v-else>
-      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="i < received">
+      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="!lastBotMsg || i < received">
         <view class="weui-flex bot-message">
           <view class="left-item">
             <view class="avatar-wrapper">
@@ -32,11 +17,11 @@
           </view>
         </view>
       </block>
-      <block v-if="received < displayIncomingMsgs.length">
+      <block v-if="lastBotMsg && received < displayIncomingMsgs.length">
         <bot-msg-receiving/>
       </block>
     </block>
-  </block>
+</block>
 </template>
 
 <script>

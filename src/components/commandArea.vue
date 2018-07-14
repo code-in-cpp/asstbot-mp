@@ -1,56 +1,28 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <view class="record-status" v-if="recordStatus && recordStatus!='readyToRecord'">
-      <block v-if="recordStatus=='inRecording'">
-        <view class="weui-flex" style="width: 300rpx">
-          <view class="weui-flex__item">
-            <i class="icon iconfont icon-translation_fill" style="color: white; float:right;"></i>
-          </view>
-          <view class="weui-flex__item">
-            <view class="spinner"></view>
-          </view>
-        </view>
-        <view style="width: 300rpx;text-align: center">
-          <text>
-            手指上滑，取消发送
-          </text>
-        </view>
-      </block>
-      <block v-else>
-        <view>
-          <i class="icon iconfont icon-undo"></i>
-        </view>
-        <text class="warn-color light ">
-          松开手指，取消发送
-        </text>
-      </block>
-    </view>
-    <view class="weui-flex container-box" :class="{iphonex_padding : is_iphonex}">
+    <record-status :recordStatus="recordStatus"></record-status>
+    <view class="weui-flex primary-color light" :class="{iphonex_padding : is_iphonex}">
       <view class="placeholder">
-        <button class="input-widget height-line-height default-widget" size="small" @click="voiceMode=true" v-if="!voiceMode">
+        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
         </button>
-        <button class="input-widget height-line-height default-widget" size="small" @click="voiceMode=false" v-else>
+        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=false" v-else>
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
 
-      <view class="weui-flex__item height-line-height command-box"  v-if="!voiceMode">
-        <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <!--<textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>-->
-        <textarea class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+      <view class="weui-flex__item"  v-if="!voiceMode">
+        <textarea class=" word-textarea word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
-      <view class="weui-flex__item height-line-height"  v-else>
-        <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <!--<textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>-->
-        <button class="input-widget height-line-height button-talk" :class="recordStatus=='readyToRecord'?'':'button-talk-pressed'"
+      <view class="weui-flex__item "  v-else>
+         <button class="input-widget .form-control .secondary-color" :class="recordStatus=='readyToRecord'?'':'dark'"
             @touchstart="startRecord"
             @touchcancel="cancelRecord"
             @touchmove="recordOperation"
             @touchend="stopRecord">{{recordOperationText}}</button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
-        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+        <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
       </view>
@@ -215,113 +187,36 @@ export default {
 </script>
 
 <style lang="less">
+
 .input-widget {
   margin: 0!important;
   height: 100%;
   max-height: 80rpx;
-  color:#fff!important;
-  background:#2d8cf0!important
+  line-height: 80rpx;
+  box-sizing: border-box;
 }
 .input-widget:disabled{
-  background: rgba(168,167,165,0.09)!important;
   padding-left: 20px;
 }
-  .height-line-height{
-    /*height: 80rpx;*/
-    line-height: 80rpx;
-    box-sizing: border-box;
-  }
-  .container-box{
-    align-items: flex-end;
-    background: #ccc;
-  }
-  .word-break{
-    /*word-wrap: normal;*/
-    word-break: break-word;
-  }
-  .word-textarea{
-    height: auto;
-    background: #fff;
-    min-height: 72rpx;
-    padding-left: 10rpx;
-    line-height: 72rpx;
-  }
-  .buttonSend[disabled]{
-    background: #999!important;
-  }
 
-   .default-widget {
-    background: #999!important;
-   }
+.word-textarea{
+  height: auto;
+  background: #fff;
+  min-height: 74rpx;
+  padding-left: 10rpx;
+  line-height: 74rpx;
+  word-break: break-word;
+  border: 1rpx solid #dadada;
+  box-sizing: border-box;
+  width:100%;
+  height:100%;
+}
 
-   .button-talk-pressed {
-     background-color: #FFF!important;
-     color: #666!important;
-   }
+.iphonex_padding{
+  margin-bottom: 68rpx;
+}
 
-  .command-box{
-    padding: 4rpx 8rpx;
-  }
-  .command-text{
-    border: 1rpx solid #dadada;
-    box-sizing: border-box;
-    width:100%;
-    height:100%;
-  }
-
-  .iphonex_padding{
-    margin-bottom: 68rpx;
-  }
-
-  .input-widget .iconfont{
-    font-size: 40rpx!important;
-  }
-
-  .record-status {
-    position: fixed;
-    top: 300rpx;
-    left: 225rpx;
-    width: 300rpx;
-    height: 375rpx;
-    background-color: rgba(0 , 0, 0, 0.5);
-    text-align: center;
-    color: white;
-  }
-
-  .record-status .iconfont {
-    font-size: 200rpx;
-  }
-
-  .record-status text {
-    font-size: 28rpx;
-  }
-
-  .spinner {
-    margin-top: 150rpx;
-    width: 80rpx;
-    height: 80rpx;
-    background-color: #fff;
-    border-radius: 100%;
-    -webkit-animation: scaleout 1.0s infinite ease-in-out;
-    animation: scaleout 1.0s infinite ease-in-out;
-  }
-
-  @-webkit-keyframes scaleout {
-    0% { -webkit-transform: scale(0.0) }
-    100% {
-      -webkit-transform: scale(1.0);
-      opacity: 0;
-    }
-  }
-
-@keyframes scaleout {
-  0% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 100% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
+.input-widget .iconfont{
+  font-size: 40rpx!important;
 }
 </style>

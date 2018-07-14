@@ -188,6 +188,5 @@ export default {
 
 .short-cut .weui-flex__item.share button .desc{
   color: black;
-
 }
 </style>

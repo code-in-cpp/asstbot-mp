@@ -5,6 +5,8 @@ import 'weui-wxss/dist/style/weui.wxss'
 import '@/../static/font/iconfont.css'
 import bodAvatar from '@/components/bodAvatar'
 import pageTitle from '@/components/pageTitle'
+import spinner from '@/components/view/spinner'
+import recordStatus from '@/components/view/recordStatus'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -12,6 +14,8 @@ Vue.prototype.$store = store
 
 Vue.component('bod-avatar', bodAvatar)
 Vue.component('page-title', pageTitle)
+Vue.component('spinner', spinner)
+Vue.component('record-status', recordStatus)
 
 const app = new Vue(App)
 app.$mount()
