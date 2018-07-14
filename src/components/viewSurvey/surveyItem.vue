@@ -1,7 +1,7 @@
 <template>
-  <view>
+  <view class="weui-cell">
     <view class="weui-cell__hd">
-      <view-avatar url="surveyInfo.avatarUrl"></view-avatar>
+      <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
     </view>
     <view class="weui-cell__bd ">
       <view class="bot-info">

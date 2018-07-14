@@ -1,7 +1,6 @@
 <template>
-    <view class="weui-cell__hd">
-      <!--<bod-avatar size="60" :url="surveyInfo.avatarUrl"></bod-avatar>-->
-      <image :src="url" class="survey_list_avatar"/>
+    <view class="survey_list_avatar">
+      <image :src="url" />
     </view>
 </template>
 
@@ -17,11 +16,19 @@
 </script>
 
 <style scoped>
-  survey_list_avatar {
+  .survey_list_avatar {
+    display: block;
     margin-left: 20rpx;
     width: 120rpx;
     height: 120rpx;
     border-radius: 50%;
     overflow: hidden;
   }
+
+  .survey_list_avatar image{
+    width: 100%;
+    height: 100%;
+  }
+
+
 </style>

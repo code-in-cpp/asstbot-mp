@@ -3,6 +3,8 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view style="position: relative; overflow:hidden">
         <view class="weui-cell weui-cell_access" @click="toggleShortCut(i)" hover-class="weui-cell_active">
+        </view>
+        <view >
           <survey-item :surveyInfo="survey" ></survey-item>
           <view class="weui-cell__ft weui-cell__ft_in-access">
           </view>
@@ -40,7 +42,6 @@
           </view>
         </view>
       </view>
-
     </block>
   </view>
 </template>
