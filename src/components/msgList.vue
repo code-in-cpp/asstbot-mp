@@ -1,15 +1,10 @@
 <template>
   <block>
     <block v-if="outgoing">
-        <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
-        <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
-        <user-say-allow :content="messages.data.query" v-else-if="messages.type=='allow'"></user-say-allow>
-        <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
-        <user-say-checkbox-reply :content="messages.data" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
-        <user-say-radio-reply :content="messages.data" v-else-if="messages.type=='radio-reply'"></user-say-radio-reply>
+        <user-say-message :messages="messages"></user-say-message>
     </block>
-    <block v-else>
-      <block v-for="(msg, i) in messages.msgs" :key="msg" v-if="msg.type=='text' || msg.type=='getUserinfo' || msg.type == 'dialog-end' || msg.type=='image' ">
+    <block v-else-if="!lastBotMsg">
+      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <view class="weui-flex bot-message">
           <view class="left-item">
             <view class="avatar-wrapper">
@@ -17,41 +12,44 @@
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
             <view class="content">
-              <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
-              <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
-              <bot-say-image :content="msg.url" v-else-if="msg.type=='image'"></bot-say-image>
-              <!--<bot-say-radio-select :content="msg.title" v-else-if="msg.type=='radio'" :options="msg.items"></bot-say-radio-select>-->
-              <bot-say-text :content="msg.reply" v-else></bot-say-text>
+              <bot-say-message :msg="msg"/>
             </view>
           </view>
         </view>
+      </block>
+    </block>
+    <block v-else>
+      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="i < received">
+        <view class="weui-flex bot-message">
+          <view class="left-item">
+            <view class="avatar-wrapper">
+              <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
+              <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
+            </view>
+            <view class="content">
+              <bot-say-message :msg="msg"/>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block v-if="received < displayIncomingMsgs.length">
+        <bot-msg-receiving/>
       </block>
     </block>
   </block>
 </template>
 
 <script>
-import userSayText from '@/components/userSay/userSayText'
-import userSayImage from '@/components/userSay/userSayImage'
-import userSayAllow from '@/components/userSay/userSayAllow'
-import userSaySpeech from '@/components/userSay/userSaySpeech'
-import userSayCheckboxReply from '@/components/userSay/userSayCheckboxReply'
-import userSayRadioReply from '@/components/userSay/userSayRadioReply'
-import botSayText from '@/components/botSay/botSayText'
-import botSayUserAuth from '@/components/botSay/botSayUserAuth'
-import botSayNew from '@/components/botSay/botSayNew'
-import botAvatar from '@/components/bodAvatar'
-import botSayRadioSelect from '@/components/botSay/botSayRadioSelect'
-import botSayImage from '@/components/botSay/botSayImage'
-
-import { mapState } from 'vuex'
+import userSayMessage from '@/components/userSayMessage'
+import botSayMessage from '@/components/botSayMessage'
+import botMsgReceiving from '@/components/botMsgReceiving'
 
 export default {
   data () {
     // console.log(this.messages)
     return {
-      receivingMsgId: this.messages.to ? this.messages.msgs.length : undefined,
-      outgoing: this.messages.from !== undefined
+      outgoing: this.messages.from !== undefined,
+      received: 0
     }
   },
 
@@ -60,7 +58,7 @@ export default {
       type: Object,
       default: {}
     },
-    receiving: {
+    lastBotMsg: {
       type: Boolean,
       default: true
     },
@@ -71,26 +69,33 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      bodAvatar: state => state.bodProfile.avatar
-    })
+    displayIncomingMsgs () {
+      return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
+        return msg.type === 'text' ||
+          msg.type === 'getUserinfo' ||
+          msg.type === 'dialog-end' ||
+          msg.type === 'image'
+      })
+    }
   },
 
   components: {
-    userSayText,
-    userSayImage,
-    userSayAllow,
-    userSaySpeech,
-    userSayCheckboxReply,
-    userSayRadioReply,
-    botSayText,
-    botSayUserAuth,
-    botSayNew,
-    botAvatar,
-    botSayRadioSelect,
-    botSayImage
+    userSayMessage,
+    botSayMessage,
+    botMsgReceiving
   },
 
+  onLoad () {
+    if (this.lastBotMsg) {
+      let that = this
+      let interval = setInterval(() => {
+        that.received++
+        if (that.received >= that.displayIncomingMsgs.length || !that.lastBotMsg) {
+          clearInterval(interval)
+        }
+      }, 300)
+    }
+  },
   created () {
   }
 }

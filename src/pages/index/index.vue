@@ -6,7 +6,7 @@
         <header-area :surveyData="survey"/>
         <block v-for="(messages, i) in messagesList" :key="i">
           <view :id="i">
-          <msg-list :survey="survey" :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
+          <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
               :messages="messages"/>
           </view>
           <view :id="'bottom'+i"></view>
@@ -44,13 +44,14 @@ export default {
       isIphoneX: false,
       waitingBotMessage: false,
       // messagesList: [],
-      lastShowMessage: {},
+      // lastShowMessage: {},
       lastMessage: {}
     }
   },
   computed: {
     ...mapState({
       messagesList: state => state.messages.data,
+      lastShowMessage: state => state.messages.data.slice(-1)[0],
       flag: state => {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
