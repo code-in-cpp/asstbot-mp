@@ -18,7 +18,7 @@
 <style scoped>
   .survey_list_avatar {
     display: block;
-    margin-left: 20rpx;
+    margin-left: 10rpx;
     width: 120rpx;
     height: 120rpx;
     border-radius: 50%;

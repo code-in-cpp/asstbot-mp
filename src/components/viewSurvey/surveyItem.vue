@@ -1,12 +1,14 @@
 <template>
-  <view class="list-item">
-    <view class="label-wrapper">
-      <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
-      <top-label :title="99"></top-label>
-    </view>
-    <view class="survey-info">
-      <view class="da-title survey-title" :class="isActive? 'active-title': '' ">{{surveyInfo.title}}</view>
-      <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
+  <view class = padding :class="isActive? 'active-item': '' ">
+    <view class="list-item" >
+      <view class="label-wrapper">
+        <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
+        <top-label :title="1234" left_rpx="80"></top-label>
+      </view>
+      <view class="survey-info">
+        <view class="da-title survey-title">{{surveyInfo.title}}</view>
+        <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
+      </view>
     </view>
   </view>
 </template>
@@ -35,12 +37,17 @@ export default {
 
 <style lang="less" scoped>
   @import "../../../static/base.less";
+  .padding {
+    background-color: #ffffff;
+    height: 160rpx;
+  }
+
   .list-item {
-    margin-top: 10rpx;
+    padding-top: 12rpx;
     margin-left: 10rpx;
-    margin-right: 100rpx;
+    //margin-right: 100rpx;
     width: 730rpx;
-    height: 130rpx;
+    height: 142rpx;
     border-bottom: 2rpx solid;
     border-bottom-color: @btn-border-color;
     display: flex;
@@ -57,12 +64,12 @@ export default {
     color: @p-dark-color;
   }
 
-  .active-title {
-    color: @s-dark-color;
+  .active-item {
+    background-color: #C8C7CC;
   }
   .survey-desc {
     color: #999999;
-    margin-top: 10rpx;
+    margin-top: 20rpx;
     -webkit-line-clamp: 2;
   }
 

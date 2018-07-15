@@ -26,6 +26,9 @@ export default {
   methods: {
     selected (index) {
       this.selected_index = index
+      wx.navigateTo({
+        url: `/pages/display/main?id=${this.surveyList[index].id}`
+      })
     },
     touchMove (index) {
       this.selected_index = index

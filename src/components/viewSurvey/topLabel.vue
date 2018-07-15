@@ -33,8 +33,8 @@
     color: #ffffff;
     border-radius: 10rpx;
     padding-top: 0rpx;
-    padding-left: 10rpx;
-    padding-right: 10rpx;
+    padding-left: 4rpx;
+    padding-right: 4rpx;
   }
   .parentBox {
     /*position: relative;*/
