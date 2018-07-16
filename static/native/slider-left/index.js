@@ -46,17 +46,24 @@ exports.default = Component({
    */
   data: {
     x: 150, // 单位rpx
-    itemCount: 2,
+    itemCount: 3,
     itemWidth: 150,
-    openWidth: 300,
+    openWidth: 450,
     currentX: 150, // 当前记录组件被拖动时的x坐标
     moveInstance: 0 // 记录往左移动的距离
   },
+  created: function() {
+    console.log('slide-left enter created', this.data.openWidth)
+  },
   attached: function () {
-    console.log('slide-left enter attached')
+    console.log('slide-left enter attached', this.data.openWidth)
+    // this.setData({
+    //   itemCount: this.data.iconTitles.length
+    // })
     this.setData({
       openWidth: this.data.itemWidth * this.data.itemCount
     })
+    console.log('slide-left enter attached', this.data.openWidth)
     this.setData({
       x: this.data.open ? 0 : this.data.openWidth
     })

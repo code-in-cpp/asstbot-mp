@@ -26,8 +26,9 @@ export default {
       selected_index: 0,
       should_pop: false,
       icons: [
-        {title: '删了', color: 'red'},
-        {title: '朋友圈', color: 'grey'}
+        {title: '删除', color: 'red'},
+        {title: '朋友圈', color: 'grey'},
+        {title: '自测', color: 'grey'}
       ]
     }
   },
@@ -49,20 +50,27 @@ export default {
       console.log('#############delete_row, log after operId###########')
       console.log('operId', operId)
       let that = this
-      wx.showModal({
-        title: '您确认要删除吗？',
-        confirmText: '确认',
-        cancelText: '取消',
-        success: function (res) {
-          if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', that.surveyList[selectedItem].id)
-          } else {
-            console.log('用户点击取消操作')
+      if (operId === 0) {
+        wx.showModal({
+          title: '您确认要删除吗？',
+          confirmText: '确认',
+          cancelText: '取消',
+          success: function (res) {
+            if (res.confirm) {
+              that.$store.dispatch('deleteSurvey', that.surveyList[selectedItem].id)
+            } else {
+              console.log('用户点击取消操作')
+            }
           }
-        }
-      })
-    }
+        })
+      }
 
+      if (operId === 2) {
+        wx.navigateTo({
+          url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
+        })
+      }
+    }
   },
 
   computed: {
