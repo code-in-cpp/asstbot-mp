@@ -32,7 +32,6 @@
 
 .handle-delete {
   background-color: red;
-  width: 120rpx;
   //right:  150rpx;
   display: flex;
   align-items: center;
@@ -42,13 +41,13 @@
 
 .handle-icon {
   background-color: grey;
-  width: 120rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border-left: 2rpx solid;
   border-left-color: white;
   color: #fff;
+  width: 150rpx;
 }
 
 .handle-icons {
