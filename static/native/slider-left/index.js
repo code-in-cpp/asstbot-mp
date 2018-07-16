@@ -103,10 +103,10 @@ exports.default = Component({
     },
     // 点击删除按钮触发的事件
     handleClicked: function (e) {
-      console.log('enter handleDelete')
+      console.log('enter handleClicked')
       // console.log(e)
       this.setData({ open: false })
-      this.triggerEvent('delete', {index:e.target.dataset.index})
+      this.triggerEvent('btnClicked', {index:e.target.dataset.index})
     },
     // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
     handleTouchestart: function () {

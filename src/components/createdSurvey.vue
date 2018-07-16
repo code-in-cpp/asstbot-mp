@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left :iconTitles="icons" :openWidth="450" @delete="delete_row($event, i)">
+          <slider-left :iconTitles="icons" :openWidth="450" @btnClicked="actionClicked($event, i)">
             <view  @click="selected(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
@@ -38,7 +38,8 @@ export default {
         url: `/pages/display/main?id=${this.surveyList[index].id}`
       })
     },
-    delete_row (e, selectedItem) {
+    actionClicked (e, selectedItem) {
+      console.log('enter clicked_row')
       let operId = e.mp.detail.index
       let that = this
       if (operId === 0) {
