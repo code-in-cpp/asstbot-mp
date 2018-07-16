@@ -19,6 +19,7 @@
         <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
+
       </view>
     </view>
   </form>

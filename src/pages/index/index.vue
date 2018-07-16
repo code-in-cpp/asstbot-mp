@@ -3,22 +3,25 @@
     <page-title :title="survey.title"/>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
-        <header-area :surveyData="survey"/>
-        <block v-for="(messages, i) in messagesList" :key="i">
-          <view :id="i">
-          <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-              :messages="messages" @renderComplete="scollToBottom"/>
-          </view>
-          <view :id="'bottom'+i"></view>
-        </block>
-        <block v-if="waitingBotMessage">
-          <bot-msg-receiving/>
-        </block>
-        <view id="bottom"></view>
+        <view  :class="{'height-110':!haveImage,'height-444':haveImage}">
+          <header-area :surveyData="survey"/>
+          <block v-for="(messages, i) in messagesList" :key="i">
+            <view :id="i">
+              <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
+                        :messages="messages" @renderComplete="scollToBottom"/>
+            </view>
+            <view :id="'bottom'+i"></view>
+          </block>
+          <block v-if="waitingBotMessage">
+            <bot-msg-receiving/>
+          </block>
+          <view id="bottom"></view>
+        </view>
+
       </scroll-view>
     </view>
     <view class="footer">
-      <select-box></select-box>
+      <select-box :list="list" :haveImage="haveImage"></select-box>
       <command-area/>
     </view>
   </div>
@@ -43,7 +46,8 @@ export default {
       // messagesList: [],
       // lastShowMessage: {},
       lastMessage: {},
-      scrollToView: 'bottom'
+      scrollToView: 'bottom',
+      haveImage: false
     }
   },
   computed: {
@@ -70,7 +74,9 @@ export default {
         }
         return true
       },
-
+      ...mapGetters({
+        list: 'messageAction'
+      }),
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
@@ -79,7 +85,14 @@ export default {
   },
   watch: {
     messagesList: function (val) {
-      this.scrollToView = `bottom${val.length - 1}`
+      const that = this
+      if (this.haveImage) {
+        setTimeout(function () {
+          that.scrollToView = `bottom${val.length - 1}`
+        }, 500)
+      } else {
+        this.scrollToView = `bottom${val.length - 1}`
+      }
     },
     'lastShowMessage.msgs': function (newVal) {
       if (!this.lastShowMessage.to) {
@@ -107,6 +120,14 @@ export default {
             })
           }
         }
+      }
+    },
+    list: function (val) {
+      if (val.type === 'radio' || val.type === 'checkbox') {
+        let a = this.list.items.find(item => !!item.imageUrl === true)
+        this.haveImage = a !== undefined
+      } else {
+        this.haveImage = false
       }
     }
   },
@@ -190,4 +211,16 @@ export default {
   .height_700{
     height:700rpx
   }
+  .footer{
+    position: relative;
+  }
+  .height-110{
+    box-sizing: border-box;
+    padding-bottom: 110rpx;
+  }
+  .height-444{
+    box-sizing: border-box;
+    padding-bottom: 444rpx;
+  }
+
 </style>
