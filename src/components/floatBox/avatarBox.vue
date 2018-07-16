@@ -1,7 +1,5 @@
 <template>
   <view>
-    <!--<button class="height-line-height btn-style" open-type="getUserInfo" @getuserinfo="updateUserInfo">使用微信头像</button>-->
-    <!--<button class="height-line-height btn-style" @click="uploadAvatar">上传头像</button>-->
     <photo-chop v-if="showChopBox" :src="src"></photo-chop>
   </view>
 </template>

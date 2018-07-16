@@ -2,8 +2,8 @@
 
   <view class="page">
 
-    <view class="weui-cells">
-      <view class="weui-cell">
+    <view class="weui-cells clear-border">
+      <view class="weui-cell clear-border">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
             <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
         </view>
@@ -21,7 +21,7 @@
             <view v-if="activeIndex == 0">
               <block v-for="(subject, i) in subjects" :key="subject">
                 <view class="subject-divider"></view>
-                <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cells weui-cells_after-title clear-border">
                   <view class="weui-cell weui-cell_input subject-area subject-style font-size">
                     <view class="weui-cell__hd subject-item-style">
                       <view class="weui-label subject-title-style">题目 {{i+1}}</view>
@@ -49,7 +49,7 @@
                 <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
               </block>
               <view class="subject-divider"></view>
-              <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cells weui-cells_after-title clear-border">
                 <view class="weui-cell" @click="addSubject">
                   <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
                   <view class="weui-cell__bd">添加题目</view>

@@ -24,6 +24,7 @@
   @import "../../static/base";
 .imageGallery{
   text-align: center;
+  font-size: 0;
 }
   .image{
     display: inline-block;

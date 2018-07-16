@@ -136,7 +136,12 @@ page{
 .bot-message .content{
     width:100%
   }
-
+.clear-border:before{
+  border-top:none!important;
+}
+.clear-border:after{
+  border-bottom:none!important;
+}
 
 /* animation */
 .transited {

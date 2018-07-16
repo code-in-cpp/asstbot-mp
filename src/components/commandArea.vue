@@ -36,13 +36,9 @@
       </view>
 
       <view class="weui-flex__item height-line-height command-box"  v-if="!voiceMode">
-        <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <!--<textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>-->
-        <textarea class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" adjust-position auto-height=true @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item height-line-height"  v-else>
-        <!--<i-input v-if="!activeAction" auto-height="auto" class="height-line-height word-break" type="textarea" :value="currentMessage" @change="valueChange" placeholder="请输入消息" />-->
-        <!--<textarea v-if="!activeAction" class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" @change="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>-->
         <button class="input-widget height-line-height button-talk" :class="recordStatus=='readyToRecord'?'':'button-talk-pressed'"
             @touchstart="startRecord"
             @touchcancel="cancelRecord"
@@ -108,7 +104,12 @@ export default {
     },
     valueChange (ev) {
       this.currentMessage = ev.mp.detail.value
-      console.log('当前的值change：' + this.currentMessage)
+      // if (String.prototype.slice.apply(ev.mp.detail.value, [-1]) === '\n') {
+      //   this.$store.dispatch('sendQuery', String.prototype.slice.apply(this.currentMessage, [0, -1])).then(res => {
+      //     this.$store.commit('clearState')
+      //   })
+      //   this.currentMessage = ''
+      // }
     },
     sendMessage (ev) {
       if (this.currentMessage && !this.focusFlag) {
@@ -124,6 +125,7 @@ export default {
     },
     rowChange (e) {
       this.rowHeight = e.mp.detail.heightRpx + 'rpx'
+      console.log(this.rowHeight)
     },
     focusActive () {
       if (this.focusFlag) {
@@ -233,6 +235,7 @@ export default {
   }
   .container-box{
     align-items: flex-end;
+    display: flex!important;
     background: #ccc;
   }
   .word-break{
