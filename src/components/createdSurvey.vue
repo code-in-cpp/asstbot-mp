@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left @delete="delete_row(i)">
+          <slider-left @delete="delete_row($event, i)">
             <view  @click="selected(i)" @touchmove="touchMove(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
@@ -38,7 +38,10 @@ export default {
       this.selected_index = index
       this.should_pop = true
     },
-    delete_row (index) {
+    delete_row (e, index) {
+      console.log(e, index)
+      let key = e.mp.detail.key
+      console.log(key)
       let that = this
       wx.showModal({
         title: '您确认要删除吗？',

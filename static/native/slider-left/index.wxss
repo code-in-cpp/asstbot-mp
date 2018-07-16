@@ -33,14 +33,24 @@
 .handle-delete {
   background-color: red;
   width: 150rpx;
+  //right:  150rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
 }
 
+.handle-share {
+  background-color: grey;
+  width: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
 
-
-
-
+.handle-icons {
+  display: flex;
+  flex-direction: row;
+}
 

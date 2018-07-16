@@ -1,4 +1,4 @@
-<movable-area class="slider-left-item" style="width:{{openWidth * 2 + 750}}rpx;margin-left:-{{openWidth * 2}}rpx;">
+<movable-area class="slider-left-item" style="width:{{openWidth*2 + 750}}rpx;margin-left:-{{openWidth*2}}rpx;">
   <movable-view class="slider-left-content"
     damping="100"
     x="{{x}}"
@@ -8,7 +8,10 @@
     bind:change="handleChange">
     <slot></slot>
   </movable-view>
-  <view class='slider-left-handle'>
-    <view bind:tap="handleDelete" class='handle-delete'>删除</view>
-  </view>
+  <view class='handle-icons'>
+    <view class='slider-left-handle'>
+      <view bind:tap="handleDelete" class='handle-delete'>删除</view>
+      <view bind:tap="handleDelete" class='handle-share'>分享</view>
+    </view>
+   </view>
 </movable-area>

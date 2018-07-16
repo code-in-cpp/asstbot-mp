@@ -18,7 +18,7 @@ exports.default = Component({
     // 可以往左拖动的最大距离,同时它也是组件的初始x坐标，此时菜单不可见
     openWidth: {
       type: Number,
-      value: 75
+      value: 150
     },
     // 菜单是否打开了，true表示打开，false表示关闭
     open: {
@@ -90,7 +90,7 @@ exports.default = Component({
     handleDelete: function () {
       console.log('handleDelete')
       this.setData({ open: false })
-      this.triggerEvent('delete')
+      this.triggerEvent('delete', {key : '1234'})
     },
     // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
     handleTouchestart: function () {
