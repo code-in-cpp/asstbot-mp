@@ -3,7 +3,7 @@
     <view class="list-item" >
       <view class="label-wrapper">
         <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
-        <top-label :title="1234" left_rpx="80"></top-label>
+        <badge :title="1234" left_rpx="80"></badge>
       </view>
       <view class="survey-info">
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
@@ -16,7 +16,7 @@
 
 <script>
 import viewAvatar from '@/components/viewSurvey/viewAvatar'
-import topLabel from '@/components/viewSurvey/topLabel'
+import Badge from '@/components/viewSurvey/Badge'
 export default {
   props: {
     surveyInfo: {
@@ -30,7 +30,7 @@ export default {
   },
   components: {
     viewAvatar,
-    topLabel
+    Badge
   }
 }
 </script>
