@@ -57,11 +57,12 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import "../../../static/base.less";
   .boxItems{
     background: #fff;
     height: 700rpx;
-    font-size: 32rpx;
+    font-size: @font-size-middle;
     overflow: hidden;
     width:100%;
   }
@@ -74,9 +75,6 @@
   .ulBox{
     height:100%;
   }
-  .boxItemBox{
-
-  }
   .item{
     padding-left: 15px;
     line-height: 40px;
@@ -88,7 +86,7 @@
     background:#fff;
     padding:0;
     line-height:64rpx;
-    font-size:28rpx;
+    font-size: @font-size-small;
     width:120rpx;
   }
   .selectRadio{

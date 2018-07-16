@@ -45,7 +45,7 @@
       <view class="weui-flex">
         <scroll-view scroll-x  class="scroll-button-view">
         <view class="scroll-button-item-view">
-          <button class="weui-btn greybtn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
+          <button class="weui-btn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
         </view>
         <view class="scroll-button-item-view">
           <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
@@ -165,7 +165,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../../static/base.less";
 .user-avator-icon{
   margin-right: 10rpx;
   vertical-align: middle;
@@ -206,7 +207,7 @@ export default {
 }
 
 .weui-grid__title{
-  font-size: 48rpx;
+  font-size: @font-size-big;
   font-weight: bold;
   text-align: center;
 }
@@ -244,11 +245,6 @@ export default {
 .btn {
   width: 30%;
   margin-right: 20rpx;
-  /*background-color: #FFCC00;*/
-  /*color: #FFF;*/
-}
-.greybtn{
-  background-color: #ffffff;
 }
 
 .iconfont {

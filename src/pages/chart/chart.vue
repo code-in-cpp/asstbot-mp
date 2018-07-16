@@ -82,8 +82,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import "../../../static/base.less";
 .header-item {
   margin-top: 20rpx;
   text-align: center;
@@ -125,7 +125,7 @@ export default {
 }
 
 .chart-view-title{
-  font-size: 28rpx;
+  font-size: @font-size-small;
 }
 
 .chart-view-cell {
@@ -154,13 +154,7 @@ export default {
 .btn {
   width: 30%;
   margin-right: 20rpx;
-  /*background-color: #FFCC00;*/
-  /*color: #FFF;*/
 }
-.greybtn{
-  background-color: #ffffff;
-}
-
 .iconfont {
   display: inline-block
 }

@@ -8,7 +8,7 @@
               <bod-avatar :url="avatarUrl" size="100"/>
             </view>
             <view class="avatar-badge"  @click="chooseImage">
-              <i class="icon iconfont icon-editor" style="font-size: 28rpx"></i>
+              <i class="icon iconfont icon-editor" style="font-size: @font-size-small"></i>
             </view>
             <button class="weui-btn" type="default" size="mini"
               open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>

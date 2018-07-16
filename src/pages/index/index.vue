@@ -6,20 +6,17 @@
         <header-area :surveyData="survey"/>
         <block v-for="(messages, i) in messagesList" :key="i">
           <view :id="i">
-          <msg-list :survey="survey" :receiving="i==(messagesList.length-1)&&messages.to!==undefined"
-              :messages="messages"/>
+          <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
+              :messages="messages" @renderComplete="scollToBottom"/>
           </view>
           <view :id="'bottom'+i"></view>
         </block>
         <block v-if="waitingBotMessage">
           <bot-msg-receiving/>
         </block>
+        <view id="bottom"></view>
       </scroll-view>
     </view>
-    <!--<view class="footer" :class="{'height_700': !flag }">-->
-      <!--<command-area v-if="flag"/>-->
-      <!--<float-index v-else-if="!flag"></float-index>-->
-    <!--</view>-->
     <view class="footer">
       <select-box></select-box>
       <command-area/>
@@ -43,14 +40,16 @@ export default {
       survey: {},
       isIphoneX: false,
       waitingBotMessage: false,
-      messagesList: [],
-      lastShowMessage: {},
-      lastMessage: {}
+      // messagesList: [],
+      // lastShowMessage: {},
+      lastMessage: {},
+      scrollToView: 'bottom'
     }
   },
   computed: {
     ...mapState({
-      messages: state => state.messages.data,
+      messagesList: state => state.messages.data,
+      lastShowMessage: state => state.messages.data.slice(-1)[0],
       flag: state => {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
@@ -71,9 +70,7 @@ export default {
         }
         return true
       },
-      scrollToView: state => {
-        return `bottom${state.messages.data.length - 1}`
-      },
+
       userAuthed: state => state.userProfile.authed
     }),
     ...mapGetters({
@@ -81,27 +78,8 @@ export default {
     })
   },
   watch: {
-    messages: function (val) {
-      let lastMessage = val.slice(-1)[0]
-      this.waitingBotMessage = true
-      if (lastMessage && lastMessage.to) {
-        this.lastMessage = lastMessage
-        this.messagesList = val.slice(0, -1)
-        this.lastShowMessage = {to: lastMessage.to, type: lastMessage.type, msgs: []}
-        this.pushMessageToShow()
-
-        var that = this
-
-        let interval = setInterval(() => {
-          if (!that.pushMessageToShow()) {
-            clearInterval(interval)
-            that.waitingBotMessage = false
-          }
-        }, 300)
-      } else {
-        this.messagesList = val
-        this.lastShowMessage = {}
-      }
+    messagesList: function (val) {
+      this.scrollToView = `bottom${val.length - 1}`
     },
     'lastShowMessage.msgs': function (newVal) {
       if (!this.lastShowMessage.to) {
@@ -165,13 +143,8 @@ export default {
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     },
-    pushMessageToShow () {
-      if (this.lastShowMessage.msgs.length === this.lastMessage.msgs.length) {
-        return false
-      }
-      this.lastShowMessage.msgs = [...this.lastShowMessage.msgs, this.lastMessage.msgs[this.lastShowMessage.msgs.length]]
-      this.messagesList = [...this.messages.slice(0, -1), this.lastShowMessage]
-      return true
+    scollToBottom () {
+      this.scrollToView = 'bottom'
     }
   },
 
@@ -184,12 +157,6 @@ export default {
   },
 
   onLoad (option) {
-    // const complate = wx.getStorageSync('complate')
-    // if (complate === 'success') {
-    //   wx.navigateTo({
-    //     url: '../display/main'
-    //   })
-    // }
     if (option.id) {
       const scene = option.scene ? option.scene : 'publish'
       this.$store.commit('talkToSurveyBot', {id: option.id, scene})

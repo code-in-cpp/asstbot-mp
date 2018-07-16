@@ -1,32 +1,18 @@
 <script>
 export default {
   created () {
-    // 调用API从本地缓存中获取数据
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // console.log('app created and cache logs by setStorageSync')
   }
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import "../static/base.less";
 
 page{
   height: 100% !important;
   background-color:#F8F8F8;
-  font-size:16px;
+  font-size:@font-size-middle;
   font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
-
-}
-
-.weui-flex {
-    display: flex;
-}
-.weui-flex__item{
-    flex: 1;
 }
 
 .container {
@@ -90,14 +76,14 @@ page{
 .incoming {
   padding: 20rpx;
   margin-left: 20rpx;
-  border: solid #dddee1 1px;
+  border: solid @p-light-color 1px;
   border-radius: 15px 15px 15px 0;
   /*background-color: #f8f8f9;*/
   width: auto!important;
   display: inline-block;
-  font-size: 28rpx;
+  font-size: @font-size-small;
   max-width: 90%;
-  background: #fff;
+  background: @incoming-color;
 }
 .boxFloat{
   width:100%;
@@ -108,18 +94,19 @@ page{
 .top_0{
   height: 700rpx;
 }
-  .font-color{
-    color: #999;
-  }
-  .font-size{
-    font-size: 28rpx;
-  }
+
+.font-color{
+  color: #999;
+}
+
+.font-size{
+  font-size: @font-size-small;
+}
 
 /* Bot Message Style  */
 .bot-message {
   padding-bottom: 10px;
   display: flex;
-
 }
 
 .bot-message .avatar-wrapper {
@@ -147,5 +134,90 @@ page{
 .transited {
   -webkit-transition: .3s; /* For Safari 3.1 to 6.0 */
   transition: .3s;
+}
+
+.primary-color {
+  background-color: @p-color !important;
+  color: @text-on-p-color !important;
+}
+
+.primary-color.dark, .form-control.primary-color:active {
+  background-color: @p-dark-color !important;
+}
+
+.primary-color.light,
+.form-control.primary-color:disabled,
+.form-control.secondary-color[disabled],
+.form-control.secondary-color:disabled {
+  background-color: @p-light-color !important;
+}
+
+.primary-color.revert {
+  color: @p-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.primary-color.light.revert {
+  color: @p-light-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.primary-color.dark.revert {
+  color: @p-dark-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.secondary-color,
+.form-control.secondary-color.light:active {
+  background-color: @s-color !important;
+  color: @text-on-s-color !important;
+}
+
+.secondary-color.dark, .form-control.secondary-color:active {
+  background-color: @s-dark-color !important;
+}
+
+.secondary-color.light{
+  background-color: @s-light-color !important;
+}
+
+.secondary-color.revert {
+  color: @s-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.secondary-color.light.revert {
+  color: @s-light-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.secondary-color.dark.revert {
+  color: @s-dark-color !important;
+  background-color: @text-on-p-color !important;
+}
+
+.warn-color {
+  background-color: @w-color !important;
+  color: white;
+}
+
+.warn-color.light {
+  background-color: @w-light-color !important;
+}
+
+.warn-color.black {
+  background-color: @w-dark-color !important;
+}
+
+/* outgoing message style */
+.outgoing {
+  padding:20rpx;
+  border:solid #81d4f4 1rpx;
+  border-radius:30rpx 30rpx 0 30rpx;
+  background-color: @s-light-color !important;
+  color: @text-on-s-color !important;
+  font-size: @font-size-small;
+  margin-right:10rpx;
+  text-align:left;
 }
 </style>

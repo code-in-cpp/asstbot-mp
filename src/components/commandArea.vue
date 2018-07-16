@@ -1,52 +1,22 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <view class="record-status" v-if="recordStatus!='readyToRecord'">
-      <block v-if="recordStatus=='inRecording'">
-        <view class="weui-flex" style="width: 300rpx">
-          <view class="weui-flex__item">
-            <i class="icon iconfont icon-translation_fill" style="color: white; float:right;"></i>
-          </view>
-          <view class="weui-flex__item">
-            <view class="spinner"></view>
-          </view>
-        </view>
-        <view style="width: 300rpx;text-align: center">
-          <text>
-            手指上滑，取消发送
-          </text>
-        </view>
-      </block>
-      <block v-else>
-        <view>
-          <i class="icon iconfont icon-undo"></i>
-        </view>
-        <text style="background-color: red;">
-          松开手指，取消发送
-        </text>
-      </block>
-    </view>
-    <view class="weui-flex container-box" :class="{iphonex_padding : is_iphonex}">
+    <view class="weui-flex primary-color light" :class="{iphonex_padding : is_iphonex}">
       <view class="placeholder">
-        <button class="input-widget height-line-height default-widget" size="small" @click="voiceMode=true" v-if="!voiceMode">
+        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
         </button>
-        <button class="input-widget height-line-height default-widget" size="small" @click="voiceMode=false" v-else>
+        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=false" v-else>
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
-
-      <view class="weui-flex__item height-line-height command-box"  v-if="!voiceMode">
-        <textarea class=" word-textarea  word-break command-text" :value="currentMessage" @input="valueChange" adjust-position auto-height=true @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+      <view class="weui-flex__item"  v-if="!voiceMode">
+        <textarea class=" word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
-      <view class="weui-flex__item height-line-height"  v-else>
-        <button class="input-widget height-line-height button-talk" :class="recordStatus=='readyToRecord'?'':'button-talk-pressed'"
-            @touchstart="startRecord"
-            @touchcancel="cancelRecord"
-            @touchmove="recordOperation"
-            @touchend="stopRecord">{{recordOperationText}}</button>
+      <view class="weui-flex__item "  v-else>
+         <record-button></record-button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
-        <button class="input-widget height-line-height buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+        <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
       </view>
@@ -55,8 +25,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-
-const recorderManager = wx.getRecorderManager()
+import recordButton from './widget/recordButton'
 
 export default {
   data () {
@@ -64,10 +33,7 @@ export default {
       currentMessage: '请输入消息',
       rowHeight: '0rpx',
       focusFlag: true,
-      voiceMode: false,
-      recordStatus: 'readyToRecord',
-      startRecordPageY: 0,
-      endRecordPageY: 0
+      voiceMode: false
     }
   },
   computed: {
@@ -85,19 +51,13 @@ export default {
       items: state => {
         return state.inputValue.items
       }
-    }),
-    recordOperationText () {
-      if (this.recordStatus === 'readyToRecord') {
-        return '按住 说话'
-      } else if (this.recordStatus === 'readyToCancel') {
-        return '松开手指，取消发送'
-      } else {
-        return '松开 结束'
-      }
-    }
+    })
   },
-  updated () {
+
+  components: {
+    recordButton
   },
+
   methods: {
     updateUserInfo (ev) {
       this.$store.dispatch('updateUserInfo')
@@ -134,98 +94,25 @@ export default {
       }
     },
     keyEvnet (e) {
-      // console.log(this)
       this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
         this.currentMessage = ''
       })
-      // this.currentMessage = ''
-    },
-    startRecord (e) {
-      this.startRecordPageY = e.clientY
-      this.endRecordPageY = e.clientY
-      this.recordStatus = 'inRecording'
-      this.startRecordOperation()
-    },
-    stopRecord (e) {
-      recorderManager.stop()
-    },
-    cancelRecord (e) {
-      recorderManager.stop()
-    },
-    recordOperation (e) {
-      this.endRecordPageY = e.clientY
-      if (this.endRecordPageY - this.startRecordPageY < -50) {
-        this.recordStatus = 'readyToCancel'
-      } else {
-        this.recordStatus = 'inRecording'
-      }
-    },
-    clearRecordStatus () {
-      this.recordStatus = 'readyToRecord'
-      this.startRecordPageY = 0
-      this.endRecordPageY = 0
-    },
-    startRecordOperation () {
-      let that = this
-      recorderManager.onStart(() => {
-        console.log('recorder start')
-      })
-      recorderManager.onPause(() => {
-        console.log('recorder pause')
-      })
-      recorderManager.onStop((res) => {
-        console.log('recorder stop', res)
-        // const { tempFilePath } = res
-        if (that.recordStatus === 'inRecording') {
-          wx.showLoading({
-            title: '认真理解中',
-            mask: true
-          })
-          that.$store.dispatch('getAsrResult', res.tempFilePath)
-            .then(() => {
-              that.$store.commit('clearState')
-              that.items = []
-              wx.hideLoading()
-            })
-            .catch(() => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '没听懂:(',
-                icon: 'none'
-              })
-            })
-        }
-        that.clearRecordStatus()
-      })
-      recorderManager.onFrameRecorded((res) => {
-        const { frameBuffer } = res
-        console.log('frameBuffer.byteLength', frameBuffer.byteLength)
-      })
-
-      const options = {
-        duration: 60000,
-        sampleRate: 16000,
-        numberOfChannels: 1,
-        encodeBitRate: 64000,
-        format: 'mp3'
-      }
-
-      recorderManager.start(options)
     }
   }
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../static/base.less";
+
 .input-widget {
   margin: 0!important;
   height: 100%;
   max-height: 80rpx;
-  color:#fff!important;
-  background:#2d8cf0!important
+  line-height: 80rpx;
+  box-sizing: border-box;
 }
 .input-widget:disabled{
-  background: rgba(168,167,165,0.09)!important;
   padding-left: 20px;
 }
   .height-line-height{
@@ -280,52 +167,23 @@ export default {
     font-size: 40rpx!important;
   }
 
-  .record-status {
-    position: fixed;
-    top: 300rpx;
-    left: 225rpx;
-    width: 300rpx;
-    height: 375rpx;
-    background-color: rgba(0 , 0, 0, 0.5);
-    text-align: center;
-    color: white;
-  }
+.word-textarea{
+  height: auto;
+  min-height: 74rpx;
+  padding-left: 10rpx;
+  line-height: 74rpx;
+  word-break: break-word;
+  border: 1rpx solid #dadada;
+  box-sizing: border-box;
+  width:100%;
+  height:100%;
+}
 
-  .record-status .iconfont {
-    font-size: 200rpx;
-  }
+.iphonex_padding{
+  margin-bottom: 68rpx;
+}
 
-  .record-status text {
-    font-size: 28rpx;
-  }
-
-  .spinner {
-    margin-top: 150rpx;
-    width: 80rpx;
-    height: 80rpx;
-    background-color: #fff;
-
-    border-radius: 100%;
-    -webkit-animation: scaleout 1.0s infinite ease-in-out;
-    animation: scaleout 1.0s infinite ease-in-out;
-  }
-
-  @-webkit-keyframes scaleout {
-    0% { -webkit-transform: scale(0.0) }
-    100% {
-      -webkit-transform: scale(1.0);
-      opacity: 0;
-    }
-  }
-
-@keyframes scaleout {
-  0% {
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 100% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
+.input-widget .iconfont{
+  font-size: @font-size-big!important;
 }
 </style>
