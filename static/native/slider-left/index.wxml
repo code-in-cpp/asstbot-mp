@@ -10,8 +10,9 @@
   </movable-view>
   <view class='handle-icons'>
     <view class='slider-left-handle'>
-      <view bind:tap="handleDelete" class='handle-delete'>删除</view>
-      <view bind:tap="handleDelete" class='handle-share'>分享</view>
+      <block wx:for="{{iconTitles}}">
+        <view data-index="{{index}}" bind:tap="handleClicked" class='handle-icon'>{{item.title}}</view>
+      </block>
     </view>
    </view>
 </movable-area>

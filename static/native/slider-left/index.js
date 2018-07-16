@@ -20,7 +20,11 @@ exports.default = Component({
       type: Number,
       value: 240
     },
-    // 菜单是否打开了，true表示打开，false表示关闭
+    iconTitles: {
+      type: Array,
+      value: [{title:'分享'}, {title:'删除'}]
+    },
+    //菜单是否打开了，true表示打开，false表示关闭
     open: {
       type: Boolean,
       value: false,
@@ -87,10 +91,11 @@ exports.default = Component({
       }
     },
     // 点击删除按钮触发的事件
-    handleDelete: function () {
-      console.log('handleDelete')
+    handleClicked: function (e) {
+      console.log('enter handleDelete')
+      // console.log(e)
       this.setData({ open: false })
-      this.triggerEvent('delete', {key : '1234'})
+      this.triggerEvent('delete', {index:e.target.dataset.index})
     },
     // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
     handleTouchestart: function () {

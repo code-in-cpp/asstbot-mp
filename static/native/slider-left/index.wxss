@@ -40,12 +40,14 @@
   color: #fff;
 }
 
-.handle-share {
+.handle-icon {
   background-color: grey;
   width: 120rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-left: 2rpx solid;
+  border-left-color: white;
   color: #fff;
 }
 

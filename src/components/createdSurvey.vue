@@ -38,10 +38,12 @@ export default {
       this.selected_index = index
       this.should_pop = true
     },
-    delete_row (e, index) {
-      console.log(e, index)
-      let key = e.mp.detail.key
-      console.log(key)
+    delete_row (e, selectedItem) {
+      // console.log(e, selectedItem)
+      console.log('#############enter delete_row###########')
+      let operId = e.mp.detail.index
+      console.log('#############delete_row, log after operId###########')
+      console.log('operId', operId)
       let that = this
       wx.showModal({
         title: '您确认要删除吗？',
@@ -49,7 +51,7 @@ export default {
         cancelText: '取消',
         success: function (res) {
           if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', that.surveyList[index].id)
+            that.$store.dispatch('deleteSurvey', that.surveyList[selectedItem].id)
           } else {
             console.log('用户点击取消操作')
           }
