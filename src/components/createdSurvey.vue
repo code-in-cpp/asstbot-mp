@@ -3,8 +3,8 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left :iconTitles="icons" @delete="delete_row($event, i)">
-            <view  @click="selected(i)" @touchmove="touchMove(i)">
+          <slider-left :iconTitles="icons" :openWidth="450" @delete="delete_row($event, i)">
+            <view  @click="selected(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
           </slider-left>
@@ -24,7 +24,6 @@ export default {
   data: function () {
     return {
       selected_index: 0,
-      should_pop: false,
       icons: [
         {title: '删除', color: 'red'},
         {title: '朋友圈', color: 'grey'},
@@ -39,16 +38,8 @@ export default {
         url: `/pages/display/main?id=${this.surveyList[index].id}`
       })
     },
-    touchMove (index) {
-      this.selected_index = index
-      this.should_pop = true
-    },
     delete_row (e, selectedItem) {
-      // console.log(e, selectedItem)
-      console.log('#############enter delete_row###########')
       let operId = e.mp.detail.index
-      console.log('#############delete_row, log after operId###########')
-      console.log('operId', operId)
       let that = this
       if (operId === 0) {
         wx.showModal({

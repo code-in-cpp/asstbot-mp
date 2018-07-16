@@ -16,10 +16,10 @@ exports.default = Component({
       value: 30
     },
     // // 可以往左拖动的最大距离,同时它也是组件的初始x坐标，此时菜单不可见
-    // openWidth: {
-    //   type: Number,
-    //   value: 240
-    // },
+    openWidth: {
+      type: Number,
+      value: 300
+    },
     iconTitles: {
       type: Array,
       value: [{title: '分享', color: 'grey'}, {title:'删除', color: 'red'}]
@@ -48,7 +48,6 @@ exports.default = Component({
     x: 150, // 单位rpx
     itemCount: 3,
     itemWidth: 150,
-    openWidth: 450,
     currentX: 150, // 当前记录组件被拖动时的x坐标
     moveInstance: 0 // 记录往左移动的距离
   },
@@ -57,11 +56,11 @@ exports.default = Component({
   },
   attached: function () {
     console.log('slide-left enter attached', this.data.openWidth)
-    // this.setData({
-    //   itemCount: this.data.iconTitles.length
-    // })
     this.setData({
-      openWidth: this.data.itemWidth * this.data.itemCount
+      itemCount: this.data.iconTitles.length
+    })
+    this.setData({
+      itemWidth: this.data.openWidth / this.data.itemCount
     })
     console.log('slide-left enter attached', this.data.openWidth)
     this.setData({
