@@ -82,7 +82,7 @@ export default {
       this.scrollToView = `bottom${val.length - 1}`
     },
     'lastShowMessage.msgs': function (newVal) {
-      if (!this.lastShowMessage.to) {
+      if (!this.lastShowMessage || !this.lastShowMessage.to) {
         return
       }
       let lastmsg = newVal.slice(-1)[0]
