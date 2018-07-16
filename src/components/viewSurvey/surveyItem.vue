@@ -65,7 +65,7 @@ export default {
   }
 
   .active-item {
-    background-color: #EFEFF4;
+    background-color: @highlight-grey-color;
   }
   .survey-desc {
     color: #999999;
