@@ -2,16 +2,20 @@
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
-        <view  @click="selected(i)" @touchmove="touchMove(i)">
-          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
+        <view>
+          <slider-left @delete="delete_row(i)">
+            <view  @click="selected(i)" @touchmove="touchMove(i)">
+              <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
+            </view>
+          </slider-left>
         </view>
+
       </view>
     </block>
   </view>
 </template>
 
 <script>
-
 import surveyItem from '@/components/viewSurvey/surveyItem'
 import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
@@ -33,10 +37,23 @@ export default {
     touchMove (index) {
       this.selected_index = index
       this.should_pop = true
+    },
+    delete_row (index) {
+      let that = this
+      wx.showModal({
+        title: '您确认要删除吗？',
+        confirmText: '确认',
+        cancelText: '取消',
+        success: function (res) {
+          if (res.confirm) {
+            that.$store.dispatch('deleteSurvey', that.surveyList[index].id)
+          } else {
+            console.log('用户点击取消操作')
+          }
+        }
+      })
     }
-    // create() {
-    //
-    // }
+
   },
 
   computed: {
