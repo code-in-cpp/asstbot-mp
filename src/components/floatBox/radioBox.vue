@@ -57,7 +57,7 @@
   height:100%;
   text-align: center;
   line-height: 300rpx;
-  font-size: @font-size-small;
+  font-size: @font-size-tiny;
   color:#999;
 }
 .have{

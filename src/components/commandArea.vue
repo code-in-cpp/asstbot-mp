@@ -10,7 +10,7 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueChange" adjust-position auto-height="true" @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
@@ -19,7 +19,7 @@
         <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget .form-control buttonSend">
+        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget .form-control buttonSend" @click="setGlobalShow">
           <i class="icon iconfont icon-addition"></i>
         </button>
       </view>
@@ -36,7 +36,8 @@ export default {
   data () {
     return {
       currentMessage: '请输入消息',
-      rowHeight: '0rpx',
+      rowHeight: '80rpx',
+      lineHeight: '80rpx',
       focusFlag: true,
       voiceMode: false
     }
@@ -54,7 +55,8 @@ export default {
       },
       items: state => {
         return state.inputValue.items
-      }
+      },
+      globalShow: state => state.inputValue.globalShow
     })
   },
 
@@ -89,8 +91,10 @@ export default {
       }
     },
     rowChange (e) {
-      this.rowHeight = e.mp.detail.heightRpx + 'rpx'
-      console.log(this.rowHeight)
+      let count = e.mp.detail.lineCount
+      let heightNum = count === 1 ? count * 80 : count * 56
+      this.rowHeight = heightNum + 'rpx'
+      this.lineHeight = count <= 1 ? '80rpx' : '56rpx'
     },
     focusActive () {
       if (this.focusFlag) {
@@ -99,9 +103,18 @@ export default {
       }
     },
     keyEvnet (e) {
-      this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
-        this.currentMessage = ''
-      })
+      if (e.mp.detail.value) {
+        this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
+          this.currentMessage = ''
+        })
+      }
+    },
+    setGlobalShow () {
+      if (this.globalShow) {
+        this.$store.commit('setGlobalFalse')
+      } else {
+        this.$store.commit('setGlobalTrue')
+      }
     }
   }
 }
@@ -137,9 +150,7 @@ export default {
   .word-textarea{
     height: auto;
     background: #fff;
-    min-height: 72rpx;
     padding-left: 10rpx;
-    line-height: 72rpx;
   }
   .buttonSend[disabled]{
     background: #999!important;
@@ -171,18 +182,22 @@ export default {
   }
 
 .word-textarea{
-  height: auto;
-  min-height: 74rpx;
+  /*height: auto;*/
+  /*min-height: 74rpx;*/
   padding-left: 10rpx;
-  line-height: 74rpx;
+  /*line-height: 74rpx;*/
   word-break: break-word;
   border: 1rpx solid #dadada;
   box-sizing: border-box;
   width:100%;
-  height:100%;
+  /*height:100%;*/
 }
 
 .input-widget .iconfont{
   font-size: @font-size-big!important;
 }
+  .placeholder{
+    display: flex;
+    align-items: flex-end;
+  }
 </style>

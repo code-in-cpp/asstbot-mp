@@ -3,7 +3,7 @@
     <page-title :title="survey.title"/>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
-        <view  :class="{'height-110':!haveImage,'height-444':haveImage}">
+        <view class="padding-top-64" :class="{'height-110':!haveImage,'height-444':haveImage}">
           <header-area :surveyData="survey"/>
           <block v-for="(messages, i) in messagesList" :key="i">
             <view :id="i">
@@ -206,5 +206,7 @@ export default {
     box-sizing: border-box;
     padding-bottom: 444rpx;
   }
-
+.padding-top-64{
+  padding-top: 64rpx;
+}
 </style>

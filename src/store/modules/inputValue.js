@@ -1,6 +1,7 @@
 
 const state = {
-  items: []
+  items: [],
+  globalShow: false
 }
 
 const getters = {
@@ -13,6 +14,12 @@ const mutations = {
   },
   clearState (state) {
     state.items = []
+  },
+  setGlobalTrue (state) {
+    state.globalShow = true
+  },
+  setGlobalFalse (state) {
+    state.globalShow = false
   }
 }
 
