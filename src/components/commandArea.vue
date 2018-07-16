@@ -10,16 +10,18 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueChange" adjust-position auto-height="true" @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
-        <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+        <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-
+        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget .form-control buttonSend">
+          <i class="icon iconfont icon-addition"></i>
+        </button>
       </view>
     </view>
     <device-padding></device-padding>
