@@ -34,6 +34,9 @@ export default {
       this.selected_index = index
       this.should_pop = true
     }
+    // create() {
+    //
+    // }
   },
 
   computed: {

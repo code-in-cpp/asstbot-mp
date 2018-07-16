@@ -40,6 +40,8 @@ export default {
   .padding {
     background-color: #ffffff;
     height: 160rpx;
+    border-bottom: 2rpx solid;
+    border-bottom-color: @btn-border-color;
   }
 
   .list-item {
@@ -48,8 +50,6 @@ export default {
     //margin-right: 100rpx;
     width: 730rpx;
     height: 142rpx;
-    border-bottom: 2rpx solid;
-    border-bottom-color: @btn-border-color;
     display: flex;
     flex-direction: row;
   }
@@ -65,7 +65,7 @@ export default {
   }
 
   .active-item {
-    background-color: #C8C7CC;
+    background-color: #EFEFF4;
   }
   .survey-desc {
     color: #999999;
@@ -75,5 +75,6 @@ export default {
 
   .label-wrapper {
     position: relative;
+    padding-top: 10rpx;
   }
 </style>
