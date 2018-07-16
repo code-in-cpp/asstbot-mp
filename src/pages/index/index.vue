@@ -41,7 +41,6 @@ export default {
   data () {
     return {
       survey: {},
-      isIphoneX: false,
       waitingBotMessage: false,
       // messagesList: [],
       // lastShowMessage: {},
@@ -95,7 +94,7 @@ export default {
       }
     },
     'lastShowMessage.msgs': function (newVal) {
-      if (!this.lastShowMessage.to) {
+      if (!this.lastShowMessage || !this.lastShowMessage.to) {
         return
       }
       let lastmsg = newVal.slice(-1)[0]
@@ -148,19 +147,6 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
-    getDeviceType () {
-      wx.getSystemInfo({
-        success: (res) => {
-          if (res.model.search('iPhone X') !== -1) {
-            this.$store.dispatch('update_device_info', true)
-            // console.log('getDeviceType, iphone X')
-          } else {
-            this.$store.dispatch('update_device_info', false)
-            // console.log('getDeviceType, not iphone X')
-          }
-        }
-      })
-    },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     },
@@ -170,8 +156,6 @@ export default {
   },
 
   created () {
-    // 调用应用实例的方法获取全局数据
-    this.getDeviceType()
   },
 
   onShow () {

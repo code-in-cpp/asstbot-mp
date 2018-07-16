@@ -29,18 +29,18 @@
     },
     computed: {
       displayText () {
-        // let str = ''
-        // this.content.items.map(item => {
-        //   str += item.caption + ','
-        // })
-        // return str.substring(0, str.length - 1)
-        return this.content.items.reduce((lhs, rhs) => {
-          if (lhs.caption) {
-            return lhs.caption + ',' + rhs.caption
-          } else {
-            return lhs + ',' + rhs.caption
-          }
-        })
+        let chooseItems = this.content.items
+        if (chooseItems.length === 1) {
+          return chooseItems[0].caption
+        } else {
+          return this.content.items.reduce((lhs, rhs) => {
+            if (lhs.caption) {
+              return lhs.caption + ',' + rhs.caption
+            } else {
+              return lhs + ',' + rhs.caption
+            }
+          })
+        }
       },
       imgUrls () {
         let arr = []

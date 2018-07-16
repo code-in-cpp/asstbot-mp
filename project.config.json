@@ -74,9 +74,9 @@
 					"scene": "1008"
 				},
 				{
-					"id": -1,
-					"name": "调查问卷",
-					"pathName": "pages/index/main",
+					"id": 6,
+					"name": "createdView",
+					"pathName": "pages/createdSurvey/main",
 					"query": "",
 					"scene": "1008"
 				}

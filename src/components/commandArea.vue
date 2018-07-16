@@ -1,6 +1,6 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
-    <view class="weui-flex primary-color light" :class="{iphonex_padding : is_iphonex}">
+    <view class="weui-flex primary-color light">
       <view class="placeholder">
         <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
@@ -10,10 +10,10 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class=" word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @linechange="rowChange" adjust-position auto-height @focus="focusActive" cursor-spacing="12" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
-      <view class="weui-flex__item "  v-else>
-         <record-button></record-button>
+      <view class="weui-flex__item"  v-else>
+        <record-button></record-button>
       </view>
       <view class="placeholder" v-if="!voiceMode">
         <button class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
@@ -22,11 +22,13 @@
 
       </view>
     </view>
+    <device-padding></device-padding>
   </form>
 </template>
 <script>
 import { mapState } from 'vuex'
 import recordButton from './widget/recordButton'
+import devicePadding from './view/devicePadding'
 
 export default {
   data () {
@@ -40,7 +42,6 @@ export default {
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed,
-      is_iphonex: state => state.iphonex.is_iphonex,
       flag: state => {
         let data = state.messages.data.slice(-1)
         if (data[0] && data[0].to) {
@@ -56,7 +57,8 @@ export default {
   },
 
   components: {
-    recordButton
+    recordButton,
+    devicePadding
   },
 
   methods: {
@@ -160,9 +162,7 @@ export default {
     height:100%;
   }
 
-  .iphonex_padding{
-    margin-bottom: 68rpx;
-  }
+
 
   .input-widget .iconfont{
     font-size: 40rpx!important;
@@ -178,10 +178,6 @@ export default {
   box-sizing: border-box;
   width:100%;
   height:100%;
-}
-
-.iphonex_padding{
-  margin-bottom: 68rpx;
 }
 
 .input-widget .iconfont{

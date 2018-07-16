@@ -1,103 +1,44 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <view style="position: relative; overflow:hidden">
-        <view class="weui-cell weui-cell_access" @click="toggleShortCut(i)" hover-class="weui-cell_active">
-          <view class="weui-cell__hd">
-            <bod-avatar size="40" :url="survey.avatarUrl"></bod-avatar>
-          </view>
-          <view class="weui-cell__bd ">
-            <view class="bot-info">
-              <view class="weui-media-box__title">{{survey.title}}</view>
-              <view class="weui-media-box__desc">{{survey.intro}}</view>
+      <view>
+        <view>
+          <slider-left @delete="delete_row(i)">
+            <view  @click="selected(i)" @touchmove="touchMove(i)">
+              <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
-          </view>
-          <view class="weui-cell__ft weui-cell__ft_in-access">
-          </view>
+          </slider-left>
         </view>
-        <view class="short-cut weui-flex transited " :class="shortCutStatus[i]">
-          <view class="weui-flex__item secondary-color  dark form-control" @click="deletesurvey(i)">
-            <i class="icon iconfont icon-trash"></i>
-            <view class="desc">删除</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-setup" @click="editsurvey(i)"></i>
-            <view class="desc">编辑</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-browse" @click="browsesurvey(i)"></i>
-            <view class="desc">查看</view>
-          </view>
-          <view class="weui-flex__item secondary-color dark form-control">
-            <i class="icon iconfont icon-share" @click="toShareSurvey(i)"></i>
-            <view class="desc">分享</view>
-          </view>
-          <view class="weui-flex__item share primary-color light">
-            <button class="primary-color form-control" open-type="share">
-              <view>
-                <image src='../../static/image/weixin.png' />
-              </view>
-            </button>
-          </view>
-          <view class="weui-flex__item share primary-color light">
-            <button class="primary-color form-control">
-              <view>
-                <image src='../../static/image/moment.png'/>
-              </view>
-            </button>
-          </view>
-        </view>
-      </view>
 
+      </view>
     </block>
   </view>
 </template>
 
 <script>
+import surveyItem from '@/components/viewSurvey/surveyItem'
 import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
 export default {
   data () {
     return {
-      shortCutStatus: []
+      selected_index: 0,
+      should_pop: false
     }
   },
-  computed: {
-    ...mapState({
-      surveyList: state => state.survey.surveyList
-    })
-  },
-
-  watch: {
-    surveyList: function (val) {
-      this.shortCutStatus = this.surveyList.map(() => {
-        return 'hidden'
-      })
-    }
-  },
-
   methods: {
-    toggleShortCut (index) {
-      this.shortCutStatus = this.shortCutStatus.map((val, i) => {
-        if (index === i) {
-          return val !== 'hidden' ? 'hidden' : 'show'
-        } else {
-          return 'hidden'
-        }
+    selected (index) {
+      this.selected_index = index
+      wx.navigateTo({
+        url: `/pages/display/main?id=${this.surveyList[index].id}`
       })
     },
-    toShareSurvey (index) {
-      this.shortCutStatus = this.shortCutStatus.map((val, i) => {
-        if (index === i) {
-          return val === 'show' ? 'show-more' : 'show'
-        } else {
-          return 'hidden'
-        }
-      })
-      this.$emit('readtoshare', this.surveyList[index])
+    touchMove (index) {
+      this.selected_index = index
+      this.should_pop = true
     },
-    deletesurvey (index) {
+    delete_row (index) {
       let that = this
       wx.showModal({
         title: '您确认要删除吗？',
@@ -111,19 +52,19 @@ export default {
           }
         }
       })
-    },
-    editsurvey (index) {
-      wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${this.surveyList[index].id}`
-      })
-    },
-    browsesurvey (index) {
-      wx.navigateTo({
-        url: `/pages/display/main?id=${this.surveyList[index].id}`
-      })
     }
+
   },
 
+  computed: {
+    ...mapState({
+      surveyList: state => state.survey.surveyList
+    })
+  },
+
+  components: {
+    surveyItem
+  },
   onLoad () {
     this.$store.dispatch('retrieveSurvey')
   }

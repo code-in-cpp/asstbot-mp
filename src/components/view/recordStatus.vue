@@ -32,7 +32,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../../static/base.less";
 .record-status {
   position: fixed;
   top: 300rpx;
