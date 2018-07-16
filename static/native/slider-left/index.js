@@ -22,7 +22,7 @@ exports.default = Component({
     },
     iconTitles: {
       type: Array,
-      value: [{title:'分享'}, {title:'删除'}]
+      value: [{title: '分享', color: 'grey'}, {title:'删除', color: 'red'}]
     },
     //菜单是否打开了，true表示打开，false表示关闭
     open: {

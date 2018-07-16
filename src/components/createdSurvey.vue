@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left @delete="delete_row($event, i)">
+          <slider-left :iconTitles="icons" @delete="delete_row($event, i)">
             <view  @click="selected(i)" @touchmove="touchMove(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
@@ -21,10 +21,14 @@ import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
 export default {
-  data () {
+  data: function () {
     return {
       selected_index: 0,
-      should_pop: false
+      should_pop: false,
+      icons: [
+        {title: '删了', color: 'red'},
+        {title: '朋友圈', color: 'grey'}
+      ]
     }
   },
   methods: {
