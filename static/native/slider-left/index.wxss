@@ -32,7 +32,7 @@
 
 .handle-delete {
   background-color: red;
-  width: 150rpx;
+  width: 120rpx;
   //right:  150rpx;
   display: flex;
   align-items: center;
@@ -42,7 +42,7 @@
 
 .handle-share {
   background-color: grey;
-  width: 150rpx;
+  width: 120rpx;
   display: flex;
   align-items: center;
   justify-content: center;
