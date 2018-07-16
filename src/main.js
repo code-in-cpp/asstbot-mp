@@ -7,6 +7,9 @@ import bodAvatar from '@/components/bodAvatar'
 import pageTitle from '@/components/pageTitle'
 import spinner from '@/components/view/spinner'
 import recordStatus from '@/components/view/recordStatus'
+import botTitleBar from '@/components/titleBar/botTitleBar'
+import titleBar from '@/components/titleBar/titleBar'
+import devicePadding from '@/components/view/devicePadding'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -16,6 +19,9 @@ Vue.component('bod-avatar', bodAvatar)
 Vue.component('page-title', pageTitle)
 Vue.component('spinner', spinner)
 Vue.component('record-status', recordStatus)
+Vue.component('bot-title-bar', botTitleBar)
+Vue.component('title-bar', titleBar)
+Vue.component('device-padding', devicePadding)
 
 const app = new Vue(App)
 app.$mount()
@@ -28,6 +34,7 @@ export default {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#2C2D31',
       navigationBarTextStyle: 'white',
+      navigationStyle: 'custom',
       enablePullDownRefresh: false
     }
   }

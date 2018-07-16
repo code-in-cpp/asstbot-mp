@@ -1,6 +1,6 @@
 <template>
 <view class="page">
-    <page-title :title="survey.title"/>
+    <title-bar :title="survey.title"/>
     <view class="header-item">
       <bod-avatar :url="survey.avatarUrl" size="80"/>
     </view>

@@ -1,10 +1,9 @@
 <template>
   <div class="page">
-    <page-title :title="survey.title"/>
+    <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
     <view class="content">
       <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
         <view class="padding-top-64" :class="{'height-110':!haveImage,'height-444':haveImage}">
-          <header-area :surveyData="survey"/>
           <block v-for="(messages, i) in messagesList" :key="i">
             <view :id="i">
               <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"

@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <page-title :title="surveyTitle"/>
+    <title-bar :title="surveyTitle"/>
     <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
             <image :src="responderAvator" class="middle-avatar"/>
