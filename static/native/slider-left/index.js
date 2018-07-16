@@ -15,12 +15,16 @@ exports.default = Component({
       type: Number,
       value: 30
     },
-    // 可以往左拖动的最大距离,同时它也是组件的初始x坐标，此时菜单不可见
-    openWidth: {
-      type: Number,
-      value: 75
+    // // 可以往左拖动的最大距离,同时它也是组件的初始x坐标，此时菜单不可见
+    // openWidth: {
+    //   type: Number,
+    //   value: 240
+    // },
+    iconTitles: {
+      type: Array,
+      value: [{title: '分享', color: 'grey'}, {title:'删除', color: 'red'}]
     },
-    // 菜单是否打开了，true表示打开，false表示关闭
+    //菜单是否打开了，true表示打开，false表示关闭
     open: {
       type: Boolean,
       value: false,
@@ -41,13 +45,25 @@ exports.default = Component({
    * 组件的初始数据
    */
   data: {
-    x: 75, // 单位px
-
-    currentX: 75, // 当前记录组件被拖动时的x坐标
+    x: 150, // 单位rpx
+    itemCount: 3,
+    itemWidth: 150,
+    openWidth: 450,
+    currentX: 150, // 当前记录组件被拖动时的x坐标
     moveInstance: 0 // 记录往左移动的距离
   },
+  created: function() {
+    console.log('slide-left enter created', this.data.openWidth)
+  },
   attached: function () {
-    console.log('slide-left enter attached')
+    console.log('slide-left enter attached', this.data.openWidth)
+    // this.setData({
+    //   itemCount: this.data.iconTitles.length
+    // })
+    this.setData({
+      openWidth: this.data.itemWidth * this.data.itemCount
+    })
+    console.log('slide-left enter attached', this.data.openWidth)
     this.setData({
       x: this.data.open ? 0 : this.data.openWidth
     })
@@ -87,10 +103,11 @@ exports.default = Component({
       }
     },
     // 点击删除按钮触发的事件
-    handleDelete: function () {
-      console.log('handleDelete')
+    handleClicked: function (e) {
+      console.log('enter handleDelete')
+      // console.log(e)
       this.setData({ open: false })
-      this.triggerEvent('delete')
+      this.triggerEvent('delete', {index:e.target.dataset.index})
     },
     // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
     handleTouchestart: function () {

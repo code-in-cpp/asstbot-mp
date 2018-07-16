@@ -32,15 +32,26 @@
 
 .handle-delete {
   background-color: red;
-  width: 150rpx;
+  //right:  150rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
 }
 
+.handle-icon {
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 2rpx solid;
+  border-left-color: white;
+  color: #fff;
+  width: 150rpx;
+}
 
-
-
-
+.handle-icons {
+  display: flex;
+  flex-direction: row;
+}
 

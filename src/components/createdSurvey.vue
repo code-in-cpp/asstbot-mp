@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left @delete="delete_row(i)">
+          <slider-left :iconTitles="icons" @delete="delete_row($event, i)">
             <view  @click="selected(i)" @touchmove="touchMove(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
@@ -21,10 +21,15 @@ import { mapState } from 'vuex'
 // import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
 export default {
-  data () {
+  data: function () {
     return {
       selected_index: 0,
-      should_pop: false
+      should_pop: false,
+      icons: [
+        {title: '删除', color: 'red'},
+        {title: '朋友圈', color: 'grey'},
+        {title: '自测', color: 'grey'}
+      ]
     }
   },
   methods: {
@@ -38,22 +43,34 @@ export default {
       this.selected_index = index
       this.should_pop = true
     },
-    delete_row (index) {
+    delete_row (e, selectedItem) {
+      // console.log(e, selectedItem)
+      console.log('#############enter delete_row###########')
+      let operId = e.mp.detail.index
+      console.log('#############delete_row, log after operId###########')
+      console.log('operId', operId)
       let that = this
-      wx.showModal({
-        title: '您确认要删除吗？',
-        confirmText: '确认',
-        cancelText: '取消',
-        success: function (res) {
-          if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', that.surveyList[index].id)
-          } else {
-            console.log('用户点击取消操作')
+      if (operId === 0) {
+        wx.showModal({
+          title: '您确认要删除吗？',
+          confirmText: '确认',
+          cancelText: '取消',
+          success: function (res) {
+            if (res.confirm) {
+              that.$store.dispatch('deleteSurvey', that.surveyList[selectedItem].id)
+            } else {
+              console.log('用户点击取消操作')
+            }
           }
-        }
-      })
-    }
+        })
+      }
 
+      if (operId === 2) {
+        wx.navigateTo({
+          url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
+        })
+      }
+    }
   },
 
   computed: {
