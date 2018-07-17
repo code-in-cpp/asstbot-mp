@@ -1,12 +1,12 @@
 import wechat from './wechat'
 import config from '@/config.js'
 
-// console.log(config)
 const url = config.service.userInfoUrl
 
 const state = {
   userInfo: {},
-  authed: false
+  authed: false,
+  loginStatus: false
 }
 
 const getters = {
@@ -18,6 +18,9 @@ const mutations = {
   },
   setAuth (state, auth) {
     state.authed = auth
+  },
+  setLogin (state) {
+    state.loginStatus = true
   }
 }
 
@@ -58,6 +61,15 @@ const actions = {
           }
         }
       })
+    })
+  },
+  updateAuthStatus ({commit}) {
+    wx.getSetting({
+      success: (response) => {
+        if (response.authSetting['scope.userInfo']) {
+          commit('setAuth', true)
+        }
+      }
     })
   }
 }
