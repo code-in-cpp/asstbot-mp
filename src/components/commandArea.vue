@@ -1,6 +1,7 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex primary-color light">
+
       <view class="placeholder">
         <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
@@ -10,7 +11,7 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueChange" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
@@ -37,7 +38,7 @@ export default {
     return {
       currentMessage: '请输入消息',
       rowHeight: '80rpx',
-      lineHeight: '80rpx',
+      lineHeightNum: '80rpx',
       focusFlag: true,
       voiceMode: false
     }
@@ -69,7 +70,7 @@ export default {
     updateUserInfo (ev) {
       this.$store.dispatch('updateUserInfo')
     },
-    valueChange (ev) {
+    valueInput (ev) {
       this.currentMessage = ev.mp.detail.value
       // if (String.prototype.slice.apply(ev.mp.detail.value, [-1]) === '\n') {
       //   this.$store.dispatch('sendQuery', String.prototype.slice.apply(this.currentMessage, [0, -1])).then(res => {
@@ -94,7 +95,7 @@ export default {
       let count = e.mp.detail.lineCount
       let heightNum = count === 1 ? count * 80 : count * 56
       this.rowHeight = heightNum + 'rpx'
-      this.lineHeight = count <= 1 ? '80rpx' : '56rpx'
+      this.lineHeightNum = count <= 1 ? '80rpx' : '56rpx'
     },
     focusActive () {
       if (this.focusFlag) {

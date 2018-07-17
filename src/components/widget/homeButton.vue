@@ -14,20 +14,23 @@ export default {
   props: ['text'],
   methods: {
     toHome () {
-      let url = ''
-      if (getCurrentPages().length) {
-        let locationUrl = getCurrentPages().slice(-1)[0].route
-        if (locationUrl.indexOf('pages/index') >= 0) {
-          url = ''
-        } else if (locationUrl.indexOf('pages/') >= 0) {
-          url = '../index/main'
-        }
-        if (url) {
-          wx.navigateTo({
-            url: url
-          })
-        }
-      }
+      // let url = ''
+      // if (getCurrentPages().length) {
+      //   let locationUrl = getCurrentPages().slice(-1)[0].route
+      //   if (locationUrl.indexOf('pages/index') >= 0) {
+      //     url = ''
+      //   } else if (locationUrl.indexOf('pages/') >= 0) {
+      //     url = '../index/main'
+      //   }
+      //   if (url) {
+      //     wx.reLaunch({
+      //       url: url
+      //     })
+      //   }
+      // }
+      wx.reLaunch({
+        url: '../index/main'
+      })
     }
   }
 }

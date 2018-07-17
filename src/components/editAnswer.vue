@@ -1,6 +1,6 @@
 <template>
   <block>
-    <checkbox-group  v-if="type=='checkbox' && surveyType=='exam'" class="anwser-container">
+    <checkbox-group  v-if="type=='checkbox' && (surveyType=='exam' || surveyType == 'inquiry' || surveyType == 'poll')" class="anwser-container">
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
@@ -44,7 +44,7 @@
       </label>
     </checkbox-group>
 
-    <radio-group v-if="type=='radio' && surveyType=='exam'"  class="anwser-container">
+    <radio-group v-if="type=='radio' && (surveyType=='exam'|| surveyType == 'inquiry' || surveyType == 'poll')"  class="anwser-container">
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
