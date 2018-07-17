@@ -1,5 +1,6 @@
 <template>
   <view class="page">
+    <title-bar title="我创建的..."></title-bar>
     <view class="weui-cells weui-cells_after-title">
       <created-survey @readtoshare="toshare"/>             
     </view>          

@@ -1,5 +1,6 @@
 <template>
   <view class="page">
+    <title-bar title=" "/>
     <view class="weui-cells clear-border">
       <view class="weui-cell clear-border">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
