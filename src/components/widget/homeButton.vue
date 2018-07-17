@@ -14,10 +14,20 @@ export default {
   props: ['text'],
   methods: {
     toHome () {
-      console.log(global.getApp().globalData.appOptions.path)
-      wx.navigateTo({
-        url: 'pages/index/main.js'
-      })
+      let url = ''
+      if (getCurrentPages().length) {
+        let locationUrl = getCurrentPages().slice(-1)[0].route
+        if (locationUrl.indexOf('pages/index') >= 0) {
+          url = ''
+        } else if (locationUrl.indexOf('pages/') >= 0) {
+          url = '../index/main'
+        }
+        if (url) {
+          wx.navigateTo({
+            url: url
+          })
+        }
+      }
     }
   }
 }
