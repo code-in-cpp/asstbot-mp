@@ -11,7 +11,8 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>
+        <!--<textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>-->
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position @focus="focusActive" auto-height="true"  cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>

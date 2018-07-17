@@ -1,16 +1,16 @@
 <template>
-  <!--<div>-->
-    <!--<p class="card">-->
-      <!--{{text}}-->
-    <!--</p>-->
-  <!--</div>-->
   <movable-view class="move-btn" inertia='true' damping='10' friction='5' x="10" y="15" direction="all" @click="toHome">
-    <image class="image" src="../../../static/image/avatar.png"></image>
+    <image class="image" :src="imageUrl"></image>
   </movable-view>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      imageUrl: '../../static/image/avatar.png'
+    }
+  },
   props: ['text'],
   methods: {
     toHome () {
@@ -48,9 +48,10 @@ export default {
     border-radius: 50%;
     color: #fff;
     z-index: 10000;
-    box-shadow:0 0 20rpx #5f0306;
+    box-shadow:0 0 20rpx #25CEC2;
     overflow: hidden;
     background: #fff;
+    border: 1rpx solid #25cec2;
   }
   .image{
     width: 100%;
