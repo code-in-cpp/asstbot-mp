@@ -57,6 +57,11 @@
               </view>
             </picker>
           </block>
+          <block v-else-if="type=='phone'">
+            <input class="weui-input height-line-92" type="number" :placeholder="186"
+                   @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                   :value="answer.value"/>
+          </block>
           <block v-else>
             <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
@@ -74,7 +79,7 @@
         </view>
       </view>
     </block>
-
+  
     <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
         <view class="weui-cell__ft font-style"  >
           <i class="icon iconfont icon-add"></i>
