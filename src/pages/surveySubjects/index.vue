@@ -98,6 +98,10 @@
                       <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
                         @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
                     </view>
+                    <view class="icon-item-style font-style" @click="addConclusionMedia(i)">
+                      <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
+                      <image class="answer-image" v-if="conclusion.imageUrl" :src="conclusion.imageUrl"></image>
+                    </view>
                   </view>
                 </view>
               </view>
@@ -156,7 +160,10 @@ export default {
       },
       survey: state => state.currentSurvey.survey,
       type: state => state.currentSurvey.survey.type,
-      conclusions: state => state.currentSurvey.survey.conclusions,
+      conclusions: state => {
+        console.log(state)
+        return state.currentSurvey.survey.conclusions
+      },
       subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
         return state.currentSurvey.survey.subjects.map((subject) => {
@@ -218,6 +225,22 @@ export default {
             that.$store.commit('updateSubjectQuestionImage', {index, imageUrl: res})
           }).catch(err => {
             console.log(err)
+          })
+        }
+      })
+    },
+    addConclusionMedia (index) {
+      const that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            console.log(res)
+            that.$store.commit('updateConclusionimage', {index: index, imageUrl: res})
+          }).catch(error => {
+            console.log(error)
           })
         }
       })
@@ -313,9 +336,20 @@ export default {
   width:48rpx;
   text-align: center;
 }
+.font-style{
+  height:92rpx;
+  width:92rpx;
+  line-height:92rpx;
+  text-align:center;
+}
 .subject-hieght-line{
   height:100%;
   line-height: 92rpx;
 }
-
+.answer-image{
+  width:70rpx;
+  height:70rpx;
+  display:inline-block;
+  margin-top:11rpx;
+}
 </style>

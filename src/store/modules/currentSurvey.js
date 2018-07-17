@@ -64,12 +64,16 @@ const mutations = {
     state.survey.conclusions[index].scoreRange.max = value
   },
   updateConclusionText (state, {index, text}) {
+    console.log(state.survey.conclusions)
     state.survey.conclusions[index].text = text
+  },
+  updateConclusionimage (state, {index, imageUrl}) {
+    state.survey.conclusions[index].imageUrl = imageUrl
   },
   addConclusion (state) {
     let subjectCount = state.survey.subjects.length
     let range = getFreeRange(subjectCount, state.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
-    state.survey.conclusions.push({ scoreRange: {min: range.min, max: range.max}, text: '' })
+    state.survey.conclusions.push({ scoreRange: {min: range.min, max: range.max}, text: '', imageUrl: '' })
   },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
