@@ -1,28 +1,12 @@
 <template>
   <block>
-    <checkbox-group  v-if="type=='checkbox' && (surveyType=='exam' || surveyType == 'inquiry' || surveyType == 'poll')" class="anwser-container">
+    <checkbox-group  v-if="type=='checkbox'" class="anwser-container">
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
-          <block v-if="type=='date'">
-            <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})">
-              <view class="picker height-line-92">
-                {{answer.value}}
-              </view>
-            </picker>
-          </block>
-          <block v-else-if="type=='location'">
-            <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
-              <view class="picker height-line-92">
-                {{answer.value}}
-              </view>
-            </picker>
-          </block>
-          <block v-else>
             <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
-          </block>
         </view>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
@@ -34,19 +18,30 @@
           </view>
         </view>
       </view>
-      <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
-        <view class="weui-cell__ft font-style">
-          <i class="icon iconfont icon-add"></i>
-        </view>
-        <view class="weui-cell__ft height-line-92">
-          添加答案
-        </view>
-      </label>
     </checkbox-group>
 
-    <radio-group v-if="type=='radio' && (surveyType=='exam'|| surveyType == 'inquiry' || surveyType == 'poll')"  class="anwser-container">
+    <radio-group v-if="type=='radio'"  class="anwser-container">
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
+        <view class="weui-cell__bd height-92">
+          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+                  @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                  :value="answer.value"/>
+        </view>
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
+          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
+        </view>
+        <view class="weui-cell__ft font-style">
+          <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
+            <i class="icon iconfont icon-trash"></i>
+          </view>
+        </view>
+      </view>
+    </radio-group>
+
+    <block v-if="type!='radio' && type !='checkbox'">
+      <view class="radio anwser-item anwser-container" v-for="(answer, index) in answers" :key="index">
         <view class="weui-cell__bd height-92">
           <block v-if="type=='date'">
             <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})">
@@ -78,15 +73,17 @@
           </view>
         </view>
       </view>
-      <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
+    </block>
+
+    <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
         <view class="weui-cell__ft font-style"  >
           <i class="icon iconfont icon-add"></i>
         </view>
         <view class="weui-cell__ft height-line-92">
           添加答案
         </view>
-      </label>
-    </radio-group>
+    </label>
+
   </block>
 
 </template>
