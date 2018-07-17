@@ -184,9 +184,9 @@ export default {
 
 .word-textarea{
   /*height: auto;*/
-  /*min-height: 74rpx;*/
+  min-height: 74rpx;
   padding-left: 10rpx;
-  /*line-height: 74rpx;*/
+  line-height: 74rpx;
   word-break: break-word;
   border: 1rpx solid #dadada;
   box-sizing: border-box;
