@@ -49,13 +49,10 @@ exports.default = Component({
     itemCount: 3,
     itemWidth: 150,
     currentX: 150, // 当前记录组件被拖动时的x坐标
-    moveInstance: 0 // 记录往左移动的距离
-  },
-  created: function() {
-    console.log('slide-left enter created', this.data.openWidth)
+    moveInstance: 0,  // 记录往左移动的距离
+    moved: false      //记录是否发生过滑动
   },
   attached: function () {
-    console.log('slide-left enter attached', this.data.openWidth)
     this.setData({
       itemCount: this.data.iconTitles.length
     })
@@ -72,11 +69,27 @@ exports.default = Component({
       const x = e.detail.x
       this.data.moveInstance = this.data.openWidth - x
       this.data.currentX = x
-      console.log(this.data.moveInstance)
+      // console.log(this.data.moveInstance)
+    },
+    // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
+    handleTouchestart: function () {
+      console.log('handleTouchestart')
+      if (!this.data.open) {
+        this.triggerEvent('sliderLeftStart')
+      }
+    },
+    handleTouchmove: function() {
+      console.log('handleTouchmove')
+      this.setData({ moved: true })
     },
     handleTouchend: function () {
       // 如果松开手指的时候，已经被拖拽到最左边或者最右边，则不处理
       console.log('handleTouched')
+      if (!this.data.moved) {
+        this.setData({ open: false })
+        return
+      }
+      this.setData({ moved: false })
       if (this.data.currentX === 0) {
         this.setData({ open: true })
         return
@@ -90,7 +103,6 @@ exports.default = Component({
         this.setData({ open: false })
         return
       }
-
       // 如果当前菜单是关着的，只要往左移动超过阀值就马上打开菜单
       if (this.data.moveInstance < this.data.moveThreshold) {
         this.setData({
@@ -108,12 +120,5 @@ exports.default = Component({
       this.setData({ open: false })
       this.triggerEvent('btnClicked', {index:e.target.dataset.index})
     },
-    // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
-    handleTouchestart: function () {
-      console.log('handleTouchestart')
-      if (!this.data.open) {
-        this.triggerEvent('sliderLeftStart')
-      }
-    }
   }
 })
