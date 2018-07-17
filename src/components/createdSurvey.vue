@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)">
+          <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)" @sliderLeftStart="slider(i)">
             <view  @click="selected(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>
@@ -37,6 +37,10 @@ export default {
       wx.navigateTo({
         url: `/pages/display/main?id=${this.surveyList[index].id}`
       })
+    },
+    slider (index) {
+      console.log('slider left')
+      this.selected_index = index
     },
     actionClicked (e, selectedItem) {
       console.log('enter clicked_row')
