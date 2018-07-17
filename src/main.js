@@ -10,6 +10,8 @@ import recordStatus from '@/components/view/recordStatus'
 import botTitleBar from '@/components/titleBar/botTitleBar'
 import titleBar from '@/components/titleBar/titleBar'
 import devicePadding from '@/components/view/devicePadding'
+import daLogo from '@/components/view/daLogo'
+import logoTitleBar from '@/components/titleBar/logoTitleBar'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -22,6 +24,8 @@ Vue.component('record-status', recordStatus)
 Vue.component('bot-title-bar', botTitleBar)
 Vue.component('title-bar', titleBar)
 Vue.component('device-padding', devicePadding)
+Vue.component('da-logo', daLogo)
+Vue.component('logo-title-bar', logoTitleBar)
 
 const app = new Vue(App)
 app.$mount()

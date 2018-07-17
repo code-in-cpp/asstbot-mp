@@ -5,7 +5,7 @@
     </view>
     <image src="../../static/image/bot-title-bar.png" class="background"></image>
     <view class="logo">
-      <image class="logo" src="../../static/image/logo.png" v-if="title.length == 0"></image>
+      <da-logo v-if="title.length == 0"/>
       <return-button v-else/>
     </view>
     <view class="title primary-color dark">{{title}}</view>

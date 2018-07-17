@@ -45,7 +45,8 @@ export default {
       // lastShowMessage: {},
       lastMessage: {},
       scrollToView: 'bottom',
-      haveImage: false
+      haveImage: false,
+      option: {}
     }
   },
   computed: {
@@ -75,11 +76,12 @@ export default {
       ...mapGetters({
         list: 'messageAction'
       }),
-      userAuthed: state => state.userProfile.authed
+      userAuthed: state => state.userProfile.authed,
+      loginStatus: state => state.userProfile.loginStatus
     }),
-    ...mapGetters({
-      falg: 'textOrRadioAction'
-    })
+    hasLogin () {
+      return this.userAuthed || this.loginStatus
+    }
   },
   watch: {
     messagesList: function (val) {
@@ -127,6 +129,12 @@ export default {
       } else {
         this.haveImage = false
       }
+    },
+    hasLogin: function (val, oldVal) {
+      console.log('hasLogin', val, oldVal)
+      if (val && !oldVal) {
+        this.startChat()
+      }
     }
   },
   components: {
@@ -142,15 +150,37 @@ export default {
   },
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
-    },
     scollToBottom () {
       this.scrollToView = 'bottom'
+    },
+    startChat () {
+      let option = this.option
+      if (option.id) {
+        const scene = option.scene ? option.scene : 'publish'
+        this.$store.commit('talkToSurveyBot', {id: option.id, scene})
+
+        this.$store.dispatch('retrieveSurveyById', option.id)
+          .then((survey) => {
+            this.survey = survey
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } else {
+        this.$store.commit('talkToBotFather')
+        this.survey = {}
+      }
+
+      this.$store.dispatch('updateUserInfo').then((res) => {
+        if (this.userAuthed) {
+          this.$store.dispatch('start')
+        } else {
+          this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+        }
+      }).catch((err) => {
+        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
+        console.log(err)
+      })
     }
   },
 
@@ -158,35 +188,15 @@ export default {
   },
 
   onShow () {
+    if (!this.hasLogin) {
+      wx.navigateTo({
+        url: '/pages/login/main'
+      })
+    }
   },
 
   onLoad (option) {
-    if (option.id) {
-      const scene = option.scene ? option.scene : 'publish'
-      this.$store.commit('talkToSurveyBot', {id: option.id, scene})
-
-      this.$store.dispatch('retrieveSurveyById', option.id)
-        .then((survey) => {
-          this.survey = survey
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    } else {
-      this.$store.commit('talkToBotFather')
-      this.survey = {}
-    }
-
-    this.$store.dispatch('updateUserInfo').then((res) => {
-      if (this.userAuthed) {
-        this.$store.dispatch('start')
-      } else {
-        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-      }
-    }).catch((err) => {
-      this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-      console.log(err)
-    })
+    this.option = option
   }
 }
 </script>
