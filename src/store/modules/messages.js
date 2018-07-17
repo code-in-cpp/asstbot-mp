@@ -94,10 +94,10 @@ const mutations = {
     url = `${config.service.hostRoot}/chatbot`
   },
   talkToSurveyBot (state, {id, scene}) {
-    chatBot = 'surveyBot'
     if (chatBot === 'bodFather') {
       backupMsg = [...state.data]
     }
+    chatBot = 'surveyBot'
     state.data = []
     url = `${config.service.hostRoot}/chatbot/survey`
     surveyId = id

@@ -1,6 +1,6 @@
 <template>
     <view class="survey_list_avatar">
-      <image :src="url" />
+      <bod-avatar :url="url" size="60"/>
     </view>
 </template>
 

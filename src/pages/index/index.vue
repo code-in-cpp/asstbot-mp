@@ -25,7 +25,6 @@
         <command-area/>
       </view>
     </div>
-    <home-button></home-button>
   </movable-area>
 </template>
 
@@ -118,9 +117,12 @@ export default {
           }
         } else if (lastmsg.url === 'create-survey') {
           if (lastmsg.option.id) {
-            wx.navigateTo({
-              url: `/pages/surveySubjects/main?id=${lastmsg.option.id}`
-            })
+            this.$store.dispatch('retrieveSurvey')
+              .then(() => {
+                wx.navigateTo({
+                  url: `/pages/surveySubjects/main?id=${lastmsg.option.id}`
+                })
+              })
           }
         }
       }
@@ -136,6 +138,11 @@ export default {
     hasLogin: function (val, oldVal) {
       console.log('hasLogin', val, oldVal)
       if (val && !oldVal) {
+        this.startChat()
+      }
+    },
+    option: function (val) {
+      if (this.hasLogin) {
         this.startChat()
       }
     }
@@ -200,7 +207,13 @@ export default {
 
   onLoad (option) {
     this.option = option
+  },
+
+  onUnload () {
+    this.option = {}
+    this.survey = {}
   }
+
 }
 </script>
 
