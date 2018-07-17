@@ -1,29 +1,32 @@
 <template>
-  <div class="page">
-    <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
-    <view class="content">
-      <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
-        <view class="padding-top-64" :class="{'height-110':!haveImage,'height-444':haveImage}">
-          <block v-for="(messages, i) in messagesList" :key="i">
-            <view :id="i">
-              <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-                        :messages="messages" @renderComplete="scollToBottom"/>
-            </view>
-            <view :id="'bottom'+i"></view>
-          </block>
-          <block v-if="waitingBotMessage">
-            <bot-msg-receiving/>
-          </block>
-          <view id="bottom"></view>
-        </view>
+  <movable-area class="move-area">
+    <div class="page">
+      <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
+      <view class="content">
+        <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
+          <view class="padding-top-64" :class="{'height-110':!haveImage,'height-444':haveImage}">
+            <block v-for="(messages, i) in messagesList" :key="i">
+              <view :id="i">
+                <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
+                          :messages="messages" @renderComplete="scollToBottom"/>
+              </view>
+              <view :id="'bottom'+i"></view>
+            </block>
+            <block v-if="waitingBotMessage">
+              <bot-msg-receiving/>
+            </block>
+            <view id="bottom"></view>
+          </view>
 
-      </scroll-view>
-    </view>
-    <view class="footer">
-      <select-box :list="list" :haveImage="haveImage"></select-box>
-      <command-area/>
-    </view>
-  </div>
+        </scroll-view>
+      </view>
+      <view class="footer">
+        <select-box :list="list" :haveImage="haveImage"></select-box>
+        <command-area/>
+      </view>
+    </div>
+    <home-button></home-button>
+  </movable-area>
 </template>
 
 <script>

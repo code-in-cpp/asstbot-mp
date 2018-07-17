@@ -220,4 +220,8 @@ page{
   margin-right:10rpx;
   text-align:left;
 }
+  .move-area{
+    height: 100vh;
+    width: 100%;
+  }
 </style>

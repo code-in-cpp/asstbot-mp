@@ -1,22 +1,26 @@
 <template>
-<view class="page">
-    <title-bar :title="survey.title"/>
-    <view class="header-item">
-      <bod-avatar :url="survey.avatarUrl" size="80"/>
-    </view>
-   <view class = "weui-cells__title"> 答卷列表：</view>
-   <view class ="body">
-    <view class="responsor-list weui-cells weui-cells_after-title">
-        <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
-        <view class="chart-view-title">第{{i+1}}题：{{item.question}} 【{{item.type}}】</view>
-        <view class="chart-canvas-view">
-            <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
+  <movable-area class="move-area">
+    <view class="page">
+      <title-bar :title="survey.title"/>
+      <view class="header-item">
+        <bod-avatar :url="survey.avatarUrl" size="80"/>
+      </view>
+      <view class = "weui-cells__title"> 答卷列表：</view>
+      <view class ="body">
+        <view class="responsor-list weui-cells weui-cells_after-title">
+          <view v-for="(item, i) in getQuestions" :key="i" class="chart-view-cell" >
+            <view class="chart-view-title">第{{i+1}}题：{{item.question}} 【{{item.type}}】</view>
+            <view class="chart-canvas-view">
+              <canvas :canvas-id="item.chartId" class="chart-canvas"></canvas>
+            </view>
+          </view>
+          <button class="weui-btn" type="primary" @click="toDisplay" size="default" >返回</button>
         </view>
-        </view>
-        <button class="weui-btn" type="primary" @click="toDisplay" size="default" >返回</button>
+      </view>
     </view>
-   </view>
-</view>
+    <home-button/>
+  </movable-area>
+
 </template>
 
 

@@ -1,35 +1,38 @@
 <template>
-  <view class="page">
-    <title-bar :title="surveyTitle"/>
-    <view class="weui-panel__bd">
+  <movable-area class="move-area">
+    <view class="page">
+      <title-bar :title="surveyTitle"/>
+      <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
-            <image :src="responderAvator" class="middle-avatar"/>
-            <view class="responser-name" >{{responderName}}</view>
+          <image :src="responderAvator" class="middle-avatar"/>
+          <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-            <view class="weui-media-box__title" v-if="surveyType==='exam'">答对 {{score}} 题</view>
-            <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
-            <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
+          <view class="weui-media-box__title" v-if="surveyType==='exam'">答对 {{score}} 题</view>
+          <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
+          <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
-    </view>
-    <view class="content">
-      <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
+      </view>
+      <view class="content">
+        <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
-              <view class="weui-cell__bd">
-                <bot-say-text :content="item.question"></bot-say-text>
+            <view class="weui-cell__bd">
+              <bot-say-text :content="item.question"></bot-say-text>
+            </view>
+            <view class="weui-cell__ft">
+              <user-say-text :content="item.value"></user-say-text>
+              <view class="answer-correct"  v-if="surveyType==='exam'">
+                <i class="icon iconfont icon-right" v-if="item.correct"></i>
+                <i class="icon iconfont icon-close" v-else></i>
               </view>
-              <view class="weui-cell__ft">
-                <user-say-text :content="item.value"></user-say-text>
-                <view class="answer-correct"  v-if="surveyType==='exam'">
-                  <i class="icon iconfont icon-right" v-if="item.correct"></i>
-                  <i class="icon iconfont icon-close" v-else></i>
-                </view>
-              </view>
+            </view>
           </view>
-      </scroll-view>
+        </scroll-view>
+      </view>
+      <view class="foot">@@@</view>
     </view>
-    <view class="foot">@@@</view>
-</view>
+    <home-button/>
+  </movable-area>
 </template>
 
 <script>

@@ -10,6 +10,7 @@ import recordStatus from '@/components/view/recordStatus'
 import botTitleBar from '@/components/titleBar/botTitleBar'
 import titleBar from '@/components/titleBar/titleBar'
 import devicePadding from '@/components/view/devicePadding'
+import homeButton from '@/components/widget/homeButton'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -22,6 +23,7 @@ Vue.component('record-status', recordStatus)
 Vue.component('bot-title-bar', botTitleBar)
 Vue.component('title-bar', titleBar)
 Vue.component('device-padding', devicePadding)
+Vue.component('home-button', homeButton)
 
 const app = new Vue(App)
 app.$mount()
