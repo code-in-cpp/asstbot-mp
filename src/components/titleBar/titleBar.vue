@@ -3,10 +3,7 @@
     <device-top-padding></device-top-padding>
     <view class="weui-flex">
       <view style="width: 174rpx;" >
-        <view class="return-button" @click="navigateBack" v-if="canReturn">
-          <i class="icon iconfont icon-return"></i>
-          <view class="desc"><text>返回</text></view>
-        </view>
+        <return-button/>
       </view>
       <view class="title">
         {{title}}
@@ -19,12 +16,9 @@
 
 <script>
 import deviceTopPadding from '@/components/view/deviceTopPadding'
+import returnButton from '@/components/widget/returnButton'
 export default {
-  data () {
-    return {
-      canReturn: false
-    }
-  },
+
   props: {
     title: {
       type: String,
@@ -32,30 +26,14 @@ export default {
     }
   },
   components: {
-    deviceTopPadding
-  },
-  methods: {
-    navigateBack () {
-      wx.navigateBack()
-    }
-  },
-  onLoad () {
-    this.canReturn = getCurrentPages().length > 1
+    deviceTopPadding,
+    returnButton
   }
 }
 </script>
 
 <style lang="less" scoped>
 @import "~@/../static/base.less";
-.return-button {
-  display: flex;
-  flex-direction: row;
-}
-
-.return-button:active {
-  background-color: @p-color;
-}
-
 .title-bar {
   padding-bottom: 20rpx;
 }
@@ -66,17 +44,11 @@ export default {
   display: block;
 }
 
-.return-button  .desc{
-  line-height: @font-size-big;
-  vertical-align: middle;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
 .title {
   min-height: 76rpx;
   flex: 1;
   text-align: center;
 }
+
+
 </style>
