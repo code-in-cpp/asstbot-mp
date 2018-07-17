@@ -9,7 +9,6 @@
             </view>
           </slider-left>
         </view>
-
       </view>
     </block>
   </view>
@@ -39,13 +38,14 @@ export default {
       })
     },
     slider (index) {
-      console.log('slider left')
+      // console.log('slider left')
       this.selected_index = index
     },
     actionClicked (e, selectedItem) {
-      console.log('enter clicked_row')
+      // console.log('enter actionClicked')
       let operId = e.mp.detail.index
       let that = this
+      //删除
       if (operId === 0) {
         wx.showModal({
           title: '您确认要删除吗？',
@@ -59,8 +59,9 @@ export default {
             }
           }
         })
+        return
       }
-
+      //自测
       if (operId === 2) {
         wx.navigateTo({
           url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
