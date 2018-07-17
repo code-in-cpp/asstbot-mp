@@ -3,7 +3,7 @@
     <block v-for="(survey, i) in surveyList" :key="i">
       <view>
         <view>
-          <slider-left :iconTitles="icons" :openWidth="450" @btnClicked="actionClicked($event, i)">
+          <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)">
             <view  @click="selected(i)">
               <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
             </view>

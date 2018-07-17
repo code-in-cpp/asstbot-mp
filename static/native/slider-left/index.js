@@ -24,6 +24,18 @@ exports.default = Component({
       type: Array,
       value: [{title: '分享', color: 'grey'}, {title:'删除', color: 'red'}]
     },
+    isActive: {
+      type: Boolean,
+      value: false,
+      observer: function (isActive) {
+        console.log('set isActive', isActive)
+        if (!isActive) {
+          console.log('item deactived, hide popup button')
+          this.setData({open : false})
+          this.setData({x:  this.data.openWidth})
+        }
+      }
+    },
     //菜单是否打开了，true表示打开，false表示关闭
     open: {
       type: Boolean,
