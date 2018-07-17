@@ -1,136 +1,140 @@
 <template>
-  <view class="page">
-    <title-bar title=" "/>
-    <view class="weui-cells clear-border">
-      <view class="weui-cell clear-border">
-        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+
+  <movable-area class="move-area">
+    <view class="page">
+      <title-bar title=" "/>
+      <view class="weui-cells clear-border">
+        <view class="weui-cell clear-border">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
             <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
-        </view>
-        <view class="weui-cell__bd">
+          </view>
+          <view class="weui-cell__bd">
             <view>{{survey.title}}</view>
             <view style="font-size: 13px;color: #888888;">{{survey.intro}}</view>
+          </view>
         </view>
       </view>
-    </view>
-    <view class="content">
-      <view class="weui-tab">
-        <nav-bar v-if="type === 'exam'" :navItems="items" @tabActive="tabActive"></nav-bar>
-        <view v-bind:class="pollStyleClass">
-          <scroll-view scroll-y='true' style="height: 100%">
-            <view v-if="activeIndex == 0">
-              <block v-for="(subject, i) in subjects" :key="subject">
+      <view class="content">
+        <view class="weui-tab">
+          <nav-bar v-if="type === 'exam'" :navItems="items" @tabActive="tabActive"></nav-bar>
+          <view v-bind:class="pollStyleClass">
+            <scroll-view scroll-y='true' style="height: 100%">
+              <view v-if="activeIndex == 0">
+                <block v-for="(subject, i) in subjects" :key="subject">
+                  <view class="subject-divider"></view>
+                  <view class="weui-cells weui-cells_after-title clear-border">
+                    <view class="weui-cell weui-cell_input subject-area subject-style font-size">
+                      <view class="weui-cell__hd subject-item-style">
+                        <view class="weui-label subject-title-style">题目 {{i+1}}</view>
+                      </view>
+                      <view class="weui-cell__bd subject-item-style">
+                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" :value="subject.question"
+                               @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
+                      </view>
+                      <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
+                        <i class="icon iconfont icon-picture font-color"></i>
+                      </view>
+                      <view class="weui-cell__ft subject-item-style">
+                        <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
+                          <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
+                        </picker>
+                      </view>
+                      <view class="weui-cell__ft subject-item-style">
+                        <view class="icon-item-style" @click="removeSubject(i)">
+                          <i class="icon iconfont icon-trash"></i>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl"></image-gallery>
+                  <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
+                </block>
                 <view class="subject-divider"></view>
                 <view class="weui-cells weui-cells_after-title clear-border">
-                  <view class="weui-cell weui-cell_input subject-area subject-style font-size">
-                    <view class="weui-cell__hd subject-item-style">
-                      <view class="weui-label subject-title-style">题目 {{i+1}}</view>
-                    </view>
-                    <view class="weui-cell__bd subject-item-style">
-                      <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" :value="subject.question"
-                        @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
-                    </view>
-                    <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
-                      <i class="icon iconfont icon-picture font-color"></i>
-                    </view>
-                    <view class="weui-cell__ft subject-item-style">
-                      <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
-                        <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
-                      </picker>
-                    </view>
-                    <view class="weui-cell__ft subject-item-style">
-                      <view class="icon-item-style" @click="removeSubject(i)">
-                        <i class="icon iconfont icon-trash"></i>
-                      </view>
-                    </view>
+                  <view class="weui-cell" @click="addSubject">
+                    <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+                    <view class="weui-cell__bd">添加题目</view>
                   </view>
                 </view>
-                <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl"></image-gallery>
-                <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
-              </block>
-              <view class="subject-divider"></view>
-              <view class="weui-cells weui-cells_after-title clear-border">
-                <view class="weui-cell" @click="addSubject">
-                  <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-                  <view class="weui-cell__bd">添加题目</view>
-                </view>
               </view>
-            </view>
 
-            <view v-if="activeIndex == 1">
-              <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
-                <view class="subject-divider"></view>
-                <view class="weui-cells__title">
-                  <view class="weui-cell" >
-                    <view class="weui-cell__bd">
-                      <view class="weui-label">评语分类 {{i+1}}</view>
+              <view v-if="activeIndex == 1">
+                <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
+                  <view class="subject-divider"></view>
+                  <view class="weui-cells__title">
+                    <view class="weui-cell" >
+                      <view class="weui-cell__bd">
+                        <view class="weui-label">评语分类 {{i+1}}</view>
+                      </view>
+                      <view class="weui-cell__ft">
+                        <view @click="removeConclusion(i)">
+                          <i class="icon iconfont icon-trash"></i>
+                        </view>
+                      </view>
                     </view>
-                    <view class="weui-cell__ft">
-                      <view @click="removeConclusion(i)">
-                        <i class="icon iconfont icon-trash"></i>
+                  </view>
+                  <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell weui-cell_input" >
+                      <view class="weui-cell__hd">
+                        <view class="weui-label">最少答对题数</view>
+                      </view>
+                      <view class="weui-cell__bd">
+                        <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
+                               @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
+                      </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input" >
+                      <view class="weui-cell__hd">
+                        <view class="weui-label">最多答对题数</view>
+                      </view>
+                      <view class="weui-cell__bd">
+                        <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
+                               @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
+                      </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input" >
+                      <view class="weui-cell__hd">
+                        <view class="weui-label">评语内容</view>
+                      </view>
+                      <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
+                               @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+                      </view>
+                      <view class="icon-item-style font-style" @click="addConclusionMedia(i)">
+                        <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
+                        <image class="answer-image" v-if="conclusion.imageUrl" :src="conclusion.imageUrl"></image>
                       </view>
                     </view>
                   </view>
                 </view>
-                <view class="weui-cells weui-cells_after-title">
-                  <view class="weui-cell weui-cell_input" >
-                    <view class="weui-cell__hd">
-                      <view class="weui-label">最少答对题数</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                      <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
-                        @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
-                    </view>
-                  </view>
-                  <view class="weui-cell weui-cell_input" >
-                    <view class="weui-cell__hd">
-                      <view class="weui-label">最多答对题数</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                      <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
-                        @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
-                    </view>
-                  </view>
-                  <view class="weui-cell weui-cell_input" >
-                    <view class="weui-cell__hd">
-                      <view class="weui-label">评语内容</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                      <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
-                        @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-                    </view>
-                    <view class="icon-item-style font-style" @click="addConclusionMedia(i)">
-                      <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
-                      <image class="answer-image" v-if="conclusion.imageUrl" :src="conclusion.imageUrl"></image>
-                    </view>
+                <view class="subject-divider"></view>
+                <view class="weui-cells weui-cells_after-title" >
+                  <view class="weui-cell" @click="addConclusion">
+                    <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+                    <view class="weui-cell__bd">添加评语分类</view>
                   </view>
                 </view>
               </view>
-              <view class="subject-divider"></view>
-              <view class="weui-cells weui-cells_after-title" >
-                <view class="weui-cell" @click="addConclusion">
-                  <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-                  <view class="weui-cell__bd">添加评语分类</view>
-                </view>
-              </view>
-            </view>
-          </scroll-view>
+            </scroll-view>
+          </view>
+        </view>
+      </view>
+      <view class="footer bottom_button">
+        <view class="weui-flex">
+          <view class="weui-flex__item">
+            <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
+          </view>
+          <view class="weui-flex__item">
+            <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
+          </view>
+          <view class="weui-flex__item">
+            <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
+          </view>
         </view>
       </view>
     </view>
-    <view class="footer bottom_button">
-      <view class="weui-flex">
-        <view class="weui-flex__item">
-          <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
-        </view>
-        <view class="weui-flex__item">
-          <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
-        </view>
-        <view class="weui-flex__item">
-          <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
-        </view>
-      </view>
-    </view>
-  </view>
+    <home-button/>
+  </movable-area>
 </template>
 
 <script>

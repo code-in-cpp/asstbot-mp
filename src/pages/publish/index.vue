@@ -1,7 +1,10 @@
 <template>
-  <view class="page">
-    <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
-  </view>
+  <movable-area class="move-area">
+    <view class="page">
+      <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
+    </view>
+    <home-button/>
+  </movable-area>
 </template>
 
 <script>

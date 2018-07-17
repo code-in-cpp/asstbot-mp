@@ -1,68 +1,72 @@
 <template>
-<view class="page">
-    <title-bar :title="survey.title"/>
-    <view class="header-item">
-      <bod-avatar :url="survey.avatarUrl" size="80"/>
-    </view>
-    <view class="page__bd">
+  <movable-area class="move-area">
+    <view class="page">
+      <title-bar :title="survey.title"/>
+      <view class="header-item">
+        <bod-avatar :url="survey.avatarUrl" size="80"/>
+      </view>
+      <view class="page__bd">
         <view class="weui-grids">
-            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title">{{commitToday}}</view>
-                <view class="weui-grid__label">今日提交</view>
-            </navigator>
-            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title" >{{commitCount}}</view>
-                <view class="weui-grid__label">提交总数</view>
-            </navigator>
-            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-                <view class="weui-grid__title">{{reviewCount}}</view>
-                <view class="weui-grid__label">浏览总数</view>
-            </navigator>
+          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+            <view class="weui-grid__title">{{commitToday}}</view>
+            <view class="weui-grid__label">今日提交</view>
+          </navigator>
+          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+            <view class="weui-grid__title" >{{commitCount}}</view>
+            <view class="weui-grid__label">提交总数</view>
+          </navigator>
+          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+            <view class="weui-grid__title">{{reviewCount}}</view>
+            <view class="weui-grid__label">浏览总数</view>
+          </navigator>
         </view>
-    </view>
-    <!-- <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar> -->
-    <view class = "weui-cells__title"> 答卷列表：</view>
-    <view class="content">
-      <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
+      </view>
+      <!-- <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar> -->
+      <view class = "weui-cells__title"> 答卷列表：</view>
+      <view class="content">
+        <scroll-view scroll-y="true" class="responsor-list weui-cells weui-cells_after-title">
           <navigator v-for="item in surveySummary" :url="'../detail/main?resultId='+item.id+'&type=ask&score='+item.score" :key="item" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <view class="weui-cell__hd">
-                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-              </view>
-              <view class="weui-cell__bd">{{item.name}}</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access"><view  v-if="survey.type==='exam'">答对 {{item.score}} 题</view></view>
+            <view class="weui-cell__hd">
+              <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+            </view>
+            <view class="weui-cell__bd">{{item.name}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"><view  v-if="survey.type==='exam'">答对 {{item.score}} 题</view></view>
           </navigator>
 
           <view class="weui-cell" v-for="item in emptySurveyAnswer" :key="item.id">
-              <view class="weui-cell__hd">
-                  <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
-              </view>
-              <view class="weui-cell__bd">{{item.name}}</view>
-              <view class="weui-cell__ft">{{item.score}}</view>
+            <view class="weui-cell__hd">
+              <image :src="item.avatarUrl" class = "user-avator-icon" ></image>
+            </view>
+            <view class="weui-cell__bd">{{item.name}}</view>
+            <view class="weui-cell__ft">{{item.score}}</view>
           </view>
-      </scroll-view>
-    </view>
-    <view class="footer bottom_button">
-      <view class="weui-flex">
-        <scroll-view scroll-x  class="scroll-button-view">
-        <view class="scroll-button-item-view">
-          <button class="weui-btn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
+        </scroll-view>
+      </view>
+      <view class="footer bottom_button">
+        <view class="weui-flex">
+          <scroll-view scroll-x  class="scroll-button-view">
+            <view class="scroll-button-item-view">
+              <button class="weui-btn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
+            </view>
+            <view class="scroll-button-item-view">
+              <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
+            </view>
+            <view class="scroll-button-item-view">
+              <button class="weui-btn" type="default" @click="chartStatics" size="mini"><i class="icon iconfont icon-stealth"></i>统计</button>
+            </view>
+            <view class="scroll-button-item-view">
+              <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
+            </view>
+            <view class="scroll-button-item-view">
+              <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
+            </view>
+          </scroll-view>
         </view>
-        <view class="scroll-button-item-view">
-          <button class="weui-btn" type="default" @click="selfTest" size="mini"><i class="icon iconfont icon-stealth"></i>自测</button>
-        </view>
-        <view class="scroll-button-item-view">
-          <button class="weui-btn" type="default" @click="chartStatics" size="mini"><i class="icon iconfont icon-stealth"></i>统计</button>
-        </view>
-        <view class="scroll-button-item-view">
-          <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
-        </view>
-        <view class="scroll-button-item-view">
-          <button class="weui-btn" open-type="share" type="primary" size="mini"><i class="icon iconfont icon-share"></i>发布</button>
-        </view>
-      </scroll-view>
       </view>
     </view>
-</view>
+    <home-button/>
+  </movable-area>
+
 </template>
 
 
@@ -129,7 +133,7 @@ export default {
     selfTest () {
       wx.navigateTo({
         url: `/pages/index/main?id=${this.surveyId}&scene=test`
-      })      
+      })
     },
     chartStatics() {
       wx.navigateTo({

@@ -5,6 +5,7 @@
     direction="horizontal"
     bind:touchstart="handleTouchestart"
     bind:touchend="handleTouchend"
+    bind:htouchmove="handleTouchmove"
     bind:change="handleChange">
     <slot></slot>
   </movable-view>

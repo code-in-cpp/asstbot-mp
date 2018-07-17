@@ -9,7 +9,7 @@
         {{title}}
       </view>
       <view style="width: 174rpx;">
-      </view>      
+      </view>
     </view>
   </view>
 </template>
@@ -49,6 +49,4 @@ export default {
   flex: 1;
   text-align: center;
 }
-
-
 </style>

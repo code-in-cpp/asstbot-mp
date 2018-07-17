@@ -1,13 +1,14 @@
 <template>
-  <view class="page">
-    <view class = "content">
-      <view class="weui-tab">
-        <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
-        <view class="weui-tab__panel">
+  <movable-area class="move-area">
+    <view class="page">
+      <view class = "content">
+        <view class="weui-tab">
+          <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
+          <view class="weui-tab__panel">
             <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
               <view v-if="activeIndex == 0">
                 <view class="weui-cells weui-cells_after-title">
-                  <created-survey />             
+                  <created-survey />
                 </view>
               </view>
               <view v-if="activeIndex == 1">
@@ -16,15 +17,18 @@
                 </view>
               </view>
             </scroll-view>
+          </view>
         </view>
       </view>
-    </view>
-    <view class="footer bottom_button">
+      <view class="footer bottom_button">
         <picker @change="updateSurveyType(surveyType[$event.mp.detail.value])" :value="exam" :range="surveyTypeName">
           <button class="weui-btn" type="primary" size="default" >创建问卷机器人</button>
         </picker>
+      </view>
     </view>
-  </view>
+    <home-button/>
+  </movable-area>
+
 </template>
 
 <script>

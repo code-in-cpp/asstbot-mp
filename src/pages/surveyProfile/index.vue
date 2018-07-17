@@ -1,56 +1,60 @@
 <template>
-  <view class="page">
-    <view class="content">
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input ">
-          <view class="weui-cell__bd avatar-uploader">
-            <view @click="chooseImage">
-              <bod-avatar :url="avatarUrl" size="100"/>
-            </view>
-            <view class="avatar-badge"  @click="chooseImage">
-              <i class="icon iconfont icon-editor" style="font-size: @font-size-small"></i>
-            </view>
-            <button class="weui-btn" type="default" size="mini"
-              open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
-          </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">标题</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-                <input class="weui-input" v-model="title" placeholder="请输入标题"/>
-            </view>
-        </view>
-      </view>
-      <view class="weui-cells__title">简介</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell">
-          <view class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入简介"
-              v-model="welcomeText" style="height: 3.3em" />
-            <view class="weui-textarea-counter">{{welcomeText.length}}/200</view>
-          </view>
-        </view>
-      </view>
-      <!-- <view class="weui-cells__title">类型</view>
-      <view class="weui-cells weui-cells_after-title">
-          <radio-group @change="surveTypeChange">
-              <label class="weui-cell weui-check__label" v-for="type in surveyTypes" :key="type">
-                  <radio class="weui-check" :value="type.value" :checked="type.checked"/>
 
-                  <view class="weui-cell__bd">{{type.name}}</view>
-                  <view class="weui-cell__ft weui-cell__ft_in-radio" v-if="type.checked">
-                      <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                  </view>
-              </label>
-          </radio-group>
-      </view> -->
+  <movable-area class="move-area">
+    <view class="page">
+      <view class="content">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input ">
+            <view class="weui-cell__bd avatar-uploader">
+              <view @click="chooseImage">
+                <bod-avatar :url="avatarUrl" size="100"/>
+              </view>
+              <view class="avatar-badge"  @click="chooseImage">
+                <i class="icon iconfont icon-editor" style="font-size: @font-size-small"></i>
+              </view>
+              <button class="weui-btn" type="default" size="mini"
+                      open-type="getUserInfo" @getuserinfo="onGetUserInfo">使用您的微信头像</button>
+            </view>
+          </view>
+        </view>
+        <view class="weui-cells__title">标题</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+              <input class="weui-input" v-model="title" placeholder="请输入标题"/>
+            </view>
+          </view>
+        </view>
+        <view class="weui-cells__title">简介</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入简介"
+                      v-model="welcomeText" style="height: 3.3em" />
+              <view class="weui-textarea-counter">{{welcomeText.length}}/200</view>
+            </view>
+          </view>
+        </view>
+        <!-- <view class="weui-cells__title">类型</view>
+        <view class="weui-cells weui-cells_after-title">
+            <radio-group @change="surveTypeChange">
+                <label class="weui-cell weui-check__label" v-for="type in surveyTypes" :key="type">
+                    <radio class="weui-check" :value="type.value" :checked="type.checked"/>
+
+                    <view class="weui-cell__bd">{{type.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" v-if="type.checked">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+        </view> -->
+      </view>
+      <view class="bottom_button">
+        <button class="weui-btn" type="primary" @click="createBot" :disabled="dataValid">创建</button>
+      </view>
     </view>
-    <view class="bottom_button">
-      <button class="weui-btn" type="primary" @click="createBot" :disabled="dataValid">创建</button>
-    </view>
-  </view>
+    <home-button/>
+  </movable-area>
 </template>
 
 <script>
@@ -151,7 +155,7 @@ export default {
   position: absolute;
   top: 5rpx;
   right: 270rpx;
-  
+
 }
 
 </style>
