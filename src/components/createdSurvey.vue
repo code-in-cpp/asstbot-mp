@@ -1,15 +1,11 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <view>
-        <view>
-          <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)" @sliderLeftStart="slider(i)">
-            <view  @click="selected(i)">
-              <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
-            </view>
-          </slider-left>
+      <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)" @sliderLeftStart="slider(i)">
+        <view  @click="selected(i)">
+          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
         </view>
-      </view>
+      </slider-left>
     </block>
   </view>
 </template>
@@ -45,7 +41,7 @@ export default {
       // console.log('enter actionClicked')
       let operId = e.mp.detail.index
       let that = this
-      //删除
+      // 删除
       if (operId === 0) {
         wx.showModal({
           title: '您确认要删除吗？',
@@ -61,7 +57,7 @@ export default {
         })
         return
       }
-      //自测
+      // 自测
       if (operId === 2) {
         wx.navigateTo({
           url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
