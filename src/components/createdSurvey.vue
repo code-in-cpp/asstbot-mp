@@ -1,16 +1,11 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <view>
-        <view>
-          <slider-left :iconTitles="icons" :openWidth="450" @btnClicked="actionClicked($event, i)">
-            <view  @click="selected(i)">
-              <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
-            </view>
-          </slider-left>
+      <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)" @sliderLeftStart="slider(i)">
+        <view  @click="selected(i)">
+          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
         </view>
-
-      </view>
+      </slider-left>
     </block>
   </view>
 </template>
@@ -38,10 +33,15 @@ export default {
         url: `/pages/display/main?id=${this.surveyList[index].id}`
       })
     },
+    slider (index) {
+      // console.log('slider left')
+      this.selected_index = index
+    },
     actionClicked (e, selectedItem) {
-      console.log('enter clicked_row')
+      // console.log('enter actionClicked')
       let operId = e.mp.detail.index
       let that = this
+      // 删除
       if (operId === 0) {
         wx.showModal({
           title: '您确认要删除吗？',
@@ -55,8 +55,9 @@ export default {
             }
           }
         })
+        return
       }
-
+      // 自测
       if (operId === 2) {
         wx.navigateTo({
           url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
@@ -80,61 +81,3 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import "../../static/base.less";
-.short-cut {
-  width: 600rpx;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-}
-
-.short-cut.hidden {
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-}
-
-.short-cut.show {
-  -webkit-transform: translateX(33%);
-  transform: translateX(33%);
-}
-
-.short-cut.show-more {
-  -webkit-transform: translateX(0%);
-  transform: translateX(0%);
-}
-
-.short-cut .weui-flex__item{
-  text-align: center;
-  vertical-align: middle;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.short-cut .iconfont {
-  font-size: @font-size-big ;
-  color: white;
-}
-
-.short-cut .desc {
-  font-size: @font-size-small;
-  color: white;
-}
-
-.short-cut .weui-flex__item.share image{
-  width: 70rpx;
-  height: 70rpx;
-}
-
-.short-cut .weui-flex__item.share button{
-  padding: 10rpx 12rpx !important;
-  line-height: 1.6 !important;
-}
-
-.short-cut .weui-flex__item.share button .desc{
-  color: black;
-}
-</style>

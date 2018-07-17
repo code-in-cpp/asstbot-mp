@@ -177,6 +177,7 @@ export default {
         })
     } else {
       this.$store.commit('talkToBotFather')
+      this.survey = {}
     }
 
     this.$store.dispatch('updateUserInfo').then((res) => {

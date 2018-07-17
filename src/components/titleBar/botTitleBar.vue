@@ -4,13 +4,17 @@
       <device-padding></device-padding>
     </view>
     <image src="../../static/image/bot-title-bar.png" class="background"></image>
-    <image class="logo" src="../../static/image/logo.png"></image>
+    <view class="logo">
+      <image class="logo" src="../../static/image/logo.png" v-if="title.length == 0"></image>
+      <return-button v-else/>
+    </view>
     <view class="title primary-color dark">{{title}}</view>
     <image class="avatar" :src="displayUrl"></image>
   </view>
 </template>
 
 <script>
+import returnButton from '@/components/widget/returnButton'
 export default {
   props: {
     avatarUrl: {
@@ -26,8 +30,10 @@ export default {
     displayUrl () {
       return this.avatarUrl ? this.avatarUrl : '../../static/image/avatar.png'
     }
+  },
+  components: {
+    returnButton
   }
-
 }
 </script>
 
@@ -60,10 +66,14 @@ export default {
 }
 
 .title {
-  width: 450rpx;
-  left: 300rpx;
-  bottom: 60rpx;
+  width: 400rpx;
+  left: 130rpx;
+  bottom: 80rpx;
   position:absolute;
+}
+.title {
+  flex: 1;
+  text-align: center;
 }
 
 </style>
