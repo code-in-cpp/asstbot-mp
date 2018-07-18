@@ -64,7 +64,7 @@ const getters = {
     let answers = []
     let subjects = []
     console.log('id', id)
-    console.log('quest', queryResults)
+    console.log('query result', queryResults)
     for (let index in queryResults) {
       let item = queryResults[index]
       if (item.id === id) {
