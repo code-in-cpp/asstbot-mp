@@ -124,14 +124,14 @@
                       <view class="inline-cell-title">
                         <view class="weui-cells__title">评语内容：</view>
                         <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
-                          <i v-if="!pollConclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
+                          <i class="icon iconfont icon-picture font-color"></i>
                         </view>
                       </view>
-                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl"></image-gallery>
                       <view class="poll-conclusion-bd">
                         <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
                                @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
                       </view>
+                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl"></image-gallery>
                     </view>
                 </block>
               </view>
@@ -238,9 +238,6 @@ export default {
     },
     tabActive (event) {
       this.activeIndex = event
-      if (this.type !== 'exam') {
-        this.initConclusion()
-      }
     },
     changeAvatar () {
       const that = this
@@ -329,6 +326,9 @@ export default {
       })
     }
     this.updateCurrentSurvey(survey)
+    if (this.type !== 'exam') {
+      this.initConclusion()
+    }
   },
 
   onShareAppMessage (res) {
@@ -445,5 +445,10 @@ export default {
   height:32rpx;
   line-height:32rpx;
   text-align:center;
+}
+
+.weui-textarea{
+  background-color: #ffffff;
+  height: 100rpx;
 }
 </style>
