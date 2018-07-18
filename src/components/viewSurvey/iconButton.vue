@@ -1,6 +1,6 @@
 <template>
-<view>
-  <i class="icon iconfont" :class="icon"></i>
+<view class="btn-item">
+  <i class="icon iconfont btn-icon" :class="icon"></i>
   <view class="btn-title"> {{title}} </view>
 </view>
 </template>
@@ -23,7 +23,32 @@ export default {
 <style lang="less" scoped>
   @import "../../../static/base.less";
   .btn-title {
-    font-size: @font-size-small;
-    color: white
+    color: black;
+    font-weight: normal;
+    font-size: @font-size-middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: blue;
+    /*height: 120rpx;*/
+    /*line-height:120rpx;*/
+    text-align: center;
+  }
+  .btn-icon {
+    font-size: @font-size-big;
+    border-radius: 50%;
+    background-color: white;
+    border: 2rpx solid;
+    border-color: @btn-border-color;
+    color: blue;
+    align-content: center;
+    text-align: center;
+    height: 80rpx;
+    width: 80rpx;
+    display: inline-block;
+  }
+  .btn-item {
+    align-content: center;
+    text-align: center;
   }
 </style>

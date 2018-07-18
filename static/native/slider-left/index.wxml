@@ -11,7 +11,7 @@
   </movable-view>
   <view class='handle-icons'>
     <view class='slider-left-handle'>
-      <block wx:for="{{iconTitles}}">
+      <block wx:for="{{iconTitles}}" wx:key="">
         <view data-index="{{index}}" bind:tap="handleClicked" class='handle-icon'  style='background-color:{{item.color}};width:{{itemWidth}}rpx'>{{item.title}}</view>
       </block>
     </view>
