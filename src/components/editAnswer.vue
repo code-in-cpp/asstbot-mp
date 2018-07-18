@@ -58,7 +58,7 @@
             </picker>
           </block>
           <block v-else-if="type=='phone'">
-            <input class="weui-input height-line-92" type="number" :placeholder="186"
+            <input class="weui-input height-line-92" type="number" placeholder="请输入号码"
                    @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>

@@ -19,8 +19,8 @@
       </view>
       <view class="content">
         <view class="weui-tab">
-          <nav-bar v-if="type === 'exam'" :navItems="items" @tabActive="tabActive"></nav-bar>
-          <view v-bind:class="pollStyleClass">
+          <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
+          <view class="weui-tab__panel">
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
                 <block v-for="(subject, i) in subjects" :key="subject">
@@ -62,6 +62,7 @@
               </view>
 
               <view v-if="activeIndex == 1">
+                <block v-if="type=='exam'">
                 <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
                   <view class="subject-divider"></view>
                   <view class="weui-cells__title">
@@ -117,6 +118,22 @@
                     <view class="weui-cell__bd">添加评语分类</view>
                   </view>
                 </view>
+                </block>
+                <block v-else>
+                    <view class="poll-conclusion-cell" >
+                      <view class="inline-cell-title">
+                        <view class="weui-cells__title">评语内容：</view>
+                        <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
+                          <i v-if="!pollConclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
+                        </view>
+                      </view>
+                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl"></image-gallery>
+                      <view class="poll-conclusion-bd">
+                        <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
+                               @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
+                      </view>
+                    </view>
+                </block>
               </view>
             </scroll-view>
           </view>
@@ -174,24 +191,18 @@ export default {
       conclusions: state => {
         return state.currentSurvey.survey.conclusions
       },
-      subjects: state => {
-        console.log(state)
-        return state.currentSurvey.survey.subjects
+
+      pollConclusion: state => {
+        return state.currentSurvey.survey.conclusions[0]
       },
+      subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
         return state.currentSurvey.survey.subjects.map((subject) => {
           var index = subjectType.indexOf(subject.type)
           return subjectTypeName[index]
         })
       }
-    }),
-
-    pollStyleClass () {
-      if (this.type !== 'exam') {
-        return 'weui-tab__panel poll-style'
-      }
-      return 'weui-tab__panel'
-    }
+    })
   },
 
   components: {
@@ -209,6 +220,7 @@ export default {
       'addConclusion',
       'removeConclusion',
       'addSubject',
+      'initConclusion',
       'clearSurvey',
       'removeSubject',
       'updateSubjectType',
@@ -226,6 +238,9 @@ export default {
     },
     tabActive (event) {
       this.activeIndex = event
+      if (this.type !== 'exam') {
+        this.initConclusion()
+      }
     },
     changeAvatar () {
       const that = this
@@ -257,6 +272,7 @@ export default {
         }
       })
     },
+
     addConclusionMedia (index) {
       const that = this
       wx.chooseImage({
@@ -369,6 +385,16 @@ export default {
   display: inline-block;
   font-size:40rpx!important;
 }
+
+.inline-cell-title{
+  display: inline-flex;
+  border-bottom:1rpx solid #dadada;
+}
+
+.poll-conclusion-bd {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+}
 .subject-style{
   height:92rpx;
   overflow: hidden;
@@ -402,14 +428,22 @@ export default {
   display:inline-block;
   margin-top:11rpx;
 }
-  .font-camera{
-    position:absolute;
-    top:0;
-    right:0;
-    font-size:28rpx;
-    width:32rpx;
-    height:32rpx;
-    line-height:32rpx;
-    text-align:center;
-  }
+
+.poll-conclusion-cell{
+  padding:20rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.font-camera{
+  position:absolute;
+  top:0;
+  right:0;
+  font-size:28rpx;
+  width:32rpx;
+  height:32rpx;
+  line-height:32rpx;
+  text-align:center;
+}
 </style>
