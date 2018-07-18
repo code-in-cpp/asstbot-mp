@@ -2,7 +2,7 @@
 <movable-area class="move-area">
   <view class="page">
     <bot-title-bar></bot-title-bar>
-    <chat-page :messageList="messageList"/>
+    <chat-page :messageList="messageList" @redirectTo="toRedirect"/>
   </view>
 </movable-area>
 </template>
@@ -15,7 +15,8 @@ export default {
   data () {
     return {
       option: {},
-      scene: 'load'
+      scene: 'load',
+      redirect: {}
     }
   },
   computed: {
@@ -41,6 +42,10 @@ export default {
         .then(() => {
           this.$store.dispatch('start')
         })
+    },
+    toRedirect (event) {
+      this.scene = `redirectTo ${event}`
+      this.redirect = event
     }
   },
 
@@ -57,6 +62,11 @@ export default {
       } else if (this.scene === 'onload') {
         this.startChat()
         this.scene = ''
+      } else if (this.scene.indexOf('redirectTo') !== -1) {
+        this.$store.commit('talkToBotFather')
+        this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
+        this.scene = ''
+        this.redirect = {}
       } else {
         this.$store.commit('talkToBotFather')
       }

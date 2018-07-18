@@ -7,7 +7,7 @@
       <select-box :showImage="showImage" :messageAction="messageAction"/>
       <command-area />
     </view>
-    <bot-redirect :messageList="messageList"/>
+    <bot-redirect :messageList="messageList" @redirectTo="$emit('redirectTo', $event)"/>
   </block>
 </template>
 

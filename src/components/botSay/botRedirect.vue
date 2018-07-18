@@ -32,15 +32,15 @@ export default {
       if (lastmsg.type === 'redirect') {
         if (lastmsg.url === 'view-survey') {
           if (lastmsg.option.id === 'created') {
-            this.redirectTo('view-created-survey', '/pages/createdSurvey/main')
+            this.redirectTo(lastmsg, '/pages/createdSurvey/main')
           } else {
-            this.redirectTo('view-visited-survey', '/pages/visitedSurvey/main')
+            this.redirectTo(lastmsg, '/pages/visitedSurvey/main')
           }
         } else if (lastmsg.url === 'create-survey') {
           if (lastmsg.option.id) {
             this.$store.dispatch('retrieveSurvey')
               .then(() => {
-                this.redirectTo('edit-created-survey', `/pages/surveySubjects/main?id=${lastmsg.option.id}`)
+                this.redirectTo(lastmsg, `/pages/surveySubjects/main?id=${lastmsg.option.id}`)
               })
           }
         }
