@@ -3,7 +3,7 @@
     <view class="list-item" >
       <view class="label-wrapper">
         <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
-        <badge :title="1234" left_rpx="80"></badge>
+        <!--<badge :title="1234" left_rpx="80"></badge>-->
       </view>
       <view class="survey-info">
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
