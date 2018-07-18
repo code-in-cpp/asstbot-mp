@@ -43,7 +43,8 @@
             height: 300
           }
         },
-        flag: false
+        flag: false,
+        noClick: true
       }
     },
     components: {
@@ -78,10 +79,17 @@
       getCropperImage () {
         wecropper.getCropperImage()
           .then((filePath) => {
-            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
-            }).catch(err => {
-              console.log(err)
-            })
+            if (this.noClick) {
+              console.log('点击了')
+              this.noClick = !this.noClick
+              this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
+                this.noClick = !this.noClick
+                this.flag = false
+              }).catch(err => {
+                this.noClick = !this.noClick
+                console.log(err)
+              })
+            }
           })
           .catch(e => {
             console.error('获取图片失败')
