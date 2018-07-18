@@ -54,6 +54,15 @@ const getters = {
 }
 
 const mutations = {
+  updateSurveyAvatarUrl (state, avatarUrl) {
+    state.survey.avatarUrl = avatarUrl
+  },
+  updateSurveyTitle (state, title) {
+    state.survey.title = title
+  },
+  updateSurveyIntro (state, intro) {
+    state.survey.intro = intro
+  },
   updateCurrentSurvey (state, survey) {
     state.survey = JSON.parse(JSON.stringify(survey))
   },

@@ -5,12 +5,15 @@
       <title-bar title=" "/>
       <view class="weui-cells clear-border">
         <view class="weui-cell clear-border">
-          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click="changeAvatar">
             <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
+            <i class="icon iconfont icon-camera font-camera"></i>
           </view>
           <view class="weui-cell__bd">
-            <view>{{survey.title}}</view>
-            <view style="font-size: 13px;color: #888888;">{{survey.intro}}</view>
+            <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
+            <input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">
+            <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
+            <input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">
           </view>
         </view>
       </view>
@@ -169,14 +172,16 @@ export default {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
       items: ['题目', '评语'],
-      activeIndex: 0
+      activeIndex: 0,
+      titleEditFlag: false,
+      introEditFlag: false
     }
   },
 
   computed: {
     ...mapState({
       displayAvatar: state => {
-        var surveyAvatarUrl = state.currentSurvey.survey.avatarUrl || ''
+        var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
       survey: state => state.currentSurvey.survey,
@@ -236,6 +241,21 @@ export default {
         this.initConclusion()
       }
     },
+    changeAvatar () {
+      const that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            that.$store.commit('updateSurveyAvatarUrl', res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      })
+    },
     addMedia (index) {
       const that = this
       wx.chooseImage({
@@ -267,6 +287,28 @@ export default {
           })
         }
       })
+    },
+    editTitle () {
+      this.titleEditFlag = true
+    },
+    changeTitle (e) {
+      if (e.mp.detail.value) {
+        this.$store.commit('updateSurveyTitle', e.mp.detail.value)
+        this.titleEditFlag = false
+      } else {
+        wx.showToast({title: '请输入标题'})
+      }
+    },
+    editIntro () {
+      this.introEditFlag = true
+    },
+    changeIntro (e) {
+      if (e.mp.detail.value) {
+        this.$store.commit('updateSurveyIntro', e.mp.detail.value)
+        this.introEditFlag = false
+      } else {
+        wx.showToast({title: '请输入简介'})
+      }
     }
   },
 
@@ -284,7 +326,6 @@ export default {
         return item
       })
     }
-    console.log(survey)
     this.updateCurrentSurvey(survey)
   },
 
@@ -393,4 +434,14 @@ export default {
   background: #ffffff;
 }
 
+.font-camera{
+  position:absolute;
+  top:0;
+  right:0;
+  font-size:28rpx;
+  width:32rpx;
+  height:32rpx;
+  line-height:32rpx;
+  text-align:center;
+}
 </style>
