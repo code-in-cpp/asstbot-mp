@@ -10,7 +10,7 @@ export default {
 
 page{
   height: 100% !important;
-  background-color:#F8F8F8;
+  background-color:#F2F2F2;
   font-size:@font-size-middle;
   font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
@@ -41,11 +41,11 @@ page{
 .content {
   flex: 1;
   display: flex;
-  background-color: rgb(249, 249, 249);
+  background-color: #F2F2F2;
 }
 
 .footer {
-  background-color: rgb(249, 249, 249);
+  background-color: #F2F2F2;
 }
 
 .small-avatar {
@@ -76,9 +76,9 @@ page{
 .incoming {
   padding: 20rpx;
   margin-left: 20rpx;
-  border: solid @p-light-color 1px;
+  border: solid #eaeaea 1rpx;
   border-radius: 15px 15px 15px 0;
-  /*background-color: #f8f8f9;*/
+  background-color: #ffffff;
   width: auto!important;
   display: inline-block;
   font-size: @font-size-small;
@@ -212,7 +212,7 @@ page{
 /* outgoing message style */
 .outgoing {
   padding:20rpx;
-  border:solid #81d4f4 1rpx;
+  border:solid #aee3fc 1rpx;
   border-radius:30rpx 30rpx 0 30rpx;
   background-color: @s-light-color !important;
   color: @text-on-s-color !important;
