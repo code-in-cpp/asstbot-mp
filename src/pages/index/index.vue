@@ -54,26 +54,6 @@ export default {
     ...mapState({
       messagesList: state => state.messages.data,
       lastShowMessage: state => state.messages.data.slice(-1)[0],
-      flag: state => {
-        let data = state.messages.data.slice(-1)
-        if (data[0] && data[0].to) {
-          let type = data[0].msgs.slice(-1)[0].type
-          switch (type) {
-            case 'radio':
-              if (data[0].msgs.slice(-1)[0].items && data[0].msgs.slice(-1)[0].items.length > 10) {
-                return false
-              } else {
-                return true
-              }
-            case 'checkbox':
-              return false
-            default: {
-              return true
-            }
-          }
-        }
-        return true
-      },
       ...mapGetters({
         list: 'messageAction'
       }),
