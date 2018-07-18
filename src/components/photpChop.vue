@@ -44,7 +44,8 @@
             height: 300
           }
         },
-        flag: false
+        flag: false,
+        noClick: true
       }
     },
     components: {
@@ -77,17 +78,17 @@
       getCropperImage () {
         wecropper.getCropperImage()
           .then((filePath) => {
-            // console.log(filePath)
-            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
-              // this.imgFlag = false
-            }).catch(err => {
-              // this.imgFlag = false
-              console.log(err)
-            })
-            // wx.previewImage({
-            //   current: '', // 当前显示图片的http链接
-            //   urls: [src] // 需要预览的图片http链接列表
-            // })
+            if (this.noClick) {
+              console.log('点击了')
+              this.noClick = !this.noClick
+              this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
+                this.noClick = !this.noClick
+                this.flag = false
+              }).catch(err => {
+                this.noClick = !this.noClick
+                console.log(err)
+              })
+            }
           })
           .catch(e => {
             console.error('获取图片失败')

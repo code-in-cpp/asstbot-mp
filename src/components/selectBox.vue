@@ -28,7 +28,6 @@
     computed: {
       ...mapState({
         globalShow: state => {
-          console.log(1111)
           console.log(state)
           return state.inputValue.globalShow
         }

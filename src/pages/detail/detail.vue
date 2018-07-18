@@ -29,7 +29,7 @@
           </view>
         </scroll-view>
       </view>
-      <view class="foot">@@@</view>
+      <view class="foot">©2018 小哒 </view>
     </view>
     <home-button/>
   </movable-area>
