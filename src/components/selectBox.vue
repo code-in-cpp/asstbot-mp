@@ -1,8 +1,8 @@
 <template>
-    <view class="select-box" :class="{'top_110': !haveImage, 'top_444': haveImage}">
-      <radio-box v-if="list.type === 'radio' && !globalShow" :list="list"></radio-box>
-      <checkbox-box v-if="list.type === 'checkbox' && !globalShow" :list="list"></checkbox-box>
-      <avatar-box v-if="list.type === 'imageUploader' && !globalShow" :list="list"></avatar-box>
+    <view class="select-box" :class="{'top_110': !showImage, 'top_444': showImage}">
+      <radio-box v-if="messageAction.type === 'radio' && !globalShow" :list="messageAction"></radio-box>
+      <checkbox-box v-if="messageAction.type === 'checkbox' && !globalShow" :list="messageAction"></checkbox-box>
+      <avatar-box v-if="messageAction.type === 'imageUploader' && !globalShow" :list="messageAction"></avatar-box>
       <global-component v-if="globalShow"></global-component>
     </view>
 </template>
@@ -15,8 +15,14 @@
   import { mapState } from 'vuex'
   export default {
     name: 'selectBox',
-    data () {
-      return {
+    props: {
+      messageAction: {
+        type: Object,
+        default: {}
+      },
+      showImage: {
+        type: Boolean,
+        default: {}
       }
     },
     components: {
@@ -28,12 +34,10 @@
     computed: {
       ...mapState({
         globalShow: state => {
-          console.log(state)
           return state.inputValue.globalShow
         }
       })
-    },
-    props: ['list', 'haveImage']
+    }
   }
 </script>
 

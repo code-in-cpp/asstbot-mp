@@ -1,216 +1,73 @@
 <template>
-  <movable-area class="move-area">
-    <div class="page">
-      <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
-      <view class="content">
-        <scroll-view scroll-y='true' style="height: 100%" :scroll-into-view="scrollToView">
-          <view class="padding-top-64" :class="{'height-110':!haveImage,'height-444':haveImage}">
-            <block v-for="(messages, i) in messagesList" :key="i">
-              <view :id="i">
-                <msg-list :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-                          :messages="messages" @renderComplete="scollToBottom"/>
-              </view>
-              <view :id="'bottom'+i"></view>
-            </block>
-            <block v-if="waitingBotMessage">
-              <bot-msg-receiving/>
-            </block>
-            <view id="bottom"></view>
-          </view>
-
-        </scroll-view>
-      </view>
-      <view class="footer">
-        <select-box :list="list" :haveImage="haveImage"></select-box>
-        <command-area/>
-      </view>
-    </div>
-  </movable-area>
+<movable-area class="move-area">
+  <view class="page">
+    <bot-title-bar></bot-title-bar>
+    <chat-page :messageList="messageList"/>
+  </view>
+</movable-area>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import commandArea from '@/components/commandArea'
-import headerArea from '@/components/headerArea'
-import pageTitle from '@/components/pageTitle'
-import msgList from '@/components/msgList'
-import selectBox from '@/components/selectBox'
-import botMsgReceiving from '@/components/botMsgReceiving'
+import { mapState } from 'vuex'
+import chatPage from '@/components/chatPage/chatPage'
 
 export default {
   data () {
     return {
-      survey: {},
-      waitingBotMessage: false,
-      // messagesList: [],
-      // lastShowMessage: {},
-      lastMessage: {},
-      scrollToView: 'bottom',
-      haveImage: false,
-      option: {}
+      option: {},
+      scene: 'load'
     }
   },
   computed: {
     ...mapState({
-      messagesList: state => state.messages.data,
-      lastShowMessage: state => state.messages.data.slice(-1)[0],
-      ...mapGetters({
-        list: 'messageAction'
-      }),
       userAuthed: state => state.userProfile.authed,
       loginStatus: state => state.userProfile.loginStatus
+    }),
+    ...mapState({
+      messageList: state => state.messages.creatorBotMsg
     }),
     hasLogin () {
       return this.userAuthed || this.loginStatus
     }
   },
-  watch: {
-    messagesList: function (val) {
-      const that = this
-      if (this.haveImage) {
-        setTimeout(function () {
-          that.scrollToView = `bottom${val.length - 1}`
-        }, 500)
-      } else {
-        this.scrollToView = `bottom${val.length - 1}`
-      }
-    },
-    'lastShowMessage.msgs': function (newVal) {
-      if (!this.lastShowMessage || !this.lastShowMessage.to) {
-        return
-      }
-      let lastmsg = newVal.slice(-1)[0]
-      if (!lastmsg) {
-        return
-      }
-      if (lastmsg.type === 'redirect') {
-        if (lastmsg.url === 'view-survey') {
-          if (lastmsg.option.id === 'created') {
-            wx.navigateTo({
-              url: '/pages/createdSurvey/main'
-            })
-          } else {
-            wx.navigateTo({
-              url: '/pages/visitedSurvey/main'
-            })
-          }
-        } else if (lastmsg.url === 'create-survey') {
-          if (lastmsg.option.id) {
-            this.$store.dispatch('retrieveSurvey')
-              .then(() => {
-                wx.navigateTo({
-                  url: `/pages/surveySubjects/main?id=${lastmsg.option.id}`
-                })
-              })
-          }
-        }
-      }
-    },
-    list: function (val) {
-      if (val.type === 'radio' || val.type === 'checkbox') {
-        let a = this.list.items.find(item => !!item.imageUrl === true)
-        this.haveImage = a !== undefined
-      } else {
-        this.haveImage = false
-      }
-    },
-    hasLogin: function (val, oldVal) {
-      console.log('hasLogin', val, oldVal)
-      if (val && !oldVal) {
-        this.startChat()
-      }
-    },
-    option: function (val) {
-      if (this.hasLogin) {
-        this.startChat()
-      }
-    }
-  },
   components: {
-    headerArea,
-    commandArea,
-    // boxFloat,
-    pageTitle,
-    msgList,
-    selectBox,
-    botMsgReceiving
-    // uploadAvatar,
+    chatPage
   },
 
   methods: {
-    scollToBottom () {
-      this.scrollToView = 'bottom'
-    },
     startChat () {
-      let option = this.option
-      if (option.id) {
-        const scene = option.scene ? option.scene : 'publish'
-        this.$store.commit('talkToSurveyBot', {id: option.id, scene})
-
-        this.$store.dispatch('retrieveSurveyById', option.id)
-          .then((survey) => {
-            this.survey = survey
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      } else {
-        this.$store.commit('talkToBotFather')
-        this.survey = {}
-      }
-
-      this.$store.dispatch('updateUserInfo').then((res) => {
-        if (this.userAuthed) {
+      this.$store.commit('talkToBotFather')
+      this.$store.dispatch('updateUserInfo')
+        .then(() => {
           this.$store.dispatch('start')
-        } else {
-          this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-        }
-      }).catch((err) => {
-        this.$store.dispatch('getUserinfo', {content: '获取你的公开信息（昵称、头像等)', type: 'getUserinfo'})
-        console.log(err)
-      })
+        })
     }
-  },
-
-  created () {
   },
 
   onShow () {
     if (!this.hasLogin) {
+      this.scene = 'gotoLogin'
       wx.navigateTo({
         url: '/pages/login/main'
       })
+    } else {
+      if (this.scene === 'gotoLogin') {
+        this.startChat()
+        this.scene = ''
+      } else if (this.scene === 'onload') {
+        this.startChat()
+        this.scene = ''
+      } else {
+        this.$store.commit('talkToBotFather')
+      }
     }
   },
 
   onLoad (option) {
-    this.option = option
-  },
-
-  onUnload () {
-    this.option = {}
-    this.survey = {}
+    this.scene = 'onload'
   }
-
 }
 </script>
 
 <style scoped>
-  .height_700{
-    height:700rpx
-  }
-  .footer{
-    position: relative;
-  }
-  .height-110{
-    box-sizing: border-box;
-    padding-bottom: 110rpx;
-  }
-  .height-444{
-    box-sizing: border-box;
-    padding-bottom: 444rpx;
-  }
-.padding-top-64{
-  padding-top: 64rpx;
-}
 </style>

@@ -20,7 +20,6 @@
 
 <script>
   import MpvueCropper from 'mpvue-cropper'
-  import { mapGetters } from 'vuex'
 
   let wecropper
 
@@ -51,18 +50,20 @@
     components: {
       MpvueCropper
     },
-    props: [
-      'src'
-    ],
-    computed: {
-      ...mapGetters({
-        optionObject: 'messageAction'
-      })
+    props: {
+      src: {
+        type: String
+      },
+      messageAction: {
+        type: Object,
+        default: {}
+      }
     },
     methods: {
       cropperReady (...args) {
         const that = this
         setTimeout(function () {
+          console.log(that.src)
           wecropper.pushOrigin(that.src)
         }, 300)
       },

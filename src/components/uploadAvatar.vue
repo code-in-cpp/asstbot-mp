@@ -58,9 +58,6 @@
       MpvueCropper
     },
     computed: {
-      ...mapState({
-        list: state => state.messages.data[state.messages.data.length - 1]
-      }),
       ...mapGetters({
         optionObject: 'messageAction'
       })
