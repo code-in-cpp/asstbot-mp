@@ -212,7 +212,7 @@ page{
 /* outgoing message style */
 .outgoing {
   padding:20rpx;
-  border:solid #81d4f4 1rpx;
+  border:solid #aee3fc 1rpx;
   border-radius:30rpx 30rpx 0 30rpx;
   background-color: @s-light-color !important;
   color: @text-on-s-color !important;
