@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     displayUrl () {
-      return this.avatarUrl ? this.avatarUrl : '../../static/image/avatar.png'
+      return this.avatarUrl || this.avatarUrl !== null ? this.avatarUrl : '../../static/image/avatar.png'
     }
   },
   components: {
@@ -62,7 +62,8 @@ export default {
   bottom: -63rpx;
   border-radius: 50%;
   border: solid #25CEC2 4rpx;
-  z-index: 9999;
+  z-index: 500;
+  background-color: #F8F8F8;
 }
 
 .title {
