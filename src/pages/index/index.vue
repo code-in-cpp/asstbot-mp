@@ -34,7 +34,6 @@ import commandArea from '@/components/commandArea'
 import headerArea from '@/components/headerArea'
 import pageTitle from '@/components/pageTitle'
 import msgList from '@/components/msgList'
-import floatIndex from '@/components/floatIndex'
 import selectBox from '@/components/selectBox'
 import botMsgReceiving from '@/components/botMsgReceiving'
 
@@ -151,7 +150,6 @@ export default {
     headerArea,
     commandArea,
     // boxFloat,
-    floatIndex,
     pageTitle,
     msgList,
     selectBox,
