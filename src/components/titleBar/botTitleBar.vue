@@ -71,6 +71,9 @@ export default {
   left: 130rpx;
   bottom: 80rpx;
   position:absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .title {
   flex: 1;
