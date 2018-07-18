@@ -49,7 +49,7 @@
                       </view>
                     </view>
                   </view>
-                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl"></image-gallery>
+                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
                   <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
                 </block>
                 <view class="subject-divider"></view>
@@ -127,7 +127,7 @@
                           <i v-if="!pollConclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
                         </view>
                       </view>
-                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl"></image-gallery>
+                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
                       <view class="poll-conclusion-bd">
                         <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
                                @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>

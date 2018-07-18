@@ -79,6 +79,9 @@ const mutations = {
   updateConclusionimage (state, {index, imageUrl}) {
     state.survey.conclusions[index].imageUrl = imageUrl
   },
+  deleteConclusionImage (state, {index}) {
+    state.survey.conclusions[index].imageUrl = ''
+  },
   addConclusion (state) {
     let subjectCount = state.survey.subjects.length
     let range = getFreeRange(subjectCount, state.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
@@ -138,6 +141,9 @@ const mutations = {
   },
   updateSubjectQuestionImage (state, {index, imageUrl}) {
     state.survey.subjects[index].imageUrl = imageUrl
+  },
+  deleteSubjectQuestionImage (state, {index}) {
+    state.survey.subjects[index].imageUrl = ''
   },
   addAnswer (state, subjectIndex) {
     let subject = state.survey.subjects[subjectIndex]
