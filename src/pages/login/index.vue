@@ -6,7 +6,7 @@
       </view>
       <view class="button-area" v-if="!userAuthed">
         <button type="primary" open-type="getUserInfo" @getuserinfo="gotUserInfo">微信登录</button>
-        <button @click="guestLogin">匿名用户登录</button>
+        <button @click="guestLogin">匿名登录</button>
       </view>
     </view>
   </view>
