@@ -1,6 +1,6 @@
 <template>
     <view class="imageGallery" @click="previewImage">
-      <image class="image" :src="imageUrl"></image>
+      <image mode="widthFix" class="image" :src="imageUrl"></image>
     </view>
 </template>
 

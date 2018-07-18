@@ -167,13 +167,17 @@ export default {
         var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
-      survey: state => state.currentSurvey.survey,
+      survey: state => {
+        return state.currentSurvey.survey
+      },
       type: state => state.currentSurvey.survey.type,
       conclusions: state => {
-        console.log(state)
         return state.currentSurvey.survey.conclusions
       },
-      subjects: state => state.currentSurvey.survey.subjects,
+      subjects: state => {
+        console.log(state)
+        return state.currentSurvey.survey.subjects
+      },
       typeNames: state => {
         return state.currentSurvey.survey.subjects.map((subject) => {
           var index = subjectType.indexOf(subject.type)
@@ -298,6 +302,7 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
+    console.log(survey)
     if (survey.subjects.length) {
       survey.subjects.map(item => {
         item.imageUrl = item.imageUrl ? item.imageUrl : ''

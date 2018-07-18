@@ -129,6 +129,7 @@ const mutations = {
   },
   updateSubjectQuestionImage (state, {index, imageUrl}) {
     state.survey.subjects[index].imageUrl = imageUrl
+    console.log(state)
   },
   addAnswer (state, subjectIndex) {
     let subject = state.survey.subjects[subjectIndex]

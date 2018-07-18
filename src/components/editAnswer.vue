@@ -79,7 +79,7 @@
         </view>
       </view>
     </block>
-  
+
     <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
         <view class="weui-cell__ft font-style"  >
           <i class="icon iconfont icon-add"></i>
@@ -123,7 +123,6 @@ export default {
       if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
         return []
       }
-      console.log(this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers)
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
     }
   },
