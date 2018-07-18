@@ -5,19 +5,22 @@
       <title-bar title=" "/>
       <view class="weui-cells clear-border">
         <view class="weui-cell clear-border">
-          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click="changeAvatar">
             <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
+            <i class="icon iconfont icon-camera font-camera"></i>
           </view>
           <view class="weui-cell__bd">
-            <view>{{survey.title}}</view>
-            <view style="font-size: 13px;color: #888888;">{{survey.intro}}</view>
+            <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
+            <input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">
+            <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
+            <input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">
           </view>
         </view>
       </view>
       <view class="content">
         <view class="weui-tab">
-          <nav-bar v-if="type === 'exam'" :navItems="items" @tabActive="tabActive"></nav-bar>
-          <view v-bind:class="pollStyleClass">
+          <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
+          <view class="weui-tab__panel">
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
                 <block v-for="(subject, i) in subjects" :key="subject">
@@ -46,7 +49,7 @@
                       </view>
                     </view>
                   </view>
-                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl"></image-gallery>
+                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
                   <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
                 </block>
                 <view class="subject-divider"></view>
@@ -59,6 +62,7 @@
               </view>
 
               <view v-if="activeIndex == 1">
+                <block v-if="type=='exam'">
                 <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
                   <view class="subject-divider"></view>
                   <view class="weui-cells__title">
@@ -114,6 +118,22 @@
                     <view class="weui-cell__bd">添加评语分类</view>
                   </view>
                 </view>
+                </block>
+                <block v-else>
+                    <view class="poll-conclusion-cell" >
+                      <view class="inline-cell-title">
+                        <view class="weui-cells__title">评语内容：</view>
+                        <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
+                          <i class="icon iconfont icon-picture font-color"></i>
+                        </view>
+                      </view>
+                      <view class="poll-conclusion-bd">
+                        <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
+                               @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
+                      </view>
+                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
+                    </view>
+                </block>
               </view>
             </scroll-view>
           </view>
@@ -152,21 +172,28 @@ export default {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
       items: ['题目', '评语'],
-      activeIndex: 0
+      activeIndex: 0,
+      titleEditFlag: false,
+      introEditFlag: false
     }
   },
 
   computed: {
     ...mapState({
       displayAvatar: state => {
-        var surveyAvatarUrl = state.currentSurvey.survey.avatarUrl || ''
+        var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
-      survey: state => state.currentSurvey.survey,
+      survey: state => {
+        return state.currentSurvey.survey
+      },
       type: state => state.currentSurvey.survey.type,
       conclusions: state => {
-        console.log(state)
         return state.currentSurvey.survey.conclusions
+      },
+
+      pollConclusion: state => {
+        return state.currentSurvey.survey.conclusions[0]
       },
       subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
@@ -175,14 +202,7 @@ export default {
           return subjectTypeName[index]
         })
       }
-    }),
-
-    pollStyleClass () {
-      if (this.type !== 'exam') {
-        return 'weui-tab__panel poll-style'
-      }
-      return 'weui-tab__panel'
-    }
+    })
   },
 
   components: {
@@ -200,6 +220,7 @@ export default {
       'addConclusion',
       'removeConclusion',
       'addSubject',
+      'initConclusion',
       'clearSurvey',
       'removeSubject',
       'updateSubjectType',
@@ -218,6 +239,21 @@ export default {
     tabActive (event) {
       this.activeIndex = event
     },
+    changeAvatar () {
+      const that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            that.$store.commit('updateSurveyAvatarUrl', res)
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      })
+    },
     addMedia (index) {
       const that = this
       wx.chooseImage({
@@ -233,6 +269,7 @@ export default {
         }
       })
     },
+
     addConclusionMedia (index) {
       const that = this
       wx.chooseImage({
@@ -248,6 +285,28 @@ export default {
           })
         }
       })
+    },
+    editTitle () {
+      this.titleEditFlag = true
+    },
+    changeTitle (e) {
+      if (e.mp.detail.value) {
+        this.$store.commit('updateSurveyTitle', e.mp.detail.value)
+        this.titleEditFlag = false
+      } else {
+        wx.showToast({title: '请输入标题'})
+      }
+    },
+    editIntro () {
+      this.introEditFlag = true
+    },
+    changeIntro (e) {
+      if (e.mp.detail.value) {
+        this.$store.commit('updateSurveyIntro', e.mp.detail.value)
+        this.introEditFlag = false
+      } else {
+        wx.showToast({title: '请输入简介'})
+      }
     }
   },
 
@@ -256,6 +315,7 @@ export default {
 
   onLoad (option) {
     var survey = this.$store.getters.getSurvey(option.id)
+    console.log(survey)
     if (survey.subjects.length) {
       survey.subjects.map(item => {
         item.imageUrl = item.imageUrl ? item.imageUrl : ''
@@ -265,8 +325,10 @@ export default {
         return item
       })
     }
-    console.log(survey)
     this.updateCurrentSurvey(survey)
+    if (this.type !== 'exam') {
+      this.initConclusion()
+    }
   },
 
   onShareAppMessage (res) {
@@ -323,6 +385,16 @@ export default {
   display: inline-block;
   font-size:40rpx!important;
 }
+
+.inline-cell-title{
+  display: inline-flex;
+  border-bottom:1rpx solid #dadada;
+}
+
+.poll-conclusion-bd {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+}
 .subject-style{
   height:92rpx;
   overflow: hidden;
@@ -355,5 +427,28 @@ export default {
   height:70rpx;
   display:inline-block;
   margin-top:11rpx;
+}
+
+.poll-conclusion-cell{
+  padding:20rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.font-camera{
+  position:absolute;
+  top:0;
+  right:0;
+  font-size:28rpx;
+  width:32rpx;
+  height:32rpx;
+  line-height:32rpx;
+  text-align:center;
+}
+
+.weui-textarea{
+  background-color: #ffffff;
+  height: 100rpx;
 }
 </style>

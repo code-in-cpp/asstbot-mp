@@ -1,7 +1,7 @@
 <template>
 <block>
   <block v-if="needPadding">
-    <view style="height: 68rpx">
+    <view style="height: 68rpx;">
     </view>
   </block>
 </block>
