@@ -33,7 +33,7 @@ export default {
     }
     return {
       title: this.shareSurvey.title,
-      path: '/pages/index/main?id=' + this.shareSurvey.id,
+      path: '/pages/surveyChat/main?id=' + this.shareSurvey.id,
       imageUrl: this.shareSurvey.avatarUrl
     }
   }

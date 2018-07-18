@@ -76,7 +76,7 @@ page{
 .incoming {
   padding: 20rpx;
   margin-left: 20rpx;
-  // border: solid @p-light-color 1px;
+  border: solid #eaeaea 1rpx;
   border-radius: 15px 15px 15px 0;
   background-color: #ffffff;
   width: auto!important;

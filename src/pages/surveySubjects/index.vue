@@ -181,7 +181,7 @@ export default {
   computed: {
     ...mapState({
       displayAvatar: state => {
-        var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
+        var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== null && state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
       survey: state => {
@@ -344,7 +344,7 @@ export default {
         })
     return {
       title: this.survey.title,
-      path: '/pages/index/main?id=' + this.survey.id,
+      path: '/pages/surveyChat/main?id=' + this.survey.id,
       imageUrl: this.survey.avatarUrl
     }
   }

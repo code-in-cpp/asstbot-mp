@@ -17,12 +17,12 @@
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
       </view>
-      <view class="placeholder" v-if="!voiceMode">
-        <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget .form-control .secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+      <view class="placeholder">
+        <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget .form-control buttonSend" @click="setGlobalShow">
-          <i class="icon iconfont icon-addition"></i>
+        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
+          <i class="icon iconfont icon-add"></i>
         </button>
       </view>
     </view>
@@ -47,14 +47,6 @@ export default {
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed,
-      flag: state => {
-        let data = state.messages.data.slice(-1)
-        if (data[0] && data[0].to) {
-          let type = data[0].msgs.slice(-1)[0].type
-          return (type === 'text')
-        }
-        return false
-      },
       items: state => {
         return state.inputValue.items
       },

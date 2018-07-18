@@ -20,7 +20,6 @@
 
 <script>
   import MpvueCropper from 'mpvue-cropper'
-  import { mapGetters } from 'vuex'
 
   let wecropper
 
@@ -41,27 +40,30 @@
             x: (width - 300) / 2,
             y: (height - 300) / 3,
             width: 300,
-            height: 300
+            height: 1000
           }
         },
-        flag: false
+        flag: false,
+        noClick: true
       }
     },
     components: {
       MpvueCropper
     },
-    props: [
-      'src'
-    ],
-    computed: {
-      ...mapGetters({
-        optionObject: 'messageAction'
-      })
+    props: {
+      src: {
+        type: String
+      },
+      messageAction: {
+        type: Object,
+        default: {}
+      }
     },
     methods: {
       cropperReady (...args) {
         const that = this
         setTimeout(function () {
+          console.log(that.src)
           wecropper.pushOrigin(that.src)
         }, 300)
       },
@@ -77,17 +79,17 @@
       getCropperImage () {
         wecropper.getCropperImage()
           .then((filePath) => {
-            // console.log(filePath)
-            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
-              // this.imgFlag = false
-            }).catch(err => {
-              // this.imgFlag = false
-              console.log(err)
-            })
-            // wx.previewImage({
-            //   current: '', // 当前显示图片的http链接
-            //   urls: [src] // 需要预览的图片http链接列表
-            // })
+            if (this.noClick) {
+              console.log('点击了')
+              this.noClick = !this.noClick
+              this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
+                this.noClick = !this.noClick
+                this.flag = false
+              }).catch(err => {
+                this.noClick = !this.noClick
+                console.log(err)
+              })
+            }
           })
           .catch(e => {
             console.error('获取图片失败')

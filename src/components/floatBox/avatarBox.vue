@@ -1,6 +1,6 @@
 <template>
   <view>
-    <photo-chop v-if="showChopBox" :src="src"></photo-chop>
+    <photo-chop v-if="showChopBox" :src="src" :messageAction="list"></photo-chop>
   </view>
 </template>
 
@@ -12,6 +12,11 @@
       return {
         src: '',
         showChopBox: false
+      }
+    },
+    props: {
+      list: {
+        type: Object
       }
     },
     components: {

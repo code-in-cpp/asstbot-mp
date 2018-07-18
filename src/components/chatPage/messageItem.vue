@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import userSayMessage from '@/components/userSayMessage'
-import botSayMessage from '@/components/botSayMessage'
-import botMsgReceiving from '@/components/botMsgReceiving'
+import userSayMessage from '@/components/userSay/userSayMessage'
+import botSayMessage from '@/components/botSay/botSayMessage'
+import botMsgReceiving from '@/components/botSay/botMsgReceiving'
 
 export default {
   data () {

@@ -1,5 +1,5 @@
 <template>
-  <image :src="url!='null'&&url!=''?url:bodAvatar" class="avatar" :style="'width: '+size*2+'rpx; height: '+size*2+'rpx;'"/>
+  <image :src="url!='null'&&url!=''&&url!=null?url:bodAvatar" class="avatar" :style="'width: '+size*2+'rpx; height: '+size*2+'rpx;'"/>
 </template>
 
 <script>
