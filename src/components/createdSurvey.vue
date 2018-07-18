@@ -1,7 +1,9 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <slider-left :iconTitles="icons" :openWidth="450" :isActive="selected_index==i" @btnClicked="actionClicked($event, i)" @sliderLeftStart="slider(i)">
+      <slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"
+                   @btnClicked="actionClicked($event, i)"
+                   @sliderLeftStart="slider(i)">
         <view  @click="selected(i)">
           <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
         </view>
@@ -21,7 +23,6 @@ export default {
       selected_index: 0,
       icons: [
         {title: '删除', color: 'red'},
-        {title: '朋友圈', color: 'grey'},
         {title: '自测', color: 'grey'}
       ]
     }
