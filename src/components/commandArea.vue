@@ -47,14 +47,6 @@ export default {
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed,
-      flag: state => {
-        let data = state.messages.data.slice(-1)
-        if (data[0] && data[0].to) {
-          let type = data[0].msgs.slice(-1)[0].type
-          return (type === 'text')
-        }
-        return false
-      },
       items: state => {
         return state.inputValue.items
       },

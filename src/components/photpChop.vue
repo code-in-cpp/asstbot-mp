@@ -20,7 +20,6 @@
 
 <script>
   import MpvueCropper from 'mpvue-cropper'
-  import { mapGetters } from 'vuex'
 
   let wecropper
 
@@ -50,18 +49,20 @@
     components: {
       MpvueCropper
     },
-    props: [
-      'src'
-    ],
-    computed: {
-      ...mapGetters({
-        optionObject: 'messageAction'
-      })
+    props: {
+      src: {
+        type: String
+      },
+      messageAction: {
+        type: Object,
+        default: {}
+      }
     },
     methods: {
       cropperReady (...args) {
         const that = this
         setTimeout(function () {
+          console.log(that.src)
           wecropper.pushOrigin(that.src)
         }, 300)
       },
@@ -77,17 +78,10 @@
       getCropperImage () {
         wecropper.getCropperImage()
           .then((filePath) => {
-            // console.log(filePath)
-            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
-              // this.imgFlag = false
+            this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
             }).catch(err => {
-              // this.imgFlag = false
               console.log(err)
             })
-            // wx.previewImage({
-            //   current: '', // 当前显示图片的http链接
-            //   urls: [src] // 需要预览的图片http链接列表
-            // })
           })
           .catch(e => {
             console.error('获取图片失败')

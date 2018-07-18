@@ -282,7 +282,7 @@ export default {
         })
     return {
       title: this.survey.title,
-      path: '/pages/index/main?id=' + this.survey.id,
+      path: '/pages/surveyChat/main?id=' + this.survey.id,
       imageUrl: this.survey.avatarUrl
     }
   }

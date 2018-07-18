@@ -5,11 +5,10 @@ var url = `${config.service.hostRoot}/chatbot/survey`
 var surveyId = ''
 var chatBot = 'surveyBot'
 var sceneMode = 'publish'
-var backupMsg = []
 
 const state = {
-  data: [
-  ]
+  creatorBotMsg: [],
+  surveybotMsg: []
 }
 /*
 * messageAction 获取messagelist的最后一条数据
@@ -17,88 +16,32 @@ const state = {
 * activeAction 获取最后一条数据的类型radio和imageUploader（后续可能有扩展）返回true，否则返回false
 * messageAction 可以解决上诉所有问题
 * */
-const getters = {
-  activeAction: state => {
-    let list = state.data[state.data.length - 1]
-    if (list && list.to && list.msgs && list.msgs.length > 0) {
-      let len = list.msgs.length - 1
-      let type = list.msgs[len].type
-      if (type === 'radio' || type === 'imageUploader' || type === 'checkbox') {
-        return true
-      }
-    }
-    return false
-  },
-  textOrRadioAction: state => {
-    let list = state.data[state.data.length - 1]
-    if (list && list.to && list.msgs && list.msgs.length > 0) {
-      let len = list.msgs.length - 1
-      let type = list.msgs[len].type
-      if (type === 'imageUploader' || type === 'checkbox' || (type === 'radio' && list.msgs[len].items && list.msgs[len].items.length > 10)) {
-        return true
-      }
-    }
-    return false
-  },
-  typeStatus: state => {
-    let list = [...state.data].slice(-1).pop()
-    if (list && list.to) {
-      let type = [...list.msgs].slice(-1).pop()
-      return type.type
-    } else {
-      return list ? list.type ? list.type : 'text' : 'text'
-    }
-  },
-  messageAction: state => {
-    let list = [...state.data].slice(-1).pop()
-    if (list && list.to) {
-      return [...list.msgs].slice(-1).pop()
-    } else {
-      let objType = Object.prototype.toString.call(list).slice(8, -1)
-      switch (objType) {
-        case 'Array' :
-          return {
-            title: '',
-            type: 'text',
-            items: '',
-            ...[...list].slice(-1).pop()
-          }
-        case 'Object':
-          return {
-            title: '',
-            type: 'text',
-            items: '',
-            ...list
-          }
-        default:
-          return {
-            title: '',
-            type: 'text',
-            items: ''
-          }
-      }
-    }
+
+var __appendMsg = function (state, msg) {
+  if (chatBot === 'surveyBot') {
+    state.surveybotMsg = [...state.surveybotMsg, msg]
+  } else {
+    state.creatorBotMsg = [...state.creatorBotMsg, msg]
   }
+}
+
+const getters = {
 }
 
 const mutations = {
   appendMessage (state, message) {
     const timestamp = new Date()
-    state.data.push({timestamp, ...message})
+    __appendMsg(state, {timestamp, ...message})
   },
   talkToBotFather (state) {
-    if (chatBot === 'surveyBot') {
-      state.data = [...backupMsg]
-    }
     chatBot = 'bodFather'
     url = `${config.service.hostRoot}/chatbot`
   },
   talkToSurveyBot (state, {id, scene}) {
     if (chatBot === 'bodFather') {
-      backupMsg = [...state.data]
+      state.surveybotMsg = []
     }
     chatBot = 'surveyBot'
-    state.data = []
     url = `${config.service.hostRoot}/chatbot/survey`
     surveyId = id
     sceneMode = scene

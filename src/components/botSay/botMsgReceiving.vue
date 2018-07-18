@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../static/base.less";
+@import "~@/../static/base.less";
 
 .box {
   display: block;

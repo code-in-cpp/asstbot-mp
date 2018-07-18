@@ -23,9 +23,6 @@
       avatarFloat
     },
     computed: {
-      ...mapState({
-        messagesList: state => state.messages.data
-      }),
       ...mapGetters({
         list: 'messageAction'
       })

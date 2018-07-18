@@ -132,7 +132,7 @@ export default {
     },
     selfTest () {
       wx.navigateTo({
-        url: `/pages/index/main?id=${this.surveyId}&scene=test`
+        url: `/pages/surveyChat/main?id=${this.surveyId}&scene=test`
       })
     },
     chartStatics() {
@@ -147,7 +147,7 @@ export default {
     }
     return {
       title: this.survey.title,
-      path: '/pages/index/main?id=' + this.surveyId,
+      path: '/pages/surveyChat/main?id=' + this.surveyId,
       imageUrl: this.survey.avatarUrl
     }
   },
