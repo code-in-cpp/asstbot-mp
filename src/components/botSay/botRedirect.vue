@@ -6,7 +6,7 @@
 const urlMaping = {'create-survey': '/pages/createdSurvey/main',
   'visit-survey': '/pages/visitedSurvey/main',
   'edit-survey': '/pages/surveySubjects/main',
-  'bot-creater': '/pages/index/main'}
+  'bot-creator': '/pages/index/main'}
 
 export default {
   props: {
