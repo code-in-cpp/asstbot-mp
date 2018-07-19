@@ -151,6 +151,9 @@
             <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
           </view>
           <view class="weui-flex__item">
+            <button class="weui-btn" type="default" @click="selfTest" ><i class="icon iconfont icon-interactive"></i>自测</button>
+          </view>
+          <view class="weui-flex__item">
             <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
           </view>
         </view>
@@ -315,6 +318,14 @@ export default {
       wx.navigateTo({
         url: '../surveyTitleAndIntro/main'
       })
+    },
+    selfTest () {
+      this.$store.dispatch('editSurvey', this.survey)
+        .then(() => {
+          wx.navigateTo({
+            url: `/pages/surveyChat/main?id=${this.survey.id}&scene=test`
+          })
+        })
     }
   },
 

@@ -142,6 +142,9 @@ const actions = {
   },
   sendSpeech ({commit}, {url, asr, nlu}) {
     return _sendmessage(commit, 'speech', {url, asr, nlu})
+  },
+  sendGenericRequest ({commit}, {type, data}) {
+    return _sendmessage(commit, type, data)
   }
 }
 

@@ -9,7 +9,9 @@
       <return-button v-else/>
     </view>
     <view class="title primary-color dark">{{title}}</view>
-    <image class="avatar" :src="displayUrl"></image>
+    <view class="avatar">
+      <bod-avatar :url="avatarUrl" size="50"></bod-avatar>
+    </view>
   </view>
 </template>
 
@@ -28,7 +30,7 @@ export default {
   },
   computed: {
     displayUrl () {
-      return this.avatarUrl ? this.avatarUrl : '../../static/image/avatar.png'
+      return this.avatarUrl || this.avatarUrl !== null ? this.avatarUrl : '../../static/image/avatar.png'
     }
   },
   components: {
@@ -62,7 +64,8 @@ export default {
   bottom: -63rpx;
   border-radius: 50%;
   border: solid #25CEC2 4rpx;
-  z-index: 9999;
+  z-index: 500;
+  background-color: #F8F8F8;
 }
 
 .title {
@@ -70,6 +73,9 @@ export default {
   left: 130rpx;
   bottom: 80rpx;
   position:absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .title {
   flex: 1;

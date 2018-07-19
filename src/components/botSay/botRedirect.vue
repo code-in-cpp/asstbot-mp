@@ -3,6 +3,10 @@
 </template>
 
 <script>
+const urlMaping = {'create-survey': '/pages/createdSurvey/main',
+  'visit-survey': '/pages/visitedSurvey/main',
+  'edit-survey': '/pages/surveySubjects/main',
+  'bot-creator': '/pages/index/main'}
 
 export default {
   props: {
@@ -30,19 +34,16 @@ export default {
         return
       }
       if (lastmsg.type === 'redirect') {
-        if (lastmsg.url === 'view-survey') {
-          if (lastmsg.option.id === 'created') {
-            this.redirectTo('view-created-survey', '/pages/createdSurvey/main')
-          } else {
-            this.redirectTo('view-visited-survey', '/pages/visitedSurvey/main')
-          }
-        } else if (lastmsg.url === 'create-survey') {
-          if (lastmsg.option.id) {
-            this.$store.dispatch('retrieveSurvey')
-              .then(() => {
-                this.redirectTo('edit-created-survey', `/pages/surveySubjects/main?id=${lastmsg.option.id}`)
-              })
-          }
+        let redirectUrl = urlMaping[lastmsg.url]
+        let headerParas = this.buildHeaderParas(lastmsg.option)
+        let urlWithParas = redirectUrl + headerParas
+        if (lastmsg.url === 'edit-survey') {
+          this.$store.dispatch('retrieveSurvey')
+            .then(() => {
+              this.redirectTo(lastmsg, urlWithParas)
+            })
+        } else {
+          this.redirectTo(lastmsg, urlWithParas)
         }
       }
     }
@@ -51,6 +52,19 @@ export default {
     redirectTo (scene, url) {
       this.$emit('redirectTo', scene)
       wx.navigateTo({url})
+    },
+
+    buildHeaderParas (option) {
+      if (!option) {
+        return ''
+      }
+      let ret = '?'
+      for (let key in option) {
+        let para = key + '=' + option[key]
+        ret += (ret === '?') ? para : '&' + para
+      }
+      console.log('build para is', ret)
+      return ret
     }
   }
 }
