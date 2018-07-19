@@ -64,8 +64,12 @@ export default {
 <style lang="less" scoped>
   @import "../../static/base.less";
   .panel {
-    width: 750rpx;
+    position:fixed;
+    left:0;right:0;bottom:0;
     background-color: @background-color;
+    width: 100%;
+    z-index: 1000;
+    alignment: bottom;
   }
   .title {
     width: 750rpx;
@@ -78,7 +82,8 @@ export default {
     text-overflow: ellipsis;
     align-content: center;
     text-align: center;
-    padding: 10rpx 10rpx;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
   }
   .cmdbtn {
     width: 750rpx;
@@ -87,6 +92,8 @@ export default {
     align-content: center;
     text-align: center;
     border-top: 2rpx solid @btn-border-color;
-    padding: 10rpx 10rpx;
+    margin-top: 20rpx;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
   }
 </style>
