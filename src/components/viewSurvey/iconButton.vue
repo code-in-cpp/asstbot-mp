@@ -25,18 +25,19 @@ export default {
   .btn-title {
     color:  @p-color;
     font-weight: normal;
-    font-size: @font-size-middle;
+    font-size: @font-size-tiny;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     /*height: 120rpx;*/
     /*line-height:120rpx;*/
     text-align: center;
+    margin-top: 10rpx;
   }
   .btn-icon {
     font-size: @font-size-big;
     border-radius: 50%;
-    background-color: @background-color;
+    background-color: white;
     /*border: 2rpx solid;*/
     /*border-color: @btn-border-color;*/
     color: @s-dark-color;
