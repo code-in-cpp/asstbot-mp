@@ -79,6 +79,13 @@
 					"pathName": "pages/createdSurvey/main",
 					"query": "",
 					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "调查问卷",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=d161fbf08a7011e88326c57f767840ad",
+					"scene": "1008"
 				}
 			]
 		}
