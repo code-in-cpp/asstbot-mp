@@ -1,5 +1,5 @@
 <template>
-  <image :src="url!='null'&&url!=''&&url!=null?url:bodAvatar" class="avatar" :style="'width: '+size*2+'rpx; height: '+size*2+'rpx;'"/>
+  <image :src="displayUrl" class="avatar" :style="'width: '+size*2+'rpx; height: '+size*2+'rpx;'"/>
 </template>
 
 <script>
@@ -19,7 +19,12 @@ export default {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
       bodName: state => state.bodProfile.name
-    })
+    }),
+    displayUrl () {
+      let url = this.url
+      let bodAvatar = this.bodAvatar
+      return (url !== 'null' && url !== '' && url !== null) ? url : bodAvatar
+    }
   }
 }
 </script>

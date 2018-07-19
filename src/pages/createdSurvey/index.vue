@@ -4,7 +4,7 @@
       <title-bar title="我创建的..."></title-bar>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-          <created-survey @readtoshare="toshare"/>
+          <created-survey/>
         </scroll-view>
       </view>
     </view>
