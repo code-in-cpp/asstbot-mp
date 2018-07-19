@@ -8,7 +8,7 @@
       @beforeImageLoad="cropperBeforeImageLoad"
       @beforeLoad="cropperLoad"
     ></mpvue-cropper>
-    <div class="cropper-buttons">
+    <div class="cropper-buttons" :style="{'bottom': needPadding ? '148rpx' : '80rpx'}">
       <div
         class="getCropperImage"
         @tap="getCropperImage">
@@ -44,7 +44,8 @@
           }
         },
         flag: false,
-        noClick: true
+        noClick: true,
+        needPadding: false
       }
     },
     components: {
@@ -104,7 +105,18 @@
         that.flag = true
       }, 50)
     },
-
+    onLoad () {
+      wx.getSystemInfo({
+        success: (res) => {
+          console.log(res.model)
+          if (res.model.search('iPhone X') !== -1) {
+            this.needPadding = true
+          } else {
+            this.needPadding = false
+          }
+        }
+      })
+    },
     mounted () {
       wecropper = this.$refs.cropper
     }
