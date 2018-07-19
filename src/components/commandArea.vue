@@ -12,16 +12,16 @@
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
         <!--<textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>-->
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position @focus="focusActive" auto-height="true"  cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
+        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position auto-height="true"  cursor-spacing="14"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
       </view>
       <view class="placeholder">
-        <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+        <button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
+        <button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
           <i class="icon iconfont icon-add"></i>
         </button>
       </view>
@@ -37,10 +37,9 @@ import devicePadding from './view/devicePadding'
 export default {
   data () {
     return {
-      currentMessage: '请输入消息',
+      currentMessage: '',
       rowHeight: '80rpx',
       lineHeightNum: '80rpx',
-      focusFlag: true,
       voiceMode: false
     }
   },
@@ -73,7 +72,7 @@ export default {
       // }
     },
     sendMessage (ev) {
-      if (this.currentMessage && !this.focusFlag) {
+      if (this.currentMessage) {
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
         })
@@ -89,12 +88,6 @@ export default {
       let heightNum = count === 1 ? count * 80 : count * 56
       this.rowHeight = heightNum + 'rpx'
       this.lineHeightNum = count <= 1 ? '80rpx' : '56rpx'
-    },
-    focusActive () {
-      if (this.focusFlag) {
-        this.currentMessage = ''
-        this.focusFlag = false
-      }
     },
     keyEvnet (e) {
       if (e.mp.detail.value) {

@@ -79,6 +79,7 @@ export default {
   },
 
   onLoad (option) {
+    console.log('option:' + option)
     if (option.scene) {
       this.scene = option.scene
     } else {
