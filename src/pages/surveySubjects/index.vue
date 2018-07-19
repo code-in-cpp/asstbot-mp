@@ -15,6 +15,9 @@
             <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
             <input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">
           </view>
+          <view class="right-btn-box" @click="toEditPage">
+            <i class="icon iconfont icon-enter"></i>
+          </view>
         </view>
       </view>
       <view class="content">
@@ -146,6 +149,9 @@
           </view>
           <view class="weui-flex__item">
             <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
+          </view>
+          <view class="weui-flex__item">
+            <button class="weui-btn" type="default" @click="selfTest" ><i class="icon iconfont icon-interactive"></i>自测</button>
           </view>
           <view class="weui-flex__item">
             <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
@@ -307,6 +313,19 @@ export default {
       } else {
         wx.showToast({title: '请输入简介'})
       }
+    },
+    toEditPage () {
+      wx.navigateTo({
+        url: '../surveyTitleAndIntro/main'
+      })
+    },
+    selfTest () {
+      this.$store.dispatch('editSurvey', this.survey)
+        .then(() => {
+          wx.navigateTo({
+            url: `/pages/surveyChat/main?id=${this.survey.id}&scene=test`
+          })
+        })
     }
   },
 
@@ -451,4 +470,7 @@ export default {
   background-color: #ffffff;
   height: 100rpx;
 }
+  .right-btn-box{
+    height: 100%;
+  }
 </style>
