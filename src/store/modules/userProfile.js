@@ -24,52 +24,82 @@ const mutations = {
   }
 }
 
-const actions = {
-  updateUserInfo ({commit}) {
-    return new Promise((resolve, reject) => {
-      wx.getSetting({
-        success: (response) => {
-          if (response.authSetting['scope.userInfo']) {
-            commit('setAuth', true)
-            wx.getUserInfo({
-              success: function (res) {
-                // console.log(res.userInfo)
-                wechat.getOpenId()
-                  .then((openid) => {
-                    wx.request({
-                      url,
-                      data: {
-                        id: openid,
-                        wechat: res.userInfo
-                      },
-                      method: 'POST',
-                      success: (response) => {
-                        // console.log(response.data)
-                        commit('appendMessage', response.data)
-                        resolve(response)
-                      },
-                      fail: (err) => {
-                        reject(err)
-                      }
-                    })
-                  })
-              }
-            })
-          } else {
-            commit('setAuth', false)
-            reject(response)
+function __updateUserInfo (userInfo) {
+  return new Promise((resolve, reject) => {
+    wechat.getOpenId()
+      .then((openid) => {
+        wx.request({
+          url,
+          data: {
+            id: openid,
+            wechat: userInfo
+          },
+          method: 'POST',
+          success: (response) => {
+            resolve(response)
+          },
+          catch: (err) => {
+            reject(err)
           }
+        })
+      })
+  })
+}
+
+function __getUserInfo (auth) {
+  return new Promise((resolve, reject) => {
+    if (auth) {
+      wx.getUserInfo({
+        success: function (res) {
+          resolve(res.userInfo)
+        },
+        fail: function (err) {
+          reject(err)
         }
       })
+    } else {
+      resolve({
+        nickName: '',
+        avatarUrl: '',
+        gender: 0,
+        city: ''
+      })
+    }
+  })
+}
+
+const actions = {
+  updateUserInfo ({dispatch, commit}) {
+    return new Promise((resolve, reject) => {
+      dispatch('updateAuthStatus')
+        .then((auth) => {
+          __getUserInfo(auth).then((userInfo) => {
+            __updateUserInfo(userInfo)
+              .then((response) => {
+                resolve(response)
+              })
+              .catch((err) => {
+                reject(err)
+              })
+          })
+          .catch((err) => {
+            reject(err)
+          })
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
   },
   updateAuthStatus ({commit}) {
-    wx.getSetting({
-      success: (response) => {
-        if (response.authSetting['scope.userInfo']) {
-          commit('setAuth', true)
+    return new Promise((resolve, reject) => {
+      wx.getSetting({
+        success: (response) => {
+          let auth = !!response.authSetting['scope.userInfo']
+          commit('setAuth', auth)
+          resolve(auth)
         }
-      }
+      })
     })
   }
 }

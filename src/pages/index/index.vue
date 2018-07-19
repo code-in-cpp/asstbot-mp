@@ -42,6 +42,9 @@ export default {
         .then(() => {
           this.$store.dispatch('start')
         })
+        .catch(e => {
+          console.error(e)
+        })
     },
     toRedirect (event) {
       this.scene = `redirectTo ${event}`
@@ -51,6 +54,7 @@ export default {
 
   onShow () {
     if (!this.hasLogin) {
+      console.log(this.hasLogin)
       this.scene = 'gotoLogin'
       wx.navigateTo({
         url: '/pages/login/main'
