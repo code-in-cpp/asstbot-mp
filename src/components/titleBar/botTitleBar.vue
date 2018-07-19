@@ -9,7 +9,9 @@
       <return-button v-else/>
     </view>
     <view class="title primary-color dark">{{title}}</view>
-    <image class="avatar" :src="displayUrl"></image>
+    <view class="avatar">
+      <bod-avatar :url="avatarUrl" size="50"></bod-avatar>
+    </view>
   </view>
 </template>
 
