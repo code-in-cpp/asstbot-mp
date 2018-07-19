@@ -11,9 +11,9 @@
           </view>
           <view class="weui-cell__bd">
             <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
-            <input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">
+            <!--<input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">-->
             <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
-            <input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">
+            <!--<input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">-->
           </view>
           <view class="right-btn-box" @click="toEditPage">
             <i class="icon iconfont icon-enter"></i>
@@ -292,28 +292,28 @@ export default {
         }
       })
     },
-    editTitle () {
-      this.titleEditFlag = true
-    },
-    changeTitle (e) {
-      if (e.mp.detail.value) {
-        this.$store.commit('updateSurveyTitle', e.mp.detail.value)
-        this.titleEditFlag = false
-      } else {
-        wx.showToast({title: '请输入标题'})
-      }
-    },
-    editIntro () {
-      this.introEditFlag = true
-    },
-    changeIntro (e) {
-      if (e.mp.detail.value) {
-        this.$store.commit('updateSurveyIntro', e.mp.detail.value)
-        this.introEditFlag = false
-      } else {
-        wx.showToast({title: '请输入简介'})
-      }
-    },
+    // editTitle () {
+    //   this.titleEditFlag = true
+    // },
+    // changeTitle (e) {
+    //   if (e.mp.detail.value) {
+    //     this.$store.commit('updateSurveyTitle', e.mp.detail.value)
+    //     this.titleEditFlag = false
+    //   } else {
+    //     wx.showToast({title: '请输入标题'})
+    //   }
+    // },
+    // editIntro () {
+    //   this.introEditFlag = true
+    // },
+    // changeIntro (e) {
+    //   if (e.mp.detail.value) {
+    //     this.$store.commit('updateSurveyIntro', e.mp.detail.value)
+    //     this.introEditFlag = false
+    //   } else {
+    //     wx.showToast({title: '请输入简介'})
+    //   }
+    // },
     toEditPage () {
       wx.navigateTo({
         url: '../surveyTitleAndIntro/main'
