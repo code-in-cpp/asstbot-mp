@@ -52,33 +52,33 @@ export default {
       this.selected_index = index
       this.showPanel = false
     },
-    selfTest: function (id) {
+    selfTest: function (index) {
       wx.navigateTo({
-        url: `/pages/index/main?id=${id}&scene=test`
+        url: `/pages/index/main?id=${index}&scene=test`
       })
     },
-    showDetail: function (id) {
+    showDetail: function (index) {
       wx.navigateTo({
-        url: `/pages/display/main?id=${id}`
+        url: `/pages/display/main?id=${index}`
       })
     },
-    deleteSuevey: function (that, id) {
+    deleteSuevey: function (that, index) {
       wx.showModal({
         title: '您确认要删除吗？',
         confirmText: '确认',
         cancelText: '取消',
         success: function (res) {
           if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', id)
+            that.$store.dispatch('deleteSurvey', index)
           } else {
             console.log('用户点击取消操作')
           }
         }
       })
     },
-    editSurvey (id) {
+    editSurvey (index) {
       wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${id}`
+        url: `/pages/surveySubjects/main?id=${index}`
       })
     },
     sliderActionClicked (e, selectedItem) {
@@ -99,8 +99,9 @@ export default {
     panelActionClicked (index) {
       console.log('enter panelActionClicked' + index)
       let operId = index
-      let id = this.surveyList[index].id
+      let id = this.surveyList[this.selected_index].id
       let that = this
+      this.showPanel = false
       // 自测
       if (operId === 2) {
         console.log('enter self test')
@@ -110,9 +111,13 @@ export default {
       if (operId === 3) {
         this.deleteSuevey(that, id)
       }
-      // 编辑
+      // 显示
       if (operId === 4) {
         this.showDetail(id)
+      }
+      // 编辑
+      if (operId === 5) {
+        this.editSurvey(id)
       }
     }
   },
