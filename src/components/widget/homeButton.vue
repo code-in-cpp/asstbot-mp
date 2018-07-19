@@ -38,6 +38,7 @@ export default {
     overflow: hidden;
     background: #fff;
     border: 1rpx solid #25cec2;
+    position: fixed!important;
   }
   .image{
     width: 100%;

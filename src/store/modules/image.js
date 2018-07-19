@@ -21,11 +21,13 @@ const actions = {
         filePath,
         name: 'image',
         success: function (res) {
+          console.log('res')
           const url = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
           dispatch('sendImage', {url, indicator}).then(() => resolve())
             .catch(err => reject(err))
         },
         fail: function (error) {
+          console.log(error)
           reject(error)
         }
       })
