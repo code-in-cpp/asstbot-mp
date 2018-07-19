@@ -1,13 +1,13 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :showImage="showImage"/>
+      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayStart"/>
     </view>
     <view class="footer">
-      <select-box :showImage="showImage" :messageAction="messageAction"/>
+      <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
       <command-area />
     </view>
-    <bot-redirect :messageList="messageList" @redirectTo="$emit('redirectTo', $event)"/>
+    <bot-redirect v-if="displayFinish" :messageList="messageList" @redirectTo="$emit('redirectTo', $event)"/>
   </block>
 </template>
 
@@ -18,13 +18,17 @@ import selectBox from '@/components/selectBox'
 import botRedirect from '@/components/botSay/botRedirect'
 
 export default {
+  data () {
+    return {
+      displayFinish: false
+    }
+  },
   props: {
     messageList: {
       type: Object,
       default: []
     }
   },
-
   computed: {
     messageAction () {
       if (!this.messageList) {
@@ -75,6 +79,15 @@ export default {
       } else {
         return false
       }
+    }
+  },
+  methods: {
+    msgDisplayFinish () {
+      console.log('begin redirect')
+      this.displayFinish = true
+    },
+    msgDisplayStart () {
+      this.displayFinish = false
     }
   },
 
