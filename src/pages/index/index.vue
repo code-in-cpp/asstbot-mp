@@ -61,7 +61,7 @@ export default {
         this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
         this.scene = ''
         this.redirect = {}
-      } else if (this.scene === 'relaunchFrom') {
+      } else if (this.scene.indexOf('relaunchFrom') !== -1) {
         this.startChat()
       } else if (this.scene === 'onLoad') {
         this.startChat()
@@ -79,7 +79,7 @@ export default {
   },
 
   onLoad (option) {
-    console.log('option:' + option)
+    console.log('option:', option)
     if (option.scene) {
       this.scene = option.scene
     } else {
