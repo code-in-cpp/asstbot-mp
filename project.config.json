@@ -34,8 +34,8 @@
 				{
 					"id": 0,
 					"name": "调查问卷",
-					"pathName": "pages/index/main",
-					"query": "id=2bd3ca208b1e11e8a3241dca33486b22",
+					"pathName": "pages/surveyChat/main",
+					"query": "id=survey-52ae3750-7ffe-11e8-b56b-594b8a930fa4",
 					"scene": "1008"
 				},
 				{
