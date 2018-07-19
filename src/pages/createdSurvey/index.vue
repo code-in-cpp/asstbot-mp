@@ -4,7 +4,7 @@
       <title-bar title="我创建的..."></title-bar>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-          <created-survey @readtoshare="toshare"/>
+          <created-survey >
         </scroll-view>
       </view>
     </view>
@@ -14,6 +14,8 @@
 
 <script>
 import createdSurvey from '@/components/createdSurvey'
+import btnPanel from '@/components/btnPanel'
+import iconButton from '@/components/viewSurvey/iconButton'
 
 export default {
   data () {
@@ -22,11 +24,18 @@ export default {
     }
   },
   components: {
-    createdSurvey
+    createdSurvey,
+    btnPanel,
+    iconButton
   },
   methods: {
     toshare (event) {
       this.shareSurvey = event
+    },
+    actionClicked (e) {
+      console.log('enter actionClicked')
+      let operId = e.mp.detail.index
+      console.log(operId)
     }
   },
   onShareAppMessage (res) {

@@ -29,7 +29,7 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: blue;
+    color: @p-color;
     /*height: 120rpx;*/
     /*line-height:120rpx;*/
     text-align: center;
@@ -40,9 +40,10 @@ export default {
     background-color: white;
     border: 2rpx solid;
     border-color: @btn-border-color;
-    color: blue;
+    color: @p-color;
     align-content: center;
     text-align: center;
+    line-height: 80rpx;
     height: 80rpx;
     width: 80rpx;
     display: inline-block;
@@ -50,5 +51,7 @@ export default {
   .btn-item {
     align-content: center;
     text-align: center;
+    margin-top: 20rpx;
+    background-color: @background-color;
   }
 </style>

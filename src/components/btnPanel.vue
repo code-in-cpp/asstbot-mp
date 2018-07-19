@@ -1,32 +1,37 @@
 <template>
-  <wux-row class="placeholder">
-    <block v-for="(item, index) in titles" :key="index">
-      <wux-col span="3">
-        <view @click="item_selected(index)">
-          <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
-          <icon-button :title="item.text" icon="icon-share"> </icon-button>
-        </view>
-      </wux-col>
-    </block>
-  </wux-row>
+  <view>
+    <wux-row class="placeholder">
+      <block v-for="(item, index) in buttons" :key="index">
+        <wux-col span="3">
+          <view  @click="item_selected(index)">
+            <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
+            <icon-button :title="item.title" :icon="item.icon"> </icon-button>
+          </view>
+        </wux-col>
+      </block>
+    </wux-row>
+  </view>
 </template>
 
 <script>
 import iconButton from '@/components/viewSurvey/iconButton'
 export default {
   props: {
-    surveyInfo: {
+    buttons: {
       type: Object,
-      default: {}
-    },
-    isActive: {
-      default: false,
-      type: Boolean
+      default: [
+        {title: '分享', icon: 'icon-moment'},
+        {title: '转发', icon: 'icon-send'},
+        {title: '自测', icon: 'icon-playon_fill'},
+        {title: '删除', icon: 'icon-trash'},
+        {title: '统计', icon: 'icon-zhtn'}
+      ]
     }
   },
-  data () {
-    return {
-      titles: [ { text: '1' }, { text: '2' }, { text: '3' }, { text: '4' }, { text: '5' }, { text: '6' }, { text: '7' } ]
+  methods: {
+    item_selected (i) {
+      console.log(i)
+      this.$emit('btnClicked', {index: i})
     }
   },
   components: {
@@ -34,21 +39,22 @@ export default {
   },
   onLoad: function () {
   }
+}
 </script>
 
 <style lang="less" scoped>
-  @import "../../../static/base.less";
+  @import "../../static/base.less";
   .placeholder {
 
   }
-  .cell-item {
+  .cell-style {
     font-weight: normal;
     font-size: @font-size-middle;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: black;
-    background-color: white;
+    background-color: @background-color;
     border: 2rpx solid;
     border-color: @btn-border-color;
     height: 120rpx;
