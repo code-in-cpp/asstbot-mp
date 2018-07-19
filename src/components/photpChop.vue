@@ -82,7 +82,7 @@
             if (this.noClick) {
               console.log('点击了')
               this.noClick = !this.noClick
-              this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.optionObject.indicator}).then(res => {
+              this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
                 this.noClick = !this.noClick
                 this.flag = false
               }).catch(err => {
@@ -92,7 +92,7 @@
             }
           })
           .catch(e => {
-            console.error('获取图片失败')
+            console.error('e')
           })
       }
     },
