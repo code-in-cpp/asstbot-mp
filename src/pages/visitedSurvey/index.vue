@@ -3,8 +3,10 @@
   <movable-area class="move-area">
     <view class="page">
       <title-bar title="我聊过的..."></title-bar>
-      <view class="weui-cells weui-cells_after-title">
-        <visited-survey />
+      <view class="content">
+        <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+          <visited-survey />
+        </scroll-view>
       </view>
     </view>
     <home-button/>
