@@ -12,6 +12,7 @@
     <btn-panel
       :shouldShow="showPanel"
       :panelTitle="getPanelTitle"
+      :buttons="panel"
       @iconBtnClicked="panelActionClicked($event)"/>
   </view>
 </template>
@@ -30,6 +31,14 @@ export default {
       icons: [
         {title: '删除', color: 'red'},
         {title: '自测', color: 'grey'}
+      ],
+      panel: [
+        {title: '分享', icon: 'icon-moment'},
+        {title: '转发', icon: 'icon-send'},
+        {title: '自测', icon: 'icon-playon_fill'},
+        {title: '删除', icon: 'icon-trash'},
+        {title: '显示', icon: 'icon-zhtn'},
+        {title: '编辑', icon: 'icon-zhtn'}
       ]
     }
   },
@@ -37,42 +46,73 @@ export default {
     selected (index) {
       this.selected_index = index
       this.showPanel = true
-      // wx.navigateTo({
-      //   url: `/pages/display/main?id=${this.surveyList[index].id}`
-      // })
-    },
-    panelActionClicked (e) {
-      console.log('enter panelActionClicked' + e)
     },
     slider (index) {
       // console.log('slider left')
       this.selected_index = index
+      this.showPanel = false
+    },
+    selfTest: function (id) {
+      wx.navigateTo({
+        url: `/pages/index/main?id=${id}&scene=test`
+      })
+    },
+    showDetail: function (id) {
+      wx.navigateTo({
+        url: `/pages/display/main?id=${id}`
+      })
+    },
+    deleteSuevey: function (that, id) {
+      wx.showModal({
+        title: '您确认要删除吗？',
+        confirmText: '确认',
+        cancelText: '取消',
+        success: function (res) {
+          if (res.confirm) {
+            that.$store.dispatch('deleteSurvey', id)
+          } else {
+            console.log('用户点击取消操作')
+          }
+        }
+      })
+    },
+    editSurvey (id) {
+      wx.navigateTo({
+        url: `/pages/surveySubjects/main?id=${id}`
+      })
     },
     sliderActionClicked (e, selectedItem) {
       // console.log('enter actionClicked')
       let operId = e.mp.detail.index
+      let id = this.surveyList[selectedItem].id
       let that = this
       // 删除
       if (operId === 0) {
-        wx.showModal({
-          title: '您确认要删除吗？',
-          confirmText: '确认',
-          cancelText: '取消',
-          success: function (res) {
-            if (res.confirm) {
-              that.$store.dispatch('deleteSurvey', that.surveyList[selectedItem].id)
-            } else {
-              console.log('用户点击取消操作')
-            }
-          }
-        })
-        return
+        this.deleteSuevey(that, id)
       }
       // 自测
+      if (operId === 1) {
+        console.log('enter self test')
+        this.selfTest(id)
+      }
+    },
+    panelActionClicked (index) {
+      console.log('enter panelActionClicked' + index)
+      let operId = index
+      let id = this.surveyList[index].id
+      let that = this
+      // 自测
       if (operId === 2) {
-        wx.navigateTo({
-          url: `/pages/index/main?id=${that.surveyList[selectedItem].id}&scene=test`
-        })
+        console.log('enter self test')
+        this.selfTest(id)
+      }
+      // 删除
+      if (operId === 3) {
+        this.deleteSuevey(that, id)
+      }
+      // 编辑
+      if (operId === 4) {
+        this.showDetail(id)
       }
     }
   },

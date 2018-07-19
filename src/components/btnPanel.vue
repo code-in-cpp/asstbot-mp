@@ -1,17 +1,19 @@
 <template>
-  <view v-if="shouldShow" class="panel">
-    <view class="title">{{panelTitle}}</view>
-    <wux-row>
-      <block v-for="(item, index) in buttons" :key="index">
-        <wux-col span="4">
-          <view  @click="item_selected(index)">
-            <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
-            <icon-button :title="item.title" :icon="item.icon"> </icon-button>
-          </view>
-        </wux-col>
-      </block>
-    </wux-row>
-    <view class="cmdbtn" @click="close_panel">关闭</view>
+  <view v-if="shouldShow" class="mask">
+    <view class="panel">
+      <view class="title">{{panelTitle}}</view>
+      <wux-row>
+        <block v-for="(item, index) in buttons" :key="index">
+          <wux-col span="4">
+            <view  @click="item_selected(index)">
+              <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
+              <icon-button :title="item.title" :icon="item.icon"> </icon-button>
+            </view>
+          </wux-col>
+        </block>
+      </wux-row>
+      <view class="cmdbtn" @click="close_panel">关闭</view>
+    </view>
   </view>
 </template>
 
@@ -23,10 +25,7 @@ export default {
       type: Object,
       default: [
         {title: '分享', icon: 'icon-moment'},
-        {title: '转发', icon: 'icon-send'},
-        {title: '自测', icon: 'icon-playon_fill'},
-        {title: '删除', icon: 'icon-trash'},
-        {title: '统计', icon: 'icon-zhtn'}
+        {title: '转发', icon: 'icon-send'}
       ]
     },
     panelTitle: {
@@ -95,5 +94,14 @@ export default {
     margin-top: 20rpx;
     padding-top: 20rpx;
     padding-bottom: 20rpx;
+  }
+  .mask {
+    position:fixed;
+    left:0;right:0;bottom:0;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 900;
+    padding: 0 0;
   }
 </style>
