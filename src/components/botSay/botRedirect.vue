@@ -33,10 +33,11 @@ export default {
       if (!this.messageAction) {
         return
       }
+      let redirectUrl = urlMaping[lastmsg.url]
+      let headerParas = this.buildHeaderParas(lastmsg.option)
+      let urlWithParas = redirectUrl + headerParas
+
       if (lastmsg.type === 'redirect') {
-        let redirectUrl = urlMaping[lastmsg.url]
-        let headerParas = this.buildHeaderParas(lastmsg.option)
-        let urlWithParas = redirectUrl + headerParas
         if (lastmsg.url === 'edit-survey') {
           this.$store.dispatch('retrieveSurvey')
             .then(() => {
@@ -44,6 +45,15 @@ export default {
             })
         } else {
           this.redirectTo(lastmsg, urlWithParas)
+        }
+      } else if (lastmsg.type === 'reLaunch') {
+        if (lastmsg.url === 'edit-survey') {
+          this.$store.dispatch('retrieveSurvey')
+            .then(() => {
+              wx.reLaunch({url: urlWithParas})
+            })
+        } else {
+          wx.reLaunch({url: urlWithParas})
         }
       }
     }
