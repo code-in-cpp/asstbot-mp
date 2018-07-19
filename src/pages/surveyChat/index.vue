@@ -4,26 +4,27 @@
     <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
     <chat-page :messageList="messageList"/>
   </view>
-  <user-login @haslogin="userLogin()"/>
 </movable-area>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import chatPage from '@/components/chatPage/chatPage'
 
 export default {
   data () {
     return {
       survey: {},
-      option: {},
-      hasLogin: false
+      option: {}
     }
   },
   computed: {
     ...mapState({
       messageList: state => state.messages.surveybotMsg
-    })
+    }),
+    ...mapGetters([
+      'hasLogin'
+    ])
   },
   components: {
     chatPage
@@ -50,10 +51,6 @@ export default {
           this.$store.dispatch('start')
         })
       console.error('test')
-    },
-    userLogin () {
-      this.hasLogin = true
-      this.startChat()
     }
   },
 
@@ -61,8 +58,16 @@ export default {
   },
 
   onShow () {
+    console.log(this.hasLogin)
     if (this.hasLogin) {
       this.startChat()
+    } else if (this.hasLogin === undefined) {
+      this.$store.dispatch('updateAuthStatus')
+        .then((auth) => {
+          if (auth) {
+            this.startChat()
+          }
+        })
     }
   },
 
