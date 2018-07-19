@@ -14,27 +14,19 @@
 
 <script>
 import createdSurvey from '@/components/createdSurvey'
-import btnPanel from '@/components/btnPanel'
 
 export default {
   data () {
     return {
-      shareSurvey: {},
-      showPanel: true
+      shareSurvey: {}
     }
   },
   components: {
-    createdSurvey,
-    btnPanel
+    createdSurvey
   },
   methods: {
     toshare (event) {
       this.shareSurvey = event
-    },
-    actionClicked (e) {
-      console.log('enter actionClicked')
-      let operId = e
-      console.log(operId)
     }
   },
   onShareAppMessage (res) {
