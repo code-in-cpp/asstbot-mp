@@ -10,12 +10,6 @@ const state = {
   creatorBotMsg: [],
   surveybotMsg: []
 }
-/*
-* messageAction 获取messagelist的最后一条数据
-* typeStatus 获取最后一条数据的类型
-* activeAction 获取最后一条数据的类型radio和imageUploader（后续可能有扩展）返回true，否则返回false
-* messageAction 可以解决上诉所有问题
-* */
 
 var __appendMsg = function (state, msg) {
   if (chatBot === 'surveyBot') {

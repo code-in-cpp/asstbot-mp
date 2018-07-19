@@ -34,7 +34,15 @@ export default {
       this.$store.dispatch('updateUserInfo')
         .then(() => {
           this.$store.commit('setLogin')
-          wx.navigateBack()
+          let obj = this.$root.$mp.appOptions.query
+          let param = Object.keys(obj).map(function (key) {
+            return key + '=' + obj[key]
+          }).join('&')
+          param = param.length > 0 ? ('?' + param) : ''
+          let url = `/${this.$root.$mp.appOptions.path}${param}`
+          wx.reLaunch({
+            url
+          })
         })
     }
   },

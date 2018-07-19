@@ -4,6 +4,7 @@
     <bot-title-bar></bot-title-bar>
     <chat-page :messageList="messageList" @redirectTo="toRedirect"/>
   </view>
+  <user-login @haslogin="userLogin()"/>
 </movable-area>
 </template>
 
@@ -16,25 +17,18 @@ export default {
     return {
       option: {},
       scene: 'load',
-      redirect: {}
+      redirect: {},
+      hasLogin: false
     }
   },
   computed: {
     ...mapState({
-      userAuthed: state => state.userProfile.authed,
-      loginStatus: state => state.userProfile.loginStatus
-    }),
-    ...mapState({
       messageList: state => state.messages.creatorBotMsg
-    }),
-    hasLogin () {
-      return this.userAuthed || this.loginStatus
-    }
+    })
   },
   components: {
     chatPage
   },
-
   methods: {
     startChat () {
       this.$store.commit('talkToBotFather')
@@ -49,28 +43,22 @@ export default {
     toRedirect (event) {
       this.scene = `redirectTo ${event}`
       this.redirect = event
+    },
+    userLogin () {
+      this.hasLogin = true
+      this.startChat()
     }
   },
 
   onShow () {
-    if (!this.hasLogin) {
-      console.log(this.hasLogin)
-      this.scene = 'gotoLogin'
-      wx.navigateTo({
-        url: '/pages/login/main'
-      })
-    } else {
-      if (this.scene === 'gotoLogin') {
-        this.startChat()
-        this.scene = ''
-      } else if (this.scene === 'onload') {
-        this.startChat()
-        this.scene = ''
-      } else if (this.scene.indexOf('redirectTo') !== -1) {
+    if (this.hasLogin) {
+      if (this.scene.indexOf('redirectTo') !== -1) {
         this.$store.commit('talkToBotFather')
         this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
         this.scene = ''
         this.redirect = {}
+      } else if (this.scene === 'relaunchFrom') {
+        this.startChat()
       } else {
         this.$store.commit('talkToBotFather')
       }
@@ -78,7 +66,9 @@ export default {
   },
 
   onLoad (option) {
-    this.scene = 'onload'
+    if (option.scene) {
+      this.scene = option.scene
+    }
   }
 }
 </script>

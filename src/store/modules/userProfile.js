@@ -5,8 +5,8 @@ const url = config.service.userInfoUrl
 
 const state = {
   userInfo: {},
-  authed: false,
-  loginStatus: false
+  authed: undefined,
+  loginStatus: undefined
 }
 
 const getters = {

@@ -53,7 +53,7 @@ export default {
               wx.reLaunch({url: urlWithParas})
             })
         } else {
-          wx.reLaunch({url: urlWithParas})
+          wx.reLaunch({url: `${urlWithParas}?scene='relaunchFromBot'`})
         }
       }
     }

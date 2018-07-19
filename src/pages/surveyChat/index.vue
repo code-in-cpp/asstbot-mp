@@ -4,6 +4,7 @@
     <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
     <chat-page :messageList="messageList"/>
   </view>
+  <user-login @haslogin="userLogin()"/>
 </movable-area>
 </template>
 
@@ -15,34 +16,15 @@ export default {
   data () {
     return {
       survey: {},
-      option: {}
+      option: {},
+      hasLogin: false
     }
   },
   computed: {
     ...mapState({
-      userAuthed: state => state.userProfile.authed,
-      loginStatus: state => state.userProfile.loginStatus
-    }),
-    ...mapState({
       messageList: state => state.messages.surveybotMsg
-    }),
-    hasLogin () {
-      return this.userAuthed || this.loginStatus
-    }
+    })
   },
-  // watch: {
-  //   hasLogin: function (val, oldVal) {
-  //     console.log('hasLogin', val, oldVal)
-  //     if (val && !oldVal) {
-  //       this.startChat()
-  //     }
-  //   },
-  //   option: function (val) {
-  //     if (this.hasLogin) {
-  //       this.startChat()
-  //     }
-  //   }
-  // },
   components: {
     chatPage
   },
@@ -67,6 +49,11 @@ export default {
         .then(() => {
           this.$store.dispatch('start')
         })
+      console.error('test')
+    },
+    userLogin () {
+      this.hasLogin = true
+      this.startChat()
     }
   },
 
@@ -74,11 +61,7 @@ export default {
   },
 
   onShow () {
-    if (!this.hasLogin) {
-      wx.navigateTo({
-        url: '/pages/login/main'
-      })
-    } else {
+    if (this.hasLogin) {
       this.startChat()
     }
   },
