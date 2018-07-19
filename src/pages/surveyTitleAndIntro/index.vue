@@ -3,24 +3,30 @@
     <title-bar title=" "/>
       <view class="content-box">
         <text class="content-text">标题</text>
-        <input class="content-input" type="text" @blur="editTitle">
+        <input class="content-input" type="text" autofocus="true" focus="true" @blur="editTitle" :value="survey.title">
       </view>
       <view class="content-box">
         <text class="content-text">简介</text>
-        <input class="content-input" type="text" @blur="editIntro">
+        <input class="content-input" type="text" @blur="editIntro" :value="survey.intro">
       </view>
     <view class="btn-box">
-      <button class="btn-save">保存</button>
+      <button class="btn-save" @click="saveSurvey">保存</button>
       <!--<view>保存</view>-->
     </view>
-
-
     <home-button/>
   </movable-area>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
+    computed: {
+      ...mapState({
+        survey: state => {
+          return state.currentSurvey.survey
+        }
+      })
+    },
     methods: {
       editTitle (e) {
         if (e.mp.detail.value) {
@@ -30,10 +36,14 @@
         }
       },
       editIntro (e) {
-        if (e.mp.detail.value) {
-          this.$store.commit('updateSurveyIntro', e.mp.detail.value)
-        } else {
-          wx.showToast({title: '请输入简介'})
+        this.$store.commit('updateSurveyIntro', e.mp.detail.value)
+      },
+      saveSurvey () {
+        if (this.survey.title) {
+          this.$store.dispatch('editSurvey', this.survey)
+            .then(() => {
+              wx.navigateBack()
+            })
         }
       }
     }
@@ -55,10 +65,12 @@
   }
   .content-text{
     padding:0 20rpx;
+    color:#999;
   }
   .content-input{
     height: 100%;
     line-height: 80rpx;
+    flex: 1;
   }
   .btn-box{
     padding: 0 30rpx;
