@@ -4,12 +4,11 @@
     <bot-title-bar></bot-title-bar>
     <chat-page :messageList="messageList" @redirectTo="toRedirect"/>
   </view>
-  <user-login @haslogin="userLogin()"/>
 </movable-area>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import chatPage from '@/components/chatPage/chatPage'
 
 export default {
@@ -17,15 +16,19 @@ export default {
     return {
       option: {},
       scene: 'load',
-      redirect: {},
-      hasLogin: false
+      redirect: {}
     }
   },
   computed: {
     ...mapState({
       messageList: state => state.messages.creatorBotMsg
-    })
+    }),
+    ...mapGetters([
+      'hasLogin'
+    ]
+    )
   },
+
   components: {
     chatPage
   },
@@ -51,6 +54,7 @@ export default {
   },
 
   onShow () {
+    console.log(this.hasLogin)
     if (this.hasLogin) {
       if (this.scene.indexOf('redirectTo') !== -1) {
         this.$store.commit('talkToBotFather')
@@ -59,15 +63,26 @@ export default {
         this.redirect = {}
       } else if (this.scene === 'relaunchFrom') {
         this.startChat()
+      } else if (this.scene === 'onLoad') {
+        this.startChat()
       } else {
         this.$store.commit('talkToBotFather')
       }
+    } else if (this.hasLogin === undefined) {
+      this.$store.dispatch('updateAuthStatus')
+        .then((auth) => {
+          if (auth) {
+            this.startChat()
+          }
+        })
     }
   },
 
   onLoad (option) {
     if (option.scene) {
       this.scene = option.scene
+    } else {
+      this.scene = 'onLoad'
     }
   }
 }

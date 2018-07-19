@@ -10,6 +10,9 @@ const state = {
 }
 
 const getters = {
+  hasLogin: state => {
+    return state.authed || state.loginStatus
+  }
 }
 
 const mutations = {
