@@ -10,18 +10,21 @@
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
-      <view class="weui-flex__item"  v-if="!voiceMode">
-        <!--<textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>-->
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position @focus="focusActive" auto-height="true"  cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333'}"  @confirm="keyEvnet($event)"/>
-      </view>
-      <view class="weui-flex__item"  v-else>
-        <record-button></record-button>
-      </view>
+      <block>
+        <view class="weui-flex__item"  v-if="!voiceMode">
+          <textarea class="word-textarea primary-color revert" :value="currentMessage"
+            @input="valueInput"  adjust-position auto-height="true"
+            cursor-spacing="14"  @confirm="confirm($event)"/>
+        </view>
+        <view class="weui-flex__item"  v-else>
+          <record-button></record-button>
+        </view>
+      </block>
       <view class="placeholder">
-        <button v-if="items.length || (currentMessage && !focusFlag)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='' || focusFlag) && !items.length">
+        <button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-if="(currentMessage=='' || focusFlag) && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
+        <button v-else class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
           <i class="icon iconfont icon-add"></i>
         </button>
       </view>
@@ -37,10 +40,9 @@ import devicePadding from './view/devicePadding'
 export default {
   data () {
     return {
-      currentMessage: '请输入消息',
+      currentMessage: '',
       rowHeight: '80rpx',
       lineHeightNum: '80rpx',
-      focusFlag: true,
       voiceMode: false
     }
   },
@@ -51,7 +53,20 @@ export default {
         return state.inputValue.items
       },
       globalShow: state => state.inputValue.globalShow
-    })
+    }),
+    displayText () {
+      if (!this.items) {
+        return ''
+      }
+      return this.items.filter(item => item.caption && item.caption.length > 1)
+            .map((item) => item.caption).join(',')
+    }
+  },
+
+  watch: {
+    displayText: function (newVal, oldVal) {
+      this.currentMessage = newVal
+    }
   },
 
   components: {
@@ -60,20 +75,11 @@ export default {
   },
 
   methods: {
-    updateUserInfo (ev) {
-      this.$store.dispatch('updateUserInfo')
-    },
     valueInput (ev) {
       this.currentMessage = ev.mp.detail.value
-      // if (String.prototype.slice.apply(ev.mp.detail.value, [-1]) === '\n') {
-      //   this.$store.dispatch('sendQuery', String.prototype.slice.apply(this.currentMessage, [0, -1])).then(res => {
-      //     this.$store.commit('clearState')
-      //   })
-      //   this.currentMessage = ''
-      // }
     },
     sendMessage (ev) {
-      if (this.currentMessage && !this.focusFlag) {
+      if (this.currentMessage && this.currentMessage !== this.displayText) {
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
         })
@@ -84,19 +90,7 @@ export default {
         })
       }
     },
-    rowChange (e) {
-      let count = e.mp.detail.lineCount
-      let heightNum = count === 1 ? count * 80 : count * 56
-      this.rowHeight = heightNum + 'rpx'
-      this.lineHeightNum = count <= 1 ? '80rpx' : '56rpx'
-    },
-    focusActive () {
-      if (this.focusFlag) {
-        this.currentMessage = ''
-        this.focusFlag = false
-      }
-    },
-    keyEvnet (e) {
+    confirm (e) {
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
           this.currentMessage = ''
