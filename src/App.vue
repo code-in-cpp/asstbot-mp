@@ -1,6 +1,7 @@
 <script>
 export default {
   created () {
+    this.$store.dispatch('updateAuthStatus')
   }
 }
 </script>
@@ -93,6 +94,10 @@ page{
 }
 .top_0{
   height: 700rpx;
+}
+
+.valueBox {
+  font-size:  @font-size-small
 }
 
 .font-color{

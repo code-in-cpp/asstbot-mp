@@ -102,8 +102,31 @@ var _sendmessage = (commit, type, data) => {
         })
     })
     .catch((err) => {
+      console.error(err)
       reject(err)
     })
+  })
+}
+
+var __sendLogin = (commit, isNew) => {
+  return new Promise((resolve, reject) => {
+    _sendmessage(commit, 'login', {code: '', isNew})
+              .then(() => {
+                wx.setStorage({
+                  key: 'has-login',
+                  value: 'true',
+                  success: () => {
+                    resolve()
+                  },
+                  fail: (err) => {
+                    reject(err)
+                  }
+                })
+              })
+              .catch((err) => {
+                console.error(err)
+                reject(err)
+              })
   })
 }
 
@@ -129,9 +152,33 @@ const actions = {
   },
   start ({commit}) {
     if (chatBot === 'surveyBot') {
-      _sendmessage(commit, 'dialog-start', {surveyId, scene: sceneMode})
+      return _sendmessage(commit, 'dialog-start', {surveyId, scene: sceneMode})
     } else {
-      _sendmessage(commit, 'login', {code: ''})
+      return new Promise((resolve, reject) => {
+        wx.getStorage({
+          key: 'has-login',
+          success: (res) => {
+            __sendLogin(commit, false)
+              .then(() => {
+                resolve()
+              })
+              .catch((err) => {
+                console.err(err)
+                reject(err)
+              })
+          },
+          fail: (res) => {
+            __sendLogin(commit, true)
+              .then(() => {
+                resolve()
+              })
+              .catch((err) => {
+                console.err(err)
+                reject(err)
+              })
+          }
+        })
+      })
     }
   },
   getUserinfo ({commit}, data) {

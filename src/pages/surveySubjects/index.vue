@@ -239,7 +239,7 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack()
+          wx.redirectTo({url: '/pages/createdSurvey/main'})
         })
     },
     tabActive (event) {

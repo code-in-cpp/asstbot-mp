@@ -13,41 +13,43 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data: {
-    userAuthed: false,
     option: {}
   },
-
+  computed: {
+    ...mapState({
+      userAuthed: state => state.userProfile.authed
+    })
+  },
   methods: {
     gotUserInfo () {
-      this.$store.dispatch('updateUserInfo')
-        .then(() => {
-          this.nextStep()
-        })
+      this.nextStep()
     },
     guestLogin () {
       this.nextStep()
     },
     nextStep () {
-      wx.navigateBack()
+      this.$store.dispatch('updateUserInfo')
+        .then(() => {
+          this.$store.commit('setLogin')
+          wx.navigateBack()
+        })
     }
   },
 
   onLoad (option) {
-    wx.getSetting({
-      success: (response) => {
-        this.userAuthed = response.authSetting['scope.userInfo']
-        if (this.userAuthed) {
-          this.$store.dispatch('updateUserInfo')
-            .then(() => {
-              this.nextStep()
-            })
-        }
-      }
-    })
+    if (this.userAuthed) {
+      this.$store.dispatch('updateUserInfo')
+        .then(() => {
+          this.nextStep()
+        })
+        .catch(e => {
+          console.error(e)
+        })
+    }
   }
-
 }
 </script>
 
