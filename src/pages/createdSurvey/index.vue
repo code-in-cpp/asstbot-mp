@@ -15,18 +15,17 @@
 <script>
 import createdSurvey from '@/components/createdSurvey'
 import btnPanel from '@/components/btnPanel'
-import iconButton from '@/components/viewSurvey/iconButton'
 
 export default {
   data () {
     return {
-      shareSurvey: {}
+      shareSurvey: {},
+      showPanel: true
     }
   },
   components: {
     createdSurvey,
-    btnPanel,
-    iconButton
+    btnPanel
   },
   methods: {
     toshare (event) {

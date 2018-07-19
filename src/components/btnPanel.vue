@@ -1,8 +1,9 @@
 <template>
-  <view class="panel">
+  <view v-if="shouldShow" class="panel">
+    <view class="title">{{panelTitle}}</view>
     <wux-row>
       <block v-for="(item, index) in buttons" :key="index">
-        <wux-col span="3">
+        <wux-col span="4">
           <view  @click="item_selected(index)">
             <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
             <icon-button :title="item.title" :icon="item.icon"> </icon-button>
@@ -10,6 +11,7 @@
         </wux-col>
       </block>
     </wux-row>
+    <view class="cmdbtn" @click="close_panel">关闭</view>
   </view>
 </template>
 
@@ -26,12 +28,29 @@ export default {
         {title: '删除', icon: 'icon-trash'},
         {title: '统计', icon: 'icon-zhtn'}
       ]
+    },
+    panelTitle: {
+      type: String,
+      default: '请选择操作'
+    },
+    shouldShow: {
+      type: Boolean,
+      default: true
     }
   },
+  // data () {
+  //   return {
+  //     shouldShow: true
+  //   }
+  // },
   methods: {
-    item_selected (i) {
-      console.log(i)
-      this.$emit('btnClicked', {index: i})
+    item_selected (index) {
+      console.log(index)
+      this.$emit('iconBtnClicked', index)
+      this.shouldShow = false
+    },
+    close_panel () {
+      this.shouldShow = false
     }
   },
   components: {
@@ -47,5 +66,27 @@ export default {
   .panel {
     width: 750rpx;
     background-color: @background-color;
+  }
+  .title {
+    width: 750rpx;
+    color: @p-dark-color;
+    font-size: @font-size-tiny;
+    border-bottom: 2rpx solid @btn-border-color;
+    /*border-bottom-color: @;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-content: center;
+    text-align: center;
+    padding: 10rpx 10rpx;
+  }
+  .cmdbtn {
+    width: 750rpx;
+    color: @p-dark-color;
+    font-size: @font-size-middle;
+    align-content: center;
+    text-align: center;
+    border-top: 2rpx solid @btn-border-color;
+    padding: 10rpx 10rpx;
   }
 </style>
