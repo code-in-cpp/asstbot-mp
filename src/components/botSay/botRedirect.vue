@@ -58,11 +58,12 @@ export default {
       if (!option) {
         return ''
       }
-      console.log(Object.entries(option))
       let ret = '?'
       for (let key in option) {
-        ret = ret + key + '=' + option[key]
+        let para = key + '=' + option[key]
+        ret += (ret === '?') ? para : '&' + para
       }
+      console.log('build para is', ret)
       return ret
     }
   }
