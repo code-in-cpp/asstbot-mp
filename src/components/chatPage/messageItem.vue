@@ -79,7 +79,7 @@ export default {
           that.$emit('renderComplete')
           clearInterval(interval)
         }
-      }, 300)
+      }, 1000)
     }
   },
   created () {
