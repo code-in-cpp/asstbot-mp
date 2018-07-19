@@ -1,6 +1,6 @@
 <template>
-  <view>
-    <wux-row class="placeholder">
+  <view class="panel">
+    <wux-row>
       <block v-for="(item, index) in buttons" :key="index">
         <wux-col span="3">
           <view  @click="item_selected(index)">
@@ -44,23 +44,8 @@ export default {
 
 <style lang="less" scoped>
   @import "../../static/base.less";
-  .placeholder {
-
-  }
-  .cell-style {
-    font-weight: normal;
-    font-size: @font-size-middle;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: black;
+  .panel {
+    width: 750rpx;
     background-color: @background-color;
-    border: 2rpx solid;
-    border-color: @btn-border-color;
-    height: 120rpx;
-    line-height: 120rpx;
-    text-align: center;
-    padding-left: 34rpx;
-    padding-right: 34rpx;
   }
 </style>

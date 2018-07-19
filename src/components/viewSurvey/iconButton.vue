@@ -23,13 +23,12 @@ export default {
 <style lang="less" scoped>
   @import "../../../static/base.less";
   .btn-title {
-    color: black;
+    color:  @p-color;
     font-weight: normal;
     font-size: @font-size-middle;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: @p-color;
     /*height: 120rpx;*/
     /*line-height:120rpx;*/
     text-align: center;
@@ -37,10 +36,10 @@ export default {
   .btn-icon {
     font-size: @font-size-big;
     border-radius: 50%;
-    background-color: white;
-    border: 2rpx solid;
-    border-color: @btn-border-color;
-    color: @p-color;
+    background-color: @background-color;
+    /*border: 2rpx solid;*/
+    /*border-color: @btn-border-color;*/
+    color: @s-dark-color;
     align-content: center;
     text-align: center;
     line-height: 80rpx;

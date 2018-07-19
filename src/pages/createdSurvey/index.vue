@@ -34,7 +34,7 @@ export default {
     },
     actionClicked (e) {
       console.log('enter actionClicked')
-      let operId = e.mp.detail.index
+      let operId = e
       console.log(operId)
     }
   },
