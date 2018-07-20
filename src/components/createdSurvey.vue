@@ -90,21 +90,21 @@ export default {
         url: `/pages/surveySubjects/main?id=${index}`
       })
     },
-    sliderActionClicked (e, selectedItem) {
-      // console.log('enter actionClicked')
-      let operId = e.mp.detail.index
-      let id = this.surveyList[selectedItem].id
-      let that = this
-      // 删除
-      if (operId === 0) {
-        this.deleteSuevey(that, id)
-      }
-      // 自测
-      if (operId === 1) {
-        console.log('enter self test')
-        this.selfTest(id)
-      }
-    },
+    // sliderActionClicked (e, selectedItem) {
+    //   // console.log('enter actionClicked')
+    //   let operId = e.mp.detail.index
+    //   let id = this.surveyList[selectedItem].id
+    //   let that = this
+    //   // 删除
+    //   if (operId === 0) {
+    //     this.deleteSuevey(that, id)
+    //   }
+    //   // 自测
+    //   if (operId === 1) {
+    //     console.log('enter self test')
+    //     this.selfTest(id)
+    //   }
+    // },
     panelActionClicked (index) {
       let operId = index
       let id = this.surveyList[this.selected_index].id
