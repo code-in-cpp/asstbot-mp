@@ -1,6 +1,7 @@
 <template>
-  <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">  
-    <view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">
+  <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
+    <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
+    <view class="padding-top-64">
       <block v-for="(messages, i) in messagesList" :key="i">
         <view :id="i">
           <message-item :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
