@@ -63,8 +63,6 @@ const getters = {
     let queryResults = (type === 'ask') ? state.result : state.replySurveys
     let answers = []
     let subjects = []
-    console.log('id', id)
-    console.log('query result', queryResults)
     for (let index in queryResults) {
       let item = queryResults[index]
       if (item.id === id) {
@@ -164,8 +162,10 @@ const getters = {
     let ret = '没有找个合适的结论'
     for (let index in conclusions) {
       let conclusion = conclusions[index]
-      if (score > conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
-        ret = conclusion.text
+      if (conclusion.scoreRange) {
+        if (score > conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
+          ret = conclusion.text
+        }
       }
     }
     return ret

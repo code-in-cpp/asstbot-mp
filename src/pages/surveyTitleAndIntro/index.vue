@@ -3,11 +3,12 @@
     <title-bar title=" "/>
       <view class="content-box">
         <text class="content-text">标题</text>
-        <input class="content-input" type="text" autofocus="true" focus="true" @blur="editTitle" :value="title">
+        <input class="content-input" type="text" autofocus="true" focus="true" @input="editTitle" :value="title">
       </view>
-      <view class="content-box">
+      <view class="content-box content-box-1">
         <text class="content-text">简介</text>
-        <input class="content-input" type="text" @blur="editIntro" :value="intro">
+        <!--<input class="content-input" type="text" @blur="editIntro" :value="intro">-->
+        <textarea @input="editIntro" :value="intro"></textarea>
       </view>
     <view class="btn-box">
       <button :disabled="!title" class="btn-save" @click="saveSurvey">保存</button>
@@ -45,9 +46,11 @@
         this.title = e.mp.detail.value
       },
       editIntro (e) {
+        console.log('intro:' + e.mp.detail.value)
         this.intro = e.mp.detail.value
       },
       saveSurvey () {
+        console.log(this.title, this.intro)
         if (this.title) {
           this.$store.commit('updateSurveyTitle', this.title)
           this.$store.commit('updateSurveyIntro', this.intro)
@@ -82,9 +85,14 @@
     background:#fff;
     margin-top: 30rpx;
   }
+  .content-box-1{
+    height: auto;
+  }
   .content-text{
     padding:0 20rpx;
     color:#999;
+    width: 80rpx;
+    font-size: 32rpx;
   }
   .content-input{
     height: 100%;
