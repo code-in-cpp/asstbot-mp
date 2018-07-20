@@ -1,5 +1,5 @@
 <template>
-  <movable-view class="move-btn" inertia='true' damping='10' friction='5' :x="750" :y="1000"  animation="true" direction="all" @click="toHome">
+  <movable-view class="move-btn" inertia='true' damping='10' friction='5' :x="370" :y="600"  animation="true" direction="all" @click="toHome">
     <image class="image" :src="imageUrl"></image>
   </movable-view>
 </template>
