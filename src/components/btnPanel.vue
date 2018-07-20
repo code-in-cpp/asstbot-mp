@@ -65,7 +65,7 @@ export default {
   .panel {
     position:fixed;
     left:0;right:0;bottom:0;
-    background-color: @background-color;
+    background-color: #F2F2F2;
     width: 100%;
     z-index: 1000;
     alignment: bottom;
@@ -75,6 +75,7 @@ export default {
     color: @p-dark-color;
     font-size: @font-size-tiny;
     border-bottom: 2rpx solid @btn-border-color;
+    border-top: 2rpx solid @btn-border-color;
     /*border-bottom-color: @;*/
     white-space: nowrap;
     overflow: hidden;
@@ -83,6 +84,7 @@ export default {
     text-align: center;
     padding-top: 20rpx;
     padding-bottom: 20rpx;
+    background-color: #F2F2F2;
   }
   .cmdbtn {
     width: 750rpx;

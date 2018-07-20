@@ -83,8 +83,41 @@ export default {
     } else {
       this.scene = 'onLoad'
     }
+    // wx.showShareMenu({
+    //   withShareTicket: true,
+    //   success: function (res) {
+    //     // 分享成功
+    //     console.log('shareMenu share success')
+    //     console.log('分享' + res)
+    //   },
+    //   fail: function (res) {
+    //     // 分享失败
+    //     console.log(res)
+    //   }
+    // })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '',
+      path: '/pages/index/main',
+      imageUrl: this.shareSurvey.avatarUrl
+      // success: function (res) {
+      //   console.log(res.shareTickets[0])
+      //   wx.getShareInfo({
+      //     shareTicket: res.shareTickets[0],
+      //     success: function (res) { console.log(res) },
+      //     fail: function (res) { console.log(res) },
+      //     complete: function (res) { console.log(res) }
+      //   })
+      // },
+      // fail: function (res) {
+      //   // 分享失败
+      //   console.log(res)
+      // }
+    }
   }
 }
+
 </script>
 
 <style scoped>
