@@ -41,8 +41,8 @@ export default {
 .loader-13:after,
 .loader-13 {
   display: block;
-  width: 30rpx;
-  height: 30rpx;
+  width: 24rpx;
+  height: 24rpx;
   color: inherit;
 
   pointer-events: none;
