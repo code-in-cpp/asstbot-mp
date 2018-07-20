@@ -148,12 +148,12 @@ export default {
       setTimeout(function () {
         that.$emit('redirectTo', scene)
         wx.navigateTo({url})
-      }, 2000)
+      }, 1500)
     },
     delayRelaunch (url) {
       setTimeout(function () {
         wx.reLaunch({url})
-      }, 2000)
+      }, 1500)
     }
   },
 
