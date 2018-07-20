@@ -104,7 +104,6 @@ export default {
       return lastmsg.msgs.slice(-1)[0]
     },
     doRedirect (lastmsg) {
-      console.log('begin redirect.....')
       let redirectUrl = urlMaping[lastmsg.url]
       let headerParas = this.buildHeaderParas(lastmsg.option)
       let urlWithParas = redirectUrl + headerParas

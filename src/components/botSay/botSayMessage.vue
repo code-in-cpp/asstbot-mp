@@ -2,7 +2,7 @@
   <block>
     <bot-say-user-auth :content="msg.reply" v-if="msg.type=='getUserinfo'"></bot-say-user-auth>
     <bot-say-new :content="msg.reply" v-else-if="msg.type=='dialog-end'"></bot-say-new>
-    <bot-say-image :content="msg.url" v-else-if="msg.type=='image'"></bot-say-image>
+    <bot-say-image :content="msg.url" v-else-if="msg.type=='image'" @loadDone="$emit('loadDone', $event)"></bot-say-image>
     <!--<bot-say-radio-select :content="msg.title" v-else-if="msg.type=='radio'" :options="msg.items"></bot-say-radio-select>-->
     <bot-say-text :content="msg.reply" v-else></bot-say-text>
   </block>

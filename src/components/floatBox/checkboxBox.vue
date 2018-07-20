@@ -14,7 +14,7 @@
             <view class="value valueBox">{{option.caption}}</view>
           </block>
         </view>
-        <view class="weui-flex__item" v-if="checkArr[index]">
+        <view class="weui-flex__item checked" v-if="checkArr[index]">
           <icon class="weui-icon-radio" type="success_no_circle" size="16" ></icon>
         </view>
       </view>  
@@ -88,6 +88,7 @@
     height:400rpx;
     border: 1rpx solid #dadada;
     margin-right: 20rpx;
+    position: relative;
   }
   .haveimage .imageBox{
     display: block;
@@ -124,5 +125,11 @@
     align-content: center;
     width: 300rpx;
     height: 400rpx;
+  }
+
+  .haveimage .checked {
+    position: absolute;
+    top: 10rpx;
+    right: 10rpx;
   }
 </style>
