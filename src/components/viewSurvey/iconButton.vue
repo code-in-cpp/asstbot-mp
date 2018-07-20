@@ -52,6 +52,6 @@ export default {
     align-content: center;
     text-align: center;
     margin-top: 20rpx;
-    background-color: @background-color;
+    background-color: #F2F2F2;
   }
 </style>
