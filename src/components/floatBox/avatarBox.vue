@@ -23,28 +23,18 @@
       photoChop
     },
     methods: {
-      updateUserInfo (ev) {
-        this.$store.dispatch('updateUserInfo').then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
-      }
     },
     created () {
       const that = this
-      console.log('enter avatarBox created')
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: function (res) {
-          console.log('avatarBox created, choose image success')
           that.src = res.tempFilePaths[0]
           that.showChopBox = true
         },
         fail: function (e) {
-          // var path = ''
           console.log('avatarBox created, choose image failed')
           that.$store.dispatch('sendImage', {url: '', indicator: that.list.indicator})
         }

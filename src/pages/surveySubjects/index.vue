@@ -350,9 +350,6 @@ export default {
   },
 
   onShareAppMessage (res) {
-    if (res.from === 'button') {
-      console.log(res.target)
-    }
     let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)
         .then(() => {

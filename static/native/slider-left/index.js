@@ -28,9 +28,7 @@ exports.default = Component({
       type: Boolean,
       value: false,
       observer: function (isActive) {
-        console.log('set isActive', isActive)
         if (!isActive) {
-          console.log('item deactived, hide popup button')
           this.setData({open : false})
           this.setData({x:  this.data.openWidth})
         }
@@ -71,7 +69,6 @@ exports.default = Component({
     this.setData({
       itemWidth: this.data.openWidth / this.data.itemCount
     })
-    console.log('slide-left enter attached', this.data.openWidth)
     this.setData({
       x: this.data.open ? 0 : this.data.openWidth
     })
@@ -81,22 +78,18 @@ exports.default = Component({
       const x = e.detail.x
       this.data.moveInstance = this.data.openWidth - x
       this.data.currentX = x
-      // console.log(this.data.moveInstance)
     },
     // 开始左滑时触发（轻触摸的时候也会触发），主要用于显示当前删除按钮前先 隐藏掉其它项的删除按钮
     handleTouchestart: function () {
-      console.log('handleTouchestart')
       if (!this.data.open) {
         this.triggerEvent('sliderLeftStart')
       }
     },
     handleTouchmove: function() {
-      console.log('handleTouchmove')
       this.setData({ moved: true })
     },
     handleTouchend: function () {
       // 如果松开手指的时候，已经被拖拽到最左边或者最右边，则不处理
-      console.log('handleTouched')
       if (!this.data.moved) {
         this.setData({ open: false })
         return
@@ -127,8 +120,6 @@ exports.default = Component({
     },
     // 点击删除按钮触发的事件
     handleClicked: function (e) {
-      console.log('enter handleClicked')
-      // console.log(e)
       this.setData({ open: false })
       this.triggerEvent('btnClicked', {index:e.target.dataset.index})
     },

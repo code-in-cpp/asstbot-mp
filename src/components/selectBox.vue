@@ -48,11 +48,11 @@
   overflow:auto;
 }
 .top_110{
-  position: absolute;
+  /*position: absolute;*/
   top: -110rpx;
 }
 .top_444{
-  position: absolute;
+  /*position: absolute;*/
   top: -444rpx;
 }
 </style>
