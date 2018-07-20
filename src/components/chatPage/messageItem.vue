@@ -12,7 +12,7 @@
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
             <view class="content">
-              <bot-say-message :msg="msg" @loadDone="$emit('renderComplete')"/>
+              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')"/>
             </view>
           </view>
         </view>
