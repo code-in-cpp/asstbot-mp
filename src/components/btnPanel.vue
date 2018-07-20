@@ -37,11 +37,6 @@ export default {
       default: false
     }
   },
-  // data () {
-  //   return {
-  //     shouldShow: true
-  //   }
-  // },
   methods: {
     item_selected (index) {
       console.log(index)

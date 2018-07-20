@@ -29,7 +29,7 @@
           </view>
         </scroll-view>
       </view>
-      <view class="foot">©2018 小哒 </view>
+      <copywrite v-if="showFooter"/>
     </view>
     <home-button/>
   </movable-area>
@@ -39,6 +39,8 @@
 import { mapState } from 'vuex'
 import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
+import copyright from '@/components/copyright'
+
 import { formatTime } from '@/utils/index'
 export default {
   data: {
@@ -72,6 +74,9 @@ export default {
     },
     getCreateTime () {
       return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId, this.type)))
+    },
+    showFooter () {
+      return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
     }
   },
 
@@ -83,7 +88,8 @@ export default {
 
   components: {
     userSayText,
-    botSayText
+    botSayText,
+    copyright
   }
 }
 </script>
