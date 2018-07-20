@@ -10,12 +10,16 @@
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
-      <view class="weui-flex__item"  v-if="!voiceMode">
-        <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position auto-height="true"  cursor-spacing="14"  @confirm="keyEvnet($event)"/>
-      </view>
-      <view class="weui-flex__item"  v-else>
-        <record-button></record-button>
-      </view>
+      <block>
+        <view class="weui-flex__item"  v-if="!voiceMode">
+          <textarea class="word-textarea primary-color revert" :value="currentMessage"
+            @input="valueInput"  adjust-position auto-height="true"
+            cursor-spacing="14"  @confirm="confirm($event)"/>
+        </view>
+        <view class="weui-flex__item"  v-else>
+          <record-button></record-button>
+        </view>
+      </block>
       <view class="placeholder">
         <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
           <i class="icon iconfont icon-arrows"></i>
@@ -52,7 +56,20 @@ export default {
         return state.inputValue.items
       },
       globalShow: state => state.inputValue.globalShow
-    })
+    }),
+    displayText () {
+      if (!this.items) {
+        return ''
+      }
+      return this.items.filter(item => item.caption && item.caption.length > 1)
+            .map((item) => item.caption).join(',')
+    }
+  },
+
+  watch: {
+    displayText: function (newVal, oldVal) {
+      this.currentMessage = newVal
+    }
   },
 
   components: {
@@ -63,15 +80,9 @@ export default {
   methods: {
     valueInput (ev) {
       this.currentMessage = ev.mp.detail.value
-      // if (String.prototype.slice.apply(ev.mp.detail.value, [-1]) === '\n') {
-      //   this.$store.dispatch('sendQuery', String.prototype.slice.apply(this.currentMessage, [0, -1])).then(res => {
-      //     this.$store.commit('clearState')
-      //   })
-      //   this.currentMessage = ''
-      // }
     },
     sendMessage (ev) {
-      if (this.currentMessage) {
+      if (this.currentMessage && this.currentMessage !== this.displayText) {
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
         })
@@ -82,7 +93,7 @@ export default {
         })
       }
     },
-    keyEvnet (e) {
+    confirm (e) {
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
           this.currentMessage = ''

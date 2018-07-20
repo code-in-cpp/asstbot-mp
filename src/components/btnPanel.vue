@@ -1,5 +1,5 @@
 <template>
-  <view v-if="shouldShow" class="mask">
+  <view v-if="shouldShow" class="mask" @click="close_panel">
     <view class="panel">
       <view class="title">{{panelTitle}}</view>
       <wux-row>
@@ -34,7 +34,7 @@ export default {
     },
     shouldShow: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   // data () {

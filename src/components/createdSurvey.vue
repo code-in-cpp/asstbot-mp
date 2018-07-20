@@ -38,7 +38,7 @@ export default {
         {title: '自测', icon: 'icon-playon_fill'},
         {title: '删除', icon: 'icon-trash'},
         {title: '显示', icon: 'icon-zhtn'},
-        {title: '编辑', icon: 'icon-zhtn'}
+        {title: '编辑', icon: 'icon-editor'}
       ]
     }
   },
@@ -54,7 +54,7 @@ export default {
     },
     selfTest: function (index) {
       wx.navigateTo({
-        url: `/pages/index/main?id=${index}&scene=test`
+        url: `/pages/surveyChat/main?id=${index}&scene=test`
       })
     },
     showDetail: function (index) {

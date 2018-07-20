@@ -53,6 +53,8 @@ export default {
   methods: {
     scollToBottom () {
       this.scrollToView = 'bottom'
+      this.$emit('renderFinish')
+      console.log('scroll to end')
     }
   }
 }
