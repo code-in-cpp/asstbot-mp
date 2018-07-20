@@ -51,9 +51,10 @@ export default {
     text-overflow: ellipsis;
     text-align: center;
     margin-top: 0rpx;
+    margin-bottom: 0rpx;
   }
   .btn-icon {
-    font-size: @font-size-big;
+    font-size: 54rpx;
     border-radius: 50%;
     background-color: white;
     /*border: 2rpx solid;*/
@@ -61,16 +62,18 @@ export default {
     color: @s-color;
     align-content: center;
     text-align: center;
-    line-height: 80rpx;
-    height: 80rpx;
-    width: 80rpx;
+    line-height: 100rpx;
+    height: 100rpx;
+    width: 100rpx;
     display: inline-block;
-    margin-bottom: 0;
+    margin-top: 0rpx;
+    margin-bottom: 0rpx;
   }
   .btn-item {
     align-content: center;
     text-align: center;
-    margin-top: 20rpx;
+    margin-top: 0rpx;
+    margin-bottom: 0rpx;
     background-color: transparent;
   }
   /*去按钮边框*/

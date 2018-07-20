@@ -76,6 +76,7 @@ export default {
     padding-top: 20rpx;
     padding-bottom: 20rpx;
     background-color: #F2F2F2;
+    margin-bottom: 20rpx;
   }
   .cmdbtn {
     width: 750rpx;
