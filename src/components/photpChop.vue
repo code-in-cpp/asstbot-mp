@@ -40,7 +40,7 @@
             x: (width - 300) / 2,
             y: (height - 300) / 3,
             width: 300,
-            height: 1000
+            height: 300
           }
         },
         flag: false,

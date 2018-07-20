@@ -76,7 +76,6 @@ export default {
   },
 
   onLoad (option) {
-    console.log(option.resultId)
     this.resultId = option.resultId
     this.score = option.score
     this.type = option.type
