@@ -9,6 +9,8 @@ export default {
     navigationBarTitleText: '我聊过的...',
     'usingComponents': {
       // 'i-icon': '../../../static/iview/icon/index'
-    }
+    },
+    'enablePullDownRefresh': false,
+    'disableScroll': true
   }
 }

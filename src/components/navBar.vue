@@ -46,7 +46,6 @@ export default {
 
   onLoad: function () {
     var that = this
-    console.log('onload')
     wx.getSystemInfo({
       success: function (res) {
         that.sliderLeft = (res.windowWidth / that.navItems.length - sliderWidth) / 2

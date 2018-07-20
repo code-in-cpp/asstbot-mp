@@ -16,7 +16,6 @@
     computed: {
       ...mapState({
         userId: state => {
-          console.log(state.id)
           return state.id.id
         }
       })
@@ -28,7 +27,7 @@
           this.$store.dispatch('start', this.userId)
         }).catch(err => {
           this.$store.dispatch('start', this.userId)
-          console.log(err)
+          console.error(err)
         })
       },
       refuse () {

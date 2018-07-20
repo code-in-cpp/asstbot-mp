@@ -9,6 +9,8 @@ export default {
     navigationBarTitleText: '我的机器人',
     'usingComponents': {
       // 'i-icon': '../../../static/iview/icon/index'
-    }
+    },
+    'enablePullDownRefresh': false,
+    'disableScroll': true
   }
 }
