@@ -1,5 +1,5 @@
 <template>
-  <view class="wrapper word-text right-block">
+  <view class="wrapper word-text right-block flex-1">
     <view class="outgoing right-item">
       {{content}}
     </view>
@@ -28,4 +28,7 @@ export default {
 .right-item{
   max-width: 70%;
 }
+  .flex-1{
+    flex: 1;
+  }
 </style>
