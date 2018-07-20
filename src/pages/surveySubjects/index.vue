@@ -159,7 +159,6 @@
         </view>
       </view>
     </view>
-    <home-button/>
   </movable-area>
 </template>
 

@@ -1,14 +1,19 @@
 <template>
-  <movable-view class="move-btn" inertia='true' damping='10' friction='5' x="10" y="500"  animation="true" direction="all" @click="toHome">
+  <movable-view class="move-btn" inertia='true' damping='10' friction='5' :x="width" :y="height"  animation="true" direction="all" @click="toHome">
     <image class="image" :src="imageUrl"></image>
   </movable-view>
 </template>
 
 <script>
+const device = wx.getSystemInfoSync()
+const width = device.windowWidth - 100
+const height = device.windowHeight - 100
 export default {
   data () {
     return {
-      imageUrl: '../../static/image/avatar.png'
+      imageUrl: '../../static/image/avatar.png',
+      width: width,
+      height: height
     }
   },
   props: ['text'],
