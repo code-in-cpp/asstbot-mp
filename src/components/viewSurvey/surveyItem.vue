@@ -8,6 +8,7 @@
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
         <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
       </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </view>
   </view>
 </template>

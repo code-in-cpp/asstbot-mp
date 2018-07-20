@@ -1,13 +1,14 @@
 <template>
   <view>
     <block v-for="(survey, i) in surveyList" :key="i">
-      <slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"
-                   @btnClicked="sliderActionClicked($event, i)"
-                   @sliderLeftStart="slider(i)">
-        <view  @click="selected(i)">
-          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
-        </view>
-      </slider-left>
+      <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
+                   <!--@btnClicked="sliderActionClicked($event, i)"-->
+                   <!--@sliderLeftStart="slider(i)">-->
+      <view  @click="selected(i)">
+        <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
+      </view>
+      <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
+      <!--</slider-left>-->
     </block>
     <btn-panel
       :shouldShow="showPanel"
@@ -28,10 +29,10 @@ export default {
     return {
       selected_index: 0,
       showPanel: false,
-      icons: [
-        {title: '删除', color: 'red'},
-        {title: '自测', color: 'grey'}
-      ],
+      // icons: [
+      //   {title: '删除', color: 'red'},
+      //   {title: '自测', color: 'grey'}
+      // ],
       panel: [
         {title: '编辑', icon: 'icon-editor'},
         {title: '自测', icon: 'icon-playon_fill'},
@@ -47,11 +48,11 @@ export default {
       this.selected_index = index
       this.showPanel = true
     },
-    slider (index) {
-      // console.log('slider left')
-      this.selected_index = index
-      this.showPanel = false
-    },
+    // slider (index) {
+    //   // console.log('slider left')
+    //   this.selected_index = index
+    //   this.showPanel = false
+    // },
     selfTest: function (index) {
       wx.navigateTo({
         url: `/pages/surveyChat/main?id=${index}&scene=test`
