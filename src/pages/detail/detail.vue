@@ -29,7 +29,7 @@
           </view>
         </scroll-view>
       </view>
-      <copywrite v-if="showFooter"/>
+      <copyright v-if="showFooter"/>
     </view>
     <home-button/>
   </movable-area>
