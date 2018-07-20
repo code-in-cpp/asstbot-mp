@@ -4,7 +4,7 @@
       <view class="title">{{panelTitle}}</view>
       <wux-row>
         <block v-for="(item, index) in buttons" :key="index">
-          <wux-col span="4">
+          <wux-col span="3">
             <view  class="weui-btn" @click="item_selected(index)">
               <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
               <icon-button :title="item.title" :icon="item.icon" :opentype="item.opentype"> </icon-button>
