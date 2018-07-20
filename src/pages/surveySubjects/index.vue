@@ -476,7 +476,8 @@ export default {
 }
 
 .bottom-button-box{
-  overflow: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-style-survey{

@@ -201,6 +201,11 @@ export default {
   margin-right: 20rpx;
 }
 
+.bottom-button-box{
+  display: flex;
+  justify-content: center;
+}
+
 .iconfont {
   display: inline-block;
   font-size:32rpx!important;
