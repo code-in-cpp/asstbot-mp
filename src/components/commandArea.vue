@@ -11,19 +11,21 @@
         </button>
       </view>
       <view class="weui-flex__item"  v-if="!voiceMode">
-        <!--<textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput" @change="valueChange" adjust-position @focus="focusActive" auto-height="true" @linechange="rowChange" cursor-spacing="14" :style="{color: focusFlag ? '#999' : '#333', height: rowHeight, lineHeight: lineHeight}"  @confirm="keyEvnet($event)"/>-->
         <textarea class="word-textarea primary-color revert" :value="currentMessage" @input="valueInput"  adjust-position auto-height="true"  cursor-spacing="14"  @confirm="keyEvnet($event)"/>
       </view>
       <view class="weui-flex__item"  v-else>
         <record-button></record-button>
       </view>
       <view class="placeholder">
-        <button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
+        <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
-          <i class="icon iconfont icon-add"></i>
-        </button>
+        <!--<button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">-->
+          <!--<i class="icon iconfont icon-arrows"></i>-->
+        <!--</button>-->
+        <!--<button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">-->
+          <!--<i class="icon iconfont icon-add"></i>-->
+        <!--</button>-->
       </view>
     </view>
     <device-padding></device-padding>
@@ -59,9 +61,6 @@ export default {
   },
 
   methods: {
-    updateUserInfo (ev) {
-      this.$store.dispatch('updateUserInfo')
-    },
     valueInput (ev) {
       this.currentMessage = ev.mp.detail.value
       // if (String.prototype.slice.apply(ev.mp.detail.value, [-1]) === '\n') {
@@ -82,12 +81,6 @@ export default {
           this.$store.commit('clearState')
         })
       }
-    },
-    rowChange (e) {
-      let count = e.mp.detail.lineCount
-      let heightNum = count === 1 ? count * 80 : count * 56
-      this.rowHeight = heightNum + 'rpx'
-      this.lineHeightNum = count <= 1 ? '80rpx' : '56rpx'
     },
     keyEvnet (e) {
       if (e.mp.detail.value) {
@@ -177,6 +170,7 @@ export default {
   border: 1rpx solid #dadada;
   box-sizing: border-box;
   width:100%;
+  margin-top: 3rpx;
   /*height:100%;*/
 }
 

@@ -143,17 +143,17 @@
         </view>
       </view>
       <view class="footer bottom_button">
-        <view class="weui-flex">
-          <view class="weui-flex__item">
+        <view class="weui-flex bottom-button-box">
+          <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn" type="default" @click="selfTest" ><i class="icon iconfont icon-interactive"></i>自测</button>
           </view>
-          <view class="weui-flex__item">
+          <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
           </view>
         </view>
@@ -472,5 +472,11 @@ export default {
 }
   .right-btn-box{
     height: 100%;
+  }
+  .bottom-button-box{
+    overflow: auto;
+  }
+  .btn-style-survey{
+    margin-right: 30rpx;
   }
 </style>
