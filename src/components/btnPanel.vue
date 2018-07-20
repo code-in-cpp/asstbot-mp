@@ -70,7 +70,6 @@ export default {
     color: @p-dark-color;
     font-size: @font-size-tiny;
     border-bottom: 2rpx solid @btn-border-color;
-    border-top: 2rpx solid @btn-border-color;
     /*border-bottom-color: @;*/
     white-space: nowrap;
     overflow: hidden;
