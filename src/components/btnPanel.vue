@@ -1,5 +1,5 @@
 <template>
-  <view v-if="shouldShow" class="mask" @click="close_panel">
+  <view class="mask" @click="close_panel">
     <view class="panel">
       <view class="title">{{panelTitle}}</view>
       <wux-row>
@@ -31,20 +31,16 @@ export default {
     panelTitle: {
       type: String,
       default: '请选择操作'
-    },
-    shouldShow: {
-      type: Boolean,
-      default: false
     }
   },
   methods: {
     item_selected (index) {
       console.log(index)
       this.$emit('iconBtnClicked', index)
-      this.shouldShow = false
+      this.$emit('panelClosed')
     },
     close_panel () {
-      this.shouldShow = false
+      this.$emit('panelClosed')
     }
   },
   components: {

@@ -10,11 +10,11 @@
       <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
       <!--</slider-left>-->
     </block>
-    <btn-panel
-      :shouldShow="showPanel"
+    <btn-panel v-if="showPanel"
       :panelTitle="getPanelTitle"
       :buttons="panel"
-      @iconBtnClicked="panelActionClicked($event)"/>
+      @iconBtnClicked="panelActionClicked($event)"
+      @panelClosed="pancelClosed"/>
   </view>
 </template>
 
@@ -45,8 +45,12 @@ export default {
   },
   methods: {
     selected (index) {
+      console.log('index', index, 'is clicked')
       this.selected_index = index
       this.showPanel = true
+    },
+    pancelClosed () {
+      this.showPanel = false
     },
     // slider (index) {
     //   // console.log('slider left')
