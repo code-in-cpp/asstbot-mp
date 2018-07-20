@@ -65,6 +65,11 @@ export default {
     publish: function (index) {
       saveQrCodeToPhotosAlbum(index)
     },
+    share: function (index) {
+      wx.showShareMenu({
+        withShareTicket: true
+      })
+    },
     deleteSuevey: function (that, index) {
       wx.showModal({
         title: '您确认要删除吗？',
@@ -120,7 +125,7 @@ export default {
       }
       // 转发
       if (operId === 3) {
-        this.showDetail(id)
+        this.share(id)
       }
       // 分享
       if (operId === 4) {
@@ -157,6 +162,19 @@ export default {
   components: {
     surveyItem,
     btnPanel
+  },
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+      return {
+        title: this.surveyList[this.selected_index].title,
+        path: '/pages/surveyChat/main?id=' + this.surveyList[this.selected_index].id,
+        imageUrl: this.surveyList[this.selected_index].avatarUrl
+      }
+    }
+    return {
+      path: '/pages/index/main'
+    }
   },
   onLoad () {
     this.$store.dispatch('retrieveSurvey')
