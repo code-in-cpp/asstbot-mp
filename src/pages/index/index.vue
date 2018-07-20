@@ -58,7 +58,6 @@ export default {
       if (this.scene.indexOf('redirectTo') !== -1) {
         this.$store.commit('talkToBotFather')
         this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
-        this.scene = ''
         this.redirect = {}
       } else if (this.scene.indexOf('relaunchFrom') !== -1) {
         this.startChat()
@@ -75,6 +74,7 @@ export default {
           }
         })
     }
+    this.scene = ''
   },
 
   onLoad (option) {
