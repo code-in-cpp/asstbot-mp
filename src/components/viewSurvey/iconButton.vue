@@ -40,7 +40,7 @@ export default {
     background-color: white;
     /*border: 2rpx solid;*/
     /*border-color: @btn-border-color;*/
-    color: @s-dark-color;
+    color: @s-color;
     align-content: center;
     text-align: center;
     line-height: 80rpx;

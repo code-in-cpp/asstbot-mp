@@ -1,6 +1,6 @@
 <template>
   <view class="big-box">
-    <label class="option-container secondary-color light form-control" v-for="(option, index) in list.items" :key="option"
+    <label class="option-container user-msg-box-color light form-control" v-for="(option, index) in list.items" :key="option"
            :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">     
       <view class="weui-flex">
         <view class="weui-flex__item">
