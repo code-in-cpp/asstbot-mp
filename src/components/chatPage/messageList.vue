@@ -38,8 +38,6 @@ export default {
   watch: {
     messagesList: function (val) {
       const that = this
-      console.log('coming here=======', val)
-      this.$emit('renderBegin')
       if (this.showImage) {
         setTimeout(function () {
           that.scrollToView = `bottom${val.length - 1}`

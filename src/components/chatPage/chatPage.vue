@@ -1,13 +1,12 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayStart"/>
+      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
       <command-area />
     </view>
-    <bot-redirect v-if="displayFinish" :messageList="messageList" @redirectTo="$emit('redirectTo', $event)"/>
   </block>
 </template>
 
@@ -15,7 +14,11 @@
 import commandArea from '@/components/commandArea'
 import messageList from '@/components/chatPage/messageList'
 import selectBox from '@/components/selectBox'
-import botRedirect from '@/components/botSay/botRedirect'
+
+const urlMaping = {'create-survey': '/pages/createdSurvey/main',
+  'visit-survey': '/pages/visitedSurvey/main',
+  'edit-survey': '/pages/surveySubjects/main',
+  'bot-creator': '/pages/index/main'}
 
 export default {
   data () {
@@ -83,19 +86,79 @@ export default {
   },
   methods: {
     msgDisplayFinish () {
-      console.log('begin redirect')
       this.displayFinish = true
+      let lastMsg = this.getlastMsg()
+      if (lastMsg) {
+        this.doRedirect(lastMsg)
+      }
     },
-    msgDisplayStart () {
-      this.displayFinish = false
+    getlastMsg () {
+      if (!this.messageList) {
+        return undefined
+      }
+      let lastmsg = this.messageList.slice(-1)[0]
+      if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
+        return undefined
+      }
+
+      return lastmsg.msgs.slice(-1)[0]
+    },
+    doRedirect (lastmsg) {
+      console.log('begin redirect.....')
+      let redirectUrl = urlMaping[lastmsg.url]
+      let headerParas = this.buildHeaderParas(lastmsg.option)
+      let urlWithParas = redirectUrl + headerParas
+
+      if (lastmsg.type === 'redirect') {
+        if (lastmsg.url === 'edit-survey') {
+          this.$store.dispatch('retrieveSurvey')
+            .then(() => {
+              this.delayRedirectTo(lastmsg, urlWithParas)
+            })
+        } else {
+          this.delayRedirectTo(lastmsg, urlWithParas)
+        }
+      } else if (lastmsg.type === 'reLaunch') {
+        if (lastmsg.url === 'edit-survey') {
+          this.$store.dispatch('retrieveSurvey')
+            .then(() => {
+              this.delayRelaunch(urlWithParas)
+            })
+        } else {
+          this.delayRelaunch(`${urlWithParas}?scene='relaunchFromBot'`)
+        }
+      }
+    },
+    buildHeaderParas (option) {
+      if (!option) {
+        return ''
+      }
+      let ret = '?'
+      for (let key in option) {
+        let para = key + '=' + option[key]
+        ret += (ret === '?') ? para : '&' + para
+      }
+      console.log('build para is', ret)
+      return ret
+    },
+    delayRedirectTo (scene, url) {
+      let that = this
+      setTimeout(function () {
+        that.$emit('redirectTo', scene)
+        wx.navigateTo({url})
+      }, 2000)
+    },
+    delayRelaunch (url) {
+      setTimeout(function () {
+        wx.reLaunch({url})
+      }, 2000)
     }
   },
 
   components: {
     commandArea,
     messageList,
-    selectBox,
-    botRedirect
+    selectBox
   }
 }
 </script>
