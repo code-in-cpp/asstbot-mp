@@ -116,6 +116,13 @@ const mutations = {
   },
   updateSubjectType (state, {index, type}) {
     var oldType = state.survey.subjects[index].type
+    if (type === 'date' || type === 'phone' || type === 'location') {
+      if (oldType !== type) {
+        state.survey.subjects[index].answers = []
+      }
+      return
+    }
+
     if (type === 'radio' && oldType !== 'radio') {
       var findFirstRadio = false
       var answers = state.survey.subjects[index].answers
