@@ -1,5 +1,6 @@
 <template>
 <view>
+  <!--ugly code, need to refact to support other open-type-->
   <button class="btn-item" open-type="share" v-if="isShare === true">
     <i class="icon iconfont btn-icon" :class="icon"></i>
     <view class="btn-title"> {{title}} </view>
@@ -72,5 +73,9 @@ export default {
     text-align: center;
     margin-top: 20rpx;
     background-color: #F2F2F2;
+  }
+  /*去按钮边框*/
+  .btn-item::after{
+    border: none;
   }
 </style>
