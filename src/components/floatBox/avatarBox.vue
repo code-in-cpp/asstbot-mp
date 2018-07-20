@@ -23,25 +23,6 @@
       photoChop
     },
     methods: {
-      updateUserInfo (ev) {
-        this.$store.dispatch('updateUserInfo').then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      uploadAvatar () {
-        const that = this
-        wx.chooseImage({
-          count: 1,
-          sizeType: ['original', 'compressed'],
-          sourceType: ['album', 'camera'],
-          success: function (res) {
-            that.src = res.tempFilePaths[0]
-            that.showChopBox = true
-          }
-        })
-      }
     },
     created () {
       const that = this

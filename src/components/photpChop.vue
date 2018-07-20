@@ -64,7 +64,6 @@
       cropperReady (...args) {
         const that = this
         setTimeout(function () {
-          console.log(that.src)
           wecropper.pushOrigin(that.src)
         }, 300)
       },
@@ -81,7 +80,6 @@
         wecropper.getCropperImage()
           .then((filePath) => {
             if (this.noClick) {
-              console.log('点击了')
               this.noClick = !this.noClick
               this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
                 this.noClick = !this.noClick
@@ -108,7 +106,6 @@
     onLoad () {
       wx.getSystemInfo({
         success: (res) => {
-          console.log(res.model)
           if (res.model.search('iPhone X') !== -1) {
             this.needPadding = true
           } else {
