@@ -44,18 +44,12 @@
       </view>
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
-            <!-- <view class="scroll-button-item-view">
-              <button class="weui-btn" type="warn" @click="deleteSurvey" size="mini"><i class="icon iconfont icon-delete"></i>删除</button>
-            </view> -->
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" type="default" @click="selfTest"><i class="icon iconfont icon-stealth"></i>自测</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" type="default" @click="chartStatics" ><i class="icon iconfont icon-stealth"></i>统计</button>
             </view>
-            <!-- <view class="scroll-button-item-view">
-              <button class="weui-btn" type="default" @click="editSurvey" size="mini"><i class="icon iconfont icon-editor"></i>编辑</button>
-            </view> -->
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" open-type="share" type="primary" ><i class="icon iconfont icon-share"></i>发布</button>
             </view>
@@ -98,33 +92,6 @@ export default {
     navBar
   },
   methods: {
-    editSurvey () {
-      let surveyId = this.surveyId
-      wx.navigateTo({
-        url: `/pages/surveySubjects/main?id=${surveyId}`
-      })
-    },
-    deleteSurvey () {
-      console.log('deleteSurvey')
-      let that = this
-      wx.showModal({
-        title: '您确认要删除吗？',
-        confirmText: '确认',
-        cancelText: '取消',
-        success: function (res) {
-          if (res.confirm) {
-            that.$store.dispatch('deleteSurvey', that.surveyId)
-              .then(() => {
-                wx.reLaunch({
-                  url: `/pages/home/main`
-                })
-              })
-          } else {
-            console.log('用户点击取消操作')
-          }
-        }
-      })
-    },
     selfTest () {
       wx.navigateTo({
         url: `/pages/surveyChat/main?id=${this.surveyId}&scene=test`
