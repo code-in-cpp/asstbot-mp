@@ -16,7 +16,6 @@ export default {
   onLoad () {
     wx.getSystemInfo({
       success: (res) => {
-        console.log(res)
         let model = res.model
         if (model.search('iPhone') !== -1) {
           if (res.model.search('iPhone X') !== -1) {

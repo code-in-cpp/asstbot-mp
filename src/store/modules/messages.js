@@ -139,7 +139,6 @@ const actions = {
     return _sendmessage(commit, 'image', {url, indicator})
   },
   sentRadioReply ({ commit }, data) {
-    console.log('do send radio reply')
     return _sendmessage(commit, 'radio-reply', data)
   },
   sentCheckBoxReply ({ commit }, data) {

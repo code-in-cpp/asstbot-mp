@@ -105,7 +105,6 @@ export default {
       }
     },
     panelActionClicked (index) {
-      console.log('enter panelActionClicked' + index)
       let operId = index
       let id = this.surveyList[this.selected_index].id
       let that = this
@@ -116,7 +115,6 @@ export default {
       }
       // 自测
       if (operId === 1) {
-        console.log('enter self test')
         this.selfTest(id)
       }
       // 显示
@@ -141,19 +139,16 @@ export default {
   computed: {
     ...mapState({
       surveyList: state => {
-        console.log(state.survey)
         return state.survey.surveyList
       }
     }),
     getPanelTitle () {
-      console.log('enter getPanelTitle')
       if (!(this.surveyList === undefined || this.surveyList === null || this.surveyList.length === 0)) {
         if (this.selected_index >= this.surveyList.length) {
           this.selected_index = 0
         }
         return this.surveyList[this.selected_index].title
       } else {
-        console.log('survey list is null')
         return '请选择'
       }
     }
@@ -165,7 +160,6 @@ export default {
   },
   onShareAppMessage (res) {
     if (res.from === 'button') {
-      console.log(res.target)
       return {
         title: this.surveyList[this.selected_index].title,
         path: '/pages/surveyChat/main?id=' + this.surveyList[this.selected_index].id,

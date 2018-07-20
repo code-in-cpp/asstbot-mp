@@ -51,6 +51,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       wechat.getOpenId()
         .then((userId) => {
+          console.log(survey)
           fly.put(url, {userId, survey})
             .then((response) => {
               dispatch('retrieveSurvey')

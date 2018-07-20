@@ -86,12 +86,12 @@
                 this.flag = false
               }).catch(err => {
                 this.noClick = !this.noClick
-                console.log(err)
+                console.error(err)
               })
             }
           })
           .catch(e => {
-            console.error('e')
+            console.error(e)
           })
       }
     },

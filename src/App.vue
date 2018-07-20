@@ -3,7 +3,6 @@ export default {
   created () {
   },
   onLaunch (option) {
-    console.log(this.$root.$mp.appOptions)
     this.$store.dispatch('updateAuthStatus')
       .then((auth) => {
         if (!auth) {
