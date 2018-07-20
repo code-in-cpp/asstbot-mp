@@ -39,7 +39,7 @@
 import { mapState } from 'vuex'
 import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
-import copywrite from '@/components/copywrite'
+import copyright from '@/components/copyright'
 
 import { formatTime } from '@/utils/index'
 export default {
@@ -89,7 +89,7 @@ export default {
   components: {
     userSayText,
     botSayText,
-    copywrite
+    copyright
   }
 }
 </script>
