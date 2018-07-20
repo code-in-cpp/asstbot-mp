@@ -73,6 +73,7 @@ var _impleSendmessage = (commit, id, type, data) => {
       data: message,
       method: 'POST',
       success: (response) => {
+        console.log('add response data......')
         commit('appendMessage', response.data)
         resolve(response)
       },
@@ -139,6 +140,7 @@ const actions = {
     return _sendmessage(commit, 'image', {url, indicator})
   },
   sentRadioReply ({ commit }, data) {
+    console.log('do send radio reply')
     return _sendmessage(commit, 'radio-reply', data)
   },
   sentCheckBoxReply ({ commit }, data) {
