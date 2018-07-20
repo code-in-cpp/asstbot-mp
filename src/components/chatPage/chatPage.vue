@@ -1,7 +1,7 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish"/>
+      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
@@ -85,6 +85,9 @@ export default {
     }
   },
   methods: {
+    msgDisplayBegin () {
+      this.displayFinish = false
+    },
     msgDisplayFinish () {
       this.displayFinish = true
       let lastMsg = this.getlastMsg()
@@ -104,7 +107,6 @@ export default {
       return lastmsg.msgs.slice(-1)[0]
     },
     doRedirect (lastmsg) {
-      console.log('begin redirect.....')
       let redirectUrl = urlMaping[lastmsg.url]
       let headerParas = this.buildHeaderParas(lastmsg.option)
       let urlWithParas = redirectUrl + headerParas

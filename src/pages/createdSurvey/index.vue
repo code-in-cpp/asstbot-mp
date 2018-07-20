@@ -28,16 +28,6 @@ export default {
     toshare (event) {
       this.shareSurvey = event
     }
-  },
-  onShareAppMessage (res) {
-    if (res.from === 'button') {
-      console.log(res.target)
-    }
-    return {
-      title: this.shareSurvey.title,
-      path: '/pages/surveyChat/main?id=' + this.shareSurvey.id,
-      imageUrl: this.shareSurvey.avatarUrl
-    }
   }
 }
 </script>

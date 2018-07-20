@@ -3,7 +3,7 @@
     <view class="outgoing right-item">
       {{content.asr}}
     </view>
-    <!-- <view class="outgoing right-item">
+    <view class="outgoing right-item">
       <view>
         <block v-if="playStatus=='stop'">
           <i class="icon iconfont icon-play" @click="play"></i>
@@ -15,7 +15,7 @@
           <i class="icon iconfont icon-suspend" @click="resume"></i>
         </block>
       </view>  
-    </view> -->
+    </view>
   </view>
 </template>
 

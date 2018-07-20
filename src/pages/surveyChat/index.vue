@@ -58,7 +58,6 @@ export default {
   },
 
   onShow () {
-    console.log(this.hasLogin)
     if (this.hasLogin) {
       this.startChat()
     } else if (this.hasLogin === undefined) {

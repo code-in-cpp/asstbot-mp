@@ -33,6 +33,10 @@
         success: function (res) {
           that.src = res.tempFilePaths[0]
           that.showChopBox = true
+        },
+        fail: function (e) {
+          console.log('avatarBox created, choose image failed')
+          that.$store.dispatch('sendImage', {url: '', indicator: that.list.indicator})
         }
       })
     }
