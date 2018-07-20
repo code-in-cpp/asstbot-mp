@@ -1,7 +1,13 @@
 <template>
-<view class="btn-item">
-  <i class="icon iconfont btn-icon" :class="icon"></i>
-  <view class="btn-title"> {{title}} </view>
+<view>
+  <button class="btn-item" open-type="share" v-if="isShare === true">
+    <i class="icon iconfont btn-icon" :class="icon"></i>
+    <view class="btn-title"> {{title}} </view>
+  </button>
+  <button class="btn-item" v-if="isShare === false">
+    <i class="icon iconfont btn-icon" :class="icon"></i>
+    <view class="btn-title"> {{title}} </view>
+  </button>
 </view>
 </template>
 
@@ -15,6 +21,19 @@ export default {
     title: {
       type: String,
       default: '100'
+    },
+    opentype: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    isShare () {
+      console.log('iconButton:' + this.opentype)
+      if (this.opentype === undefined || this.opentype === null || this.opentype.length === 0) {
+        return false
+      }
+      return true
     }
   }
 }

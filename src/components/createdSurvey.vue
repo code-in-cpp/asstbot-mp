@@ -37,7 +37,7 @@ export default {
         {title: '编辑', icon: 'icon-editor'},
         {title: '自测', icon: 'icon-playon_fill'},
         {title: '显示', icon: 'icon-zhtn'},
-        {title: '转发', icon: 'icon-send'},
+        {title: '转发', icon: 'icon-send', opentype: 'share'},
         {title: '分享', icon: 'icon-moment'},
         {title: '删除', icon: 'icon-trash'}
       ]

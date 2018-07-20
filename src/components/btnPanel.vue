@@ -5,9 +5,9 @@
       <wux-row>
         <block v-for="(item, index) in buttons" :key="index">
           <wux-col span="4">
-            <view  @click="item_selected(index)">
+            <view  class="weui-btn" @click="item_selected(index)">
               <!--<icon-button class="cell-item" title="item.text" icon="icon-share" @click="item_selected(index)"> </icon-button>-->
-              <icon-button :title="item.title" :icon="item.icon"> </icon-button>
+              <icon-button :title="item.title" :icon="item.icon" :opentype="item.opentype"> </icon-button>
             </view>
           </wux-col>
         </block>
@@ -24,8 +24,8 @@ export default {
     buttons: {
       type: Object,
       default: [
-        {title: '分享', icon: 'icon-moment'},
-        {title: '转发', icon: 'icon-send'}
+        {title: '分享', icon: 'icon-moment', opentype: ''},
+        {title: '转发', icon: 'icon-send', opentype: ''}
       ]
     },
     panelTitle: {
@@ -33,6 +33,7 @@ export default {
       default: '请选择操作'
     }
   },
+
   methods: {
     item_selected (index) {
       console.log(index)
