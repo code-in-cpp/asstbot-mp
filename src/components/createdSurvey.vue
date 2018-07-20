@@ -54,7 +54,7 @@ export default {
     },
     selfTest: function (index) {
       wx.navigateTo({
-        url: `/pages/index/main?id=${index}&scene=test`
+        url: `/pages/surveyChat/main?id=${index}&scene=test`
       })
     },
     showDetail: function (index) {
