@@ -1,6 +1,7 @@
 import wechat from './wechat'
 import config from '@/config.js'
 import Fly from 'flyio/dist/npm/wx'
+import validator from '@/validator/survey.js'
 
 var fly = new Fly()
 const url = `${config.service.hostRoot}/survey`
@@ -49,6 +50,26 @@ const actions = {
 
   editSurvey ({dispatch, commit}, survey) {
     return new Promise((resolve, reject) => {
+      let valid = validator.validSurvey(survey)
+      if (valid.result !== 'ok') {
+        let title
+        if (!valid.result.subjectQuestion) {
+          title = '题目: 文字和图片至少要填一个'
+        } else if (!valid.result.subjectType) {
+          title = '题目: 类型不对或单选多选题没有答案'
+        } else if (!valid.result.subjectAnswer) {
+          title = '答案: 文字和图片至少要填一个'
+        } else {
+          title = '评语: 文字和图片至少要填一个'
+        }
+        wx.showToast({
+          title,
+          icon: 'none',
+          duration: 2000
+        })
+        reject(valid)
+        return
+      }
       wechat.getOpenId()
         .then((userId) => {
           console.log(survey)
