@@ -4,7 +4,7 @@
       <block v-for="(messages, i) in messagesList" :key="i">
         <view :id="i">
           <message-item :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-                    :messages="messages" @renderComplete="scollToBottom"/>
+                    :messages="messages" @renderComplete="renderComplete" @itemLoad="scollToBottom"/>
         </view>
         <view :id="'bottom'+i"></view>
       </block>
@@ -52,10 +52,13 @@ export default {
     messageItem
   },
   methods: {
-    scollToBottom () {
-      this.scrollToView = 'bottom'
+    renderComplete () {
+      this.scollToBottom()
       this.$emit('renderFinish')
-      console.log('scroll to end')
+    },
+    scollToBottom () {
+      this.scrollToView = ''
+      this.scrollToView = 'bottom'
     }
   }
 }

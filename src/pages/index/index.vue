@@ -54,7 +54,6 @@ export default {
   },
 
   onShow () {
-    console.log(this.hasLogin)
     if (this.hasLogin) {
       if (this.scene.indexOf('redirectTo') !== -1) {
         this.$store.commit('talkToBotFather')

@@ -21,12 +21,15 @@
         </view>
       </block>
       <view class="placeholder">
-        <button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
+        <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
           <i class="icon iconfont icon-arrows"></i>
         </button>
-        <button v-else class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">
-          <i class="icon iconfont icon-add"></i>
-        </button>
+        <!--<button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">-->
+          <!--<i class="icon iconfont icon-arrows"></i>-->
+        <!--</button>-->
+        <!--<button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">-->
+          <!--<i class="icon iconfont icon-add"></i>-->
+        <!--</button>-->
       </view>
     </view>
     <device-padding></device-padding>
@@ -178,6 +181,7 @@ export default {
   border: 1rpx solid #dadada;
   box-sizing: border-box;
   width:100%;
+  margin-top: 3rpx;
   /*height:100%;*/
 }
 

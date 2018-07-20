@@ -1,5 +1,5 @@
 <template>
-    <image mode="widthFix" class="image" :src="content"></image>
+    <image mode="widthFix" class="image" :src="content" @load="$emit('loadDone', $event)"></image>
 </template>
 
 <script>
