@@ -1,11 +1,11 @@
 <template>
 <view>
   <!--ugly code, need to refact to support other open-type-->
-  <button class="btn-item" open-type="share" v-if="isShare === true">
+  <button class="btn-item" open-type="share" v-if="isShare">
     <i class="icon iconfont btn-icon" :class="icon"></i>
     <view class="btn-title"> {{title}} </view>
   </button>
-  <button class="btn-item" v-if="isShare === false">
+  <button class="btn-item" v-else>
     <i class="icon iconfont btn-icon" :class="icon"></i>
     <view class="btn-title"> {{title}} </view>
   </button>
@@ -49,10 +49,8 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /*height: 120rpx;*/
-    /*line-height:120rpx;*/
     text-align: center;
-    margin-top: 10rpx;
+    margin-top: 0rpx;
   }
   .btn-icon {
     font-size: @font-size-big;
@@ -67,12 +65,13 @@ export default {
     height: 80rpx;
     width: 80rpx;
     display: inline-block;
+    margin-bottom: 0;
   }
   .btn-item {
     align-content: center;
     text-align: center;
     margin-top: 20rpx;
-    background-color: #F2F2F2;
+    background-color: transparent;
   }
   /*去按钮边框*/
   .btn-item::after{
