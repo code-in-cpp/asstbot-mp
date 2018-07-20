@@ -11,6 +11,8 @@ export default {
       'slider-left': '../../../static/native/slider-left/index',
       'wux-row': '../../../static/wux/row/index',
       'wux-col': '../../../static/wux/col/index'
-    }
+    },
+    'enablePullDownRefresh': false,
+    'disableScroll': true
   }
 }

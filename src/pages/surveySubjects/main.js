@@ -8,6 +8,8 @@ export default {
   config: {
     navigationBarTitleText: '编辑机器人',
     'usingComponents': {
-    }
+    },
+    'enablePullDownRefresh': false,
+    'disableScroll': true
   }
 }
