@@ -20,8 +20,8 @@
 <script>
 import surveyItem from '@/components/viewSurvey/surveyItem'
 import btnPanel from '@/components/btnPanel'
+import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 import { mapState } from 'vuex'
-// import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
 
 export default {
   data: function () {
@@ -33,12 +33,12 @@ export default {
         {title: '自测', color: 'grey'}
       ],
       panel: [
-        {title: '分享', icon: 'icon-moment'},
-        {title: '转发', icon: 'icon-send'},
+        {title: '编辑', icon: 'icon-editor'},
         {title: '自测', icon: 'icon-playon_fill'},
-        {title: '删除', icon: 'icon-trash'},
         {title: '显示', icon: 'icon-zhtn'},
-        {title: '编辑', icon: 'icon-editor'}
+        {title: '转发', icon: 'icon-send'},
+        {title: '分享', icon: 'icon-moment'},
+        {title: '删除', icon: 'icon-trash'}
       ]
     }
   },
@@ -61,6 +61,9 @@ export default {
       wx.navigateTo({
         url: `/pages/display/main?id=${index}`
       })
+    },
+    publish: function (index) {
+      saveQrCodeToPhotosAlbum(index)
     },
     deleteSuevey: function (that, index) {
       wx.showModal({
@@ -102,22 +105,30 @@ export default {
       let id = this.surveyList[this.selected_index].id
       let that = this
       this.showPanel = false
+      // 编辑
+      if (operId === 0) {
+        this.editSurvey(id)
+      }
       // 自测
-      if (operId === 2) {
+      if (operId === 1) {
         console.log('enter self test')
         this.selfTest(id)
       }
-      // 删除
-      if (operId === 3) {
-        this.deleteSuevey(that, id)
-      }
       // 显示
-      if (operId === 4) {
+      if (operId === 2) {
         this.showDetail(id)
       }
-      // 编辑
+      // 转发
+      if (operId === 3) {
+        this.showDetail(id)
+      }
+      // 分享
+      if (operId === 4) {
+        this.publish(id)
+      }
+      // 删除
       if (operId === 5) {
-        this.editSurvey(id)
+        this.deleteSuevey(that, id)
       }
     }
   },
