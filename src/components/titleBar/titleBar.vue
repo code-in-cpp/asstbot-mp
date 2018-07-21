@@ -3,7 +3,9 @@
     <device-top-padding></device-top-padding>
     <view class="weui-flex">
       <view style="width: 174rpx;" >
-        <return-button/>
+        <view class="return-button">
+          <return-button/>
+        </view>
       </view>
       <view class="title">
         {{title}}
@@ -51,5 +53,14 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: @font-size-middle + 4;
+}
+
+.weui-flex {
+  padding-top: 15rpx;
+}
+
+.return-button {
+  min-height: 76rpx;
 }
 </style>

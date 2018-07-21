@@ -1,5 +1,5 @@
 <template>
-  <view class="primary-color dark title-bar">
+  <view class="title-bg-color title-bar">
     <device-top-padding></device-top-padding>
     <view>
       <da-logo ></da-logo>     

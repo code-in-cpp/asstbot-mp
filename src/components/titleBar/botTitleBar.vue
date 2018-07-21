@@ -1,14 +1,14 @@
 <template>
   <view style="position: relative">
-    <view class="primary-color dark">
-      <device-padding></device-padding>
+    <view class="title-bg-color">
+      <device-top-padding></device-top-padding>
     </view>
     <image src="../../static/image/bot-title-bar.png" class="background"></image>
     <view class="logo">
-      <da-logo v-if="title.length == 0"/>
-      <return-button v-else/>
+      <da-logo />
+      <!-- <return-button v-else/> -->
     </view>
-    <view class="title primary-color dark">{{title}}</view>
+    <!-- <view class="title primary-color dark">{{title}}</view> -->
     <view class="avatar-wrapper">
       <view class="avatar">
         <bod-avatar :url="avatarUrl" size="50"></bod-avatar>
@@ -19,6 +19,7 @@
 
 <script>
 import returnButton from '@/components/widget/returnButton'
+import deviceTopPadding from '@/components/view/deviceTopPadding'
 export default {
   props: {
     avatarUrl: {
@@ -36,7 +37,8 @@ export default {
     }
   },
   components: {
-    returnButton
+    returnButton,
+    deviceTopPadding
   }
 }
 </script>
@@ -54,7 +56,7 @@ export default {
 .background {
   display: block;
   font-size: 0;
-  height: 174rpx;
+  height: 146rpx;
   width: 750rpx;
 }
 

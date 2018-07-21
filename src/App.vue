@@ -224,6 +224,11 @@ page{
   background-color: @text-on-p-color !important;
 }
 
+.title-bg-color {
+  background-color: @title-bg-color;
+  color: @text-on-p-color;
+}
+
 .user-msg-box-color {
   background-color: @s-msg-color !important;
 }

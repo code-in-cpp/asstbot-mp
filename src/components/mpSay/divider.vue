@@ -29,7 +29,7 @@ export default {
 
 .divider {
   background: @divider-color;
-  color: white;
+  color: @background-color;
   font-size: @font-size-tiny - 4;
 }
 .weui-flex {
