@@ -240,6 +240,9 @@ export default {
         .then(() => {
           wx.redirectTo({url: '/pages/createdSurvey/main'})
         })
+        .catch((err) => {
+          console.error(err)
+        })
     },
     tabActive (event) {
       this.activeIndex = event
@@ -254,7 +257,7 @@ export default {
           that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
             that.$store.commit('updateSurveyAvatarUrl', res)
           }).catch(err => {
-            console.log(err)
+            console.error(err)
           })
         }
       })
@@ -269,7 +272,7 @@ export default {
           that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
             that.$store.commit('updateSubjectQuestionImage', {index, imageUrl: res})
           }).catch(err => {
-            console.log(err)
+            console.error(err)
           })
         }
       })
@@ -286,7 +289,7 @@ export default {
             console.log(res)
             that.$store.commit('updateConclusionimage', {index: index, imageUrl: res})
           }).catch(error => {
-            console.log(error)
+            console.error(error)
           })
         }
       })

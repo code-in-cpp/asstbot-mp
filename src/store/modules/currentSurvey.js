@@ -73,7 +73,6 @@ const mutations = {
     state.survey.conclusions[index].scoreRange.max = value
   },
   updateConclusionText (state, {index, text}) {
-    console.log('update conlusion text', index, text)
     state.survey.conclusions[index].text = text
   },
   updateConclusionimage (state, {index, imageUrl}) {
