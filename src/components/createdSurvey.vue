@@ -1,6 +1,6 @@
 <template>
   <view>
-    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
       <block v-for="(survey, i) in surveyList" :key="i">
         <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
                      <!--@btnClicked="sliderActionClicked($event, i)"-->

@@ -274,6 +274,5 @@ page{
   align-items: center;
   padding: 20rpx 0rpx;
   overflow: auto;
-  /*justify-content: center;*/
 }
 </style>

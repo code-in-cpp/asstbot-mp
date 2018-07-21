@@ -4,8 +4,8 @@
     <view class="page">
       <title-bar title=" "/>
       <view class="weui-cells clear-border">
-        <view class="weui-cell clear-border">
-          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click="changeAvatar">
+        <view class="weui-cell clear-border"  @click="toEditPage">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click.stop="changeAvatar">
             <image :src="displayAvatar" style="width: 50px; height: 50px; display: block; border-radius: 50%; overflow: hidden"/>
             <!--<i class="icon iconfont icon-camera font-camera"></i>-->
           </view>
@@ -15,7 +15,7 @@
             <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
             <!--<input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">-->
           </view>
-          <view class="right-btn-box" @click="toEditPage">
+          <view class="right-btn-box">
             <i class="icon iconfont icon-enter"></i>
           </view>
         </view>
