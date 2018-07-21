@@ -45,6 +45,7 @@ export default {
   },
   watch: {
     selectedIndex: function (newVal, oldVal) {
+      console.log('selectedIndex changed')
       this.$emit('itemSelected', {title: this.surveyList[newVal].title, id: this.surveyList[newVal].id, imageUrl: this.surveyList[newVal].avatarUrl})
     }
   },
