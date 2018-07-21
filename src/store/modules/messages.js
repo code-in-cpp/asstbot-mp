@@ -32,13 +32,15 @@ const mutations = {
     url = `${config.service.hostRoot}/chatbot`
   },
   talkToSurveyBot (state, {id, scene}) {
-    if (chatBot === 'bodFather') {
-      state.surveybotMsg = []
-    }
+    state.surveybotMsg = []
     chatBot = 'surveyBot'
     url = `${config.service.hostRoot}/chatbot/survey`
     surveyId = id
     sceneMode = scene
+  },
+  appendDividerMessage (state, cause) {
+    const timestamp = new Date()
+    __appendMsg(state, {timestamp, gui: 'gui', type: 'divider'})
   }
 }
 

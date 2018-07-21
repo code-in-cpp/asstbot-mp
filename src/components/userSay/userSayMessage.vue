@@ -8,12 +8,12 @@
         <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
         <user-say-checkbox-reply :content="messages.data" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
         <user-say-radio-reply :content="messages.data" v-else-if="messages.type=='radio-reply'"></user-say-radio-reply>
+        <user-say-divider :data="messages" v-else-if="messages.type=='divider'"></user-say-divider>
       </view>
       <view class="user-avatar" v-if="userAuthed">
         <open-data type="userAvatarUrl" />
       </view>
     </view>
-
   </block>
 </template>
 
@@ -47,7 +47,8 @@ export default {
         this.messages.type === 'allow' ||
         this.messages.type === 'speech' ||
         this.messages.type === 'checkbox-reply' ||
-        this.messages.type === 'radio-reply'
+        this.messages.type === 'radio-reply' ||
+        this.messages.type === 'divider'
     }
   },
   components: {
