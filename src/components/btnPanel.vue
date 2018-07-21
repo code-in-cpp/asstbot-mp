@@ -57,7 +57,7 @@ export default {
   .panel {
     position:fixed;
     left:0;right:0;bottom:0;
-    background-color: #F2F2F2;
+    background-color: @background-color;
     width: 100%;
     z-index: 1000;
     alignment: bottom;
@@ -75,7 +75,7 @@ export default {
     text-align: center;
     padding-top: 20rpx;
     padding-bottom: 20rpx;
-    background-color: #F2F2F2;
+    background-color: @background-color;
     margin-bottom: 20rpx;
   }
   .cmdbtn {

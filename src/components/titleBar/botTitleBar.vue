@@ -64,7 +64,7 @@ export default {
   height: 112rpx;
   right: 81rpx;
   bottom: -78rpx;
-  background-color: #F2F2F2;
+  background-color: @background-color;
   border-radius: 50%;
   padding: 12rpx;
   z-index: 500;

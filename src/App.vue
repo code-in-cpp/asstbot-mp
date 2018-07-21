@@ -20,7 +20,7 @@ export default {
 
 page{
   height: 100% !important;
-  background-color:#F2F2F2;
+  background-color:@background-color;
   font-size:@font-size-middle;
   font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
@@ -51,11 +51,11 @@ page{
 .content {
   flex: 1;
   display: flex;
-  background-color: #F2F2F2;
+  background-color: @background-color;
 }
 
 .footer {
-  background-color: #F2F2F2;
+  background-color: @background-color;
 }
 
 .small-avatar {
