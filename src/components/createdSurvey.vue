@@ -1,15 +1,17 @@
 <template>
   <view>
-    <block v-for="(survey, i) in surveyList" :key="i">
-      <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
-                   <!--@btnClicked="sliderActionClicked($event, i)"-->
-                   <!--@sliderLeftStart="slider(i)">-->
-      <view  @click="selected(i)">
-        <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
-      </view>
-      <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
-      <!--</slider-left>-->
-    </block>
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+      <block v-for="(survey, i) in surveyList" :key="i">
+        <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
+                     <!--@btnClicked="sliderActionClicked($event, i)"-->
+                     <!--@sliderLeftStart="slider(i)">-->
+        <view  @click="selected(i)">
+          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
+        </view>
+        <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
+        <!--</slider-left>-->
+      </block>
+    </scroll-view>
     <btn-panel v-if="showPanel"
       :panelTitle="getPanelTitle"
       :buttons="panel"

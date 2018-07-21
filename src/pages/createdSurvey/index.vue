@@ -3,9 +3,7 @@
     <view class="page">
       <title-bar title="我创建的..."></title-bar>
       <view class="content">
-        <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-          <created-survey @itemSelected="toshare($event)"/>
-        </scroll-view>
+        <created-survey @itemSelected="toshare($event)"/>
       </view>
     </view>
     <home-button/>
