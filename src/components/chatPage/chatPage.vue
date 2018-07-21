@@ -112,23 +112,9 @@ export default {
       let urlWithParas = redirectUrl + headerParas
 
       if (lastmsg.type === 'redirect') {
-        if (lastmsg.url === 'edit-survey') {
-          this.$store.dispatch('retrieveSurvey')
-            .then(() => {
-              this.delayRedirectTo(lastmsg, urlWithParas)
-            })
-        } else {
-          this.delayRedirectTo(lastmsg, urlWithParas)
-        }
+        this.delayRedirectTo(lastmsg, urlWithParas)
       } else if (lastmsg.type === 'reLaunch') {
-        if (lastmsg.url === 'edit-survey') {
-          this.$store.dispatch('retrieveSurvey')
-            .then(() => {
-              this.delayRelaunch(urlWithParas)
-            })
-        } else {
-          this.delayRelaunch(`${urlWithParas}?scene='relaunchFromBot'`)
-        }
+        this.delayRelaunch(`${urlWithParas}?scene='relaunchFromBot'`)
       }
     },
     buildHeaderParas (option) {
