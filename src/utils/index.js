@@ -25,9 +25,16 @@ export function formatDay (date) {
 
   return [year, month, day].map(formatNumber).join('/')
 }
+function formatDayTime (date) {
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  // const noon = hour < 12 ? '上午' : '下午'
+  return `${formatNumber(hour)}:${formatNumber(minute)}`
+}
 
 export default {
   formatNumber,
   formatTime,
-  formatDay
+  formatDay,
+  formatDayTime
 }

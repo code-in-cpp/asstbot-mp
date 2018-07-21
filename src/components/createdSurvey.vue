@@ -65,9 +65,9 @@ export default {
     //   this.selectedIndex = index
     //   this.showPanel = false
     // },
-    selfTest: function (index) {
+    selfTest: function (sueveyId) {
       wx.navigateTo({
-        url: `/pages/surveyChat/main?id=${index}&scene=test`
+        url: `/pages/surveyChat/main?id=${sueveyId}&scene=test`
       })
     },
     showDetail: function (index) {

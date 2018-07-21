@@ -9,8 +9,10 @@
       <return-button v-else/>
     </view>
     <view class="title primary-color dark">{{title}}</view>
-    <view class="avatar">
-      <bod-avatar :url="avatarUrl" size="50"></bod-avatar>
+    <view class="avatar-wrapper">
+      <view class="avatar">
+        <bod-avatar :url="avatarUrl" size="50"></bod-avatar>
+      </view>
     </view>
   </view>
 </template>
@@ -56,16 +58,26 @@ export default {
   width: 750rpx;
 }
 
-.avatar {
+.avatar-wrapper {
   position: absolute;
+  width: 112rpx;
+  height: 112rpx;
+  right: 81rpx;
+  bottom: -78rpx;
+  background-color: @background-color;
+  border-radius: 50%;
+  padding: 12rpx;
+  z-index: 500;
+
+}
+
+.avatar {
   width: 100rpx;
   height: 100rpx;
-  right: 89rpx;
-  bottom: -63rpx;
   border-radius: 50%;
-  border: solid #25CEC2 4rpx;
-  z-index: 500;
-  background-color: #F8F8F8;
+  border: solid #25CEC2 6rpx;
+
+  
 }
 
 .title {

@@ -1,12 +1,9 @@
 <template>
-
   <movable-area class="move-area">
     <view class="page">
       <title-bar title="我聊过的..."></title-bar>
       <view class="content">
-        <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-          <visited-survey />
-        </scroll-view>
+        <visited-survey/>
       </view>
     </view>
     <home-button/>
@@ -15,7 +12,6 @@
 
 <script>
 import visitedSurvey from '@/components/visitedSurvey'
-
 export default {
   components: {
     visitedSurvey

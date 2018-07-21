@@ -33,16 +33,6 @@ export default {
     chatPage
   },
   methods: {
-    startChat () {
-      this.$store.commit('talkToBotFather')
-      this.$store.dispatch('updateUserInfo')
-        .then(() => {
-          this.$store.dispatch('start')
-        })
-        .catch(e => {
-          console.error(e)
-        })
-    },
     toRedirect (event) {
       this.scene = `redirectTo ${event}`
       this.redirect = event
@@ -54,15 +44,17 @@ export default {
   },
 
   onShow () {
+    this.$store.commit('talkToBotFather')
     if (this.hasLogin) {
       if (this.scene.indexOf('redirectTo') !== -1) {
-        this.$store.commit('talkToBotFather')
+        this.$store.commit('appendDividerMessage')
         this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
         this.redirect = {}
       } else if (this.scene.indexOf('relaunchFrom') !== -1) {
-        this.startChat()
+        this.$store.commit('appendDividerMessage')
+        this.$store.dispatch('start')
       } else if (this.scene === 'onLoad') {
-        this.startChat()
+        this.$store.dispatch('start')
       } else {
         this.$store.commit('talkToBotFather')
       }
@@ -70,7 +62,7 @@ export default {
       this.$store.dispatch('updateAuthStatus')
         .then((auth) => {
           if (auth) {
-            this.startChat()
+            this.$store.dispatch('start')
           }
         })
     }

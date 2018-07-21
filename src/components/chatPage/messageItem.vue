@@ -1,7 +1,10 @@
 <template>
 <block>
     <block v-if="outgoing">
-        <user-say-message :messages="messages"></user-say-message>
+      <user-say-message :messages="messages"></user-say-message>
+    </block>
+    <block v-else-if="messages.gui!=undefined">
+      <gui-divider :message="messages"></gui-divider>
     </block>
     <block v-else>
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="!lastBotMsg || i < received">
@@ -28,6 +31,7 @@
 import userSayMessage from '@/components/userSay/userSayMessage'
 import botSayMessage from '@/components/botSay/botSayMessage'
 import botMsgReceiving from '@/components/botSay/botMsgReceiving'
+import guiDivider from '@/components/mpSay/divider'
 
 export default {
   data () {
@@ -67,7 +71,8 @@ export default {
   components: {
     userSayMessage,
     botSayMessage,
-    botMsgReceiving
+    botMsgReceiving,
+    guiDivider
   },
 
   onLoad () {

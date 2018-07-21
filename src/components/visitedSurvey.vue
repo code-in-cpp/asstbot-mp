@@ -1,30 +1,45 @@
 <template>
-<block>
-  <block v-for="replyInfo in replySurveys" :key="replyInfo.resultId">
-    <navigator :url="'/pages/detail/main?resultId='+replyInfo.id+'&type=reply&score='+replyInfo.score" class="weui-cell weui-cell_access"  hover-class="weui-cell_active">
-      <view class="weui-cell__hd">
-        <bod-avatar size="40" :url="replyInfo.survey.avatarUrl"></bod-avatar>
-      </view>
-      <view class="weui-cell__bd ">
-        <view class="bot-info">
-          <view class="weui-media-box__title">{{replyInfo.survey.title}}</view>
-          <view class="weui-media-box__desc">{{replyInfo.survey.intro}}</view>
+  <view>
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+      <block v-for="(replyInfo, i) in replySurveys" :key="replyInfo.resultId">
+        <view  @click="selected(i)">
+          <survey-item :surveyInfo="replyInfo.survey" :isActive="selected_index==i"></survey-item>
         </view>
-      </view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-  </block>
-</block>
+      </block>
+    </scroll-view>
+  </view>
 </template>
-
 <script>
 import { mapGetters } from 'vuex'
+import surveyItem from '@/components/viewSurvey/surveyItem'
 
 export default {
+  data: function () {
+    return {
+      selectedIndex: 0
+    }
+  },
   computed: {
     ...mapGetters({
       replySurveys: 'getReplySurveys'
     })
+  },
+  methods: {
+    selected (index) {
+      console.log('index', index, 'is clicked')
+      this.selectedIndex = index
+      if (this.replySurveys === undefined || this.replySurveys === null || this.replySurveys.length === 0) {
+        return
+      }
+      console.log('survey id:', this.replySurveys[index].id)
+      wx.navigateTo({
+        url: `/pages/detail/main?resultId=${this.replySurveys[index].id}&type=reply&score=${this.replySurveys[index].score}`
+      })
+    }
+
+  },
+  components: {
+    surveyItem
   },
   onLoad () {
     this.$store.dispatch('querySurveyResultByUser')
@@ -32,8 +47,6 @@ export default {
 }
 </script>
 
-<style>
-.bot-info {
-  min-height: 70rpx
-}
+<style lang="less" scoped>
+
 </style>
