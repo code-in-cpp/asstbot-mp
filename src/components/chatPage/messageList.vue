@@ -67,7 +67,7 @@ export default {
 
 <style>
 .padding-top-64{
-  padding-top: 64rpx;
+  padding-top: 78rpx;
 }
 
 .height-110{

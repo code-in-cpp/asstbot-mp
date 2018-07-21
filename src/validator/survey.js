@@ -80,7 +80,7 @@ class InqueryValidator extends Validator {
     let subjectQuestion = super.validSubjectQuestion(survey)
     let subjectType = this.validSubjectType(survey)
     let subjectAnswer = super.validSubjectAnswer(survey)
-    let conclusion = super.validConclusion(survey)
+    let conclusion = [true]
     return {subjectQuestion, subjectType, subjectAnswer, conclusion}
   }
 }
