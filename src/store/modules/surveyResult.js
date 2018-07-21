@@ -272,13 +272,18 @@ const actions = {
             let subjects = response.data.result.subjects
             let configs = subjects.map((subject, i) => {
               let chartId = 'column_' + (i + 1)
-              let datas2 = subject.answers.map(answer => { return answer.count })
-              let categs = subject.answers.map(answer => { return answer.value })
+              let datas2 = subject.answers.map(answer => { return answer.count }).slice(0, 5)
+              let categs = subject.answers.map(answer => { return answer.value }).slice(0, 5)
               if (categs.length === 0) {
                 console.log('has no valid answer')
                 categs = ['没有回复']
                 datas2 = [0]
               }
+              let maxHight = 4
+              datas2.forEach(element => {
+                maxHight = Math.max(maxHight, element)
+              })
+              console.log('maxhight is', maxHight)
               let config = {
                 canvasId: chartId,
                 type: 'column',
@@ -289,7 +294,7 @@ const actions = {
                     return val
                   },
                   min: -1,
-                  max: 4
+                  max: maxHight
                 },
                 xAxis: {
                   fontColor: '#000000'
