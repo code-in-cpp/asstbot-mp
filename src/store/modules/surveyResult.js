@@ -159,7 +159,7 @@ const getters = {
         break
       }
     }
-    let ret = '没有找个合适的结论'
+    let ret = ''
     for (let index in conclusions) {
       let conclusion = conclusions[index]
       if (conclusion.scoreRange) {

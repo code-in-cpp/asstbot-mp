@@ -94,6 +94,20 @@ page{
   font-size: @font-size-small;
   max-width: 90%;
   background: @incoming-color;
+  position: relative;
+  z-index: 1;
+}
+.incoming-before:before{
+  content: '';
+  width: 0;
+  height: 0;
+  border-right:16rpx solid #fff;
+  border-top: 16rpx solid transparent;
+  border-bottom: 16rpx solid transparent;
+  position: absolute;
+  left: -16rpx;
+  top: 30rpx;
+  z-index: 0;
 }
 .boxFloat{
   width:100%;
@@ -237,9 +251,29 @@ page{
   font-size: @font-size-small;
   margin-right:10rpx;
   text-align:left;
+  position: relative;
+}
+.outgoing-after:after{
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 25rpx;
+  right: -16rpx;
+  border-left: 16rpx solid @s-msg-color;
+  border-top: 16rpx solid transparent;
+  border-bottom: 16rpx solid transparent;
+
 }
   .move-area{
     height: 100vh;
     width: 100%;
   }
+.big-box{
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0rpx;
+  overflow: auto;
+  /*justify-content: center;*/
+}
 </style>

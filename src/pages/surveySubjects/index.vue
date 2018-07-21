@@ -6,8 +6,8 @@
       <view class="weui-cells clear-border">
         <view class="weui-cell clear-border">
           <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click="changeAvatar">
-            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
-            <i class="icon iconfont icon-camera font-camera"></i>
+            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block; border-radius: 50%; overflow: hidden"/>
+            <!--<i class="icon iconfont icon-camera font-camera"></i>-->
           </view>
           <view class="weui-cell__bd">
             <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>

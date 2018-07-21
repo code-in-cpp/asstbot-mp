@@ -1,7 +1,7 @@
 <template>
   <view class="big-box">
     <label class="option-container user-msg-box-color light form-control" v-for="(option, index) in list.items" :key="option"
-           :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">     
+           :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
       <view class="weui-flex">
         <view class="weui-flex__item">
           <block v-if="option.imageUrl">
@@ -17,7 +17,7 @@
         <view class="weui-flex__item checked" v-if="checkArr[index]">
           <icon class="weui-icon-radio" type="success_no_circle" size="16" ></icon>
         </view>
-      </view>  
+      </view>
     </label>
     <checkbox-group class="select-box" @change="selectOption">
       <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
@@ -65,12 +65,6 @@
 </script>
 
 <style scoped>
-  .big-box{
-    display: flex;
-    align-items: center;
-    padding: 20rpx 0;
-    overflow: auto;
-  }
   .image-box{
     overflow: hidden;
     height:300rpx;
