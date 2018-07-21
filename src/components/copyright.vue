@@ -26,7 +26,7 @@
     left:0;right:0;bottom:0;
     /*background-color: transparent;*/
     width: 750rpx;
-    z-index: 900;
+    z-index: @copyright-z-index;
     padding: 0 0;
     margin-bottom: 40rpx;
   }

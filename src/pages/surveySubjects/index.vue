@@ -335,21 +335,26 @@ export default {
   },
 
   onLoad (option) {
-    var survey = this.$store.getters.getSurvey(option.id)
-    console.log(survey)
-    if (survey.subjects.length) {
-      survey.subjects.map(item => {
-        item.imageUrl = item.imageUrl ? item.imageUrl : ''
-        item.answers.map(item => {
-          item.imageUrl = item.imageUrl ? item.imageUrl : ''
-        })
-        return item
+    let that = this
+    this.$store.dispatch('retrieveSurveyById', option.id)
+      .then((survey) => {
+        console.log(survey)
+        if (survey.subjects.length) {
+          survey.subjects.map(item => {
+            item.imageUrl = item.imageUrl ? item.imageUrl : ''
+            item.answers.map(item => {
+              item.imageUrl = item.imageUrl ? item.imageUrl : ''
+            })
+          })
+        }
+        that.updateCurrentSurvey(survey)
+        if (survey.type !== 'exam') {
+          that.initConclusion()
+        }
       })
-    }
-    this.updateCurrentSurvey(survey)
-    if (this.type !== 'exam') {
-      this.initConclusion()
-    }
+    .catch((err) => {
+      console.log(err)
+    })
   },
 
   onShareAppMessage (res) {
