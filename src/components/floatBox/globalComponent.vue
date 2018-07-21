@@ -30,12 +30,6 @@
 </script>
 
 <style lang="less" scoped>
-  .big-box{
-    display: flex;
-    align-items: center;
-    padding: 20rpx 0;
-    overflow: auto;
-  }
   .option-container{
     width: auto;
     border-radius: 10rpx;

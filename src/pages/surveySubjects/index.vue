@@ -6,8 +6,8 @@
       <view class="weui-cells clear-border">
         <view class="weui-cell clear-border">
           <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click="changeAvatar">
-            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block"/>
-            <i class="icon iconfont icon-camera font-camera"></i>
+            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block; border-radius: 50%; overflow: hidden"/>
+            <!--<i class="icon iconfont icon-camera font-camera"></i>-->
           </view>
           <view class="weui-cell__bd">
             <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
@@ -335,21 +335,26 @@ export default {
   },
 
   onLoad (option) {
-    var survey = this.$store.getters.getSurvey(option.id)
-    console.log(survey)
-    if (survey.subjects.length) {
-      survey.subjects.map(item => {
-        item.imageUrl = item.imageUrl ? item.imageUrl : ''
-        item.answers.map(item => {
-          item.imageUrl = item.imageUrl ? item.imageUrl : ''
-        })
-        return item
+    let that = this
+    this.$store.dispatch('retrieveSurveyById', option.id)
+      .then((survey) => {
+        console.log(survey)
+        if (survey.subjects.length) {
+          survey.subjects.map(item => {
+            item.imageUrl = item.imageUrl ? item.imageUrl : ''
+            item.answers.map(item => {
+              item.imageUrl = item.imageUrl ? item.imageUrl : ''
+            })
+          })
+        }
+        that.updateCurrentSurvey(survey)
+        if (survey.type !== 'exam') {
+          that.initConclusion()
+        }
       })
-    }
-    this.updateCurrentSurvey(survey)
-    if (this.type !== 'exam') {
-      this.initConclusion()
-    }
+    .catch((err) => {
+      console.log(err)
+    })
   },
 
   onShareAppMessage (res) {

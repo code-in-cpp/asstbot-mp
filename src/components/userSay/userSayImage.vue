@@ -1,6 +1,9 @@
 <template>
   <view class="wrapper word-text">
-    <image :src="url" class="outgoing"/>
+    <image v-if="url" :src="url" class="outgoing"/>
+    <view  v-if="!url" class="outgoing right-item" style="height: auto;width: auto;margin-right: -10rpx">
+      您已取消上传
+    </view>
   </view>
 </template>
 

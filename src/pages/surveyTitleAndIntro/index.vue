@@ -50,14 +50,10 @@
         this.intro = e.mp.detail.value
       },
       saveSurvey () {
-        console.log(this.title, this.intro)
         if (this.title) {
           this.$store.commit('updateSurveyTitle', this.title)
           this.$store.commit('updateSurveyIntro', this.intro)
-          this.$store.dispatch('editSurvey', this.survey)
-            .then(() => {
-              wx.navigateBack()
-            })
+          wx.navigateBack()
         } else {
           wx.showToast({
             title: '请输入有效标题'

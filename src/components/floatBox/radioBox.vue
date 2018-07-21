@@ -39,12 +39,6 @@
 
 <style lang="less" scoped>
 @import "../../../static/base.less";
-.big-box{
-  display: flex;
-  align-items: center;
-  padding: 20rpx 0;
-  overflow: auto;
-}
 .image-box{
   overflow: hidden;
   height:300rpx;
