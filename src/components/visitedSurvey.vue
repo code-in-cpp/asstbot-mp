@@ -31,8 +31,9 @@ export default {
       if (this.replySurveys === undefined || this.replySurveys === null || this.replySurveys.length === 0) {
         return
       }
+      console.log('survey id:', this.replySurveys[index].id)
       wx.navigateTo({
-        url: `/pages/detail/main?resultId=${this.replySurveys[index].id}+'&type=reply&score=${this.replySurveys[index].score}`
+        url: `/pages/detail/main?resultId=${this.replySurveys[index].id}&type=reply&score=${this.replySurveys[index].score}`
       })
     }
 
