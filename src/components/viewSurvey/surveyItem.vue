@@ -8,7 +8,7 @@
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
         <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
       </view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      <i class="icon iconfont icon-enter iconStyle"></i>
     </view>
   </view>
 </template>
@@ -76,5 +76,15 @@ export default {
   .label-wrapper {
     position: relative;
     padding-top: 10rpx;
+  }
+
+  .iconStyle {
+    /*height: 100%;*/
+    /*line-height: 100%;*/
+    display: flex;//必须有，不然没有效果
+    justify-content: center;
+    align-items: center;
+    color: @p-color;
+    padding-right: 20rpx;
   }
 </style>

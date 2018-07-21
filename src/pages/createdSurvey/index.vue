@@ -4,7 +4,7 @@
       <title-bar title="我创建的..."></title-bar>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
-          <created-survey/>
+          <created-survey @itemSelected="toshare(survey)"/>
         </scroll-view>
       </view>
     </view>
@@ -28,6 +28,21 @@ export default {
     toshare (event) {
       this.shareSurvey = event
     }
+  },
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      return {
+        title: this.shareSurvey.title,
+        path: '/pages/surveyChat/main?id=' + this.shareSurvey.id,
+        imageUrl: this.shareSurvey.avatarUrl
+      }
+    }
+    return {
+      path: '/pages/index/main'
+    }
+  },
+  onload () {
+    console.log('created survey main page')
   }
 }
 </script>
