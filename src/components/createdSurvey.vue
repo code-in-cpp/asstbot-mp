@@ -1,15 +1,17 @@
 <template>
   <view>
-    <block v-for="(survey, i) in surveyList" :key="i">
-      <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
-                   <!--@btnClicked="sliderActionClicked($event, i)"-->
-                   <!--@sliderLeftStart="slider(i)">-->
-      <view  @click="selected(i)">
-        <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
-      </view>
-      <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
-      <!--</slider-left>-->
-    </block>
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+      <block v-for="(survey, i) in surveyList" :key="i">
+        <!--<slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"-->
+                     <!--@btnClicked="sliderActionClicked($event, i)"-->
+                     <!--@sliderLeftStart="slider(i)">-->
+        <view  @click="selected(i)">
+          <survey-item :surveyInfo="survey" :isActive="selected_index==i"></survey-item>
+        </view>
+        <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
+        <!--</slider-left>-->
+      </block>
+    </scroll-view>
     <btn-panel v-if="showPanel"
       :panelTitle="getPanelTitle"
       :buttons="panel"
@@ -27,7 +29,7 @@ import { mapState } from 'vuex'
 export default {
   data: function () {
     return {
-      selected_index: 0,
+      selectedIndex: 0,
       showPanel: false,
       // icons: [
       //   {title: '删除', color: 'red'},
@@ -43,10 +45,16 @@ export default {
       ]
     }
   },
+  watch: {
+    selectedIndex: function (newVal, oldVal) {
+      console.log('selectedIndex changed')
+      this.$emit('itemSelected', {title: this.surveyList[newVal].title, id: this.surveyList[newVal].id, imageUrl: this.surveyList[newVal].avatarUrl})
+    }
+  },
   methods: {
     selected (index) {
       console.log('index', index, 'is clicked')
-      this.selected_index = index
+      this.selectedIndex = index
       this.showPanel = true
     },
     pancelClosed () {
@@ -54,7 +62,7 @@ export default {
     },
     // slider (index) {
     //   // console.log('slider left')
-    //   this.selected_index = index
+    //   this.selectedIndex = index
     //   this.showPanel = false
     // },
     selfTest: function (index) {
@@ -111,7 +119,7 @@ export default {
     // },
     panelActionClicked (index) {
       let operId = index
-      let id = this.surveyList[this.selected_index].id
+      let id = this.surveyList[this.selectedIndex].id
       let that = this
       this.showPanel = false
       // 编辑
@@ -149,10 +157,10 @@ export default {
     }),
     getPanelTitle () {
       if (!(this.surveyList === undefined || this.surveyList === null || this.surveyList.length === 0)) {
-        if (this.selected_index >= this.surveyList.length) {
-          this.selected_index = 0
+        if (this.selectedIndex >= this.surveyList.length) {
+          this.selectedIndex = 0
         }
-        return this.surveyList[this.selected_index].title
+        return this.surveyList[this.selectedIndex].title
       } else {
         return '请选择'
       }
@@ -166,9 +174,9 @@ export default {
   onShareAppMessage (res) {
     if (res.from === 'button') {
       return {
-        title: this.surveyList[this.selected_index].title,
-        path: '/pages/surveyChat/main?id=' + this.surveyList[this.selected_index].id,
-        imageUrl: this.surveyList[this.selected_index].avatarUrl
+        title: this.surveyList[this.selectedIndex].title,
+        path: '/pages/surveyChat/main?id=' + this.surveyList[this.selectedIndex].id,
+        imageUrl: this.surveyList[this.selectedIndex].avatarUrl
       }
     }
     return {

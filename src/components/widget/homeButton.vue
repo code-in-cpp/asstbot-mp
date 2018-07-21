@@ -27,7 +27,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+  @import "../../../static/base.less";
 .card {
   padding: 10px;
 }
@@ -38,7 +39,7 @@ export default {
     line-height: 100rpx;
     border-radius: 50%;
     color: #fff;
-    z-index: 10000;
+    z-index: @home-button-z-index;
     box-shadow:0 0 20rpx #25CEC2;
     overflow: hidden;
     background: #fff;
