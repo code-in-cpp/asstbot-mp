@@ -95,7 +95,7 @@ export default {
     background-color: transparent;
     width: 100%;
     height: 100%;
-    z-index: 900;
+    z-index: @button-panel-z-index;
     padding: 0 0;
   }
 </style>
