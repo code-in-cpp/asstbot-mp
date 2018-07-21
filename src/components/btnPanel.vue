@@ -59,7 +59,7 @@ export default {
     left:0;right:0;bottom:0;
     background-color: #F2F2F2;
     width: 100%;
-    z-index: 1000;
+    z-index: @button-panel-z-index;
     alignment: bottom;
   }
   .title {
