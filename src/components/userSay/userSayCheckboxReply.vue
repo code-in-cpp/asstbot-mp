@@ -6,7 +6,7 @@
       </view>
     </view>
     <view class="swiper-box" v-if="imgUrls.length">
-      <swiper class="swiper">
+      <swiper indicator-dots="true" class="swiper">
         <block v-for="item in imgUrls"  :key="item">
           <swiper-item>
             <image :src="item" class="image" mode="widthFix"/>
