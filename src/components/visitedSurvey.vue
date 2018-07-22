@@ -1,6 +1,6 @@
 <template>
   <view>
-    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title">
+    <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
       <block v-for="(replyInfo, i) in replySurveys" :key="replyInfo.resultId">
         <view  @click="selected(i)">
           <survey-item :surveyInfo="replyInfo.survey" :isActive="selected_index==i"></survey-item>
