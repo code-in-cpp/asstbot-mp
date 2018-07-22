@@ -7,9 +7,6 @@ app.$mount()
 export default {
   config: {
     navigationBarTitleText: '分享到朋友圈',
-    'usingComponents': {
-      'i-icon': '../../../static/iview/icon/index'
-    },
     'enablePullDownRefresh': false,
     'disableScroll': true
   }

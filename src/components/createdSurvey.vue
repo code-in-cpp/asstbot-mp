@@ -171,18 +171,6 @@ export default {
     surveyItem,
     btnPanel
   },
-  onShareAppMessage (res) {
-    if (res.from === 'button') {
-      return {
-        title: this.surveyList[this.selectedIndex].title,
-        path: '/pages/surveyChat/main?id=' + this.surveyList[this.selectedIndex].id,
-        imageUrl: this.surveyList[this.selectedIndex].avatarUrl
-      }
-    }
-    return {
-      path: '/pages/index/main'
-    }
-  },
   onLoad () {
     this.$store.dispatch('retrieveSurvey')
   }
