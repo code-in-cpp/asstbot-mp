@@ -8,7 +8,7 @@
     <view class="swiper-box" v-if="imgUrls.length">
       <swiper indicator-dots="true" class="swiper">
         <block v-for="item in imgUrls"  :key="item">
-          <swiper-item>
+          <swiper-item style="border-radius: 20rpx">
             <image :src="item" class="image" mode="widthFix"/>
           </swiper-item>
         </block>
@@ -52,7 +52,16 @@
         return arr
       }
     },
+    methods: {
+      previewImage (url) {
+        wx.previewImage({
+          current: url,
+          urls: this.imgUrls
+        })
+      }
+    },
     created () {
+      console.log(this.imgsUrls)
     }
   }
 </script>
@@ -75,6 +84,7 @@
   }
   .image{
     width:400rpx;
+    border-radius: 20rpx;
   }
   .swiper-box{
     text-align: right;

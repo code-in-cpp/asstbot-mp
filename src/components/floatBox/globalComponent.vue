@@ -1,9 +1,11 @@
 <template>
-  <view class="big-box">
-    <view class="option-container secondary-color light form-control" @click="doEvent(item)" v-for="(item, index) in list" :key="index" >
-      <view class="value valueBox">{{item.value}}</view>
+  <scroll-view scroll-x="true">
+    <view class="big-box">
+      <view class="option-container secondary-color light form-control" @click="doEvent(item)" v-for="(item, index) in list" :key="index" >
+        <view class="value valueBox">{{item.value}}</view>
+      </view>
     </view>
-  </view>
+  </scroll-view>
 </template>
 
 <script>

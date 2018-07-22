@@ -50,7 +50,6 @@ export default {
         .then(() => {
           this.$store.dispatch('start')
         })
-      console.error('test')
     }
   },
 
@@ -58,6 +57,7 @@ export default {
   },
 
   onShow () {
+    console.log('hasLogin:' + this.hasLogin)
     if (this.hasLogin) {
       this.startChat()
     } else if (this.hasLogin === undefined) {
@@ -68,6 +68,9 @@ export default {
           }
         })
     }
+  },
+  onHide () {
+    console.log('hide:')
   },
 
   onLoad (option) {

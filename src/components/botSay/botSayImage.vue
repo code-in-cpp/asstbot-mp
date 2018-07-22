@@ -5,7 +5,14 @@
 <script>
   export default {
     name: 'botSayImage',
-    props: ['content']
+    props: ['content'],
+    methods: {
+      previewImage (url) {
+        wx.previewImage({
+          current: url
+        })
+      }
+    }
   }
 </script>
 
@@ -13,5 +20,6 @@
 .image{
   width:400rpx;
   margin-left: 20rpx;
+  border-radius: 20rpx;
 }
 </style>

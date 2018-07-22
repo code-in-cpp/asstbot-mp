@@ -8,7 +8,7 @@
       </block>
     </view>
     <view class="right-block">
-      <image v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
+      <image  v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
     </view>
   </view>
 </template>
@@ -21,7 +21,16 @@
         default: {}
       }
     },
-    created () {
+    methods: {
+      previewImage (url) {
+        wx.previewImage({
+          current: url,
+          urls: [url],
+          complete: function () {
+            console.log('complete')
+          }
+        })
+      }
     }
   }
 </script>
@@ -45,5 +54,6 @@
   .image{
     width: 400rpx;
     margin-right: 10rpx;
+    border-radius: 20rpx;
   }
 </style>

@@ -1,17 +1,20 @@
 <template>
-  <view class="big-box">
-    <view class="option-container user-msg-box-color light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
-      <block v-if="option.imageUrl">
-        <view class="image-box imageBox">
-          <image class="image" :src="option.imageUrl">没有上传图片哦</image>
-        </view>
-        <view class="value">{{option.caption}}</view>
-      </block>
-      <block v-else>
-        <view class="value valueBox">{{option.caption}}</view>
-      </block>
+  <scroll-view scroll-x="true">
+    <view class="big-box">
+      <view class="option-container user-msg-box-color light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
+        <block v-if="option.imageUrl">
+          <view class="image-box imageBox"  :class="!option.caption.length?'image-box-1':''">
+            <image class="image" :src="option.imageUrl"></image>
+          </view>
+          <view class="value" v-if="option.caption">{{option.caption}}</view>
+        </block>
+        <block v-else>
+          <view class="value valueBox">{{option.caption}}</view>
+        </block>
+      </view>
     </view>
-  </view>
+  </scroll-view>
+
 </template>
 
 <script>
@@ -45,6 +48,10 @@
   width:300rpx;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
+}
+.image-box-1{
+  border-radius: 20rpx;
+  height: 400rpx;
 }
 .image{
   width:100%;

@@ -278,6 +278,6 @@ page{
   display: flex;
   align-items: center;
   padding: 20rpx 0rpx;
-  overflow: auto;
+  /*overflow: auto;*/
 }
 </style>
