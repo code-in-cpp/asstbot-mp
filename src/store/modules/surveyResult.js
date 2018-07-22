@@ -266,7 +266,22 @@ const actions = {
         })
     })
   },
-
+  deleteSurveyResult ({dispatch, commit}, id) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: surveyResultUrl + '?id=' + id,
+        method: 'DELETE',
+        success: (response) => {
+          console.log('delete user survey result', id)
+          dispatch('querySurveyResultByUser')
+          resolve(response)
+        },
+        faile: (err) => {
+          reject(err)
+        }
+      })
+    })
+  },
   queryAnswerStatics ({commit}, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({

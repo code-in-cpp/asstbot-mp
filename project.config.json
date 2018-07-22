@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -76,7 +76,7 @@
 				{
 					"id": 6,
 					"name": "createdView",
-					"pathName": "pages/createdSurvey/main",
+					"pathName": "pages/visitedSurvey/main",
 					"query": "",
 					"scene": "1008"
 				},

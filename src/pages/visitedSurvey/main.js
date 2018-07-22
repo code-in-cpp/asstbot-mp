@@ -8,7 +8,7 @@ export default {
   config: {
     navigationBarTitleText: '我聊过的...',
     'usingComponents': {
-      // 'i-icon': '../../../static/iview/icon/index'
+      'slider-left': '../../../static/native/slider-left/index'
     },
     'enablePullDownRefresh': false,
     'disableScroll': true
