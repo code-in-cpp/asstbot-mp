@@ -3,6 +3,7 @@
     <view class="page">
       <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
       <emoji-text text="你好[微笑][发怒]"></emoji-text>
+      <button class="weui-btn" type="primary" open-type="share">转发</button>
     </view>
     <home-button/>
   </movable-area>
@@ -23,6 +24,18 @@ export default {
   methods: {
     publish () {
       saveQrCodeToPhotosAlbum(this.surveyId)
+    }
+  },
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      return {
+        title: '测试转发',
+        path: '/pages/surveyChat/main?id=' + '621307d08ba111e8a3241dca33486b22',
+        imageUrl: 'https://www.xiaodamp.cn/asstbot/image/test-profile.png'
+      }
+    }
+    return {
+      path: '/pages/index/main'
     }
   },
   onLoad (option) {

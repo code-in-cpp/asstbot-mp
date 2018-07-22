@@ -28,12 +28,11 @@ export default {
     }
   },
   onShareAppMessage (res) {
-    console.log('enter onShareAppMessage')
     if (res.from === 'button') {
       return {
         title: this.shareSurvey.title,
         path: '/pages/surveyChat/main?id=' + this.shareSurvey.id,
-        imageUrl: this.shareSurvey.avatarUrl
+        imageUrl: this.shareSurvey.imageUrl
       }
     }
     return {

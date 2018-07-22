@@ -73,17 +73,24 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let item = { id: index + 1, correct: true, value: '', question: subjects[index].question }
-      let answer = answers[index].result
-      let spilterCh = ''
-      for (let j in answer) {
-        let element = answer[j]
-        item.correct = element.correct && item.correct
-        item.value = item.value + spilterCh + element.value
-        spilterCh = '，'
-      }
-      ret.push(item)
+      let question = subjects[index].question
+      let questionUrl = (subjects[index].imageUrl === '') ? null : subjects[index].imageUrl
+      let results = answers[index].result
+      let userSay = answers[index].user_say
+      ret.push({ id: index + 1, question, results, correct: answers[index].correct, userSay, questionUrl })
     }
+    // for (let index in answers) {
+    //   let item = { id: index + 1, correct: true, value: '', question: subjects[index].question, questionUrl: subjects[index].url }
+    //   let answer = answers[index].result
+    //   let spilterCh = ''
+    //   for (let j in answer) {
+    //     let element = answer[j]
+    //     item.correct = element.correct && item.correct
+    //     item.value = item.value + spilterCh + element.value
+    //     spilterCh = '，'
+    //   }
+    //   ret.push(item)
+    // }
     console.log('rest ', ret)
     return ret
   },
@@ -259,7 +266,22 @@ const actions = {
         })
     })
   },
-
+  deleteSurveyResult ({dispatch, commit}, id) {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: surveyResultUrl + '?id=' + id,
+        method: 'DELETE',
+        success: (response) => {
+          console.log('delete user survey result', id)
+          dispatch('querySurveyResultByUser')
+          resolve(response)
+        },
+        faile: (err) => {
+          reject(err)
+        }
+      })
+    })
+  },
   queryAnswerStatics ({commit}, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({

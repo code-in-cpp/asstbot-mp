@@ -118,6 +118,7 @@ const mutations = {
     if (type === 'date' || type === 'phone' || type === 'location') {
       if (oldType !== type) {
         state.survey.subjects[index].answers = []
+        state.survey.subjects[index].type = type
       }
       return
     }
