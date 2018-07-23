@@ -79,6 +79,10 @@ var _impleSendmessage = (commit, id, type, data) => {
         resolve(response)
       },
       fail: (err) => {
+        wx.showToast({
+          title: '服务器出问题了，工程师正在抓紧解决',
+          icon: 'none'
+        })
         reject(err)
       }
     })

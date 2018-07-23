@@ -64,8 +64,8 @@ export default {
 
 <style>
 .user-avatar {
-  width: 80rpx;
-  height: 80rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
   margin-right: 20rpx;
   overflow:hidden;  
