@@ -1,7 +1,7 @@
 <template>
   <block>
     <view class="wrapper word-text right-block">
-      <view class="outgoing right-item">
+      <view class="outgoing right-item" v-if="displayText.length">
         {{displayText}}
       </view>
     </view>
@@ -33,10 +33,35 @@
           return chooseItems[0].caption
         } else {
           return this.content.items.reduce((lhs, rhs) => {
-            if (lhs.caption) {
-              return lhs.caption + ',' + rhs.caption
+            if (lhs.caption !== undefined) {
+              if (lhs.caption) {
+                if (rhs.caption) {
+                  return lhs.caption + ',' + rhs.caption
+                } else {
+                  return lhs.caption
+                }
+              } else {
+                if (rhs.caption) {
+                  return rhs.caption
+                } else {
+                  return ''
+                }
+              }
+              // return lhs.caption + ',' + rhs.caption
             } else {
-              return lhs + ',' + rhs.caption
+              if (lhs) {
+                if (rhs.caption) {
+                  return lhs + ',' + rhs.caption
+                } else {
+                  return lhs
+                }
+              } else {
+                if (rhs.caption) {
+                  return rhs.caption
+                } else {
+                  return ''
+                }
+              }
             }
           })
         }

@@ -1,12 +1,12 @@
 <template>
   <scroll-view scroll-x="true">
     <view class="big-box">
-      <view class="option-container user-msg-box-color light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have': !havaImage, 'no-image': havaImage}">
+      <view class="option-container light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have background-fff': !havaImage, 'no-image user-msg-box-color': havaImage}">
         <block v-if="option.imageUrl">
           <view class="image-box imageBox"  :class="!option.caption.length?'image-box-1':''">
             <image class="image" :src="option.imageUrl"></image>
           </view>
-          <view class="value" v-if="option.caption">{{option.caption}}</view>
+          <view class="value" v-if="option.caption"  style="text-align:center;font-size:28rpx;">{{option.caption}}</view>
         </block>
         <block v-else>
           <view class="value valueBox">{{option.caption}}</view>
@@ -66,7 +66,7 @@
   border-radius:20rpx;
   height:400rpx;
   border:1rpx solid #dadada;
-  margin-right:20rpx;
+  margin-left:20rpx;
 }
 .hava .imageBox{
   display: block;
@@ -99,4 +99,7 @@
   width: 300rpx;
   height: 400rpx;
 }
+  .background-fff{
+    background: #fff;
+  }
 </style>
