@@ -33,6 +33,6 @@ export default {
   font-size: @font-size-tiny - 4;
 }
 .weui-flex {
-  margin-bottom: 20rpx;
+  margin-bottom: 30rpx;
 }
 </style>

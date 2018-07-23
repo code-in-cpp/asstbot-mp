@@ -1,7 +1,7 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
+      <message-list :messagesList="messageList" :survey="survey" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
@@ -31,8 +31,12 @@ export default {
   },
   props: {
     messageList: {
-      type: Object,
+      type: Array,
       default: []
+    },
+    survey: {
+      type: Object,
+      default: {}
     }
   },
   computed: {

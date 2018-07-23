@@ -2,7 +2,7 @@
 <movable-area class="move-area">
   <view class="page">
     <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
-    <chat-page :messageList="messageList"/>
+    <chat-page :messageList="messageList" :survey="survey"/>
   </view>
 </movable-area>
 </template>
