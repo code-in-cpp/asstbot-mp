@@ -18,7 +18,10 @@ import selectBox from '@/components/selectBox'
 const urlMaping = {'create-survey': '/pages/createdSurvey/main',
   'visit-survey': '/pages/visitedSurvey/main',
   'edit-survey': '/pages/surveySubjects/main',
-  'bot-creator': '/pages/index/main'}
+  'bot-creator': '/pages/index/main',
+  'test-survey': '/pages/surveyChat/main',
+  'show-survey': '/pages/display/main'
+}
 
 export default {
   data () {
