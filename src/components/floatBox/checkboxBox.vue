@@ -10,7 +10,7 @@
               <view class="image-box imageBox" :class="!option.caption.length?'image-box-1':''">
                 <image class="image" :src="option.imageUrl"></image>
               </view>
-              <view class="value" v-if="option.caption" style="text-align:center;font-size:28rpx;">{{option.caption}}</view>
+              <view class="value image-value" v-if="option.caption">{{option.caption}}</view>
             </block>
             <block v-else>
               <view class="value valueBox">{{option.caption}}</view>
@@ -149,5 +149,16 @@
   }
   .background-fff{
     background: #fff;
+  }
+  .image-value{
+    text-align:center;
+    font-size:28rpx;
+    line-height: 50rpx;
+    height: 100rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
   }
 </style>

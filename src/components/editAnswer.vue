@@ -5,10 +5,10 @@
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
             <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
-                   @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
         </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
@@ -25,13 +25,16 @@
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
           <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
-                  @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                  @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                   :value="answer.value"/>
         </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
+        <picker v-if="surveyType=='jump'" @change="udpateAnswerJump(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
+          <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
+        </picker>
         <view class="weui-cell__ft font-style">
           <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
             <i class="icon iconfont icon-trash"></i>
@@ -44,7 +47,7 @@
       <view class="radio anwser-item anwser-container" v-for="(answer, index) in answers" :key="index">
         <view class="weui-cell__bd height-92">
           <block v-if="type=='date'">
-            <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})">
+            <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})">
               <view class="picker height-line-92">
                 {{answer.value}}
               </view>
@@ -59,16 +62,16 @@
           </block>
           <block v-else-if="type=='phone'">
             <input class="weui-input height-line-92" type="number" placeholder="请输入号码"
-                   @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>
           <block v-else>
             <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
-                   @change="updateAnswerValue({subject: subjectIndex, answer: index, value: $event.mp.detail.value})"
+                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>
         </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, answer: index})">
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
@@ -88,9 +91,7 @@
           添加答案
         </view>
     </label>
-
   </block>
-
 </template>
 
 <script>
@@ -124,6 +125,32 @@ export default {
         return []
       }
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
+    },
+    questionNames () {
+      let survey = this.$store.state.currentSurvey.survey
+      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+        return []
+      }
+      let ret = ['顺序']
+      console.log('----', survey.subjects)
+      for (let index in survey.subjects) {
+        let subject = survey.subjects[index]
+        let pos = parseInt(index) + 1
+        ret.push('题目' + pos + ':' + subject.question.slice(0, 8) + '...')
+      }
+      return ret
+    },
+    displayNames () {
+      let ret = ['顺序']
+      let survey = this.$store.state.currentSurvey.survey
+      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+        return ret
+      }
+      for (let id = 1; id < survey.subjects.length + 1; id++) {
+        ret.push('题目' + id)
+      }
+      console.log('----', ret)
+      return ret
     }
   },
 
@@ -133,21 +160,22 @@ export default {
       'removeAnswer',
       'updateAnswerValue',
       'updateAnswerCorrect',
-      'updateAnswerImagePath'
+      'updateAnswerImagePath',
+      'updateAnswerNext'
     ]),
     toUpdateAnswerCorrect (index) {
       if (this.type === 'radio') {
         this.answers.map((answer, i) => {
           this.updateAnswerCorrect({
             subject: this.subjectIndex,
-            answer: i,
+            index: i,
             value: i === index})
         })
       } else if (this.type === 'checkbox') {
         var correct = !this.answers[index].correct
         this.updateAnswerCorrect({
           subject: this.subjectIndex,
-          answer: index,
+          index: index,
           value: correct
         })
       }
@@ -158,8 +186,17 @@ export default {
       let location = value[0].replace('省', '') + '-' + value[1].replace('市', '')
       this.updateAnswerValue({
         subject: this.subjectIndex,
-        answer: index,
+        index: index,
         value: location
+      })
+    },
+
+    udpateAnswerJump (index, value) {
+      console.log('region select:', index, 'value', value)
+      this.updateAnswerNext({
+        subject: this.subjectIndex,
+        index: index,
+        next: value
       })
     },
 

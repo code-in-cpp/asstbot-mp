@@ -124,6 +124,7 @@
                 </view>
                 </block>
                 <block v-else>
+                    <block v-for="(pollConclusion, i) in conclusions" :key="i">
                     <view class="poll-conclusion-cell" >
                       <view class="inline-cell-title">
                         <view class="weui-cells__title">评语内容：</view>
@@ -137,6 +138,15 @@
                       </view>
                       <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
                     </view>
+                    </block>
+                  <block v-if="subject.type=='jump'">
+                    <view class="weui-cells weui-cells_after-title" >
+                      <view class="weui-cell" @click="addConclusion">
+                        <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+                        <view class="weui-cell__bd">添加评语分类</view>
+                      </view>
+                    </view>
+                  </block>
                 </block>
               </view>
             </scroll-view>
@@ -198,11 +208,15 @@ export default {
         return state.currentSurvey.survey.conclusions
       },
 
-      pollConclusion: state => {
-        return state.currentSurvey.survey.conclusions[0]
-      },
+      // pollConclusion: state => {
+      //   return state.currentSurvey.survey.conclusions[0]
+      // },
       subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
+        if (!state.currentSurvey.survey.subjects) {
+          return subjectTypeName[0]
+        }
+
         return state.currentSurvey.survey.subjects.map((subject) => {
           var index = subjectType.indexOf(subject.type)
           return subjectTypeName[index]
@@ -348,6 +362,7 @@ export default {
             })
           })
         }
+        console.log('comming here............')
         that.updateCurrentSurvey(survey)
         if (survey.type !== 'exam') {
           that.initConclusion()

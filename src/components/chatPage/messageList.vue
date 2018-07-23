@@ -71,8 +71,11 @@ export default {
       this.$emit('renderFinish')
     },
     scollToBottom () {
+      const that = this
       this.scrollToView = ''
-      this.scrollToView = 'bottom'
+      setTimeout(function () {
+        that.scrollToView = 'bottom'
+      }, 100)
     }
   }
 }
