@@ -43,6 +43,7 @@ export default {
   background-color: rgba(0 , 0, 0, 0.5);
   text-align: center;
   color: white;
+  z-index: 1;
 }
 
 .record-status .iconfont {

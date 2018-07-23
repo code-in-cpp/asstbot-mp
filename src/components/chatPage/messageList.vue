@@ -34,6 +34,10 @@ export default {
     showImage: {
       type: Boolean,
       default: false
+    },
+    survey: {
+      type: Object,
+      default: false
     }
   },
   watch: {
