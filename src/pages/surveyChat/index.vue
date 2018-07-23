@@ -20,7 +20,11 @@ export default {
   },
   computed: {
     ...mapState({
-      messageList: state => state.messages.surveybotMsg
+      messageList: state => state.messages.surveybotMsg,
+      previewImageFlag: state => {
+        console.log(state)
+        return state.inputValue.previewShow
+      }
     }),
     ...mapGetters([
       'hasLogin'
@@ -57,16 +61,19 @@ export default {
   },
 
   onShow () {
-    console.log('hasLogin:' + this.hasLogin)
-    if (this.hasLogin) {
-      this.startChat()
-    } else if (this.hasLogin === undefined) {
-      this.$store.dispatch('updateAuthStatus')
-        .then((auth) => {
-          if (auth) {
-            this.startChat()
-          }
-        })
+    if (this.previewImageFlag) {
+      if (this.hasLogin) {
+        this.startChat()
+      } else if (this.hasLogin === undefined) {
+        this.$store.dispatch('updateAuthStatus')
+          .then((auth) => {
+            if (auth) {
+              this.startChat()
+            }
+          })
+      }
+    } else {
+      this.$store.commit('setPreviewTrue')
     }
   },
   onHide () {

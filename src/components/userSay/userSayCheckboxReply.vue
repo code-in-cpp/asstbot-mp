@@ -9,12 +9,11 @@
       <swiper indicator-dots="true" class="swiper">
         <block v-for="item in imgUrls"  :key="item">
           <swiper-item style="border-radius: 20rpx">
-            <image :src="item" class="image" mode="widthFix"/>
+            <image @click="previewImage(item)" :src="item" class="image" mode="widthFix"/>
           </swiper-item>
         </block>
       </swiper>
     </view>
-
   </block>
 
 </template>
@@ -54,6 +53,7 @@
     },
     methods: {
       previewImage (url) {
+        this.$store.commit('setPreviewFalse')
         wx.previewImage({
           current: url,
           urls: this.imgUrls

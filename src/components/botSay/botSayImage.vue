@@ -1,5 +1,5 @@
 <template>
-    <image mode="widthFix" class="image" :src="content" @load="$emit('loadDone', $event)"></image>
+    <image @click="previewImage(content)" mode="widthFix" class="image" :src="content" @load="$emit('loadDone', $event)"></image>
 </template>
 
 <script>
@@ -8,8 +8,10 @@
     props: ['content'],
     methods: {
       previewImage (url) {
+        this.$store.commit('setPreviewFalse')
         wx.previewImage({
-          current: url
+          current: url,
+          urls: [url]
         })
       }
     }
