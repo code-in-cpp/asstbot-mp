@@ -7,8 +7,8 @@
         </view>
       </block>
     </view>
-    <view class="right-block">
-      <image v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
+    <view class="right-block word-text">
+      <image @click="previewImage(content.imageUrl)" v-if="content.imageUrl" class="image" mode="widthFix" :src="content.imageUrl"></image>
     </view>
   </view>
 </template>
@@ -21,7 +21,14 @@
         default: {}
       }
     },
-    created () {
+    methods: {
+      previewImage (url) {
+        this.$store.commit('setPreviewFalse')
+        wx.previewImage({
+          current: url,
+          urls: [url]
+        })
+      }
     }
   }
 </script>
@@ -32,7 +39,7 @@
     flex-direction: row-reverse;
   }
   .word-text{
-    padding-bottom: 10px;
+    padding-bottom: 20rpx;
   }
 
   .right-block{
@@ -45,5 +52,6 @@
   .image{
     width: 400rpx;
     margin-right: 10rpx;
+    border-radius: 20rpx;
   }
 </style>

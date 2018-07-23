@@ -1,7 +1,8 @@
 
 const state = {
   items: [],
-  globalShow: false
+  globalShow: false,
+  previewShow: true
 }
 
 const getters = {
@@ -10,7 +11,6 @@ const getters = {
 const mutations = {
   updateCheckboxData (state, obj) {
     state.items = [...obj.items]
-    console.log('items数组的长度' + state.items.length)
   },
   clearState (state) {
     state.items = []
@@ -20,6 +20,12 @@ const mutations = {
   },
   setGlobalFalse (state) {
     state.globalShow = false
+  },
+  setPreviewFalse (state) {
+    state.previewShow = false
+  },
+  setPreviewTrue (state) {
+    state.previewShow = true
   }
 }
 

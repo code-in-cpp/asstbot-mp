@@ -19,13 +19,34 @@
             <view class="weui-cell__bd">
               <bot-say-text :content="item.question"></bot-say-text>
             </view>
-            <view class="weui-cell__ft">
-              <user-say-text :content="item.value"></user-say-text>
+            <view class="weui-cell__bd">
+              <bot-say-image :content="item.questionUrl" v-if="item.questionUrl!=null" @loadDone="imageLoadEnd"></bot-say-image>
+            </view>
+            <block v-if="item.userSay!=null">
+              <view class="weui-cell__ft">
+              <user-say-text :content="item.userSay"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam'">
                 <i class="icon iconfont icon-right" v-if="item.correct"></i>
                 <i class="icon iconfont icon-close" v-else></i>
               </view>
-            </view>
+              </view>
+            </block>
+            <block v-for="(result, i) in item.results" :key="i">
+              <view class="weui-cell__ft">
+              <user-say-text :content="result.value"></user-say-text>
+              <view class="answer-correct"  v-if="surveyType==='exam' && result.correct != null">
+                <i class="icon iconfont icon-right" v-if="result.correct"></i>
+                <i class="icon iconfont icon-close" v-else></i>
+              </view>
+              </view>
+              <view class="weui-cell__ft" v-if="result.imageUrl!=null&& result.imageUrl!=''">
+              <user-say-image :url="result.imageUrl"></user-say-image>
+              <view class="answer-correct"  v-if="surveyType==='exam' && result.correct != null">
+                <i class="icon iconfont icon-right" v-if="result.correct"></i>
+                <i class="icon iconfont icon-close" v-else></i>
+              </view>
+              </view>
+            </block>  
           </view>
         </scroll-view>
       </view>
@@ -39,6 +60,8 @@
 import { mapState } from 'vuex'
 import userSayText from '@/components/userSay/userSayText'
 import botSayText from '@/components/botSay/botSayText'
+import botSayImage from '@/components/botSay/botSayImage'
+import userSayImage from '@/components/userSay/userSayImage'
 import copyright from '@/components/copyright'
 
 import { formatTime } from '@/utils/index'
@@ -85,11 +108,18 @@ export default {
     this.score = option.score
     this.type = option.type
   },
-
+  methods: {
+    imageLoadEnd (event) {
+      this.scrollToView = ''
+      this.scrollToView = 'bottom'
+    }
+  },
   components: {
     userSayText,
     botSayText,
-    copyright
+    copyright,
+    botSayImage,
+    userSayImage
   }
 }
 </script>

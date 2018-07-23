@@ -1,30 +1,32 @@
 <template>
-  <view class="big-box">
-    <label class="option-container user-msg-box-color light form-control" v-for="(option, index) in list.items" :key="option"
-           :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
-      <view class="weui-flex">
-        <view class="weui-flex__item">
-          <block v-if="option.imageUrl">
-            <view class="image-box imageBox">
-              <image class="image" :src="option.imageUrl"></image>
-            </view>
-            <view class="value">{{option.caption}}</view>
-          </block>
-          <block v-else>
-            <view class="value valueBox">{{option.caption}}</view>
-          </block>
+  <scroll-view scroll-x="true">
+    <view class="big-box">
+      <label class="option-container user-msg-box-color light form-control" v-for="(option, index) in list.items" :key="option"
+             :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
+        <view class="weui-flex">
+          <view class="weui-flex__item">
+            <block v-if="option.imageUrl">
+              <view class="image-box imageBox" :class="!option.caption.length?'image-box-1':''">
+                <image class="image" :src="option.imageUrl"></image>
+              </view>
+              <view class="value" v-if="option.caption">{{option.caption}}</view>
+            </block>
+            <block v-else>
+              <view class="value valueBox">{{option.caption}}</view>
+            </block>
+          </view>
+          <view class="weui-flex__item checked" v-if="checkArr[index]">
+            <icon class="weui-icon-radio" type="success_no_circle" size="16" ></icon>
+          </view>
         </view>
-        <view class="weui-flex__item checked" v-if="checkArr[index]">
-          <icon class="weui-icon-radio" type="success_no_circle" size="16" ></icon>
+      </label>
+      <checkbox-group class="select-box" @change="selectOption">
+        <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
+          <checkbox  :id="'option' + index" class="radioItem" :value="index"></checkbox>
         </view>
-      </view>
-    </label>
-    <checkbox-group class="select-box" @change="selectOption">
-      <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
-        <checkbox  :id="'option' + index" class="radioItem" :value="index"></checkbox>
-      </view>
-    </checkbox-group>
-  </view>
+      </checkbox-group>
+    </view>
+  </scroll-view>
 </template>
 
 <script>
@@ -71,6 +73,10 @@
     width:300rpx;
     border-top-left-radius: 20rpx;
     border-top-right-radius: 20rpx;
+  }
+  .image-box-1{
+    border-radius: 20rpx;
+    height: 400rpx;
   }
   .image{
     width:100%;
