@@ -24,7 +24,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .outgoing {
   width: 60rpx;
   float: right;
