@@ -66,20 +66,9 @@
               </view>
 
               <view v-if="activeIndex == 1">
-                <block v-if="type=='exam'">
-                  <exam-conclusion />
-                </block> 
-                <block v-else>
-                  <poll-conclusion />
-                  <block v-if="type=='jump'">
-                    <view class="weui-cells weui-cells_after-title" >
-                      <view class="weui-cell" @click="addConclusion">
-                        <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-                        <view class="weui-cell__bd">添加评语分类</view>
-                      </view>
-                    </view>
-                  </block>
-                </block>
+                  <exam-conclusion v-if="type=='exam'"/>
+                  <jump-conclusion v-else-if="type=='jump'" />
+                  <poll-conclusion v-else/>
               </view>
             </scroll-view>
           </view>
@@ -109,6 +98,7 @@ import navBar from '@/components/navBar'
 import imageGallery from '@/components/imageGallery'
 import pollConclusion from '@/components/conclusion/pollConclusion'
 import examConclusion from '@/components/conclusion/examConclusion'
+import jumpConclusion from '@/components/conclusion/jumpConclusion'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
 const subjectTypeName = ['单选', '多选', '问答', '日期', '地点', '手机']
@@ -161,7 +151,8 @@ export default {
     navBar,
     imageGallery,
     pollConclusion,
-    examConclusion
+    examConclusion,
+    jumpConclusion
   },
 
   methods: {

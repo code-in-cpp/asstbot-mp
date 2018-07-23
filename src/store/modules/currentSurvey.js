@@ -86,7 +86,9 @@ const mutations = {
     let range = getFreeRange(subjectCount, state.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
     state.survey.conclusions.push({ scoreRange: {min: range.min, max: range.max}, text: '', imageUrl: '' })
   },
-
+  addJumpConclusion (state) {
+    state.survey.conclusions.push({ text: '', imageUrl: '' })
+  },
   initConclusion (state) {
     console.log('init conclusion for pull', state.survey.conclusions)
     let conclusions = state.survey.conclusions
@@ -94,7 +96,6 @@ const mutations = {
       conclusions.push({ text: '', imageUrl: '' })
     }
   },
-
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
   },
