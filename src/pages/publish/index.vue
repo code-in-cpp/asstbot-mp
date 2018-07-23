@@ -1,11 +1,11 @@
 <template>
   <movable-area class="move-area">
     <view class="page">
+      <title-bar :title="surveyTitle"/>
       <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
       <emoji-text text="你好[微笑][发怒]"></emoji-text>
       <button class="weui-btn" type="primary" open-type="share">转发</button>
     </view>
-    <home-button/>
   </movable-area>
 </template>
 

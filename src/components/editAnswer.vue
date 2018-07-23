@@ -4,7 +4,7 @@
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
-            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
         </view>
@@ -24,7 +24,7 @@
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                   :value="answer.value"/>
         </view>

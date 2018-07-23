@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .face {
   background: url('https://www.xiaodamp.cn/asstbot/image/qqface.png') no-repeat scroll 0 0 transparent;
+  background-size: 434px 202px;
   width: 58rpx;
   height: 58rpx;
   vertical-align: middle;
