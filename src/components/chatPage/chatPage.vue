@@ -22,7 +22,8 @@ const urlMaping = {'create-survey': '/pages/createdSurvey/main',
   'bot-creator': '/pages/index/main',
   'test-survey': '/pages/surveyChat/main',
   'show-survey': '/pages/display/main',
-  'publish-survey': '/pages/publish/main'
+  'publish-survey': '/pages/publish/main',
+  'show-survey-result': '/pages/detail/main'
 }
 
 export default {
