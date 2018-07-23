@@ -165,21 +165,24 @@ const mutations = {
     if (subject.type === 'radio' || subject.type === 'checkbox') {
       defaultCorrect = false
     }
-    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: ''})
+    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: '', next: 0})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)
   },
-  updateAnswerValue (state, {subject, answer, value}) {
+  updateAnswerValue (state, {subject, index, value}) {
     console.log(state)
-    state.survey.subjects[subject].answers[answer].value = value
+    state.survey.subjects[subject].answers[index].value = value
   },
-  updateAnswerImagePath (state, {subject, answer, value}) {
-    state.survey.subjects[subject].answers[answer].imageUrl = value
+  updateAnswerImagePath (state, {subject, index, value}) {
+    state.survey.subjects[subject].answers[index].imageUrl = value
     console.log(state.survey)
   },
-  updateAnswerCorrect (state, {subject, answer, value}) {
-    state.survey.subjects[subject].answers[answer].correct = value
+  updateAnswerCorrect (state, {subject, index, value}) {
+    state.survey.subjects[subject].answers[index].correct = value
+  },
+  updateAnswerNext (state, {subject, index, next}) {
+    state.survey.subjects[subject].answers[index].next = next
   }
 }
 
