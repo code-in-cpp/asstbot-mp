@@ -42,7 +42,7 @@ export default {
       this.surveyId = option.id
       this.title = option.title
       this.avatarUrl = option.avatarUrl
-      console.log(JSON.stringify(option))
+      // console.log(JSON.stringify(option))
     } else {
       this.surveyId = '2c0ef34080ea11e88ee1db0f184fef52'
       this.title = '你身边有爱抬杠的人吗？'
