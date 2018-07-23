@@ -32,7 +32,7 @@
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
-        <picker v-if="surveyType=='skip'" @change="udpateAnswerJump(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
+        <picker v-if="surveyType=='jump'" @change="udpateAnswerJump(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
           <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
         </picker>
         <view class="weui-cell__ft font-style">
