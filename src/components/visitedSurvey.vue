@@ -2,11 +2,11 @@
   <view>
     <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
       <block v-for="(replyInfo, i) in replySurveys" :key="replyInfo.resultId">
-        <slider-left :iconTitles="icons" :openWidth="300" :isActive="selected_index==i"
+        <slider-left :iconTitles="icons" :openWidth="300" :isActive="selectedIndex==i"
                      @btnClicked="sliderActionClicked($event, i)"
                      @sliderLeftStart="slider(i)">
         <view  @click="selected(i)">
-          <survey-item :surveyInfo="replyInfo.survey" :isActive="selected_index==i"></survey-item>
+          <survey-item :surveyInfo="replyInfo.survey" :isActive="selectedIndex==i"></survey-item>
         </view>
         </slider-left>
       </block>
