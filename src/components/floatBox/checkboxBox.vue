@@ -1,15 +1,16 @@
 <template>
   <scroll-view scroll-x="true">
     <view class="big-box">
-      <label class="option-container user-msg-box-color light form-control" v-for="(option, index) in list.items" :key="option"
-             :class="{'haveimage': !havaImage, 'no-image': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
+      <view class="label-box"></view>
+      <label class="option-container light form-control" v-for="(option, index) in list.items" :key="option"
+             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
         <view class="weui-flex">
           <view class="weui-flex__item">
             <block v-if="option.imageUrl">
               <view class="image-box imageBox" :class="!option.caption.length?'image-box-1':''">
                 <image class="image" :src="option.imageUrl"></image>
               </view>
-              <view class="value" v-if="option.caption">{{option.caption}}</view>
+              <view class="value" v-if="option.caption" style="text-align:center;font-size:28rpx;">{{option.caption}}</view>
             </block>
             <block v-else>
               <view class="value valueBox">{{option.caption}}</view>
@@ -87,7 +88,7 @@
     border-radius: 20rpx;
     height:400rpx;
     border: 1rpx solid #dadada;
-    margin-right: 20rpx;
+    margin-left: 20rpx;
     position: relative;
   }
   .haveimage .imageBox{
@@ -115,7 +116,17 @@
     display: none;
   }
   .checkMe{
-    /* border: 1rpx solid #188ae2; */
+     border: 1rpx solid #1cb2b9;
+  }
+  .checkMe:after{
+    content:'';
+    /*position: absolute;*/
+    /*width:310rpx;*/
+    /*height: 410rpx;*/
+    /*top:-5rpx;*/
+    /*left:-5rpx;*/
+    /*border:1rpx solid #1cb2b9;*/
+    /*border-radius: 20rpx;*/
   }
   .haveimage .valueBox{
     display: flex;
@@ -127,9 +138,16 @@
     height: 400rpx;
   }
 
+  .value{
+    font-size: 28rpx;
+  }
+
   .haveimage .checked {
     position: absolute;
     top: 10rpx;
     right: 10rpx;
+  }
+  .background-fff{
+    background: #fff;
   }
 </style>

@@ -29,13 +29,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
 					"name": "毛孩子",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=6321f8808d9e11e8b4f2a5ce82b59c4a",
+					"query": "id=18d71c508bf111e8a3241dca33486b22",
 					"scene": "1008"
 				},
 				{
@@ -54,9 +54,9 @@
 				},
 				{
 					"id": 3,
-					"name": "多radio测试",
-					"pathName": "pages/index/main",
-					"query": "id=45e5c37081cb11e8a876e14a6ebd03a1",
+					"name": "美吗",
+					"pathName": "pages/surveyChat/main",
+					"query": "id=32a796808e2811e8bb4d8f00989ff45f",
 					"scene": "1008"
 				},
 				{

@@ -129,6 +129,7 @@
     transition: top .5s;
     top:100%;
     overflow: hidden;
+    z-index: 2;
   }
   .top_0{
     top:0
