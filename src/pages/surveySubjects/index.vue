@@ -34,8 +34,9 @@
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
                       <view class="weui-cell__bd subject-item-style">
-                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" :value="subject.question"
-                               @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
+                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" 
+                            :value="subject.question" focus="true" confirm-type="done"
+                            @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
                       </view>
                       <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
                         <i class="icon iconfont icon-picture font-color"></i>
