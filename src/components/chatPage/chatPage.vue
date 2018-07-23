@@ -1,11 +1,12 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :survey="survey" :showImage="showImage" @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
+      <message-list :messagesList="messageList" :survey="survey" :showImage="showImage" :localmsgsending="localMsgSending"
+          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
-      <command-area />
+      <command-area  @msgSendStatus="handleMsgSendStatus"/>
     </view>
   </block>
 </template>
@@ -20,13 +21,16 @@ const urlMaping = {'create-survey': '/pages/createdSurvey/main',
   'edit-survey': '/pages/surveySubjects/main',
   'bot-creator': '/pages/index/main',
   'test-survey': '/pages/surveyChat/main',
-  'show-survey': '/pages/display/main'
+  'show-survey': '/pages/display/main',
+  'publish-survey': '/pages/publish/main',
+  'show-survey-result': '/pages/detail/main'
 }
 
 export default {
   data () {
     return {
-      displayFinish: false
+      displayFinish: false,
+      localMsgSending: false
     }
   },
   props: {
@@ -147,6 +151,9 @@ export default {
       setTimeout(function () {
         wx.reLaunch({url})
       }, 1500)
+    },
+    handleMsgSendStatus (event) {
+      this.localMsgSending = (event === 'start')
     }
   },
 

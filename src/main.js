@@ -14,6 +14,7 @@ import daLogo from '@/components/view/daLogo'
 import homeButton from '@/components/widget/homeButton'
 import logoTitleBar from '@/components/titleBar/logoTitleBar'
 import userLogin from '@/components/widget/userLogin'
+import loading from '@/components/view/loading'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -30,6 +31,7 @@ Vue.component('da-logo', daLogo)
 Vue.component('home-button', homeButton)
 Vue.component('logo-title-bar', logoTitleBar)
 Vue.component('user-login', userLogin)
+Vue.component('loading', loading)
 
 const app = new Vue(App)
 app.$mount()

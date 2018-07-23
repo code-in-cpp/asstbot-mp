@@ -4,21 +4,7 @@
     <view class="page">
       <title-bar title=" "/>
       <view class="weui-cells clear-border">
-        <view class="weui-cell clear-border"  @click="toEditPage">
-          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click.stop="changeAvatar">
-            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block; border-radius: 50%; overflow: hidden"/>
-            <!--<i class="icon iconfont icon-camera font-camera"></i>-->
-          </view>
-          <view class="weui-cell__bd">
-            <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
-            <!--<input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">-->
-            <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
-            <!--<input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">-->
-          </view>
-          <view class="right-btn-box">
-            <i class="icon iconfont icon-enter"></i>
-          </view>
-        </view>
+        <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       </view>
       <view class="content">
         <view class="weui-tab">
@@ -34,7 +20,7 @@
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
                       <view class="weui-cell__bd subject-item-style">
-                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" 
+                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"
                             :value="subject.question" focus="true" confirm-type="done"
                             @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
                       </view>
@@ -66,78 +52,9 @@
               </view>
 
               <view v-if="activeIndex == 1">
-                <block v-if="type=='exam'">
-                <view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="conclusion">
-                  <view class="subject-divider"></view>
-                  <view class="weui-cells__title">
-                    <view class="weui-cell" >
-                      <view class="weui-cell__bd">
-                        <view class="weui-label">评语分类 {{i+1}}</view>
-                      </view>
-                      <view class="weui-cell__ft">
-                        <view @click="removeConclusion(i)">
-                          <i class="icon iconfont icon-trash"></i>
-                        </view>
-                      </view>
-                    </view>
-                  </view>
-                  <view class="weui-cells weui-cells_after-title">
-                    <view class="weui-cell weui-cell_input" >
-                      <view class="weui-cell__hd">
-                        <view class="weui-label">最少答对题数</view>
-                      </view>
-                      <view class="weui-cell__bd">
-                        <input class="weui-input" type="number" :value="conclusion.scoreRange.min"
-                               @change="updateConclusionMinScore({index: i, value: $event.mp.detail.value})"/>
-                      </view>
-                    </view>
-                    <view class="weui-cell weui-cell_input" >
-                      <view class="weui-cell__hd">
-                        <view class="weui-label">最多答对题数</view>
-                      </view>
-                      <view class="weui-cell__bd">
-                        <input class="weui-input" type="number" :value="conclusion.scoreRange.max"
-                               @change="updateConclusionMaxScore({index: i, value: $event.mp.detail.value})"/>
-                      </view>
-                    </view>
-                    <view class="weui-cell weui-cell_input" >
-                      <view class="weui-cell__hd">
-                        <view class="weui-label">评语内容</view>
-                      </view>
-                      <view class="weui-cell__bd">
-                        <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
-                               @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-                      </view>
-                      <view class="icon-item-style font-style" @click="addConclusionMedia(i)">
-                        <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
-                        <image class="answer-image" v-if="conclusion.imageUrl" :src="conclusion.imageUrl"></image>
-                      </view>
-                    </view>
-                  </view>
-                </view>
-                <view class="subject-divider"></view>
-                <view class="weui-cells weui-cells_after-title" >
-                  <view class="weui-cell" @click="addConclusion">
-                    <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-                    <view class="weui-cell__bd">添加评语分类</view>
-                  </view>
-                </view>
-                </block>
-                <block v-else>
-                    <view class="poll-conclusion-cell" >
-                      <view class="inline-cell-title">
-                        <view class="weui-cells__title">评语内容：</view>
-                        <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
-                          <i class="icon iconfont icon-picture font-color"></i>
-                        </view>
-                      </view>
-                      <view class="poll-conclusion-bd">
-                        <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
-                               @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
-                      </view>
-                      <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
-                    </view>
-                </block>
+                  <exam-conclusion v-if="type=='exam'"/>
+                  <jump-conclusion v-else-if="type=='jump'" />
+                  <poll-conclusion v-else/>
               </view>
             </scroll-view>
           </view>
@@ -145,9 +62,6 @@
       </view>
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
-          <!-- <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn" type="warn" @click="clearSurvey"><i class="icon iconfont icon-delete"></i>清空</button>
-          </view> -->
           <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn btn-font" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
           </view>
@@ -168,6 +82,10 @@ import { mapState, mapMutations } from 'vuex'
 import editAnswer from '@/components/editAnswer'
 import navBar from '@/components/navBar'
 import imageGallery from '@/components/imageGallery'
+import pollConclusion from '@/components/conclusion/pollConclusion'
+import examConclusion from '@/components/conclusion/examConclusion'
+import jumpConclusion from '@/components/conclusion/jumpConclusion'
+import surveyItem from '@/components/viewSurvey/surveyItem'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
 const subjectTypeName = ['单选', '多选', '问答', '日期', '地点', '手机']
@@ -198,11 +116,15 @@ export default {
         return state.currentSurvey.survey.conclusions
       },
 
-      pollConclusion: state => {
-        return state.currentSurvey.survey.conclusions[0]
-      },
+      // pollConclusion: state => {
+      //   return state.currentSurvey.survey.conclusions[0]
+      // },
       subjects: state => state.currentSurvey.survey.subjects,
       typeNames: state => {
+        if (!state.currentSurvey.survey.subjects) {
+          return subjectTypeName[0]
+        }
+
         return state.currentSurvey.survey.subjects.map((subject) => {
           var index = subjectType.indexOf(subject.type)
           return subjectTypeName[index]
@@ -214,17 +136,16 @@ export default {
   components: {
     editAnswer,
     navBar,
-    imageGallery
+    imageGallery,
+    pollConclusion,
+    examConclusion,
+    jumpConclusion,
+    surveyItem
   },
 
   methods: {
     ...mapMutations([
       'updateCurrentSurvey',
-      'updateConclusionMinScore',
-      'updateConclusionMaxScore',
-      'updateConclusionText',
-      'addConclusion',
-      'removeConclusion',
       'addSubject',
       'initConclusion',
       'clearSurvey',
@@ -278,45 +199,6 @@ export default {
         }
       })
     },
-
-    addConclusionMedia (index) {
-      const that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: function (res) {
-          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
-            console.log(res)
-            that.$store.commit('updateConclusionimage', {index: index, imageUrl: res})
-          }).catch(error => {
-            console.error(error)
-          })
-        }
-      })
-    },
-    // editTitle () {
-    //   this.titleEditFlag = true
-    // },
-    // changeTitle (e) {
-    //   if (e.mp.detail.value) {
-    //     this.$store.commit('updateSurveyTitle', e.mp.detail.value)
-    //     this.titleEditFlag = false
-    //   } else {
-    //     wx.showToast({title: '请输入标题'})
-    //   }
-    // },
-    // editIntro () {
-    //   this.introEditFlag = true
-    // },
-    // changeIntro (e) {
-    //   if (e.mp.detail.value) {
-    //     this.$store.commit('updateSurveyIntro', e.mp.detail.value)
-    //     this.introEditFlag = false
-    //   } else {
-    //     wx.showToast({title: '请输入简介'})
-    //   }
-    // },
     toEditPage () {
       wx.navigateTo({
         url: '../surveyTitleAndIntro/main'
@@ -348,6 +230,7 @@ export default {
             })
           })
         }
+        console.log('comming here............')
         that.updateCurrentSurvey(survey)
         if (survey.type !== 'exam') {
           that.initConclusion()
@@ -376,10 +259,6 @@ export default {
 </script>
 
 <style>
-.poll-style {
-  padding-top: 10rpx;
-}
-
 .content {
   flex-direction: column;
 }
@@ -414,15 +293,6 @@ export default {
   font-size: 32rpx;
 }
 
-.inline-cell-title{
-  display: inline-flex;
-  border-bottom:1rpx solid #dadada;
-}
-
-.poll-conclusion-bd {
-  margin-top: 30rpx;
-  margin-left: 30rpx;
-}
 .subject-style{
   height:92rpx;
   overflow: hidden;
@@ -440,12 +310,7 @@ export default {
   width:48rpx;
   text-align: center;
 }
-.font-style{
-  height:92rpx;
-  width:92rpx;
-  line-height:92rpx;
-  text-align:center;
-}
+
 .subject-hieght-line{
   height:100%;
   line-height: 92rpx;
@@ -457,13 +322,6 @@ export default {
   margin-top:11rpx;
 }
 
-.poll-conclusion-cell{
-  padding:20rpx 30rpx;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-}
-
 .font-camera{
   position:absolute;
   top:0;
@@ -473,11 +331,6 @@ export default {
   height:32rpx;
   line-height:32rpx;
   text-align:center;
-}
-
-.weui-textarea{
-  background-color: #ffffff;
-  height: 100rpx;
 }
 
 .right-btn-box{
