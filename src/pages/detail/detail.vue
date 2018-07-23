@@ -50,7 +50,11 @@
           </view>
         </scroll-view>
       </view>
-      <copyright v-if="showFooter"/>
+      <view class="weui-panel__footer">
+        <view class='weui-media-box__footer'>
+          <copyright v-if="showFooter"/>
+        </view>
+      </view>
     </view>
     <home-button/>
   </movable-area>
@@ -99,7 +103,8 @@ export default {
       return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId, this.type)))
     },
     showFooter () {
-      return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
+      // return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
+      return true
     }
   },
 
@@ -148,11 +153,24 @@ export default {
   height: 160rpx!important;
   border-radius: 50%;
 }
-.weui-panel__bd{
+.weui-panel__bd {
   display : flex ;
   flex-flow : row;
   padding :15px;
   border-bottom: 1rpx solid #dadada;
+}
+
+.weui-panel__footer {
+  display : flex ;
+  flex-flow : row;
+  padding :15px;
+  border-top: 1rpx solid #dadada;
+}
+
+.weui-media-box__footer{
+  padding-right: 30rpx;
+  padding-left: 50rpx;
+  padding-bottom: 80rpx;
 }
 
 .weui-media-box__desc {
@@ -162,6 +180,7 @@ export default {
 .responser-name {
   padding-top: 0px;
   text-align: center;
+  font-size: 25rpx;
 }
 
 .detail-cell {
