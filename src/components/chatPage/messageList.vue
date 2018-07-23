@@ -12,6 +12,9 @@
       <block v-if="waitingBotMessage">
         <bot-msg-receiving/>
       </block>
+      <block v-if="localmsgsending">
+        <user-say-sending/>
+      </block>
       <view id="bottom"></view>
     </view>
   </scroll-view>
@@ -19,6 +22,7 @@
 
 <script>
 import messageItem from '@/components/chatPage/messageItem'
+import userSaySending from '@/components/userSay/userSaySending'
 
 export default {
   data () {
@@ -38,6 +42,10 @@ export default {
     survey: {
       type: Object,
       default: false
+    },
+    localmsgsending: {
+      type: Boolean,
+      default: false
     }
   },
   watch: {
@@ -54,7 +62,8 @@ export default {
     }
   },
   components: {
-    messageItem
+    messageItem,
+    userSaySending
   },
   methods: {
     renderComplete () {

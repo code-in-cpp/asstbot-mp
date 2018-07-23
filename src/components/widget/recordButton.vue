@@ -67,18 +67,15 @@ export default {
         console.log('recorder stop', res)
         // const { tempFilePath } = res
         if (that.recordStatus === 'inRecording') {
-          wx.showLoading({
-            title: '认真理解中',
-            mask: true
-          })
+          that.$emit('msgSendStatus', 'start')
           that.$store.dispatch('getAsrResult', res.tempFilePath)
             .then(() => {
               that.$store.commit('clearState')
               that.items = []
-              wx.hideLoading()
+              that.$emit('msgSendStatus', 'end')
             })
             .catch(() => {
-              wx.hideLoading()
+              that.$emit('msgSendStatus', 'end')
               wx.showToast({
                 title: '没听懂:(',
                 icon: 'none'
