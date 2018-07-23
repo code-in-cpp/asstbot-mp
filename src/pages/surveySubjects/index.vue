@@ -4,21 +4,7 @@
     <view class="page">
       <title-bar title=" "/>
       <view class="weui-cells clear-border">
-        <view class="weui-cell clear-border"  @click="toEditPage">
-          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" @click.stop="changeAvatar">
-            <image :src="displayAvatar" style="width: 50px; height: 50px; display: block; border-radius: 50%; overflow: hidden"/>
-            <!--<i class="icon iconfont icon-camera font-camera"></i>-->
-          </view>
-          <view class="weui-cell__bd">
-            <view v-if="!titleEditFlag" @click="editTitle">{{survey.title}}</view>
-            <!--<input v-if="titleEditFlag" style="height: 48rpx" placeholder="请输入标题" type="text" focus="true" @blur="changeTitle" :value="survey.title">-->
-            <view v-if="!introEditFlag" style="font-size: 13px;color: #888888;" @click="editIntro">{{survey.intro}}</view>
-            <!--<input v-if="introEditFlag" style="height: 36rpx" placeholder="请输入简介" type="text" focus="true" @blur="changeIntro" :value="survey.intro">-->
-          </view>
-          <view class="right-btn-box">
-            <i class="icon iconfont icon-enter"></i>
-          </view>
-        </view>
+        <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       </view>
       <view class="content">
         <view class="weui-tab">
@@ -34,7 +20,7 @@
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
                       <view class="weui-cell__bd subject-item-style">
-                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题" 
+                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"
                             :value="subject.question" focus="true" confirm-type="done"
                             @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
                       </view>
@@ -99,6 +85,7 @@ import imageGallery from '@/components/imageGallery'
 import pollConclusion from '@/components/conclusion/pollConclusion'
 import examConclusion from '@/components/conclusion/examConclusion'
 import jumpConclusion from '@/components/conclusion/jumpConclusion'
+import surveyItem from '@/components/viewSurvey/surveyItem'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
 const subjectTypeName = ['单选', '多选', '问答', '日期', '地点', '手机']
@@ -152,7 +139,8 @@ export default {
     imageGallery,
     pollConclusion,
     examConclusion,
-    jumpConclusion
+    jumpConclusion,
+    surveyItem
   },
 
   methods: {
