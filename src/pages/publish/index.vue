@@ -1,25 +1,24 @@
 <template>
   <movable-area class="move-area">
     <view class="page">
-      <title-bar :title="surveyTitle"/>
+      <title-bar :title="title"/>
+      <view class="header-item">
+        <bod-avatar :url="avatarUrl" size="80"/>
+      </view>
       <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
-      <emoji-text text="你好[微笑][发怒]"></emoji-text>
-      <button class="weui-btn" type="primary" open-type="share">转发</button>
+      <button class="weui-btn" type="primary" open-type="share">转发给好友</button>
     </view>
   </movable-area>
 </template>
 
 <script>
 import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
-import emojiText from '@/components/emojiText'
 
 export default {
   data: {
     surveyId: '',
-    title: ''
-  },
-  components: {
-    emojiText
+    title: '',
+    avatarUrl: ''
   },
   methods: {
     publish () {
@@ -29,9 +28,9 @@ export default {
   onShareAppMessage (res) {
     if (res.from === 'button') {
       return {
-        title: '测试转发',
-        path: '/pages/surveyChat/main?id=' + '621307d08ba111e8a3241dca33486b22',
-        imageUrl: 'https://www.xiaodamp.cn/asstbot/image/test-profile.png'
+        title: this.title,
+        path: '/pages/surveyChat/main?id=' + this.id,
+        imageUrl: this.avatarUrl
       }
     }
     return {
@@ -42,9 +41,11 @@ export default {
     if (option.id) {
       this.surveyId = option.id
       this.title = option.title
+      this.avatarUrl = option.avatarUrl
     } else {
       this.surveyId = '2c0ef34080ea11e88ee1db0f184fef52'
       this.title = '你身边有爱抬杠的人吗？'
+      this.avatarUrl = 'https://www.xiaodamp.cn/asstbot/image/nobody.png'
     }
   }
 }
