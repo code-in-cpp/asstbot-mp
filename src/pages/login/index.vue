@@ -2,7 +2,7 @@
   <view class="page">
     <view class="content primary-color dark">
       <view>
-        <image src="../../../static/image/logo-main.png" mode="widthFix"/>
+        <image src="../../static/image/logo-main.png" mode="widthFix"/>
       </view>
       <view class="button-area" v-if="!userAuthed">
         <button type="primary" open-type="getUserInfo" @getuserinfo="gotUserInfo">微信登录</button>
@@ -72,6 +72,7 @@ export default {
 
 .content image {
   width: 400rpx;
+  height: 516rpx
 }
 .button-area button {
   margin: 20rpx 100rpx;
