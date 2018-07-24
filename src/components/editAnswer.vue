@@ -4,7 +4,7 @@
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
-            <input class="weui-input height-line-92" :placeholder="'请输入选项'+(index+1)" focus="true"
+            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
         </view>
@@ -24,7 +24,7 @@
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92" :placeholder="'请输入选项'+(index+1)" focus="true"
+          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                   :value="answer.value"/>
         </view>
@@ -32,7 +32,7 @@
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
-        <picker v-if="surveyType=='jump'" @change="udpateAnswerJump(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
+        <picker v-if="surveyType=='quiz'" @change="udpateAnswerQuiz(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
           <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
         </picker>
         <view class="weui-cell__ft font-style">
@@ -66,7 +66,7 @@
                    :value="answer.value"/>
           </block>
           <block v-else>
-            <input class="weui-input height-line-92" :placeholder="'请输入选项'+(index+1)"
+            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>
@@ -88,7 +88,7 @@
           <i class="icon iconfont icon-add"></i>
         </view>
         <view class="weui-cell__ft height-line-92">
-          添加选项
+          添加答案
         </view>
     </label>
   </block>
@@ -199,7 +199,7 @@ export default {
       })
     },
 
-    udpateAnswerJump (index, value) {
+    udpateAnswerQuiz (index, value) {
       console.log('region select:', index, 'value', value)
       this.updateAnswerNext({
         subject: this.subjectIndex,
