@@ -1,10 +1,10 @@
 <template>
   <scroll-view scroll-x="true">
     <view class="big-box">
-      <view class="option-container light form-control" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have background-fff': !havaImage, 'no-image user-msg-box-color': havaImage}">
+      <view class="option-container light form-control" @touchstart="touchStart(option)" @touchend="touchEnd" @touch="touchOn" @click="selectItem(option)" v-for="option in list.items" :key="option" :class="{'have background-fff': !havaImage, 'no-image user-msg-box-color': havaImage}">
         <block v-if="option.imageUrl">
-          <view class="image-box imageBox"  :class="!option.caption.length?'image-box-1':''">
-            <image class="image" :src="option.imageUrl"></image>
+          <view class="image-box imageBox" :class="!option.caption.length?'image-box-1':''">
+            <image class="image" mode="aspectFill" :src="option.imageUrl"></image>
           </view>
           <view class="value image-value" v-if="option.caption">{{option.caption}}</view>
         </block>
@@ -21,7 +21,10 @@
   export default {
     data () {
       return {
-        value: ''
+        value: '',
+        touchStartTime: '',
+        touchEndTime: '',
+        timeout: ''
       }
     },
     name: 'radioBox',
@@ -34,7 +37,28 @@
     },
     methods: {
       selectItem (obj) {
-        this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
+        if (this.touchEndTime - this.touchStartTime < 350) {
+          this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
+        }
+      },
+      touchStart (option) {
+        const that = this
+        this.touchStartTime = Date.parse(new Date())
+        this.timeout = setTimeout(function () {
+          if (option.imageUrl) {
+            that.$store.commit('setPreviewFalse')
+            wx.previewImage({
+              current: option.imageUrl,
+              urls: [option.imageUrl]
+            })
+          }
+        }, 350)
+      },
+      touchEnd () {
+        this.touchEndTime = Date.parse(new Date())
+        if (this.touchEndTime - this.touchStartTime < 350) {
+          clearTimeout(this.timeout)
+        }
       }
     }
   }

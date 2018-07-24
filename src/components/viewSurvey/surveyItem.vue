@@ -1,10 +1,10 @@
 <template>
   <view class = padding :class="isActive? 'active-item': '' ">
     <view class="list-item" >
-      <view class="label-wrapper">
-        <view-avatar :url="surveyInfo.avatarUrl"></view-avatar>
+      <view class="label-wrapper" @click="changeAvatar">
+        <view-avatar :url="surveyInfo.avatarUrl" @click="changeAvatar"></view-avatar>
       </view>
-      <view class="survey-info">
+      <view class="survey-info" @click="changeInfo">
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
         <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
       </view>
@@ -31,6 +31,16 @@ export default {
   components: {
     viewAvatar,
     Badge
+  },
+  methods: {
+    changeInfo () {
+      console.log('survey item, try to change info')
+      this.$emit('changeInfo')
+    },
+    changeAvatar () {
+      console.log('survey item, try to change avatar')
+      this.$emit('changeAvatar')
+    }
   }
 }
 </script>

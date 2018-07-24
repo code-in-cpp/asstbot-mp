@@ -22,7 +22,6 @@ export default {
     ...mapState({
       messageList: state => state.messages.surveybotMsg,
       previewImageFlag: state => {
-        console.log(state)
         return state.inputValue.previewShow
       }
     }),

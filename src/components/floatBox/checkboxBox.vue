@@ -1,14 +1,13 @@
 <template>
   <scroll-view scroll-x="true">
     <view class="big-box">
-      <view class="label-box"></view>
       <label class="option-container light form-control" v-for="(option, index) in list.items" :key="option"
-             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)">
+             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)" @touchstart="touchStart(option)" @touchend="touchEnd(option)">
         <view class="weui-flex">
           <view class="weui-flex__item">
             <block v-if="option.imageUrl">
               <view class="image-box imageBox" :class="!option.caption.length?'image-box-1':''">
-                <image class="image" :src="option.imageUrl"></image>
+                <image class="image" mode="aspectFill" :src="option.imageUrl"></image>
               </view>
               <view class="value image-value" v-if="option.caption">{{option.caption}}</view>
             </block>
@@ -21,11 +20,11 @@
           </view>
         </view>
       </label>
-      <checkbox-group class="select-box" @change="selectOption">
-        <view class="selectRadio" v-for="(option, index) in list.items" :key="option">
-          <checkbox  :id="'option' + index" class="radioItem" :value="index"></checkbox>
-        </view>
-      </checkbox-group>
+      <!--<checkbox-group class="select-box" @change="selectOption">-->
+        <!--<view class="selectRadio" v-for="(option, index) in list.items" :key="option">-->
+          <!--<checkbox  :id="'option' + index" class="radioItem" :value="index"></checkbox>-->
+        <!--</view>-->
+      <!--</checkbox-group>-->
     </view>
   </scroll-view>
 </template>
@@ -35,7 +34,11 @@
     data () {
       return {
         checkArr: [],
-        a: 1
+        a: 1,
+        touchStartTime: '',
+        touchEndTime: '',
+        timeout: '',
+        checkArrIndex: []
       }
     },
     name: 'radioBox',
@@ -48,15 +51,55 @@
     },
     methods: {
       selectOption (e) {
-        let arr = []
-        e.mp.detail.value.map(item => {
-          arr = [...arr, this.list.items[item]]
-        })
-        this.$store.commit('updateCheckboxData', {items: arr})
+        if (this.touchEndTime - this.touchStartTime < 350) {
+          let arr = []
+          this.checkArrIndex.map(item => {
+            arr = [...arr, this.list.items[item]]
+          })
+          this.$store.commit('updateCheckboxData', {items: arr})
+        }
+      },
+      saveInArray (item, arr) {
+        if (arr.includes(item)) {
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === item) {
+              arr.splice(i, 1)
+            }
+          }
+        } else {
+          arr.push(item)
+        }
       },
       checked (index) {
-        this.checkArr[index] = !this.checkArr[index]
-        this.a += 1
+        if (this.touchEndTime - this.touchStartTime < 350) {
+          let a = !this.checkArr[index]
+          this.checkArr.splice(index, 1, a)
+          this.saveInArray(index, this.checkArrIndex)
+          let arr = []
+          this.checkArrIndex.map(item => {
+            arr = [...arr, this.list.items[item]]
+          })
+          this.$store.commit('updateCheckboxData', {items: arr})
+        }
+      },
+      touchStart (option) {
+        const that = this
+        this.touchStartTime = Date.parse(new Date())
+        this.timeout = setTimeout(function () {
+          if (option.imageUrl) {
+            that.$store.commit('setPreviewFalse')
+            wx.previewImage({
+              current: option.imageUrl,
+              urls: [option.imageUrl]
+            })
+          }
+        }, 350)
+      },
+      touchEnd () {
+        this.touchEndTime = Date.parse(new Date())
+        if (this.touchEndTime - this.touchStartTime < 350) {
+          clearTimeout(this.timeout)
+        }
       }
     },
     created () {

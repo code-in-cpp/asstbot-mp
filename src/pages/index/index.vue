@@ -21,7 +21,10 @@ export default {
   },
   computed: {
     ...mapState({
-      messageList: state => state.messages.creatorBotMsg
+      messageList: state => state.messages.creatorBotMsg,
+      previewImageFlag: state => {
+        return state.inputValue.previewShow
+      }
     }),
     ...mapGetters([
       'hasLogin'
@@ -44,31 +47,34 @@ export default {
   },
 
   onShow () {
-    this.$store.commit('talkToBotFather')
-    if (this.hasLogin) {
-      if (this.scene.indexOf('redirectTo') !== -1) {
-        this.$store.commit('appendDividerMessage')
-        this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
-        this.redirect = {}
-      } else if (this.scene.indexOf('relaunchFrom') !== -1) {
-        this.$store.commit('appendDividerMessage')
-        this.$store.dispatch('start')
-      } else if (this.scene === 'onLoad') {
-        this.$store.dispatch('start')
-      } else {
-        this.$store.commit('talkToBotFather')
+    if (this.previewImageFlag) {
+      this.$store.commit('talkToBotFather')
+      if (this.hasLogin) {
+        if (this.scene.indexOf('redirectTo') !== -1) {
+          this.$store.commit('appendDividerMessage')
+          this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
+          this.redirect = {}
+        } else if (this.scene.indexOf('relaunchFrom') !== -1) {
+          this.$store.commit('appendDividerMessage')
+          this.$store.dispatch('start')
+        } else if (this.scene === 'onLoad') {
+          this.$store.dispatch('start')
+        } else {
+          this.$store.commit('talkToBotFather')
+        }
+      } else if (this.hasLogin === undefined) {
+        this.$store.dispatch('updateAuthStatus')
+          .then((auth) => {
+            if (auth) {
+              this.$store.dispatch('start')
+            }
+          })
       }
-    } else if (this.hasLogin === undefined) {
-      this.$store.dispatch('updateAuthStatus')
-        .then((auth) => {
-          if (auth) {
-            this.$store.dispatch('start')
-          }
-        })
+      this.scene = ''
+    } else {
+      this.$store.commit('setPreviewTrue')
     }
-    this.scene = ''
   },
-
   onLoad (option) {
     if (option.scene) {
       this.scene = option.scene
