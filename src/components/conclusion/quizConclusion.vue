@@ -20,7 +20,7 @@
     <view class="weui-cells weui-cells_after-title">
     <view class="poll-conclusion-bd">        
     <textarea class="weui-textarea" placeholder="请输入文本" :value="conclusion.text"
-        @input="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+        @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
     </view>
     <image-gallery v-if="conclusion.imageUrl" :imageUrl="conclusion.imageUrl" :index="i" :type="'pollConclusion'"></image-gallery>
     </view>
