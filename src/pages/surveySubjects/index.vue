@@ -137,7 +137,7 @@ export default {
         this.items[0] = '题目 ( ' + newValue.subjects.length + ' )'
       }
       if (newValue.conclusions !== undefined & newValue.conclusions !== null) {
-        this.items[1] = '结论 ( ' + newValue.conclusions.length + ' )'
+        this.items[1] = '评语 ( ' + newValue.conclusions.length + ' )'
       }
       return this.items
     }
