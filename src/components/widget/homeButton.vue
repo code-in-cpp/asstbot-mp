@@ -20,7 +20,7 @@ export default {
   methods: {
     toHome () {
       wx.reLaunch({
-        url: '../index/main'
+        url: '../index/main?scene=relaunchFrom'
       })
     }
   }
