@@ -14,8 +14,7 @@
         <view class="weui-flex__item"  v-if="!voiceMode">
           <textarea class="word-textarea primary-color revert" :value="currentMessage"
             @input="valueInput" adjust-position auto-height="true"
-            cursor-spacing="14"  @confirm="confirm($event)"
-            :focus="textAreaFocus"/>
+            cursor-spacing="14"  @confirm="confirm($event)"/>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>
