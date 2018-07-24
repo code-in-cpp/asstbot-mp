@@ -3,9 +3,7 @@
   <movable-area class="move-area">
     <view class="page">
       <title-bar title=" "/>
-      <view class="weui-cells clear-border">
-        <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
-      </view>
+      <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       <view class="content">
         <view class="weui-tab">
           <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
