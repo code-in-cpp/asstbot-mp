@@ -93,7 +93,7 @@ export default {
     return {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
-      items: ['题目', '评语'],
+      items: ['题目', '结论'],
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false
@@ -134,10 +134,10 @@ export default {
         return
       }
       if (newValue.subjects !== undefined & newValue.subjects !== null) {
-        this.items[0] = '题目(' + newValue.subjects.length + ')'
+        this.items[0] = '题目 (' + newValue.subjects.length + ')'
       }
       if (newValue.conclusions !== undefined & newValue.conclusions !== null) {
-        this.items[1] = '评语(' + newValue.conclusions.length + ')'
+        this.items[1] = '结论 (' + newValue.conclusions.length + ')'
       }
       return this.items
     }
