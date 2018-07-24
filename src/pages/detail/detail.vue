@@ -1,20 +1,29 @@
 <template>
   <movable-area class="move-area">
     <view class="page">
-      <title-bar :title="surveyTitle"/>
+      <title-bar title="聊天记录"/>
       <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
           <image :src="responderAvator" class="middle-avatar"/>
           <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-          <view class="weui-media-box__title" v-if="surveyType==='exam'">答对 {{score}} 题</view>
-          <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
+          <!--<view class=" title-desc"> 标题：超长标题，够不够长，超长标题，够不够长超长标题，够不够长，超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长</view>-->
+          <view class="weui-media-box__title"> 标题： {{surveyTitle}}</view>
           <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
       </view>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
+          <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
+            <bot-say-text :content=getResult></bot-say-text>
+          </view>
+          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.length > 0">
+            <bot-say-text :content=getSurveyConclusion></bot-say-text>
+          </view>
+          <view class="detail-cell weui-cell__bd">
+            <bot-say-text content="聊天记录如下："></bot-say-text>
+          </view>
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
             <view class="weui-cell__bd">
               <bot-say-text :content="item.question"></bot-say-text>
@@ -103,6 +112,12 @@ export default {
     showFooter () {
       // return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
       return true
+    },
+    getResult () {
+      return '共答对' + this.score + '题'
+    },
+    getSurveyConclusion () {
+      return '评语是：' + this.surveyConclusion
     }
   },
 
@@ -251,5 +266,13 @@ export default {
     line-height: 80rpx;
     height:80rpx;
   }
-
+  .title-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 450rpx;
+    max-height: 110rpx;
+  }
 </style>
