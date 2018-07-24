@@ -13,7 +13,7 @@
                 @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
         </view>
         <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
-    </view>
+        </view>
     </block>
 </block>
 </template>
@@ -62,6 +62,12 @@ export default {
 </script>
 
 <style scoped>
+
+.font-style{
+  width:92rpx;
+  text-align:center;
+  line-height: 92rpx;
+}
 
 .poll-conclusion-cell{
   padding:20rpx 30rpx;
