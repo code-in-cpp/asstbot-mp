@@ -46,14 +46,12 @@
                 <i class="icon iconfont icon-close" v-else></i>
               </view>
               </view>
-            </block>  
+            </block>
           </view>
         </scroll-view>
       </view>
       <view class="weui-panel__footer">
-        <view class='weui-media-box__footer'>
-          <copyright v-if="showFooter"/>
-        </view>
+        <copyright v-if="showFooter"/>
       </view>
     </view>
     <home-button/>
@@ -166,14 +164,17 @@ export default {
 .weui-panel__footer {
   display : flex ;
   flex-flow : row;
-  padding :15px;
-  border-top: 1rpx solid #dadada;
+  border-top: 0;
+  padding-top: 10rpx;
+  height: 110rpx;
+  background-color:#EEEEEE;
 }
 
 .weui-media-box__footer{
-  padding-right: 30rpx;
-  padding-left: 50rpx;
-  padding-bottom: 80rpx;
+  /*padding-right: 30rpx;*/
+  /*padding-left: 50rpx;*/
+  /*padding-bottom: 20rpx;*/
+  border-top: 0;
 }
 
 .weui-media-box__desc {
@@ -219,9 +220,7 @@ export default {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  border-bottom: 0;
 }
 
  .icon-right {
@@ -233,20 +232,22 @@ export default {
    font-size: 50rpx;
    color: red;
  }
-
-/* .detail-cell:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 2rpx;
-  border-top: 1rpx solid #D9D9D9;
-  color: #D9D9D9;
-  left: 30rpx;
-} */
+.weui-cells:after {
+  border: none;
+}
+  /* .detail-cell:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 2rpx;
+    border-top: 1rpx solid #D9D9D9;
+    color: #D9D9D9;
+    left: 30rpx;
+  } */
   .foot{
-    background: #f8f8f8;
+    background-color:#EEEEEE;
     line-height: 80rpx;
     height:80rpx;
   }
