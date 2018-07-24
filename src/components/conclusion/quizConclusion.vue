@@ -20,14 +20,14 @@
     <view class="weui-cells weui-cells_after-title">
     <view class="poll-conclusion-bd">        
     <textarea class="weui-textarea" placeholder="请输入文本" :value="conclusion.text"
-        @input="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
+        @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
     </view>
     <image-gallery v-if="conclusion.imageUrl" :imageUrl="conclusion.imageUrl" :index="i" :type="'pollConclusion'"></image-gallery>
     </view>
 </view>
 <view class="subject-divider"></view>
 <view class="weui-cells weui-cells_after-title" >
-    <view class="weui-cell" @click="addJumpConclusion">
+    <view class="weui-cell" @click="addQuizConclusion">
         <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
         <view class="weui-cell__bd">添加评语分类</view>
     </view>
@@ -59,7 +59,7 @@ export default {
     ...mapMutations([
       'removeConclusion',
       'updateConclusionText',
-      'addJumpConclusion'
+      'addQuizConclusion'
     ]),
     addConclusionMedia (index) {
       const that = this

@@ -63,9 +63,7 @@ export default {
   methods: {
     toDisplay () {
       let surveyId = this.surveyId
-      wx.navigateTo({
-        url: `/pages/display/main?id=${this.surveyId}`
-      })
+      wx.navigateBack()
     }
   },
 

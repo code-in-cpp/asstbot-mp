@@ -86,7 +86,7 @@ const mutations = {
     let range = getFreeRange(subjectCount, state.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
     state.survey.conclusions.push({ scoreRange: {min: range.min, max: range.max}, text: '', imageUrl: '' })
   },
-  addJumpConclusion (state) {
+  addQuizConclusion (state) {
     state.survey.conclusions.push({ text: '', imageUrl: '' })
   },
   initConclusion (state) {
@@ -98,12 +98,12 @@ const mutations = {
   },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
-    if (state.survey.type === 'jump') {
+    if (state.survey.type === 'quiz') {
       let jumpPos = state.survey.subjects.length + index
-      this.commit('removeConlusionJump', jumpPos)
+      this.commit('removeQuizConclusion', jumpPos)
     }
   },
-  removeConlusionJump (state, jumpPos) {
+  removeQuizConclusion (state, jumpPos) {
     console.log('remove jump pos', jumpPos)
     state.survey.subjects.forEach(subject => {
       subject.answers.forEach(answer => {
@@ -121,14 +121,14 @@ const mutations = {
       imageUrl: '',
       answers: []})
 
-    if (state.survey.type === 'jump') {
-      this.commit('removeConlusionJump', state.survey.subjects.length)
+    if (state.survey.type === 'quiz') {
+      this.commit('removeQuizConclusion', state.survey.subjects.length)
     }
   },
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
-    if (state.survey.type === 'jump') {
-      this.commit('removeConlusionJump', index)
+    if (state.survey.type === 'quiz') {
+      this.commit('removeQuizConclusion', index)
     }
   },
   clearSurvey (state) {
