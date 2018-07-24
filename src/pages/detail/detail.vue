@@ -112,6 +112,9 @@ export default {
     this.resultId = option.resultId
     this.score = option.score
     this.type = option.type
+    if (this.type === 'reply') {
+      this.$store.dispatch('querySurveyResultByUser')
+    }
   },
   methods: {
     imageLoadEnd (event) {
