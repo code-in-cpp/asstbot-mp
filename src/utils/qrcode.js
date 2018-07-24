@@ -85,5 +85,6 @@ export function saveQrCodeToPhotosAlbum (scene) {
 }
 
 export default {
+  getQrcodeImageUrl,
   saveQrCodeToPhotosAlbum
 }

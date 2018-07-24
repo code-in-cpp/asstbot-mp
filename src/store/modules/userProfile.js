@@ -75,19 +75,10 @@ const actions = {
   updateUserInfo ({dispatch, commit}) {
     return new Promise((resolve, reject) => {
       dispatch('updateAuthStatus')
-        .then((auth) => {
-          __getUserInfo(auth).then((userInfo) => {
-            __updateUserInfo(userInfo)
-              .then((response) => {
-                resolve(response)
-              })
-              .catch((err) => {
-                reject(err)
-              })
-          })
-          .catch((err) => {
-            reject(err)
-          })
+        .then(__getUserInfo)
+        .then(__updateUserInfo)
+        .then((response) => {
+          resolve(response)
         })
         .catch((err) => {
           reject(err)

@@ -1,21 +1,25 @@
 <template>
   <view class="wrapper word-text right-block">
-    <view class="outgoing right-item">
-      {{content.asr}}
+    <view class="outgoing right-item"  @click="play">
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          {{content.asr}} 
+        </view>
+        <view>
+          <block v-if="playStatus=='stop'">
+            <i class="icon iconfont icon-play"></i>
+          </block>
+          <block v-else-if="playStatus=='playing'">
+            <i class="icon iconfont icon-play_fill"></i>
+          </block>
+          <block v-else>
+            <i class="icon iconfont icon-suspend" @click="resume"></i>
+          </block>
+        </view>        
+      </view>
+      
     </view>
-    <view class="outgoing right-item">
-      <view>
-        <block v-if="playStatus=='stop'">
-          <i class="icon iconfont icon-play" @click="play"></i>
-        </block>
-        <block v-else-if="playStatus=='playing'">
-          <i class="icon iconfont icon-play_fill" @click="pause"></i>
-        </block>
-        <block v-else>
-          <i class="icon iconfont icon-suspend" @click="resume"></i>
-        </block>
-      </view>  
-    </view>
+
   </view>
 </template>
 
@@ -36,13 +40,15 @@ export default {
   },
   methods: {
     play () {
-      this.innerAudioContext = wx.createInnerAudioContext()
-      this.innerAudioContext.src = this.content.url
-      this.playStatus = 'playing'
-      this.innerAudioContext.play()
-      this.innerAudioContext.onEnded(() => {
-        this.playStatus = 'stop'
-      })
+      if (this.playStatus === 'stop') {
+        this.innerAudioContext = wx.createInnerAudioContext()
+        this.innerAudioContext.src = this.content.url
+        this.playStatus = 'playing'
+        this.innerAudioContext.play()
+        this.innerAudioContext.onEnded(() => {
+          this.playStatus = 'stop'
+        })
+      }
     },
 
     pause () {
