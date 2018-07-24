@@ -133,10 +133,10 @@ export default {
       if (newValue === undefined || newValue === null) {
         return
       }
-      if (newValue.subjects !== undefined & newValue.subjects !== null) {
+      if (newValue.subjects !== undefined && newValue.subjects !== null) {
         this.items[0] = '题目 ( ' + newValue.subjects.length + ' )'
       }
-      if (newValue.conclusions !== undefined & newValue.conclusions !== null) {
+      if (newValue.conclusions !== undefined && newValue.conclusions !== null) {
         this.items[1] = '评语 ( ' + newValue.conclusions.length + ' )'
       }
       return this.items
