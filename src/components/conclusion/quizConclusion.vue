@@ -27,7 +27,7 @@
 </view>
 <view class="subject-divider"></view>
 <view class="weui-cells weui-cells_after-title" >
-    <view class="weui-cell" @click="addJumpConclusion">
+    <view class="weui-cell" @click="addQuizConclusion">
         <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
         <view class="weui-cell__bd">添加评语分类</view>
     </view>
@@ -59,7 +59,7 @@ export default {
     ...mapMutations([
       'removeConclusion',
       'updateConclusionText',
-      'addJumpConclusion'
+      'addQuizConclusion'
     ]),
     addConclusionMedia (index) {
       const that = this

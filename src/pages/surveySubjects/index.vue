@@ -51,7 +51,7 @@
 
               <view v-if="activeIndex == 1">
                   <exam-conclusion v-if="type=='exam'"/>
-                  <jump-conclusion v-else-if="type=='jump'" />
+                  <quiz-conclusion v-else-if="type=='quiz'" />
                   <poll-conclusion v-else/>
               </view>
             </scroll-view>
@@ -82,7 +82,7 @@ import navBar from '@/components/navBar'
 import imageGallery from '@/components/imageGallery'
 import pollConclusion from '@/components/conclusion/pollConclusion'
 import examConclusion from '@/components/conclusion/examConclusion'
-import jumpConclusion from '@/components/conclusion/jumpConclusion'
+import quizConclusion from '@/components/conclusion/quizConclusion'
 import surveyItem from '@/components/viewSurvey/surveyItem'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
@@ -137,7 +137,7 @@ export default {
     imageGallery,
     pollConclusion,
     examConclusion,
-    jumpConclusion,
+    quizConclusion,
     surveyItem
   },
 
