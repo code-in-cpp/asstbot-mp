@@ -26,14 +26,14 @@
           </view>
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
             <view class="weui-cell__bd">
-              <bot-say-text :content="item.question"></bot-say-text>
+              <bot-say-text :content="item.question" v-if="item.question.length > 0"></bot-say-text>
             </view>
             <view class="weui-cell__bd">
               <bot-say-image :content="item.questionUrl" v-if="item.questionUrl!=null" @loadDone="imageLoadEnd"></bot-say-image>
             </view>
             <block v-if="item.userSay!=null">
               <view class="weui-cell__ft">
-              <user-say-text :content="item.userSay"></user-say-text>
+              <user-say-text :content="item.userSay" v-if="item.userSay.length > 0"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam'">
                 <i class="icon iconfont icon-right" v-if="item.correct"></i>
                 <i class="icon iconfont icon-close" v-else></i>
