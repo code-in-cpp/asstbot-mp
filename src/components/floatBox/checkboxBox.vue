@@ -2,7 +2,7 @@
   <scroll-view scroll-x="true">
     <view class="big-box">
       <label class="option-container light form-control" v-for="(option, index) in list.items" :key="option"
-             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)" @touchstart="touchStart(option)" @touchend="touchEnd(option)">
+             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)" @touchstart="touchStart(option)" @touchmove="touchMove" @touchend="touchEnd(option)">
         <view class="weui-flex">
           <view class="weui-flex__item">
             <block v-if="option.imageUrl">
@@ -36,6 +36,7 @@
         checkArr: [],
         a: 1,
         touchStartTime: '',
+        touchMoveTime: '',
         touchEndTime: '',
         timeout: '',
         checkArrIndex: []
@@ -51,7 +52,7 @@
     },
     methods: {
       selectOption (e) {
-        if (this.touchEndTime - this.touchStartTime < 350) {
+        if (this.touchEndTime - this.touchStartTime < 500) {
           let arr = []
           this.checkArrIndex.map(item => {
             arr = [...arr, this.list.items[item]]
@@ -71,7 +72,7 @@
         }
       },
       checked (index) {
-        if (this.touchEndTime - this.touchStartTime < 350) {
+        if (this.touchEndTime - this.touchStartTime < 500) {
           let a = !this.checkArr[index]
           this.checkArr.splice(index, 1, a)
           this.saveInArray(index, this.checkArrIndex)
@@ -93,12 +94,20 @@
               urls: [option.imageUrl]
             })
           }
-        }, 350)
+        }, 500)
+      },
+      touchMove () {
+        this.touchMoveTime = Date.parse(new Date())
+        if (this.touchMoveTime - this.touchStartTime < 500) {
+          clearTimeout(this.timeout)
+          this.timeout = ''
+        }
       },
       touchEnd () {
         this.touchEndTime = Date.parse(new Date())
-        if (this.touchEndTime - this.touchStartTime < 350) {
+        if (this.touchEndTime - this.touchStartTime < 500) {
           clearTimeout(this.timeout)
+          this.timeout = ''
         }
       }
     },
