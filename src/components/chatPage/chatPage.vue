@@ -85,15 +85,15 @@ export default {
     },
 
     needTextReply () {
-      if (!this.messageAction) {
+      if (!this.messageList) {
         return false
       }
-      let val = this.messageAction
-      if (val.type === 'radio' || val.type === 'checkbox' || val.type === 'redirect' ||
-        val.type === 'relaunch') {
-        return false
+      let list = this.messageList.slice(-1).pop()
+      if (list && list.to) {
+        let message = [...list.msgs].slice(-1).pop()
+        return message.type === 'text'
       } else {
-        return true
+        return false
       }
     },
 

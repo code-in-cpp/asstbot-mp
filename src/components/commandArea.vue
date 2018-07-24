@@ -1,7 +1,6 @@
 <template>
   <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex primary-color light">
-
       <view class="placeholder">
         <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
@@ -12,10 +11,17 @@
       </view>
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
-          <textarea class="word-textarea primary-color revert" :value="currentMessage"
-            @input="valueInput" adjust-position auto-height="true"
-            cursor-spacing="14"  @confirm="confirm($event)"
-            :focus="textAreaFocus"/>
+          <block v-if="textAreaFocus">
+            <textarea class="word-textarea primary-color revert" :value="currentMessage"
+              @input="valueInput" adjust-position auto-height="true"
+              cursor-spacing="14"  @confirm="confirm($event)"
+              focus="true"/>
+          </block>
+          <block v-else>
+            <textarea class="word-textarea primary-color revert" :value="currentMessage"
+              @input="valueInput" adjust-position auto-height="true"
+              cursor-spacing="14"  @confirm="confirm($event)"/>
+          </block>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>

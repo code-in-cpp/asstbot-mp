@@ -83,7 +83,18 @@ var _impleSendmessage = (commit, id, type, data) => {
           title: '服务器出问题了，工程师正在抓紧解决',
           icon: 'none'
         })
+        console.log('test')
         reject(err)
+      },
+      complete: (response) => {
+        if (response.statusCode !== 200) {
+          wx.showToast({
+            title: '服务器出问题了，工程师正在抓紧解决',
+            icon: 'none'
+          })
+          console.error(response)
+          reject(response)
+        }
       }
     })
   })

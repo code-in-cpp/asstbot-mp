@@ -73,25 +73,18 @@ const getters = {
     }
     let ret = []
     for (let index in answers) {
-      let question = subjects[index].question
-      let questionUrl = (subjects[index].imageUrl === '') ? null : subjects[index].imageUrl
+      let questionId = answers[index].id
+      if (questionId > subjects.length) {
+        break
+      }
+      let subject = subjects[parseInt(questionId) - 1]
+      let question = subject.question
+      let questionUrl = (subject.imageUrl === '') ? null : subject.imageUrl
       let results = answers[index].result
       let userSay = answers[index].user_say
       ret.push({ id: index + 1, question, results, correct: answers[index].correct, userSay, questionUrl })
     }
-    // for (let index in answers) {
-    //   let item = { id: index + 1, correct: true, value: '', question: subjects[index].question, questionUrl: subjects[index].url }
-    //   let answer = answers[index].result
-    //   let spilterCh = ''
-    //   for (let j in answer) {
-    //     let element = answer[j]
-    //     item.correct = element.correct && item.correct
-    //     item.value = item.value + spilterCh + element.value
-    //     spilterCh = '，'
-    //   }
-    //   ret.push(item)
-    // }
-    console.log('rest ', ret)
+    console.log('user answer detail is ', ret)
     return ret
   },
 

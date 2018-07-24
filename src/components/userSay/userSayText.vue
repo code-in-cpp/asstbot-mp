@@ -1,5 +1,5 @@
 <template>
-  <view class="wrapper word-text right-block flex-1">
+  <view class="wrapper word-text right-block flex-1" v-if="content.length > 0">
     <view class="outgoing right-item">
       {{content}}
     </view>
