@@ -8,7 +8,7 @@ export default {
   config: {
     navigationBarTitleText: '编辑机器人',
     'usingComponents': {
-      'wxc-list': '../../../static/minui/packages/wxc-list/dist/index'
+      // 'wxc-list': '../../../static/minui/packages/wxc-list/dist/index'
     },
     'enablePullDownRefresh': false,
     'disableScroll': true

@@ -98,6 +98,20 @@ const mutations = {
   },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
+    if (state.survey.type === 'jump') {
+      let jumpPos = state.survey.subjects.length + index
+      this.commit('removeConlusionJump', jumpPos)
+    }
+  },
+  removeConlusionJump (state, jumpPos) {
+    console.log('remove jump pos', jumpPos)
+    state.survey.subjects.forEach(subject => {
+      subject.answers.forEach(answer => {
+        if (answer.next > jumpPos) {
+          answer.next = 0
+        }
+      })
+    })
   },
   addSubject (state) {
     state.survey.subjects.push({
@@ -109,6 +123,9 @@ const mutations = {
   },
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
+    if (state.survey.type === 'jump') {
+      this.commit('removeConlusionJump', index)
+    }
   },
   clearSurvey (state) {
     state.survey.subjects = []

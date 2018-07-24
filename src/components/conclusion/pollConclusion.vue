@@ -63,6 +63,12 @@ export default {
 
 <style scoped>
 
+.font-style{
+  width:92rpx;
+  text-align:center;
+  line-height: 92rpx;
+}
+
 .poll-conclusion-cell{
   padding:20rpx 30rpx;
   display: flex;
