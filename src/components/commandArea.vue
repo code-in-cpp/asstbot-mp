@@ -14,7 +14,8 @@
         <view class="weui-flex__item"  v-if="!voiceMode">
           <textarea class="word-textarea primary-color revert" :value="currentMessage"
             @input="valueInput" adjust-position auto-height="true"
-            cursor-spacing="14"  @confirm="confirm($event)"/>
+            cursor-spacing="14"  @confirm="confirm($event)"
+            :focus="textAreaFocus"/>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>
@@ -63,6 +64,20 @@ export default {
       }
       return this.items.filter(item => item.caption && item.caption.length > 1)
             .map((item) => item.caption).join(',')
+    },
+    textAreaFocus () {
+      return this.inputFieldFocus && this.displayFinish
+    }
+  },
+
+  props: {
+    inputFieldFocus: {
+      type: Boolean,
+      default: false
+    },
+    displayFinish: {
+      type: Boolean,
+      default: false
     }
   },
 

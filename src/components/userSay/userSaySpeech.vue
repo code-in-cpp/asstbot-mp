@@ -16,10 +16,8 @@
             <i class="icon iconfont icon-suspend" @click="resume"></i>
           </block>
         </view>        
-      </view>
-      
+      </view>   
     </view>
-
   </view>
 </template>
 
