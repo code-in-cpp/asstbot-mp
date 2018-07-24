@@ -120,6 +120,10 @@ const mutations = {
       question: '',
       imageUrl: '',
       answers: []})
+
+    if (state.survey.type === 'jump') {
+      this.commit('removeConlusionJump', state.survey.subjects.length)
+    }
   },
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)
