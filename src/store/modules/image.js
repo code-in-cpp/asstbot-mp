@@ -1,7 +1,7 @@
 
 import config from '@/config.js'
 
-const url = config.service.imageUrl
+const url = config.service.imagePostUrl
 const hostRoot = config.service.hostRoot
 
 const state = {
