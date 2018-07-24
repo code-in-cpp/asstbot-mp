@@ -13,7 +13,7 @@
                 @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
         </view>
         <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
-    </view>
+        </view>
     </block>
 </block>
 </template>

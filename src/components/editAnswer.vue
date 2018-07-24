@@ -138,6 +138,11 @@ export default {
         let pos = parseInt(index) + 1
         ret.push('题目' + pos + ':' + subject.question.slice(0, 8) + '...')
       }
+      for (let index in survey.conclusions) {
+        let conclusion = survey.conclusions[index]
+        let pos = parseInt(index) + 1
+        ret.push('结论' + pos + ':' + conclusion.text.slice(0, 8) + '...')
+      }
       return ret
     },
     displayNames () {
@@ -148,6 +153,9 @@ export default {
       }
       for (let id = 1; id < survey.subjects.length + 1; id++) {
         ret.push('题目' + id)
+      }
+      for (let id = 1; id < survey.conclusions.length + 1; id++) {
+        ret.push('结论' + id)
       }
       console.log('----', ret)
       return ret

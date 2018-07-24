@@ -5,7 +5,7 @@
     <view class="weui-cells__title">
     <view class="weui-cell" >
         <view class="weui-cell__bd">
-        <view class="weui-label">评语分类 {{i+1}}</view>
+        <view class="weui-label">结论 {{i+1}}</view>
         </view>
         <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
             <i class="icon iconfont icon-picture font-color"></i>
@@ -20,7 +20,7 @@
     <view class="weui-cells weui-cells_after-title">
     <view class="poll-conclusion-bd">        
     <textarea class="weui-textarea" placeholder="请输入文本" :value="conclusion.text"
-        @input="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
+        @input="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
     </view>
     <image-gallery v-if="conclusion.imageUrl" :imageUrl="conclusion.imageUrl" :index="i" :type="'pollConclusion'"></image-gallery>
     </view>
