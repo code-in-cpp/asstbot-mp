@@ -6,7 +6,9 @@
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus"/>
+      <command-area  @msgSendStatus="handleMsgSendStatus" 
+          :inputFieldFocus="needTextReply"
+          :displayFinish="displayFinish"/>
     </view>
   </block>
 </template>
@@ -79,6 +81,19 @@ export default {
               items: ''
             }
         }
+      }
+    },
+
+    needTextReply () {
+      if (!this.messageAction) {
+        return false
+      }
+      let val = this.messageAction
+      if (val.type === 'radio' || val.type === 'checkbox' || val.type === 'redirect' ||
+        val.type === 'relaunch') {
+        return false
+      } else {
+        return true
       }
     },
 

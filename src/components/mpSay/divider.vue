@@ -31,8 +31,12 @@ export default {
   background: @divider-color;
   color: @background-color;
   font-size: @font-size-tiny - 4;
+  border-radius: 8rpx;
+  padding-right: 8rpx;
+  padding-left: 8rpx;
 }
 .weui-flex {
-  margin-bottom: 30rpx;
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
 }
 </style>

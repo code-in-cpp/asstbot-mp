@@ -6,7 +6,7 @@
       <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       <view class="content">
         <view class="weui-tab">
-          <nav-bar :navItems="items" @tabActive="tabActive"></nav-bar>
+          <nav-bar :navItems="updateTitle" @tabActive="tabActive"></nav-bar>
           <view class="weui-tab__panel">
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
@@ -61,13 +61,13 @@
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="default" @click="saveSurvey" ><i class="icon iconfont icon-brush_fill"></i>保存 </button>
+            <button class="weui-btn btn-font" type="default" @click="saveSurvey" >保存 </button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="default" @click="selfTest" ><i class="icon iconfont icon-interactive"></i>自测</button>
+            <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" open-type="share" type="primary"><i class="icon iconfont icon-share"></i>发布 </button>
+            <button class="weui-btn btn-font" open-type="share" type="primary">发布 </button>
           </view>
         </view>
       </view>
@@ -93,13 +93,12 @@ export default {
     return {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
-      items: ['题目', '评语'],
+      items: ['题目', '结论'],
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false
     }
   },
-
   computed: {
     ...mapState({
       displayAvatar: state => {
@@ -128,7 +127,20 @@ export default {
           return subjectTypeName[index]
         })
       }
-    })
+    }),
+    updateTitle (newValue) {
+      console.log('enter updateTitle')
+      if (newValue === undefined || newValue === null) {
+        return
+      }
+      if (newValue.subjects !== undefined && newValue.subjects !== null) {
+        this.items[0] = '题目 ( ' + newValue.subjects.length + ' )'
+      }
+      if (newValue.conclusions !== undefined && newValue.conclusions !== null) {
+        this.items[1] = '评语 ( ' + newValue.conclusions.length + ' )'
+      }
+      return this.items
+    }
   },
 
   components: {
