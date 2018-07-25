@@ -52,7 +52,7 @@
     },
     methods: {
       selectOption (e) {
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 1000) {
           let arr = []
           this.checkArrIndex.map(item => {
             arr = [...arr, this.list.items[item]]
@@ -72,7 +72,7 @@
         }
       },
       checked (index) {
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 1000) {
           let a = !this.checkArr[index]
           this.checkArr.splice(index, 1, a)
           this.saveInArray(index, this.checkArrIndex)
@@ -94,18 +94,18 @@
               urls: [option.imageUrl]
             })
           }
-        }, 500)
+        }, 1000)
       },
       touchMove () {
         this.touchMoveTime = Date.parse(new Date())
-        if (this.touchMoveTime - this.touchStartTime < 500) {
+        if (this.touchMoveTime - this.touchStartTime < 1000) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
       },
       touchEnd () {
         this.touchEndTime = Date.parse(new Date())
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 1000) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
