@@ -42,7 +42,7 @@
                     <!--<text class="textarea-text" @click="showTextarea(i)" v-if="!textareaShowArray[i]">{{subject.question}}</text>-->
                     <!--<textarea class="textarea-item" v-if="textareaShowArray[i]" :value="subject.question" focus="true" @input="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"></textarea>-->
                   <!--</view>-->
-                  <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue"></text-or-area>
+                  <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写问题'"></text-or-area>
 
                   <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
                   <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
@@ -237,7 +237,7 @@ export default {
       this.textareaShowArray.splice(index, 1, a)
     },
     getTextareaValue (value) {
-      this.updateSubjectQuestion(value)
+      this.updateSubjectQuestion({index: value.index, question: value.value})
     }
   },
 

@@ -1,9 +1,9 @@
 <template>
     <view class="textarea-box">
-      <text class="textarea-text" v-if="isText" @click="showTextarea">{{content || defaultContent}}</text>
+      <text class="textarea-text" v-if="isText" @click="showTextarea">{{content || defaultValue}}</text>
       <textarea @blur="blur" class="textarea-item" v-if="!isText" :value="content" :focus="focusEnd"
-                @change="$emit('getTextareaValue',{index: index,  question: $event.mp.detail.value})"
-                @confirm="$emit('getTextareaValue',{index: index,  question: $event.mp.detail.value})"></textarea>
+                @change="$emit('getTextareaValue',{index: index,  value: $event.mp.detail.value})"
+                @confirm="$emit('getTextareaValue',{index: index,  value: $event.mp.detail.value})"></textarea>
     </view>
 </template>
 
@@ -13,14 +13,14 @@
     name: 'textOrArea',
     data () {
       return {
-        defaultContent: '请输入题目',
         isText: true,
         focusEnd: false
       }
     },
     props: [
       'content',
-      'index'
+      'index',
+      'defaultValue'
     ],
     methods: {
       ...mapMutations([
