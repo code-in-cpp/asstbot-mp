@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -64,14 +64,14 @@
 					"id": 3,
 					"name": "美吗",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=32a796808e2811e8bb4d8f00989ff45f",
+					"query": "id=9e2527108e4611e8bb4d8f00989ff45f",
 					"scene": "1008"
 				},
 				{
-					"id": -1,
-					"name": "底部功能测试",
-					"pathName": "pages/index/main",
-					"query": "id=9be713b0831e11e897029b6204dd4fb1",
+					"id": 4,
+					"name": "跳转题",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=79db12408f6111e8822ad1da1f2cded4",
 					"scene": "1008"
 				},
 				{
@@ -92,7 +92,7 @@
 					"id": 7,
 					"name": "调查问卷",
 					"pathName": "pages/surveySubjects/main",
-					"query": "id=5d8c4bc08e5511e88fd88f18b55509da",
+					"query": "id=0a930f608f4711e8822ad1da1f2cded4",
 					"scene": "1008"
 				}
 			]

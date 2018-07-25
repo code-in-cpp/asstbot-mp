@@ -4,7 +4,7 @@
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
-            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+            <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value" @blur="blur"/>
         </view>
@@ -24,49 +24,50 @@
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+          <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                   :value="answer.value"  @blur="blur"/>
-        </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
-          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
-          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
         <picker v-if="surveyType=='quiz'" @change="udpateAnswerQuiz(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
           <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
         </picker>
+        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
+          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color image-icon-color"></i>
+          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
+        </view>
         <view class="weui-cell__ft font-style">
           <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
-            <i class="icon iconfont icon-trash"></i>
+            <i class="icon iconfont icon-trash trash-icon-color"></i>
           </view>
         </view>
       </view>
     </radio-group>
 
     <block v-if="type!='radio' && type !='checkbox'">
-      <view class="radio anwser-item anwser-container" v-for="(answer, index) in answers" :key="index">
+      <view class = "anwser-container">
+      <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <view class="weui-cell__bd height-92">
           <block v-if="type=='date'">
             <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})">
-              <view class="picker height-line-92">
+              <view class="picker height-line-92 input-location">
                 {{answer.value}}
               </view>
             </picker>
           </block>
           <block v-else-if="type=='location'">
             <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
-              <view class="picker height-line-92">
+              <view class="picker height-line-92 input-location">
                 {{answer.value}}
               </view>
             </picker>
           </block>
           <block v-else-if="type=='phone'">
-            <input class="weui-input height-line-92" type="number" placeholder="请输入号码"
+            <input class="weui-input height-line-92 input-location" type="number" placeholder="请输入号码"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>
           <block v-else>
-            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
+            <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                    :value="answer.value"/>
           </block>
@@ -81,16 +82,17 @@
           </view>
         </view>
       </view>
+      </view>
     </block>
 
-    <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
+    <view class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
         <view class="weui-cell__ft font-style"  >
           <i class="icon iconfont icon-add"></i>
         </view>
         <view class="weui-cell__ft height-line-92">
           添加答案
         </view>
-    </label>
+    </view>
   </block>
 </template>
 
@@ -264,47 +266,64 @@ view {
   width:92rpx;
   text-align: center;
 }
-  .font-style{
-    height:92rpx;
-    width:92rpx;
-    line-height:92rpx;
-    text-align:center;
-  }
-  .answer-image{
-    width:70rpx;
-    height:70rpx;
-    display:inline-block;
-    margin-top:11rpx;
-  }
-  .height-92{
-    height:92rpx;
-  }
-  .height-line-92{
-    height: 92rpx;
-    line-height: 92rpx;
-  }
-  .height-46{
-    height: 46rpx;
-  }
 
+.font-style{
+  height:92rpx;
+  width:92rpx;
+  line-height:92rpx;
+  text-align:center;
+}
+.answer-image{
+  width:70rpx;
+  height:70rpx;
+  display:inline-block;
+  margin-top:11rpx;
+}
+.height-92{
+  height:92rpx;
+}
+.height-line-92{
+  height: 92rpx;
+  line-height: 92rpx;
+}
+.height-46{
+  height: 46rpx;
+}
 
 .anwser-container{
   background: #fff;
 }
-  .anwser-item{
-    display:flex;
-    border-bottom:1rpx solid #dadada;
-    padding:0 30rpx;
-  }
-  .anwser-check-icon{
-    line-height:92rpx;
-    width:92rpx;
-    text-align:center;
-  }
-  .add-answer-box{
-    padding: 0 30rpx!important;
-  }
-  .add-answer-box:before{
-    border-top: none;
-  }
+.anwser-item{
+  display:flex;
+  border-bottom:1rpx solid #dadada;
+  margin-left: 20rpx;
+}
+.anwser-item:after{
+  content: '';
+  position: absolute;
+  border-bottom:1rpx solid #dadada;
+  left: 30rpx;
+  bottom:0;
+  width: 100%;
+  height: 0;
+}
+.input-location {
+  margin-left: 20rpx;
+}
+.anwser-check-icon{
+  line-height:92rpx;
+  width:92rpx;
+  text-align:center;
+}
+.add-answer-box{
+  padding: 0 0rpx!important;
+  margin-left: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+}
+.add-answer-box:before{
+  border-top: none;
+}
+
+
 </style>

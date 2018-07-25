@@ -48,20 +48,28 @@
   }
   .textarea-text{
     width:100%;
-    height:92rpx;
-    line-height:92rpx;
+    /*height:92rpx;*/
+    line-height:64rpx;
     display:block;
     padding-left:30rpx;
     overflow:hidden;
     text-overflow:ellipsis;
     box-sizing:border-box;
-    white-space:nowrap;
+    /*white-space:nowrap;*/
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    display:-webkit-box;
+    max-height: 192rpx;
+    -webkit-box-orient:vertical;
+
   }
   .textarea-item{
     width: 100%;
-    line-height: 92rpx;
-    height: 276rpx;
+    line-height: 64rpx;
+    height: 192rpx;
     overflow: auto;
     padding-left: 30rpx;
+    padding-right: 30rpx;
+    box-sizing: border-box;
   }
 </style>

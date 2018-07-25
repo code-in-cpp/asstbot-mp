@@ -47,7 +47,7 @@ export default Component({
     onClick(event) {
       let detail = event.detail;
       let option = {};
-      this.triggerEvent('click', detail, option);
+      this.triggerEvent('clickOnThis', detail, option);
     }
   }
 });

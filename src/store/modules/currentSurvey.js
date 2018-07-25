@@ -89,13 +89,6 @@ const mutations = {
   addQuizConclusion (state) {
     state.survey.conclusions.push({ text: '', imageUrl: '' })
   },
-  initConclusion (state) {
-    console.log('init conclusion for pull', state.survey.conclusions)
-    let conclusions = state.survey.conclusions
-    if (conclusions.length === 0) {
-      conclusions.push({ text: '', imageUrl: '' })
-    }
-  },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
     if (state.survey.type === 'quiz') {
@@ -114,16 +107,15 @@ const mutations = {
     })
   },
   addSubject (state) {
+    if (state.survey.type === 'quiz') {
+      this.commit('removeQuizConclusion', state.survey.subjects.length)
+    }
     state.survey.subjects.push({
       id: state.survey.subjects.length + 1,
       type: 'radio',
       question: '',
       imageUrl: '',
       answers: []})
-
-    if (state.survey.type === 'quiz') {
-      this.commit('removeQuizConclusion', state.survey.subjects.length)
-    }
   },
   removeSubject (state, index) {
     state.survey.subjects.splice(index, 1)

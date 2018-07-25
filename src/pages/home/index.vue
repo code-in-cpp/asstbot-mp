@@ -34,8 +34,6 @@
 <script>
 import { mapState } from 'vuex'
 import navBar from '@/components/navBar'
-import createdSurvey from '@/components/createdSurvey'
-import visitedSurvey from '@/components/visitedSurvey'
 
 const surveyType = ['exam', 'poll', 'inquiry']
 const surveyTypeName = ['答卷机器人', '投票机器人', '问卷机器人']
@@ -52,9 +50,7 @@ export default {
   },
 
   components: {
-    navBar,
-    createdSurvey,
-    visitedSurvey
+    navBar
   },
 
   computed: {

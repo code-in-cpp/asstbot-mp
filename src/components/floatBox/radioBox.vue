@@ -38,13 +38,16 @@
     },
     methods: {
       selectItem (obj) {
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 800) {
           this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
         }
       },
       touchStart (option) {
+        if (this.timeout) {
+          clearTimeout(this.timeout)
+        }
         const that = this
-        this.touchStartTime = Date.parse(new Date())
+        this.touchStartTime = new Date().getTime()
         this.timeout = setTimeout(function () {
           if (option.imageUrl) {
             that.$store.commit('setPreviewFalse')
@@ -53,18 +56,18 @@
               urls: [option.imageUrl]
             })
           }
-        }, 500)
+        }, 800)
       },
       touchMove () {
-        this.touchMoveTime = Date.parse(new Date())
-        if (this.touchMoveTime - this.touchStartTime < 500) {
+        this.touchMoveTime = new Date().getTime()
+        if (this.touchMoveTime - this.touchStartTime < 800) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
       },
       touchEnd () {
-        this.touchEndTime = Date.parse(new Date())
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        this.touchEndTime = new Date().getTime()
+        if (this.touchEndTime - this.touchStartTime < 800) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
