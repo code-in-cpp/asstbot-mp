@@ -81,6 +81,7 @@
           .then((filePath) => {
             if (this.noClick) {
               this.noClick = !this.noClick
+              console.log('裁剪后的图片：' + filePath)
               this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
                 this.noClick = !this.noClick
                 this.flag = false
