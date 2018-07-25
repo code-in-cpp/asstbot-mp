@@ -158,10 +158,6 @@ export default {
       for (let id = 1; id < survey.conclusions.length + 1; id++) {
         ret.push('结论' + id)
       }
-<<<<<<< HEAD
-      // console.log('----', ret)
-=======
->>>>>>> b31c31d0df40f33ec727406ac3441bb06b6a9652
       return ret
     }
   },
