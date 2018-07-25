@@ -178,7 +178,7 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.redirectTo({url: '/pages/createdSurvey/main'})
+          wx.navigateBack()
         })
         .catch((err) => {
           console.error(err)
