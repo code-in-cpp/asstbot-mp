@@ -1,12 +1,30 @@
 <template>
   <movable-area class="move-area">
+    
     <view class="page">
       <title-bar :title="title"/>
-      <view class="header-item">
-        <bod-avatar :url="avatarUrl" size="80"/>
+      <view class="content">
+        <wxc-panel>
+          <view class="weui-flex">
+            <bod-avatar :url="avatarUrl" size="80"/>
+            <view class="weui-flex__item">
+              <view class="da-title survey-title">{{title}}</view>
+              <view class="da-desc survey-desc">{{intro}}</view>
+            </view>
+          </view>
+        </wxc-panel>
+        <wxc-panel title="分享">
+          <button open-type="share" class="share-button">
+            <wxc-list icon="weixin" icon-color="black" title="转发给好友"></wxc-list>
+          </button>
+        </wxc-panel>
+        <wxc-panel>
+          <button class="share-button" @click="publish">
+            <wxc-list icon="share" icon-color="black" title="分享到朋友圈"></wxc-list>
+          </button>
+        </wxc-panel>
+        
       </view>
-      <button class="weui-btn" type="primary" @click="publish">分享到朋友圈</button>
-      <button class="weui-btn" type="primary" open-type="share">转发给好友</button>
     </view>
   </movable-area>
 </template>
@@ -18,7 +36,8 @@ export default {
   data: {
     surveyId: '',
     title: '',
-    avatarUrl: ''
+    avatarUrl: '',
+    intro: ''
   },
   methods: {
     publish () {
@@ -29,7 +48,7 @@ export default {
     if (res.from === 'button') {
       return {
         title: this.title,
-        path: '/pages/surveyChat/main?id=' + this.id,
+        path: '/pages/surveyChat/main?id=' + this.surveyId,
         imageUrl: this.avatarUrl
       }
     }
@@ -42,6 +61,10 @@ export default {
       this.surveyId = option.id
       this.title = option.title
       this.avatarUrl = option.avatarUrl
+      this.$store.dispatch('querySurveyById', this.surveyId)
+        .then((survey) => {
+          this.intro = survey.intro
+        })
       // console.log(JSON.stringify(option))
     } else {
       this.surveyId = '2c0ef34080ea11e88ee1db0f184fef52'
@@ -52,84 +75,33 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "../../../static/base.less";
-.user-avator-icon{
-  margin-right: 10rpx;
-  vertical-align: middle;
-  width:40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-}
-
-.responsor-list{
-  border-width:medium;
-  border-color:grey;
-  display: flex;
+.content {
+  padding: 20rpx;
   flex-direction: column;
 }
 
-.middle-avatar {
-  width: 140rpx!important;
-  height: 140rpx!important;
-  border-radius: 50%;
+.weui-flex {
+  margin: 20rpx 40rpx;
+}
+.weui-flex .weui-flex__item{
+  margin-left: 20rpx;
+  padding-top: 20rpx;
+}
+.survey-title {
+  color: @p-dark-color;
 }
 
-.header-item {
-  margin-top: 20rpx;
-  text-align: center;
-}
-
-.weui-navbar{
-  position: relative;
-}
-
-.scroll-view_tab{
-  display: inline-block;
-}
-
-.weui-grid{
-  height: 160rpx;
-  padding-top  :20rpx;
-}
-
-.weui-grid__title{
-  font-size: @font-size-big;
-  font-weight: bold;
-  text-align: center;
-}
-
-.weui-grid__label{
-  text-align: center;
+.survey-desc {
   color: #999999;
+  margin-top: 20rpx;
+  -webkit-line-clamp: 2;
 }
 
-.bottom_button {
-  margin: 40rpx 15rpx
-}
-
-.bottom_button .weui-btn {
-  width: 210rpx;
-  line-height: 2;
-}
-
-.btn-font {
-  font-size: 32rpx;
-}
-
-.btn {
-  width: 30%;
-  margin-right: 20rpx;
-}
-
-.bottom-button-box{
-  display: flex;
-  justify-content: center;
-}
-
-.iconfont {
-  display: inline-block;
-  font-size:32rpx!important;
+.share-button {
+  text-align: start;
+  background-color: white;
 }
 
 </style>
