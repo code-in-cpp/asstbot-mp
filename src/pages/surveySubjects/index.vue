@@ -10,7 +10,7 @@
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
                 <block v-for="(subject, i) in subjects" :key="subject">
-                  <view class="subject-divider"></view>
+                  <!-- <view class="subject-divider"></view> -->
                   <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
                     <view class="weui-cell weui-cell_input subject-area subject-style font-size">
                       <view class="weui-cell__hd subject-item-style flex-1">

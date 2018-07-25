@@ -83,14 +83,14 @@
       </view>
     </block>
 
-    <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
+    <view class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
         <view class="weui-cell__ft font-style"  >
           <i class="icon iconfont icon-add"></i>
         </view>
         <view class="weui-cell__ft height-line-92">
           添加答案
         </view>
-    </label>
+    </view>
   </block>
 </template>
 
@@ -264,47 +264,52 @@ view {
   width:92rpx;
   text-align: center;
 }
-  .font-style{
-    height:92rpx;
-    width:92rpx;
-    line-height:92rpx;
-    text-align:center;
-  }
-  .answer-image{
-    width:70rpx;
-    height:70rpx;
-    display:inline-block;
-    margin-top:11rpx;
-  }
-  .height-92{
-    height:92rpx;
-  }
-  .height-line-92{
-    height: 92rpx;
-    line-height: 92rpx;
-  }
-  .height-46{
-    height: 46rpx;
-  }
+
+.font-style{
+  height:92rpx;
+  width:92rpx;
+  line-height:92rpx;
+  text-align:center;
+}
+.answer-image{
+  width:70rpx;
+  height:70rpx;
+  display:inline-block;
+  margin-top:11rpx;
+}
+.height-92{
+  height:92rpx;
+}
+.height-line-92{
+  height: 92rpx;
+  line-height: 92rpx;
+}
+.height-46{
+  height: 46rpx;
+}
 
 
 .anwser-container{
   background: #fff;
 }
-  .anwser-item{
-    display:flex;
-    border-bottom:1rpx solid #dadada;
-    padding:0 30rpx;
-  }
-  .anwser-check-icon{
-    line-height:92rpx;
-    width:92rpx;
-    text-align:center;
-  }
-  .add-answer-box{
-    padding: 0 30rpx!important;
-  }
-  .add-answer-box:before{
-    border-top: none;
-  }
+.anwser-item{
+  display:flex;
+  border-bottom:1rpx solid #dadada;
+  margin-left: 20rpx;
+}
+.anwser-check-icon{
+  line-height:92rpx;
+  width:92rpx;
+  text-align:center;
+}
+.add-answer-box{
+  padding: 0 0rpx!important;
+  margin-left: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom:1rpx solid #dadada;
+}
+.add-answer-box:before{
+  border-top: none;
+}
 </style>
