@@ -83,14 +83,16 @@
       </view>
     </block>
 
-    <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
-        <view class="weui-cell__ft font-style"  >
-          <i class="icon iconfont icon-add"></i>
-        </view>
-        <view class="weui-cell__ft height-line-92">
-          添加答案
-        </view>
-    </label>
+    <block v-if="addAnswerShow">
+      <label class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
+          <view class="weui-cell__ft font-style"  >
+            <i class="icon iconfont icon-add"></i>
+          </view>
+          <view class="weui-cell__ft height-line-92">
+            添加答案
+          </view>
+      </label>
+    </block>
   </block>
 </template>
 
@@ -122,14 +124,14 @@ export default {
   computed: {
     answers () {
       let survey = this.$store.state.currentSurvey.survey
-      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+      if (!survey || !survey.subjects || survey.subjects.length === 0 || !survey.subjects[this.subjectIndex]) {
         return []
       }
       return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
     },
     questionNames () {
       let survey = this.$store.state.currentSurvey.survey
-      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+      if (!survey || !survey.subjects || survey.subjects.length === 0 || !survey.subjects[this.subjectIndex]) {
         return []
       }
       let ret = ['顺序']
@@ -159,6 +161,22 @@ export default {
         ret.push('结论' + id)
       }
       return ret
+    },
+    addAnswerShow () {
+      if (!this.answers) {
+        return false
+      }
+
+      if (this.answers.length === 0) {
+        return true
+      }
+
+      let lastanswer = [...this.answers].splice(-1)[0]
+
+      if (lastanswer.text === '' || lastanswer.imageUrl === '') {
+        return false
+      }
+      return true
     }
   },
 
