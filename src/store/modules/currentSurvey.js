@@ -89,13 +89,6 @@ const mutations = {
   addQuizConclusion (state) {
     state.survey.conclusions.push({ text: '', imageUrl: '' })
   },
-  initConclusion (state) {
-    console.log('init conclusion for pull', state.survey.conclusions)
-    let conclusions = state.survey.conclusions
-    if (conclusions.length === 0) {
-      conclusions.push({ text: '', imageUrl: '' })
-    }
-  },
   removeConclusion (state, index) {
     state.survey.conclusions.splice(index, 1)
     if (state.survey.type === 'quiz') {

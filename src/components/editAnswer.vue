@@ -32,12 +32,12 @@
           <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
         </picker>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
-          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
+          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color image-icon-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
         <view class="weui-cell__ft font-style">
           <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
-            <i class="icon iconfont icon-trash"></i>
+            <i class="icon iconfont icon-trash trash-icon-color"></i>
           </view>
         </view>
       </view>
@@ -324,4 +324,6 @@ view {
 .add-answer-box:before{
   border-top: none;
 }
+
+
 </style>
