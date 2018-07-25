@@ -48,7 +48,7 @@ export default {
     if (res.from === 'button') {
       return {
         title: this.title,
-        path: '/pages/surveyChat/main?id=' + this.id,
+        path: '/pages/surveyChat/main?id=' + this.surveyId,
         imageUrl: this.avatarUrl
       }
     }
