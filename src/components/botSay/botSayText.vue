@@ -1,5 +1,5 @@
 <template>
-  <view class="incoming">
+  <view class="incoming" v-if="content.length > 0">
     <emoji-text :text="content"></emoji-text>
   </view>
 </template>

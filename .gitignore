@@ -13,3 +13,5 @@ yarn-error.log*
 *.sln
 /project.config.json
 /package-lock.json
+/node_modules.zip
+!/project.config.json

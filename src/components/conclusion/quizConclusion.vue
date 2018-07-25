@@ -18,10 +18,12 @@
     </view>
     </view>
     <view class="weui-cells weui-cells_after-title">
-    <view class="poll-conclusion-bd">        
-    <textarea class="weui-textarea" placeholder="请输入文本" :value="conclusion.text"
-        @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
-    </view>
+    <!--<view class="poll-conclusion-bd">        -->
+    <!--<textarea class="weui-textarea" placeholder="请输入文本" :value="conclusion.text"-->
+        <!--@change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>-->
+    <!--</view>-->
+      <text-or-area :content="conclusion.text" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写评价'"></text-or-area>
+
     <image-gallery v-if="conclusion.imageUrl" :imageUrl="conclusion.imageUrl" :index="i" :type="'pollConclusion'"></image-gallery>
     </view>
 </view>
@@ -38,6 +40,7 @@
 
 <script>
 import imageGallery from '@/components/imageGallery'
+import textOrArea from '@/components/textOrArea'
 import { mapMutations } from 'vuex'
 export default {
   props: {
@@ -53,7 +56,8 @@ export default {
     }
   },
   components: {
-    imageGallery
+    imageGallery,
+    textOrArea
   },
   methods: {
     ...mapMutations([
@@ -76,6 +80,9 @@ export default {
           })
         }
       })
+    },
+    getTextareaValue (value) {
+      this.updateConclusionText({index: value.index, text: value.value})
     }
   }
 }

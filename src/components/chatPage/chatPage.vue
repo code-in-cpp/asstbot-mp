@@ -88,6 +88,9 @@ export default {
       if (!this.messageList) {
         return false
       }
+      if (!this.messageList.length < 5) {
+        return false
+      }
       let list = this.messageList.slice(-1).pop()
       if (list && list.to) {
         let message = [...list.msgs].slice(-1).pop()

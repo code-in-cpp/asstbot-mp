@@ -1,5 +1,4 @@
 <template>
-
   <movable-area class="move-area">
     <view class="page">
       <title-bar title=" "/>
@@ -14,14 +13,14 @@
                   <view class="subject-divider"></view>
                   <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
                     <view class="weui-cell weui-cell_input subject-area subject-style font-size">
-                      <view class="weui-cell__hd subject-item-style">
+                      <view class="weui-cell__hd subject-item-style flex-1">
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
-                      <view class="weui-cell__bd subject-item-style">
-                        <input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"
-                            :value="subject.question" focus="true" confirm-type="done"
-                            @change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>
-                      </view>
+                      <!--<view class="weui-cell__bd subject-item-style">-->
+                        <!--<input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"-->
+                            <!--:value="subject.question" focus="true" confirm-type="done"-->
+                            <!--@change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>-->
+                      <!--</view>-->
                       <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
                         <i class="icon iconfont icon-picture font-color"></i>
                       </view>
@@ -37,6 +36,13 @@
                       </view>
                     </view>
                   </view>
+
+                  <!--<view class="textarea-box">-->
+                    <!--<text class="textarea-text" @click="showTextarea(i)" v-if="!textareaShowArray[i]">{{subject.question}}</text>-->
+                    <!--<textarea class="textarea-item" v-if="textareaShowArray[i]" :value="subject.question" focus="true" @input="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"></textarea>-->
+                  <!--</view>-->
+                  <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写问题'"></text-or-area>
+
                   <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
                   <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
                 </block>
@@ -84,6 +90,7 @@ import pollConclusion from '@/components/conclusion/pollConclusion'
 import examConclusion from '@/components/conclusion/examConclusion'
 import quizConclusion from '@/components/conclusion/quizConclusion'
 import surveyItem from '@/components/viewSurvey/surveyItem'
+import textOrArea from '@/components/textOrArea'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
 const subjectTypeName = ['单选', '多选', '问答', '日期', '地点', '手机']
@@ -96,7 +103,8 @@ export default {
       items: ['题目', '结论'],
       activeIndex: 0,
       titleEditFlag: false,
-      introEditFlag: false
+      introEditFlag: false,
+      textareaShowArray: []
     }
   },
   computed: {
@@ -149,6 +157,7 @@ export default {
     imageGallery,
     pollConclusion,
     examConclusion,
+    textOrArea,
     quizConclusion,
     surveyItem
   },
@@ -221,17 +230,20 @@ export default {
             url: `/pages/surveyChat/main?id=${this.survey.id}&scene=test`
           })
         })
+    },
+    showTextarea (index) {
+      let a = !this.textareaShowArray[index]
+      this.textareaShowArray.splice(index, 1, a)
+    },
+    getTextareaValue (value) {
+      this.updateSubjectQuestion({index: value.index, question: value.value})
     }
-  },
-
-  created () {
   },
 
   onLoad (option) {
     let that = this
     this.$store.dispatch('retrieveSurveyById', option.id)
       .then((survey) => {
-        console.log(survey)
         if (survey.subjects.length) {
           survey.subjects.map(item => {
             item.imageUrl = item.imageUrl ? item.imageUrl : ''
@@ -354,6 +366,9 @@ export default {
 
 .btn-style-survey{
   margin-right: 30rpx;
+}
+.flex-1{
+  flex:1
 }
 
 </style>

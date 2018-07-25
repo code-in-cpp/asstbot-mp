@@ -3,7 +3,7 @@
     <view class="wrapper word-text right-block">
       <block v-if="content.caption">
         <view class="outgoing right-item" >
-          {{content.caption}}
+          <copyable-text :text="content.caption"/>
         </view>
       </block>
     </view>

@@ -1,30 +1,39 @@
 <template>
   <movable-area class="move-area">
     <view class="page">
-      <title-bar :title="surveyTitle"/>
+      <title-bar title="聊天记录"/>
       <view class="weui-panel__bd">
         <view class="weui-media-box__hd ">
           <image :src="responderAvator" class="middle-avatar"/>
           <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-          <view class="weui-media-box__title" v-if="surveyType==='exam'">答对 {{score}} 题</view>
-          <view class="weui-media-box__desc"> 评语： {{surveyConclusion}}</view>
+          <!--<view class=" title-desc"> 标题：超长标题，够不够长，超长标题，够不够长超长标题，够不够长，超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长</view>-->
+          <view class="weui-media-box__title"> 标题： {{surveyTitle}}</view>
           <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
       </view>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
+          <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
+            <bot-say-text :content=getResult></bot-say-text>
+          </view>
+          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.length > 0">
+            <bot-say-text :content=getSurveyConclusion></bot-say-text>
+          </view>
+          <view class="detail-cell weui-cell__bd">
+            <bot-say-text content="聊天记录如下："></bot-say-text>
+          </view>
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
             <view class="weui-cell__bd">
-              <bot-say-text :content="item.question"></bot-say-text>
+              <bot-say-text :content="item.question" v-if="item.question.length > 0"></bot-say-text>
             </view>
             <view class="weui-cell__bd">
               <bot-say-image :content="item.questionUrl" v-if="item.questionUrl!=null" @loadDone="imageLoadEnd"></bot-say-image>
             </view>
             <block v-if="item.userSay!=null">
               <view class="weui-cell__ft">
-              <user-say-text :content="item.userSay"></user-say-text>
+              <user-say-text :content="item.userSay" v-if="item.userSay.length > 0"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam'">
                 <i class="icon iconfont icon-right" v-if="item.correct"></i>
                 <i class="icon iconfont icon-close" v-else></i>
@@ -46,14 +55,12 @@
                 <i class="icon iconfont icon-close" v-else></i>
               </view>
               </view>
-            </block>  
+            </block>
           </view>
         </scroll-view>
       </view>
       <view class="weui-panel__footer">
-        <view class='weui-media-box__footer'>
-          <copyright v-if="showFooter"/>
-        </view>
+        <copyright v-if="showFooter"/>
       </view>
     </view>
     <home-button/>
@@ -105,6 +112,12 @@ export default {
     showFooter () {
       // return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
       return true
+    },
+    getResult () {
+      return '共答对' + this.score + '题'
+    },
+    getSurveyConclusion () {
+      return '评语是：' + this.surveyConclusion
     }
   },
 
@@ -166,14 +179,17 @@ export default {
 .weui-panel__footer {
   display : flex ;
   flex-flow : row;
-  padding :15px;
-  border-top: 1rpx solid #dadada;
+  border-top: 0;
+  padding-top: 10rpx;
+  height: 110rpx;
+  background-color:#EEEEEE;
 }
 
 .weui-media-box__footer{
-  padding-right: 30rpx;
-  padding-left: 50rpx;
-  padding-bottom: 80rpx;
+  /*padding-right: 30rpx;*/
+  /*padding-left: 50rpx;*/
+  /*padding-bottom: 20rpx;*/
+  border-top: 0;
 }
 
 .weui-media-box__desc {
@@ -219,9 +235,7 @@ export default {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  border-bottom: 0;
 }
 
  .icon-right {
@@ -233,22 +247,32 @@ export default {
    font-size: 50rpx;
    color: red;
  }
-
-/* .detail-cell:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 2rpx;
-  border-top: 1rpx solid #D9D9D9;
-  color: #D9D9D9;
-  left: 30rpx;
-} */
+.weui-cells:after {
+  border: none;
+}
+  /* .detail-cell:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 2rpx;
+    border-top: 1rpx solid #D9D9D9;
+    color: #D9D9D9;
+    left: 30rpx;
+  } */
   .foot{
-    background: #f8f8f8;
+    background-color:#EEEEEE;
     line-height: 80rpx;
     height:80rpx;
   }
-
+  .title-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 450rpx;
+    max-height: 110rpx;
+  }
 </style>
