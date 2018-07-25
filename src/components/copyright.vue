@@ -1,7 +1,7 @@
 <template>
   <view v-if="shouldShow" class="footer-style">
     <text class="title-style"> 小哒智能科技（上海）有限公司</text>
-    <text class="desc-style"> Copyright © 2018 xiaoda.ai</text>
+    <text class="desc-style"> Copyright @ 2018 xiaoda.ai</text>
   </view>
 </template>
 
@@ -28,7 +28,7 @@
     width: 750rpx;
     z-index: @copyright-z-index;
     padding: 0 0;
-    margin-bottom: 40rpx;
+    margin-bottom: 20rpx;
   }
   .title-style {
     display: block;

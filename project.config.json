@@ -1,5 +1,8 @@
 {
 	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
@@ -7,10 +10,16 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
+	"libVersion": "2.0.9",
 	"appid": "wxc5ac60a9e76b7be5",
 	"projectname": "xiaoda-assistant-mp",
+	"svr": "",
+	"client": "",
+	"qcloudRoot": "",
+	"miniprogramRoot": "./dist/",
+	"pluginRoot": "",
+	"scripts": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -25,17 +34,16 @@
 			"list": []
 		},
 		"game": {
-			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
 					"name": "毛孩子",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=b80131f08f2811e8ad645f83ef10c47c",
+					"query": "id=18d71c508bf111e8a3241dca33486b22",
 					"scene": "1008"
 				},
 				{
@@ -84,7 +92,7 @@
 					"id": 7,
 					"name": "调查问卷",
 					"pathName": "pages/surveySubjects/main",
-					"query": "id=fa9652b08e7a11e88fd88f18b55509da",
+					"query": "id=5d8c4bc08e5511e88fd88f18b55509da",
 					"scene": "1008"
 				}
 			]

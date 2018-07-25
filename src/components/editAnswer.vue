@@ -4,9 +4,9 @@
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
         <view class="weui-cell__bd height-92">
-            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
+            <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
                    @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                   :value="answer.value"/>
+                   :value="answer.value" @blur="blur"/>
         </view>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
@@ -24,9 +24,9 @@
       <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
         <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
         <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)" focus="true"
+          <input class="weui-input height-line-92" :placeholder="'请输入答案'+(index+1)"
                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                  :value="answer.value"/>
+                  :value="answer.value"  @blur="blur"/>
         </view>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
@@ -100,7 +100,8 @@ export default {
   data () {
     return {
       region: ['广东', '广州', '海珠'],
-      customItem: '全部'
+      customItem: '全部',
+      focusEnd: true
     }
   },
   props: {
@@ -132,7 +133,7 @@ export default {
         return []
       }
       let ret = ['顺序']
-      console.log('----', survey.subjects)
+      // console.log('----', survey.subjects)
       for (let index in survey.subjects) {
         let subject = survey.subjects[index]
         let pos = parseInt(index) + 1
@@ -222,6 +223,9 @@ export default {
         }
       })
     }
+  },
+  blur () {
+    this.focusEnd = true
   }
 }
 </script>
