@@ -3,17 +3,31 @@
     <block v-for="(pollConclusion, i) in conclusions" :key="i">
     <view class="poll-conclusion-cell" >
         <view class="inline-cell-title">
-        <view class="weui-cells__title">评语内容：</view>
-        <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
-            <i class="icon iconfont icon-picture font-color"></i>
-        </view>
+          <view class="weui-cells__title">评语内容：</view>
+          <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
+              <i class="icon iconfont icon-picture font-color image-icon-color"></i>
+          </view>
+          <view class="weui-cell__ft">
+            <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
+              <i class="icon iconfont icon-trash trash-icon-color"></i>
+            </view>
+          </view>
         </view>
         <view class="poll-conclusion-bd">
-        <textarea class="weui-textarea" placeholder="请输入文本" :value="pollConclusion.text"
+        <textarea class="weui-textarea" placeholder="请填写评价" :value="pollConclusion.text"
                 @change="updateConclusionText({index: 0, text: $event.mp.detail.value})"/>
         </view>
         <image-gallery v-if="pollConclusion.imageUrl" :imageUrl="pollConclusion.imageUrl" :index="0" :type="'pollConclusion'"></image-gallery>
+      </view>
+    </block>
+    <block v-if="conclusions.length === 0">
+      <view class="subject-divider"></view>
+        <view class="weui-cells weui-cells_after-title" >
+        <view class="weui-cell" @click="addConclusion">
+          <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
+          <view class="weui-cell__bd">添加评语</view>
         </view>
+      </view>
     </block>
 </block>
 </template>
@@ -21,6 +35,7 @@
 
 <script>
 import imageGallery from '@/components/imageGallery'
+import textOrArea from '@/components/textOrArea'
 import { mapMutations } from 'vuex'
 export default {
   props: {
@@ -35,10 +50,13 @@ export default {
     }
   },
   components: {
-    imageGallery
+    imageGallery,
+    textOrArea
   },
   methods: {
     ...mapMutations([
+      'addConclusion',
+      'removeConclusion',
       'updateConclusionText'
     ]),
     addConclusionMedia (index) {
