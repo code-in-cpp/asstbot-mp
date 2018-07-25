@@ -59,9 +59,11 @@
   }
   .textarea-item{
     width: 100%;
-    line-height: 92rpx;
-    height: 276rpx;
+    line-height: 64rpx;
+    height: 192rpx;
     overflow: auto;
     padding-left: 30rpx;
+    padding-right: 30rpx;
+    box-sizing: border-box;
   }
 </style>

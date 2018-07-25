@@ -1,21 +1,17 @@
 <template>
 <block>
-<view class="weui-cells weui-cells_after-title" v-for="(conclusion, i) in conclusions" :key="i">
+<view class="weui-cells weui-cells_after-title clear-border" v-for="(conclusion, i) in conclusions" :key="i">
     <view class="subject-divider"></view>
-    <view class="weui-cells__title">
-    <view class="weui-cell" >
-        <view class="weui-cell__bd">
-        <view class="weui-label">结论 {{i+1}}</view>
-        </view>
-        <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
-            <i class="icon iconfont icon-picture font-color"></i>
-        </view>
-        <view class="weui-cell__ft">
-        <view @click="removeConclusion(i)">
-            <i class="icon iconfont icon-trash"></i>
-        </view>
-        </view>
-    </view>
+    <view class="weui-cell weui-cell_input subject-area subject-style font-size clear-border" >
+      <view class="weui-cell__hd subject-item-style flex-1">
+        <view class="weui-label subject-title-style">结论 {{i+1}}</view>
+      </view>
+      <view class="subject-item-style icon-item-style width-92" @click="addConclusionMedia(0)">
+        <i class="icon iconfont icon-picture font-color"></i>
+      </view>
+      <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
+        <i class="icon iconfont icon-trash font-color"></i>
+      </view>
     </view>
     <view class="weui-cells weui-cells_after-title">
     <!--<view class="poll-conclusion-bd">        -->

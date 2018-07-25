@@ -1,6 +1,6 @@
 <template>
   <view class = padding :class="isActive? 'active-item': '' ">
-    <view class="list-item" >
+    <view class="list-item">
       <view class="label-wrapper" @click="changeAvatar">
         <view-avatar :url="surveyInfo.avatarUrl" @click="changeAvatar"></view-avatar>
       </view>
@@ -8,7 +8,7 @@
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
         <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
       </view>
-      <i class="icon iconfont icon-enter iconStyle"></i>
+      <i class="icon iconfont icon-enter iconStyle" @click="changeInfo"></i>
     </view>
   </view>
 </template>

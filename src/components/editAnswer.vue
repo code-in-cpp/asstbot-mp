@@ -28,13 +28,13 @@
                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
                   :value="answer.value"  @blur="blur"/>
         </view>
+        <picker v-if="surveyType=='quiz'" @change="udpateAnswerQuiz(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
+          <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
+        </picker>
         <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
           <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
           <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
         </view>
-        <picker v-if="surveyType=='quiz'" @change="udpateAnswerQuiz(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
-          <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
-        </picker>
         <view class="weui-cell__ft font-style">
           <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
             <i class="icon iconfont icon-trash"></i>
@@ -293,9 +293,19 @@ view {
 }
   .anwser-item{
     display:flex;
-    border-bottom:1rpx solid #dadada;
+    /*border-bottom:1rpx solid #dadada;*/
     padding:0 30rpx;
+    position: relative;
   }
+.anwser-item:after{
+  content: '';
+  position: absolute;
+  border-bottom:1rpx solid #dadada;
+  left: 30rpx;
+  bottom:0;
+  width: 100%;
+  height: 0;
+}
   .anwser-check-icon{
     line-height:92rpx;
     width:92rpx;
