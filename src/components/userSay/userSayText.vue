@@ -1,7 +1,7 @@
 <template>
   <view class="wrapper word-text right-block flex-1">
     <view class="outgoing right-item">
-      {{content}}
+      <copyable-text :text="content"/>
     </view>
   </view>
 </template>
