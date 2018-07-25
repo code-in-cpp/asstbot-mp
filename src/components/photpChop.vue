@@ -1,5 +1,5 @@
 <template>
-  <view  class="cropper-container" :class="{'top_0': flag}">
+  <view  class="cropper-container" :class="{'top_0': flag}" :style="{paddingBottom:needPadding?'248rpx':'180rpx'}">
     <mpvue-cropper
       ref="cropper"
       :option="cropperOpt"
