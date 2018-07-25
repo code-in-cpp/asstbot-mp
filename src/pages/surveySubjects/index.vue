@@ -21,16 +21,16 @@
                             <!--:value="subject.question" focus="true" confirm-type="done"-->
                             <!--@change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>-->
                       <!--</view>-->
-                      <view class="subject-item-style icon-item-style" @click.stop="addMedia(i)">
-                        <i class="icon iconfont icon-picture font-color"></i>
-                      </view>
                       <view class="weui-cell__ft subject-item-style">
                         <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
                           <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
                         </picker>
                       </view>
+                      <view class="subject-item-style icon-item-style width-92" @click.stop="addMedia(i)">
+                        <i class="icon iconfont icon-picture font-color"></i>
+                      </view>
                       <view class="weui-cell__ft subject-item-style">
-                        <view class="icon-item-style" @click="removeSubject(i)">
+                        <view class="icon-item-style width-92" @click="removeSubject(i)">
                           <i class="icon iconfont icon-trash"></i>
                         </view>
                       </view>
@@ -294,7 +294,8 @@ export default {
 }
 
 .subject-divider {
-  margin-top: 10px;
+  height: 20rpx;
+  border-top:1rpx solid #dadada;
 }
 
 .bottom_button {
@@ -369,6 +370,9 @@ export default {
 }
 .flex-1{
   flex:1
+}
+.width-92{
+  width: 92rpx;
 }
 
 </style>

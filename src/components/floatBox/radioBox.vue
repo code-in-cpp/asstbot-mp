@@ -38,7 +38,7 @@
     },
     methods: {
       selectItem (obj) {
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 1000) {
           this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
         }
       },
@@ -53,18 +53,18 @@
               urls: [option.imageUrl]
             })
           }
-        }, 500)
+        }, 1000)
       },
       touchMove () {
         this.touchMoveTime = Date.parse(new Date())
-        if (this.touchMoveTime - this.touchStartTime < 500) {
+        if (this.touchMoveTime - this.touchStartTime < 1000) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
       },
       touchEnd () {
         this.touchEndTime = Date.parse(new Date())
-        if (this.touchEndTime - this.touchStartTime < 500) {
+        if (this.touchEndTime - this.touchStartTime < 1000) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
