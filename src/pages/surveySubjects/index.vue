@@ -1,5 +1,4 @@
 <template>
-
   <movable-area class="move-area">
     <view class="page">
       <title-bar title=" "/>

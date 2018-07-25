@@ -2,7 +2,7 @@
   <block>
     <view class="wrapper word-text right-block">
       <view class="outgoing right-item" v-if="displayText.length">
-        {{displayText}}
+        <copyable-text :text="displayText" />
       </view>
     </view>
     <view class="swiper-box" v-if="imgUrls.length">

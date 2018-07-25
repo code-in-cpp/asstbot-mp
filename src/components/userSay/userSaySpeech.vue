@@ -3,7 +3,7 @@
     <view class="outgoing right-item"  @click="play">
       <view class="weui-flex">
         <view class="weui-flex__item">
-          {{content.asr}} 
+          <copyable-text :text="content.asr"/>
         </view>
         <view>
           <block v-if="playStatus=='stop'">

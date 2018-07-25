@@ -15,6 +15,7 @@ import homeButton from '@/components/widget/homeButton'
 import logoTitleBar from '@/components/titleBar/logoTitleBar'
 import userLogin from '@/components/widget/userLogin'
 import loading from '@/components/view/loading'
+import copyableText from '@/components/widget/copyableText'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -32,6 +33,7 @@ Vue.component('home-button', homeButton)
 Vue.component('logo-title-bar', logoTitleBar)
 Vue.component('user-login', userLogin)
 Vue.component('loading', loading)
+Vue.component('copyable-text', copyableText)
 
 const app = new Vue(App)
 app.$mount()
