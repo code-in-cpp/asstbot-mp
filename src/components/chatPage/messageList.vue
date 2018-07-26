@@ -71,7 +71,6 @@ export default {
       this.$emit('renderFinish')
     },
     renderUpdate () {
-      console.log('renderUpdate')
       this.scollToBottom()
     },
     scollToBottom () {
