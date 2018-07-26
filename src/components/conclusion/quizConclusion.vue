@@ -7,10 +7,10 @@
         <view class="weui-label subject-title-style">结论 {{i+1}}</view>
       </view>
       <view class="subject-item-style icon-item-style width-92" @click="addConclusionMedia(0)">
-        <i class="icon iconfont icon-picture font-color"></i>
+        <i class="icon iconfont icon-picture font-color image-icon-color"></i>
       </view>
       <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
-        <i class="icon iconfont icon-trash font-color"></i>
+        <i class="icon iconfont icon-trash font-color trash-icon-color"></i>
       </view>
     </view>
     <view class="weui-cells weui-cells_after-title">

@@ -8,7 +8,7 @@
         </view>
         <view class="weui-cell__ft">
           <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
-              <i class="icon iconfont icon-trash"></i>
+              <i class="icon iconfont icon-trash trash-icon-color"></i>
           </view>
         </view>
     </view>
@@ -40,7 +40,7 @@
                 @change="updateConclusionText({index: i, text: $event.mp.detail.value})"/>
         </view>
         <view class="icon-item-style font-style" @click="addConclusionMedia(i)">
-        <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color"></i>
+        <i v-if="!conclusion.imageUrl" class="icon iconfont icon-picture font-color image-icon-color"></i>
         <image class="answer-image" v-if="conclusion.imageUrl" :src="conclusion.imageUrl"></image>
         </view>
     </view>

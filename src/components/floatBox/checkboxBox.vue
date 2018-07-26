@@ -2,7 +2,7 @@
   <scroll-view scroll-x="true">
     <view class="big-box">
       <label class="option-container light form-control" v-for="(option, index) in list.items" :key="option"
-             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)" @touchstart="touchStart(option)" @touchmove="touchMove" @touchend="touchEnd(option)">
+             :class="{'haveimage background-fff': !havaImage, 'no-image user-msg-box-color': havaImage, 'checkMe': checkArr[index]}" :for="'option' + index" @click="checked(index)" @touchstart="touchStart(option)" @touchmove="touchMove()" @touchend="touchEnd(option)">
         <view class="weui-flex">
           <view class="weui-flex__item">
             <block v-if="option.imageUrl">
@@ -52,7 +52,7 @@
     },
     methods: {
       selectOption (e) {
-        if (this.touchEndTime - this.touchStartTime < 1000) {
+        if (this.touchEndTime - this.touchStartTime < 800) {
           let arr = []
           this.checkArrIndex.map(item => {
             arr = [...arr, this.list.items[item]]
@@ -72,7 +72,7 @@
         }
       },
       checked (index) {
-        if (this.touchEndTime - this.touchStartTime < 1000) {
+        if (this.touchEndTime - this.touchStartTime < 800) {
           let a = !this.checkArr[index]
           this.checkArr.splice(index, 1, a)
           this.saveInArray(index, this.checkArrIndex)
@@ -84,8 +84,11 @@
         }
       },
       touchStart (option) {
+        if (this.timeout) {
+          clearTimeout(this.timeout)
+        }
         const that = this
-        this.touchStartTime = Date.parse(new Date())
+        this.touchStartTime = new Date().getTime()
         this.timeout = setTimeout(function () {
           if (option.imageUrl) {
             that.$store.commit('setPreviewFalse')
@@ -94,18 +97,19 @@
               urls: [option.imageUrl]
             })
           }
-        }, 1000)
+        }, 800)
+        console.log('time:start#' + this.timeout)
       },
       touchMove () {
-        this.touchMoveTime = Date.parse(new Date())
-        if (this.touchMoveTime - this.touchStartTime < 1000) {
+        this.touchMoveTime = new Date().getTime()
+        if (this.touchMoveTime - this.touchStartTime < 800) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }
       },
       touchEnd () {
-        this.touchEndTime = Date.parse(new Date())
-        if (this.touchEndTime - this.touchStartTime < 1000) {
+        this.touchEndTime = new Date().getTime()
+        if (this.touchEndTime - this.touchStartTime < 800) {
           clearTimeout(this.timeout)
           this.timeout = ''
         }

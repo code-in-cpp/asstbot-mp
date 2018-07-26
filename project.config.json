@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -64,7 +64,7 @@
 					"id": 3,
 					"name": "美吗",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=32a796808e2811e8bb4d8f00989ff45f",
+					"query": "id=9e2527108e4611e8bb4d8f00989ff45f",
 					"scene": "1008"
 				},
 				{

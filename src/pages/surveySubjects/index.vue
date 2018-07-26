@@ -27,11 +27,11 @@
                         </picker>
                       </view>
                       <view class="subject-item-style icon-item-style width-92" @click.stop="addMedia(i)">
-                        <i class="icon iconfont icon-picture font-color"></i>
+                        <i class="icon iconfont icon-picture font-color image-icon-color"></i>
                       </view>
                       <view class="weui-cell__ft subject-item-style">
                         <view class="icon-item-style width-92" @click="removeSubject(i)">
-                          <i class="icon iconfont icon-trash"></i>
+                          <i class="icon iconfont icon-trash trash-icon-color"></i>
                         </view>
                       </view>
                     </view>
@@ -166,7 +166,6 @@ export default {
     ...mapMutations([
       'updateCurrentSurvey',
       'addSubject',
-      'initConclusion',
       'clearSurvey',
       'removeSubject',
       'updateSubjectType',
@@ -179,7 +178,7 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.redirectTo({url: '/pages/createdSurvey/main'})
+          wx.navigateBack()
         })
         .catch((err) => {
           console.error(err)
@@ -254,9 +253,6 @@ export default {
         }
         console.log('comming here............')
         that.updateCurrentSurvey(survey)
-        if (survey.type !== 'exam') {
-          that.initConclusion()
-        }
       })
     .catch((err) => {
       console.log(err)
@@ -373,6 +369,14 @@ export default {
 }
 .width-92{
   width: 92rpx;
+}
+
+.image-icon-color {
+  color: green
+}
+
+.trash-icon-color {
+  color: #9d0000
 }
 
 </style>

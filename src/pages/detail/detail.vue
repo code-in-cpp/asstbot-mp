@@ -8,22 +8,12 @@
           <view class="responser-name" >{{responderName}}</view>
         </view>
         <view class="weui-media-box__bd">
-          <!--<view class=" title-desc"> 标题：超长标题，够不够长，超长标题，够不够长超长标题，够不够长，超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长超长标题，够不够长</view>-->
-          <view class="weui-media-box__title"> 标题： {{surveyTitle}}</view>
+          <view class="weui-media-box__title">标题： {{surveyTitle}}</view>
           <view class="weui-media-box__desc"> 时间： {{getCreateTime}}</view>
         </view>
       </view>
       <view class="content">
         <scroll-view scroll-y="true" class="weui-cells weui-cells_after-title" style="height: 100%">
-          <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
-            <bot-say-text :content=getResult></bot-say-text>
-          </view>
-          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.length > 0">
-            <bot-say-text :content=getSurveyConclusion></bot-say-text>
-          </view>
-          <view class="detail-cell weui-cell__bd">
-            <bot-say-text content="聊天记录如下："></bot-say-text>
-          </view>
           <view v-for="item in surveyAnswers" :key="item.id" class="detail-cell">
             <view class="weui-cell__bd">
               <bot-say-text :content="item.question" v-if="item.question.length > 0"></bot-say-text>
@@ -56,6 +46,12 @@
               </view>
               </view>
             </block>
+          </view>
+          <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
+            <bot-say-text :content=getResult></bot-say-text>
+          </view>
+          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.length > 0">
+            <bot-say-text :content=getSurveyConclusion></bot-say-text>
           </view>
         </scroll-view>
       </view>
@@ -162,6 +158,7 @@ export default {
   padding-right: 30rpx;
   padding-left: 50rpx;
   padding-top: 50rpx;
+  width: 70%;
 }
 
 .middle-avatar {
@@ -173,7 +170,7 @@ export default {
   display : flex ;
   flex-flow : row;
   padding :15px;
-  border-bottom: 1rpx solid #dadada;
+  /* border-bottom: 1rpx solid #dadada; */
 }
 
 .weui-panel__footer {
@@ -238,41 +235,31 @@ export default {
   border-bottom: 0;
 }
 
- .icon-right {
-   font-size: 60rpx;
-   color: green;
- }
+.icon-right {
+  font-size: 60rpx;
+  color: green;
+}
 
- .icon-close {
-   font-size: 50rpx;
-   color: red;
- }
+.icon-close {
+  font-size: 50rpx;
+  color: red;
+}
 .weui-cells:after {
   border: none;
 }
-  /* .detail-cell:before {
-    content: " ";
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    height: 2rpx;
-    border-top: 1rpx solid #D9D9D9;
-    color: #D9D9D9;
-    left: 30rpx;
-  } */
-  .foot{
-    background-color:#EEEEEE;
-    line-height: 80rpx;
-    height:80rpx;
-  }
-  .title-desc {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 450rpx;
-    max-height: 110rpx;
-  }
+
+.foot{
+  background-color:#EEEEEE;
+  line-height: 80rpx;
+  height:80rpx;
+}
+.title-desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 450rpx;
+  max-height: 110rpx;
+}
 </style>

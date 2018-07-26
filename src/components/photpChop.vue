@@ -1,5 +1,5 @@
 <template>
-  <view  class="cropper-container" :class="{'top_0': flag}">
+  <view  class="cropper-container" :class="{'top_0': flag}" :style="{paddingBottom:needPadding?'248rpx':'180rpx'}">
     <mpvue-cropper
       ref="cropper"
       :option="cropperOpt"
@@ -81,6 +81,7 @@
           .then((filePath) => {
             if (this.noClick) {
               this.noClick = !this.noClick
+              console.log('裁剪后的图片：' + filePath)
               this.$store.dispatch('uploadImageWithIndicator', {filePath, indicator: this.messageAction.indicator}).then(res => {
                 this.noClick = !this.noClick
                 this.flag = false
