@@ -7,8 +7,9 @@
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
       <command-area  @msgSendStatus="handleMsgSendStatus" 
-          :inputFieldFocus="needTextReply"
-          :displayFinish="displayFinish"/>
+          :inputPromt="activeInputPromtMsg"
+          :displayFinish="displayFinish"
+          :needFocus="messageList.length && messageList.length>5"/>
     </view>
   </block>
 </template>

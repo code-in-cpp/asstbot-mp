@@ -11,16 +11,31 @@
       </view>
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
-          <block v-if="textAreaFocus">
-            <textarea class="word-textarea primary-color revert" :value="currentMessage"
-              @input="valueInput" adjust-position auto-height="true"
-              cursor-spacing="14"  @confirm="confirm($event)"
-              focus="true"/>
+          <block v-if="textAreaFocus && displayFinish">
+            <block v-if="textType === 'text'">
+              <textarea class="word-textarea primary-color revert" :value="currentMessage"
+                @input="valueInput" adjust-position auto-height="true"
+                cursor-spacing="14"  @confirm="confirm($event)"
+                focus="true" :maxlength="textLength" :type="textType"/>
+            </block>
+            <block v-else>
+              <input class="word-textarea primary-color revert" :value="currentMessage"
+                @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
+                :maxlength="textLength" type="number"/>  
+            </block>
           </block>
           <block v-else>
-            <textarea class="word-textarea primary-color revert" :value="currentMessage"
-              @input="valueInput" adjust-position auto-height="true"
-              cursor-spacing="14"  @confirm="confirm($event)"/>
+            <block v-if="textType === 'text'">
+              <textarea class="word-textarea primary-color revert" :value="currentMessage"
+                @input="valueInput" adjust-position auto-height="true"
+                cursor-spacing="14"  @confirm="confirm($event)"
+                :maxlength="textLength" :type="textType"/>
+            </block>
+            <block v-else>
+              <input class="word-textarea primary-color revert" :value="currentMessage"
+                @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
+                :maxlength="textLength" type="number"/>              
+            </block>
           </block>
         </view>
         <view class="weui-flex__item"  v-else>
@@ -72,14 +87,24 @@ export default {
             .map((item) => item.caption).join(',')
     },
     textAreaFocus () {
-      return this.inputFieldFocus && this.displayFinish
+      return this.needFocus && this.inputPromt.type && this.inputPromt.type === 'input-prompt'
+    },
+    textType () {
+      return this.inputPromt.keyboard ? this.inputPromt.keyboard : 'text'
+    },
+    textLength () {
+      return this.inputPromt.length ? this.inputPromt.length : 140
     }
   },
 
   props: {
-    inputFieldFocus: {
+    inputPromt: {
+      type: Object,
+      default: {}
+    },
+    needFocus: {
       type: Boolean,
-      default: false
+      default: true
     },
     displayFinish: {
       type: Boolean,
