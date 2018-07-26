@@ -80,14 +80,16 @@ export default {
     console.log('onload')
     if (this.lastBotMsg) {
       let that = this
+      this.$emit('renderUpdate')
       let interval = setInterval(() => {
         that.received++
-        if (that.received >= that.displayIncomingMsgs.length || !that.lastBotMsg) {
-          console.log(that.displayIncomingMsgs)
+        if (that.received > that.displayIncomingMsgs.length || !that.lastBotMsg) {
           that.$emit('renderComplete')
           clearInterval(interval)
+        } else {
+          that.$emit('renderUpdate')
         }
-      }, 1000)
+      }, 1200)
     }
   },
   created () {

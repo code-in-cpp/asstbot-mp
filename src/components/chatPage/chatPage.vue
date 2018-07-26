@@ -1,14 +1,15 @@
 <template>
   <block>
     <view class="content">
-      <message-list :messagesList="messageList" :survey="survey" :showImage="showImage" :localmsgsending="localMsgSending"
-                    @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
+      <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
+          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
-      <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
+      <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
       <command-area  @msgSendStatus="handleMsgSendStatus"
-          :inputFieldFocus="needTextReply"
-          :displayFinish="displayFinish"/>
+          :inputPromt="activeInputPromtMsg"
+          :displayFinish="displayFinish"
+          :needFocus="messageList.length && messageList.length>5"/>
     </view>
   </block>
 </template>
@@ -45,44 +46,6 @@ export default {
     }
   },
   computed: {
-    messageAction () {
-      if (!this.messageList) {
-        return {
-          title: '',
-          type: 'text',
-          items: ''
-        }
-      }
-      let list = this.messageList.slice(-1).pop()
-      if (list && list.to) {
-        return [...list.msgs].slice(-1).pop()
-      } else {
-        let objType = Object.prototype.toString.call(list).slice(8, -1)
-        switch (objType) {
-          case 'Array' :
-            return {
-              title: '',
-              type: 'text',
-              items: '',
-              ...[...list].slice(-1).pop()
-            }
-          case 'Object':
-            return {
-              title: '',
-              type: 'text',
-              items: '',
-              ...list
-            }
-          default:
-            return {
-              title: '',
-              type: 'text',
-              items: ''
-            }
-        }
-      }
-    },
-
     needTextReply () {
       if (!this.messageList) {
         return false
@@ -98,41 +61,51 @@ export default {
         return false
       }
     },
+    activeMsg () {
+      if (!this.messageList) {
+        return undefined
+      }
+      let lastmsg = [...this.messageList].slice(-1)[0]
+      if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
+        return undefined
+      }
+      return lastmsg
+    },
 
-    showImage () {
-      if (!this.messageAction) {
-        return false
-      }
-      let val = this.messageAction
-      if (val.type === 'radio' || val.type === 'checkbox') {
-        let finditem = val.items.find(item => (!!item.imageUrl) === true)
-        return finditem !== undefined
-      } else {
-        return false
-      }
+    activeRedirectMsg () {
+      return this.activeSomeKindOfMsg(['redirect', 'reLaunch'])
+    },
+    activeBoxMsg () {
+      return this.activeSomeKindOfMsg(['radio', 'checkbox', 'imageUploader'])
+    },
+    activeInputPromtMsg () {
+      return this.activeSomeKindOfMsg(['input-prompt'])
     }
   },
   methods: {
+    activeSomeKindOfMsg (array) {
+      if (!this.activeMsg) {
+        return undefined
+      }
+      let message = this.activeMsg.msgs.filter((msg) => {
+        return array.indexOf(msg.type) !== -1
+      })
+
+      if (message.length >= 1) {
+        return message[0]
+      } else {
+        return undefined
+      }
+    },
     msgDisplayBegin () {
       this.displayFinish = false
     },
     msgDisplayFinish () {
       this.displayFinish = true
-      let lastMsg = this.getlastMsg()
+      let lastMsg = this.activeRedirectMsg
       if (lastMsg) {
         this.doRedirect(lastMsg)
       }
-    },
-    getlastMsg () {
-      if (!this.messageList) {
-        return undefined
-      }
-      let lastmsg = this.messageList.slice(-1)[0]
-      if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
-        return undefined
-      }
-
-      return lastmsg.msgs.slice(-1)[0]
     },
     doRedirect (lastmsg) {
       let redirectUrl = urlMaping[lastmsg.url]
@@ -162,12 +135,12 @@ export default {
       setTimeout(function () {
         that.$emit('redirectTo', scene)
         wx.navigateTo({url})
-      }, 1500)
+      }, 500)
     },
     delayRelaunch (url) {
       setTimeout(function () {
         wx.reLaunch({url})
-      }, 1500)
+      }, 500)
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')

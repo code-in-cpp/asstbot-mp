@@ -15,12 +15,12 @@
         </wxc-panel>
         <wxc-panel title="分享">
           <button open-type="share" class="share-button">
-            <wxc-list icon="weixin" icon-color="black" title="转发给好友"></wxc-list>
+            <wxc-list icon="weixin" icon-color="#1cb2b9" title="转发给好友"></wxc-list>
           </button>
         </wxc-panel>
         <wxc-panel>
           <button class="share-button" @click="publish">
-            <wxc-list icon="share" icon-color="black" title="分享到朋友圈"></wxc-list>
+            <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
         
