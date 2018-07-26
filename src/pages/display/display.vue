@@ -51,7 +51,7 @@
               <button class="weui-btn btn-font" type="default" @click="chartStatics" ><i class="icon iconfont icon-stealth"></i>统计</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" open-type="share" type="primary" ><i class="icon iconfont icon-share"></i>发布</button>
+              <button class="weui-btn btn-font" type="primary" @click="toPublishPage"><i class="icon iconfont icon-share"></i>分享</button>
             </view>
         </view>
       </view>
@@ -95,6 +95,11 @@ export default {
     selfTest () {
       wx.navigateTo({
         url: `/pages/surveyChat/main?id=${this.surveyId}&scene=test`
+      })
+    },
+    toPublishPage () {
+      wx.navigateTo({
+        url: `../publish/main?id=${this.survey.id}&title=${this.survey.title}&avatarUrl=${this.survey.avatarUrl}`
       })
     },
     chartStatics() {
