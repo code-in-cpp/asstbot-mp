@@ -1,9 +1,11 @@
 <template>
     <view class="select-box" :class="{'top_110': !showImage, 'top_444': showImage}">
-      <radio-box v-if="messageAction.type === 'radio' && !globalShow" :list="messageAction"></radio-box>
-      <checkbox-box v-if="messageAction.type === 'checkbox' && !globalShow" :list="messageAction"></checkbox-box>
-      <avatar-box v-if="messageAction.type === 'imageUploader' && !globalShow" :list="messageAction"></avatar-box>
       <global-component v-if="globalShow"></global-component>
+      <block v-else>
+        <radio-box v-if="messageAction.type === 'radio'" :list="messageAction"></radio-box>
+        <checkbox-box v-if="messageAction.type === 'checkbox'" :list="messageAction"></checkbox-box>
+        <avatar-box v-if="messageAction.type === 'imageUploader'" :list="messageAction"></avatar-box>
+      </block>
     </view>
 </template>
 
@@ -46,6 +48,8 @@
   /*background: #fff;*/
   width: 100%;
   overflow:auto;
+  /*position: absolute;*/
+  /*bottom:0*/
 }
 .top_110{
   /*position: absolute;*/

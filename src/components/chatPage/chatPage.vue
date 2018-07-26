@@ -2,11 +2,11 @@
   <block>
     <view class="content">
       <message-list :messagesList="messageList" :survey="survey" :showImage="showImage" :localmsgsending="localMsgSending"
-          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
+                    @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :showImage="showImage" :messageAction="messageAction"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus" 
+      <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputFieldFocus="needTextReply"
           :displayFinish="displayFinish"/>
     </view>
@@ -18,8 +18,7 @@ import commandArea from '@/components/commandArea'
 import messageList from '@/components/chatPage/messageList'
 import selectBox from '@/components/selectBox'
 
-const urlMaping = {'create-survey': '/pages/createdSurvey/main',
-  'visit-survey': '/pages/visitedSurvey/main',
+const urlMaping = {
   'edit-survey': '/pages/surveySubjects/main',
   'bot-creator': '/pages/index/main',
   'test-survey': '/pages/surveyChat/main',

@@ -9,9 +9,6 @@
         </view>
         <view :id="'bottom'+i"></view>
       </block>
-      <block v-if="waitingBotMessage">
-        <bot-msg-receiving/>
-      </block>
       <block v-if="localmsgsending">
         <user-say-sending/>
       </block>
