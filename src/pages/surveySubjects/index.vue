@@ -64,7 +64,7 @@
             <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" >分享 </button>
+            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare">分享 </button>
           </view>
         </view>
       </view>
@@ -139,6 +139,12 @@ export default {
         this.items[1] = '评语 ( ' + state.currentSurvey.survey.conclusions.length + ' )'
       }
       return this.items
+    },
+    disableShare (state) {
+      if (state.currentSurvey.survey === undefined || state.currentSurvey.survey === null || state.currentSurvey.survey.subjects === undefined || state.currentSurvey.survey.subjects === null) {
+        return true
+      }
+      return !state.currentSurvey.survey.subjects.length
     }
   },
 

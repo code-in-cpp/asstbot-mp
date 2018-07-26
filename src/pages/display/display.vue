@@ -45,13 +45,13 @@
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" type="default" @click="selfTest"><i class="icon iconfont icon-stealth"></i>自测</button>
+              <button class="weui-btn btn-font" type="default" @click="selfTest" :disabled="disableShare"><i class="icon iconfont icon-stealth"></i>自测</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" type="default" @click="chartStatics" ><i class="icon iconfont icon-stealth"></i>统计</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" type="primary" @click="toPublishPage"><i class="icon iconfont icon-share"></i>分享</button>
+              <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare"><i class="icon iconfont icon-share"></i>分享</button>
             </view>
         </view>
       </view>
@@ -83,7 +83,13 @@ export default {
       commitToday: 'commitToday',
       commitCount: 'commitCount',
       reviewCount: 'reviewCount'
-    })
+    }),
+    disableShare () {
+      if (this.survey === undefined || this.survey === null || this.survey.subjects === undefined || this.survey.subjects === null) {
+        return true
+      }
+      return !this.survey.subjects.length
+    }
   },
 
   components: {
