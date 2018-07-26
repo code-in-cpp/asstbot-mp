@@ -16,12 +16,12 @@
               <textarea class="word-textarea primary-color revert" :value="currentMessage"
                 @input="valueInput" adjust-position auto-height="true"
                 cursor-spacing="14"  @confirm="confirm($event)"
-                focus="true" :maxlength="textLength" :type="textType"/>
+                focus="true" :maxlength="textLength" :type="textType" :placeholder="placehodlerText"/>
             </block>
             <block v-else>
               <input class="word-textarea primary-color revert" :value="currentMessage"
                 @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" type="number"/>  
+                :maxlength="textLength" type="number" :placeholder="placehodlerText"/>  
             </block>
           </block>
           <block v-else>
@@ -94,6 +94,9 @@ export default {
     },
     textLength () {
       return this.inputPromt.length ? this.inputPromt.length : 140
+    },
+    placehodlerText () {
+      return this.inputPromt.prompt ? this.inputPromt.prompt : ''
     }
   },
 

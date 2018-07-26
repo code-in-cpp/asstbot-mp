@@ -48,6 +48,8 @@
   /*background: #fff;*/
   width: 100%;
   overflow:auto;
+  /*position: absolute;*/
+  /*bottom:0*/
 }
 .top_110{
   /*position: absolute;*/

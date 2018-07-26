@@ -59,6 +59,7 @@ export default {
 
   computed: {
     displayIncomingMsgs () {
+      console.log(this.messages)
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
         return msg.type === 'text' ||
           msg.type === 'getUserinfo' ||
@@ -76,6 +77,7 @@ export default {
   },
 
   onLoad () {
+    console.log('onload')
     if (this.lastBotMsg) {
       let that = this
       this.$emit('renderUpdate')
@@ -111,7 +113,7 @@ export default {
 
 .bot-message .avatar-wrapper {
   padding: 3px 10px;
-  width: 40rpx  
+  width: 40rpx
 }
 
 .bot-message .left-item{
