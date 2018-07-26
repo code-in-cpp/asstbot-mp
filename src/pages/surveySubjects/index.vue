@@ -10,17 +10,12 @@
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
                 <block v-for="(subject, i) in subjects" :key="subject">
-                  <!-- <view class="subject-divider"></view> -->
                   <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
                     <view class="weui-cell weui-cell_input subject-area subject-style font-size">
                       <view class="weui-cell__hd subject-item-style flex-1">
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
-                      <!--<view class="weui-cell__bd subject-item-style">-->
-                        <!--<input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"-->
-                            <!--:value="subject.question" focus="true" confirm-type="done"-->
-                            <!--@change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>-->
-                      <!--</view>-->
+
                       <view class="weui-cell__ft subject-item-style">
                         <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
                           <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
@@ -37,10 +32,6 @@
                     </view>
                   </view>
 
-                  <!--<view class="textarea-box">-->
-                    <!--<text class="textarea-text" @click="showTextarea(i)" v-if="!textareaShowArray[i]">{{subject.question}}</text>-->
-                    <!--<textarea class="textarea-item" v-if="textareaShowArray[i]" :value="subject.question" focus="true" @input="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"></textarea>-->
-                  <!--</view>-->
                   <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写问题'"></text-or-area>
 
                   <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
@@ -138,7 +129,6 @@ export default {
       }
     }),
     updateTitle (state) {
-      console.log('enter updateTitle')
       if (state.currentSurvey === undefined || state.currentSurvey === null || state.currentSurvey.survey === undefined || state.currentSurvey.survey === null) {
         return
       }
@@ -252,7 +242,6 @@ export default {
   },
 
   onLoad (option) {
-    console.log('on load')
     let that = this
     if (option.source) {
       this.source = option.source
@@ -272,12 +261,6 @@ export default {
     .catch((err) => {
       console.log(err)
     })
-  },
-  onReady () {
-    console.log('on ready')
-  },
-  onShow () {
-    console.log('on show')
   },
   onShareAppMessage (res) {
     let surveyId = this.survey.id
