@@ -137,16 +137,16 @@ export default {
         })
       }
     }),
-    updateTitle (newValue) {
+    updateTitle (state) {
       console.log('enter updateTitle')
-      if (newValue === undefined || newValue === null) {
+      if (state.currentSurvey === undefined || state.currentSurvey === null || state.currentSurvey.survey === undefined || state.currentSurvey.survey === null) {
         return
       }
-      if (newValue.subjects !== undefined && newValue.subjects !== null) {
-        this.items[0] = '题目 ( ' + newValue.subjects.length + ' )'
+      if (state.currentSurvey.survey.subjects !== undefined && state.currentSurvey.survey.subjects !== null) {
+        this.items[0] = '题目 ( ' + state.currentSurvey.survey.subjects.length + ' )'
       }
-      if (newValue.conclusions !== undefined && newValue.conclusions !== null) {
-        this.items[1] = '评语 ( ' + newValue.conclusions.length + ' )'
+      if (state.currentSurvey.survey.conclusions !== undefined && state.currentSurvey.survey.conclusions !== null) {
+        this.items[1] = '评语 ( ' + state.currentSurvey.survey.conclusions.length + ' )'
       }
       return this.items
     }
@@ -252,6 +252,7 @@ export default {
   },
 
   onLoad (option) {
+    console.log('on load')
     let that = this
     if (option.source) {
       this.source = option.source
@@ -272,7 +273,12 @@ export default {
       console.log(err)
     })
   },
-
+  onReady () {
+    console.log('on ready')
+  },
+  onShow () {
+    console.log('on show')
+  },
   onShareAppMessage (res) {
     let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)
