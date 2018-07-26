@@ -41,6 +41,9 @@ export default {
   },
   methods: {
     publish () {
+      wx.showLoading({
+        title: '生成图片中'
+      })
       saveQrCodeToPhotosAlbum(this.surveyId)
     }
   },
