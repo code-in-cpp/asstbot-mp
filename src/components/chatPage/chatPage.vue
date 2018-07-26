@@ -136,12 +136,12 @@ export default {
       setTimeout(function () {
         that.$emit('redirectTo', scene)
         wx.navigateTo({url})
-      }, 1500)
+      }, 500)
     },
     delayRelaunch (url) {
       setTimeout(function () {
         wx.reLaunch({url})
-      }, 1500)
+      }, 500)
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
