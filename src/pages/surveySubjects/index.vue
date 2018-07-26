@@ -73,7 +73,7 @@
             <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" open-type="share" type="primary">发布 </button>
+            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" >分享 </button>
           </view>
         </view>
       </view>
@@ -220,6 +220,11 @@ export default {
     toEditPage () {
       wx.navigateTo({
         url: '../surveyTitleAndIntro/main'
+      })
+    },
+    toPublishPage () {
+      wx.navigateTo({
+        url: `../publish/main?id=${this.survey.id}&title=${this.survey.title}&avatarUrl=${this.survey.avatarUrl}`
       })
     },
     selfTest () {
