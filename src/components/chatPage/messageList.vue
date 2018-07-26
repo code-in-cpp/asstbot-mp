@@ -9,9 +9,6 @@
         </view>
         <view :id="'bottom'+i"></view>
       </block>
-      <block v-if="waitingBotMessage">
-        <bot-msg-receiving/>
-      </block>
       <block v-if="localmsgsending">
         <user-say-sending/>
       </block>
@@ -71,7 +68,6 @@ export default {
       this.$emit('renderFinish')
     },
     renderUpdate () {
-      console.log('renderUpdate')
       this.scollToBottom()
     },
     scollToBottom () {
