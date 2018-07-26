@@ -11,17 +11,10 @@
       </view>
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
-            <block v-if="textType === 'text'">
-              <textarea class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" adjust-position auto-height="true"
-                cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" :type="textType"/>
-            </block>
-            <block v-else>
-              <input class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" type="number"/>              
-            </block>
+          <textarea class="word-textarea primary-color revert" :value="currentMessage"
+            @input="valueInput" adjust-position auto-height="true"
+            cursor-spacing="14"  @confirm="confirm($event)"
+            :maxlength="textLength" :placeholder="placehodlerText"/>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>

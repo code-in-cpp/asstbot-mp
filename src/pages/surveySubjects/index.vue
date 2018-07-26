@@ -91,7 +91,7 @@ export default {
     return {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
-      items: ['题目', '结论'],
+      items: ['题目', '评语'],
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false,
@@ -128,23 +128,18 @@ export default {
         })
       }
     }),
-    updateTitle (state) {
-      if (state.currentSurvey === undefined || state.currentSurvey === null || state.currentSurvey.survey === undefined || state.currentSurvey.survey === null) {
-        return
+    updateTitle () {
+      if (!this.survey || !this.survey.subjects || !this.survey.conclusions) {
+        return ['题目', '结论']
       }
-      if (state.currentSurvey.survey.subjects !== undefined && state.currentSurvey.survey.subjects !== null) {
-        this.items[0] = '题目 ( ' + state.currentSurvey.survey.subjects.length + ' )'
-      }
-      if (state.currentSurvey.survey.conclusions !== undefined && state.currentSurvey.survey.conclusions !== null) {
-        this.items[1] = '评语 ( ' + state.currentSurvey.survey.conclusions.length + ' )'
-      }
-      return this.items
+      return [`题目 ( ${this.survey.subjects.length} )`,
+        `评语 ( ${this.survey.conclusions.length} )`]
     },
-    disableShare (state) {
-      if (state.currentSurvey.survey === undefined || state.currentSurvey.survey === null || state.currentSurvey.survey.subjects === undefined || state.currentSurvey.survey.subjects === null) {
+    disableShare () {
+      if (!this.survey || !this.survey.subjects) {
         return true
       }
-      return !state.currentSurvey.survey.subjects.length
+      return this.survey.subjects.length === 0
     }
   },
 
