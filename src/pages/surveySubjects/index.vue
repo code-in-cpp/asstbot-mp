@@ -141,7 +141,7 @@ export default {
       return this.items
     },
     disableShare (state) {
-      if (state.currentSurvey.survey === undefined || state.currentSurvey.survey === null || state.currentSurvey.survey.subjects === undefined || state.currentSurvey.survey.subjects === null) {
+      if (state.currentSurvey === undefined || state.currentSurvey === null || state.currentSurvey.survey === undefined || state.currentSurvey.survey === null || state.currentSurvey.survey.subjects === undefined || state.currentSurvey.survey.subjects === null) {
         return true
       }
       return !state.currentSurvey.survey.subjects.length
