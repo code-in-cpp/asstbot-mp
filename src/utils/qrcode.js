@@ -1,5 +1,32 @@
 import config from '@/config.js'
 
+function getSaveImageAuth (scene) {
+  return new Promise((resolve, reject) => {
+    wx.getSetting({
+      success (res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success () {
+              resolve(scene)
+            },
+            fail (err) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请在设置页面打开“保存到相册”',
+                icon: 'none'
+              })
+              reject(err)
+            }
+          })
+        } else {
+          resolve(scene)
+        }
+      }
+    })
+  })
+}
+
 function getQrcodeImageUrl (scene) {
   return new Promise((resolve, reject) => {
     wx.request({
@@ -75,11 +102,13 @@ function comfirmSaveImageToPhotosAlbum (image) {
 }
 
 export function saveQrCodeToPhotosAlbum (scene) {
-  getQrcodeImageUrl(scene)
+  getSaveImageAuth(scene)
+  .then(getQrcodeImageUrl)
   .then(storeQrCodeImage)
   .then(saveImageToPhotosAlbum)
   .then(comfirmSaveImageToPhotosAlbum)
   .catch((err) => {
+    wx.hideLoading()
     console.log('save qrcode image to photo album failed : ' + JSON.stringify(err))
   })
 }

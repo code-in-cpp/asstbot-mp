@@ -104,7 +104,8 @@ export default {
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false,
-      textareaShowArray: []
+      textareaShowArray: [],
+      source: 'main'
     }
   },
   computed: {
@@ -178,7 +179,13 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack()
+          if (this.source === 'main') {
+            wx.navigateBack()
+          } else {
+            wx.reLaunch({
+              url: '../index/main?scene=relaunchFrom'
+            })
+          }
         })
         .catch((err) => {
           console.error(err)
@@ -246,6 +253,9 @@ export default {
 
   onLoad (option) {
     let that = this
+    if (option.source) {
+      this.source = option.source
+    }
     this.$store.dispatch('retrieveSurveyById', option.id)
       .then((survey) => {
         if (survey.subjects.length) {
@@ -256,7 +266,6 @@ export default {
             })
           })
         }
-        console.log('comming here............')
         that.updateCurrentSurvey(survey)
       })
     .catch((err) => {
