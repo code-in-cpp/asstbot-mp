@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -75,10 +75,10 @@
 					"scene": "1008"
 				},
 				{
-					"id": -1,
-					"name": "测试加入图片的功能",
-					"pathName": "pages/surveySubjects/main",
-					"query": "id=survey-8a5de9f0-7e89-11e8-b56b-594b8a930fa4",
+					"id": 5,
+					"name": "chart",
+					"pathName": "pages/chart/main",
+					"query": "surveyId=5d8c4bc08e5511e88fd88f18b55509da",
 					"scene": "1008"
 				},
 				{

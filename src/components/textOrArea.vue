@@ -47,20 +47,25 @@
     border-bottom: 1rpx solid #dadada;
   }
   .textarea-text{
+    /*width:100%;*/
+    /*line-height:64rpx;*/
+    /*display:block;*/
+    /*padding-left:30rpx;*/
+    /*overflow:hidden;*/
+    /*text-overflow:ellipsis;*/
+    /*box-sizing:border-box;*/
+    /*-webkit-line-clamp: 3;*/
+    /*line-clamp: 3;*/
+    /*display:-webkit-box;*/
+    /*max-height: 192rpx;*/
+    /*-webkit-box-orient:vertical;*/
+
     width:100%;
-    /*height:92rpx;*/
     line-height:64rpx;
     display:block;
     padding-left:30rpx;
-    overflow:hidden;
-    text-overflow:ellipsis;
     box-sizing:border-box;
-    /*white-space:nowrap;*/
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    display:-webkit-box;
-    max-height: 192rpx;
-    -webkit-box-orient:vertical;
+
 
   }
   .textarea-item{

@@ -7,7 +7,7 @@
       <gui-divider :message="messages"></gui-divider>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="!lastBotMsg || i < received">
+      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <view class="weui-flex bot-message">
           <view class="left-item">
             <view class="avatar-wrapper">
@@ -15,14 +15,18 @@
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
             <view class="content">
-              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')"/>
+              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"/>
+              <view class="aaa" v-if="lastBotMsg && i == received">
+                <bot-msg-receiving/>
+              </view>
+
             </view>
           </view>
         </view>
       </block>
-      <block v-if="lastBotMsg && received < displayIncomingMsgs.length">
-        <bot-msg-receiving/>
-      </block>
+      <!--<block v-if="lastBotMsg && received < displayIncomingMsgs.length">-->
+        <!--<bot-msg-receiving/>-->
+      <!--</block>-->
     </block>
 </block>
 </template>
@@ -123,5 +127,8 @@ export default {
   }
 .bot-message .content{
     width:100%
+  }
+  .aaa{
+    margin-left: -40rpx;
   }
 </style>
