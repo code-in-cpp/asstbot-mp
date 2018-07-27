@@ -50,8 +50,11 @@
           <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
             <bot-say-text :content=getResult></bot-say-text>
           </view>
-          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.length > 0">
-            <bot-say-text :content=getSurveyConclusion></bot-say-text>
+          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.text != null && surveyConclusion.text != '' > 0">
+            <bot-say-text :content="'评语是：' + surveyConclusion.text"></bot-say-text>
+          </view>
+          <view class="weui-cell__bd">
+              <bot-say-image :content="surveyConclusion.imageUrl" v-if="surveyConclusion.imageUrl != null && surveyConclusion.imageUrl != ''" @loadDone="imageLoadEnd"></bot-say-image>
           </view>
         </scroll-view>
       </view>
@@ -113,9 +116,6 @@ export default {
     },
     getResult () {
       return '共答对' + this.score + '题'
-    },
-    getSurveyConclusion () {
-      return '评语是：' + this.surveyConclusion
     }
   },
 

@@ -1,7 +1,6 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 const surveyStatisticUrl = 'https://xiaodamp.cn/asstbot/survey/statistic'
-var date = new Date()
 
 const state = {
   result: [],
@@ -43,8 +42,6 @@ const getters = {
   },
 
   commitToday: state => {
-    // let currentTime = date.toLocaleDateString().replace(new RegExp('/', 'gm'), '-')
-    // console.log('current time:' + currentTime)
     let todayResult = state.result.filter(item => {
       return isToday(item.created_at)
     })
@@ -102,10 +99,9 @@ const getters = {
 
   getSurveyResultType: state => (id, type) => {
     if (!state.surveyResult.survey) {
-      return '匿名'
+      return 'exam'
     }
-    let surveyType = state.surveyResult.survey.type
-    return surveyType
+    return state.surveyResult.survey.type
   },
 
   getResponderAvator: state => (id, type) => {
@@ -119,11 +115,11 @@ const getters = {
   getConclusion: state => (id, type) => {
     let surveyResult = state.surveyResult
     if (surveyResult == null || !surveyResult.survey) {
-      return ''
+      return { text: '' }
     }
     let conclusions = surveyResult.survey.conclusions
     if (surveyResult.conclusion != null) {
-      return conclusions[surveyResult.conclusion].text
+      return conclusions[surveyResult.conclusion]
     }
     let score = surveyResult.score
     let ret = ''
@@ -131,7 +127,7 @@ const getters = {
       let conclusion = conclusions[index]
       if (conclusion.scoreRange) {
         if (score >= conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
-          ret = conclusion.text
+          ret = conclusion
         }
       }
     }
