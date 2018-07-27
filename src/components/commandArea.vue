@@ -2,41 +2,19 @@
   <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex primary-color light">
       <view class="placeholder">
-        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
+        <button class="input-widget form-control primary-color" size="small" @click="changeVoiceMode" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
         </button>
-        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=false" v-else>
+        <button class="input-widget form-control primary-color" size="small" @click="voiceMode=false" v-else>
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
-          <block v-if="textAreaFocus && displayFinish">
-            <block v-if="textType === 'text'">
-              <textarea class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" adjust-position auto-height="true"
-                cursor-spacing="14"  @confirm="confirm($event)"
-                focus="true" :maxlength="textLength" :type="textType"/>
-            </block>
-            <block v-else>
-              <input class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" type="number"/>  
-            </block>
-          </block>
-          <block v-else>
-            <block v-if="textType === 'text'">
-              <textarea class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" adjust-position auto-height="true"
-                cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" :type="textType"/>
-            </block>
-            <block v-else>
-              <input class="word-textarea primary-color revert" :value="currentMessage"
-                @input="valueInput" cursor-spacing="14"  @confirm="confirm($event)"
-                :maxlength="textLength" type="number"/>              
-            </block>
-          </block>
+          <textarea class="word-textarea primary-color revert" :value="currentMessage"
+            @input="valueInput" adjust-position auto-height="true"
+            cursor-spacing="14"  @confirm="confirm($event)"
+            :maxlength="textLength" :placeholder="placehodlerText"/>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>
@@ -61,6 +39,33 @@
 import { mapState } from 'vuex'
 import recordButton from './widget/recordButton'
 import devicePadding from './view/devicePadding'
+
+function getRecordAuth () {
+  return new Promise((resolve, reject) => {
+    wx.getSetting({
+      success (res) {
+        if (!res.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success () {
+              resolve()
+            },
+            fail (err) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请在设置页面打开“录音功能”',
+                icon: 'none'
+              })
+              reject(err)
+            }
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  })
+}
 
 export default {
   data () {
@@ -94,6 +99,9 @@ export default {
     },
     textLength () {
       return this.inputPromt.length ? this.inputPromt.length : 140
+    },
+    placehodlerText () {
+      return this.inputPromt.prompt ? this.inputPromt.prompt : ''
     }
   },
 
@@ -156,6 +164,16 @@ export default {
 
     msgSendStatus (event) {
       this.$emit('msgSendStatus', event)
+    },
+
+    changeVoiceMode () {
+      getRecordAuth()
+        .then(() => {
+          this.voiceMode = true
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 }

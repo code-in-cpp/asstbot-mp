@@ -295,8 +295,10 @@ view {
 }
 .anwser-item{
   display:flex;
-  border-bottom:1rpx solid #dadada;
-  margin-left: 20rpx;
+  /*border-bottom:1rpx solid #dadada;*/
+  /*margin-left: 20rpx;*/
+  position: relative;
+  padding: 0 30rpx;
 }
 .anwser-item:after{
   content: '';

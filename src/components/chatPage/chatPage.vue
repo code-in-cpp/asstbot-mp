@@ -6,7 +6,7 @@
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus" 
+      <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputPromt="activeInputPromtMsg"
           :displayFinish="displayFinish"
           :needFocus="messageList.length && messageList.length>5"/>
@@ -19,8 +19,7 @@ import commandArea from '@/components/commandArea'
 import messageList from '@/components/chatPage/messageList'
 import selectBox from '@/components/selectBox'
 
-const urlMaping = {'create-survey': '/pages/createdSurvey/main',
-  'visit-survey': '/pages/visitedSurvey/main',
+const urlMaping = {
   'edit-survey': '/pages/surveySubjects/main',
   'bot-creator': '/pages/index/main',
   'test-survey': '/pages/surveyChat/main',
@@ -136,12 +135,12 @@ export default {
       setTimeout(function () {
         that.$emit('redirectTo', scene)
         wx.navigateTo({url})
-      }, 1500)
+      }, 500)
     },
     delayRelaunch (url) {
       setTimeout(function () {
         wx.reLaunch({url})
-      }, 1500)
+      }, 500)
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')

@@ -10,17 +10,12 @@
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
                 <block v-for="(subject, i) in subjects" :key="subject">
-                  <!-- <view class="subject-divider"></view> -->
                   <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
                     <view class="weui-cell weui-cell_input subject-area subject-style font-size">
                       <view class="weui-cell__hd subject-item-style flex-1">
                         <view class="weui-label subject-title-style">题目 {{i+1}}</view>
                       </view>
-                      <!--<view class="weui-cell__bd subject-item-style">-->
-                        <!--<input class="weui-input subject-hieght-line" type="text" placeholder="请输入问题"-->
-                            <!--:value="subject.question" focus="true" confirm-type="done"-->
-                            <!--@change="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"/>-->
-                      <!--</view>-->
+
                       <view class="weui-cell__ft subject-item-style">
                         <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
                           <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
@@ -37,10 +32,6 @@
                     </view>
                   </view>
 
-                  <!--<view class="textarea-box">-->
-                    <!--<text class="textarea-text" @click="showTextarea(i)" v-if="!textareaShowArray[i]">{{subject.question}}</text>-->
-                    <!--<textarea class="textarea-item" v-if="textareaShowArray[i]" :value="subject.question" focus="true" @input="updateSubjectQuestion({index: i,  question: $event.mp.detail.value})"></textarea>-->
-                  <!--</view>-->
                   <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写问题'"></text-or-area>
 
                   <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
@@ -73,7 +64,7 @@
             <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" >分享 </button>
+            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare">分享 </button>
           </view>
         </view>
       </view>
@@ -100,11 +91,12 @@ export default {
     return {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
-      items: ['题目', '结论'],
+      items: ['题目', '评语'],
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false,
-      textareaShowArray: []
+      textareaShowArray: [],
+      source: 'main'
     }
   },
   computed: {
@@ -136,18 +128,18 @@ export default {
         })
       }
     }),
-    updateTitle (newValue) {
-      console.log('enter updateTitle')
-      if (newValue === undefined || newValue === null) {
-        return
+    updateTitle () {
+      if (!this.survey || !this.survey.subjects || !this.survey.conclusions) {
+        return ['题目', '结论']
       }
-      if (newValue.subjects !== undefined && newValue.subjects !== null) {
-        this.items[0] = '题目 ( ' + newValue.subjects.length + ' )'
+      return [`题目 ( ${this.survey.subjects.length} )`,
+        `评语 ( ${this.survey.conclusions.length} )`]
+    },
+    disableShare () {
+      if (!this.survey || !this.survey.subjects) {
+        return true
       }
-      if (newValue.conclusions !== undefined && newValue.conclusions !== null) {
-        this.items[1] = '评语 ( ' + newValue.conclusions.length + ' )'
-      }
-      return this.items
+      return this.survey.subjects.length === 0
     }
   },
 
@@ -178,7 +170,13 @@ export default {
     saveSurvey () {
       this.$store.dispatch('editSurvey', this.survey)
         .then(() => {
-          wx.navigateBack()
+          if (this.source === 'main') {
+            wx.navigateBack()
+          } else {
+            wx.reLaunch({
+              url: '../index/main?scene=relaunchFrom'
+            })
+          }
         })
         .catch((err) => {
           console.error(err)
@@ -246,6 +244,9 @@ export default {
 
   onLoad (option) {
     let that = this
+    if (option.source) {
+      this.source = option.source
+    }
     this.$store.dispatch('retrieveSurveyById', option.id)
       .then((survey) => {
         if (survey.subjects.length) {
@@ -256,14 +257,12 @@ export default {
             })
           })
         }
-        console.log('comming here............')
         that.updateCurrentSurvey(survey)
       })
     .catch((err) => {
       console.log(err)
     })
   },
-
   onShareAppMessage (res) {
     let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)

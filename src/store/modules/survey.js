@@ -72,6 +72,9 @@ const actions = {
       }
       wechat.getOpenId()
         .then((userId) => {
+          if (survey.hasOwnProperty('__v')) {
+            delete survey.__v
+          }
           console.log(survey)
           fly.put(url, {userId, survey})
             .then((response) => {

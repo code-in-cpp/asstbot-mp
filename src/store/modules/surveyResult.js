@@ -11,6 +11,16 @@ const state = {
   surveyResult: {}
 }
 
+function isToday (str) {
+  var d = new Date(str)
+  var todaysDate = new Date()
+  if (d.setHours(0, 0, 0, 0) === todaysDate.setHours(0, 0, 0, 0)) {
+    return true
+  } else {
+    return false
+  }
+}
+
 const getters = {
   chartCreateConfigs: state => {
     return state.chartConfigs
@@ -33,10 +43,10 @@ const getters = {
   },
 
   commitToday: state => {
-    let currentTime = date.toLocaleDateString().replace(new RegExp('/', 'gm'), '-')
-    console.log('current time:' + currentTime)
+    // let currentTime = date.toLocaleDateString().replace(new RegExp('/', 'gm'), '-')
+    // console.log('current time:' + currentTime)
     let todayResult = state.result.filter(item => {
-      return item.created_at.indexOf(currentTime) >= 0
+      return isToday(item.created_at)
     })
     return todayResult.length
   },

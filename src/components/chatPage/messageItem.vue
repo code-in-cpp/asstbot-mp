@@ -7,7 +7,7 @@
       <gui-divider :message="messages"></gui-divider>
     </block>
     <block v-else>
-      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg" v-if="!lastBotMsg || i < received">
+      <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <view class="weui-flex bot-message">
           <view class="left-item">
             <view class="avatar-wrapper">
@@ -15,14 +15,18 @@
               <bod-avatar :url="survey.avatarUrl" size="30"  v-if="i==0"/>
             </view>
             <view class="content">
-              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')"/>
+              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"/>
+              <view class="aaa" v-if="lastBotMsg && i == received">
+                <bot-msg-receiving/>
+              </view>
+
             </view>
           </view>
         </view>
       </block>
-      <block v-if="lastBotMsg && received < displayIncomingMsgs.length">
-        <bot-msg-receiving/>
-      </block>
+      <!--<block v-if="lastBotMsg && received < displayIncomingMsgs.length">-->
+        <!--<bot-msg-receiving/>-->
+      <!--</block>-->
     </block>
 </block>
 </template>
@@ -59,6 +63,7 @@ export default {
 
   computed: {
     displayIncomingMsgs () {
+      console.log(this.messages)
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
         return msg.type === 'text' ||
           msg.type === 'getUserinfo' ||
@@ -76,15 +81,19 @@ export default {
   },
 
   onLoad () {
+    console.log('onload')
     if (this.lastBotMsg) {
       let that = this
+      this.$emit('renderUpdate')
       let interval = setInterval(() => {
         that.received++
-        if (that.received >= that.displayIncomingMsgs.length || !that.lastBotMsg) {
+        if (that.received > that.displayIncomingMsgs.length || !that.lastBotMsg) {
           that.$emit('renderComplete')
           clearInterval(interval)
+        } else {
+          that.$emit('renderUpdate')
         }
-      }, 1000)
+      }, 1200)
     }
   },
   created () {
@@ -108,7 +117,7 @@ export default {
 
 .bot-message .avatar-wrapper {
   padding: 3px 10px;
-  width: 40rpx  
+  width: 40rpx
 }
 
 .bot-message .left-item{
@@ -118,5 +127,8 @@ export default {
   }
 .bot-message .content{
     width:100%
+  }
+  .aaa{
+    margin-left: -40rpx;
   }
 </style>

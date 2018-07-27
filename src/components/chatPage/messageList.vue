@@ -5,12 +5,9 @@
       <block v-for="(messages, i) in messagesList" :key="i">
         <view :id="i">
           <message-item :survey="survey" :lastBotMsg="i==(messagesList.length-1)&&messages.to!==undefined"
-                    :messages="messages" @renderComplete="renderComplete" @itemLoad="scollToBottom"/>
+                    :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
         </view>
         <view :id="'bottom'+i"></view>
-      </block>
-      <block v-if="waitingBotMessage">
-        <bot-msg-receiving/>
       </block>
       <block v-if="localmsgsending">
         <user-say-sending/>
@@ -70,12 +67,17 @@ export default {
       this.scollToBottom()
       this.$emit('renderFinish')
     },
+    renderUpdate () {
+      this.scollToBottom()
+    },
     scollToBottom () {
       const that = this
       this.scrollToView = ''
+      that.scrollToView = 'bottom'
       setTimeout(function () {
+        that.scrollToView = ''
         that.scrollToView = 'bottom'
-      }, 100)
+      }, 200)
     }
   }
 }

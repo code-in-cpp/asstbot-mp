@@ -7,18 +7,18 @@
       </view>
       <view class="page__bd">
         <view class="weui-grids">
-          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+          <view class="weui-grid" hover-class="weui-grid_active">
             <view class="weui-grid__title">{{commitToday}}</view>
             <view class="weui-grid__label">今日提交</view>
-          </navigator>
-          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+          </view>
+          <view class="weui-grid" hover-class="weui-grid_active">
             <view class="weui-grid__title" >{{commitCount}}</view>
             <view class="weui-grid__label">提交总数</view>
-          </navigator>
-          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+          </view>
+          <view url="" class="weui-grid" hover-class="weui-grid_active">
             <view class="weui-grid__title">{{reviewCount}}</view>
             <view class="weui-grid__label">浏览总数</view>
-          </navigator>
+          </view>
         </view>
       </view>
       <!-- <nav-bar :navItems="navItems" @tabActive="tabActive"></nav-bar> -->
@@ -45,13 +45,13 @@
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" type="default" @click="selfTest"><i class="icon iconfont icon-stealth"></i>自测</button>
+              <button class="weui-btn btn-font" type="default" @click="selfTest" :disabled="disableShare"><i class="icon iconfont icon-stealth"></i>自测</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" type="default" @click="chartStatics" ><i class="icon iconfont icon-stealth"></i>统计</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" type="primary" @click="toPublishPage"><i class="icon iconfont icon-share"></i>分享</button>
+              <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare"><i class="icon iconfont icon-share"></i>分享</button>
             </view>
         </view>
       </view>
@@ -68,9 +68,7 @@ export default {
   data: {
     surveyId: '',
     title: '',
-    navItems: ['答卷列表', '结果统计'],
     activeIndex: 0,
-    grids: [ { id: 0, desc: '今日提交', value: 10 }, { id: 0, desc: '提交总数', value: 4 }, { id: 0, desc: '浏览总数', value: 6 } ],
     charts: []
   },
   computed: {
@@ -85,7 +83,13 @@ export default {
       commitToday: 'commitToday',
       commitCount: 'commitCount',
       reviewCount: 'reviewCount'
-    })
+    }),
+    disableShare () {
+      if (this.survey === undefined || this.survey === null || this.survey.subjects === undefined || this.survey.subjects === null) {
+        return true
+      }
+      return !this.survey.subjects.length
+    }
   },
 
   components: {

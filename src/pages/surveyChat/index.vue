@@ -47,6 +47,18 @@ export default {
           .catch((err) => {
             console.log(err)
           })
+      } else if (option.scene) {
+        // 临时方案，适配二维码扫码后微信规定只能用scene传递参数，这时scene存的是survey id
+        const id = option.scene
+        const scene = 'publish'
+        this.$store.commit('talkToSurveyBot', {id: id, scene})
+        this.$store.dispatch('retrieveSurveyById', id)
+          .then((survey) => {
+            this.survey = survey
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
 
       this.$store.dispatch('updateUserInfo')
