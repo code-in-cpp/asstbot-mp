@@ -85,11 +85,11 @@
       </view>
     </block>
 
-    <view class="weui-cell weui-check__label add-answer-box" @click="addAnswer(subjectIndex)">
-        <view class="weui-cell__ft font-style"  >
+    <view class="weui-cell weui-check__label add-answer-box">
+        <view class="weui-cell__ft font-style"   @click="addAnswer(subjectIndex)">
           <i class="icon iconfont icon-add"></i>
         </view>
-        <view class="weui-cell__ft height-line-92">
+        <view class="weui-cell__ft height-line-92" @click="addAnswer(subjectIndex)">
           添加答案
         </view>
     </view>

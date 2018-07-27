@@ -39,9 +39,9 @@
                 </block>
                 <view class="subject-divider"></view>
                 <view class="weui-cells weui-cells_after-title clear-border">
-                  <view class="weui-cell" @click="addSubject">
-                    <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-                    <view class="weui-cell__bd">添加题目</view>
+                  <view class="weui-cell">
+                    <view class="weui-cell__ft" @click="addSubject"><i class="icon iconfont icon-add"></i></view>
+                    <view class="weui-cell__ft" @click="addSubject">添加题目</view>
                   </view>
                 </view>
               </view>
