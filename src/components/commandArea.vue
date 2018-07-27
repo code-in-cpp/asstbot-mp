@@ -16,9 +16,17 @@
             <!--cursor-spacing="14"  @confirm="confirm($event)"-->
             <!--:maxlength="textLength" :placeholder="placehodlerText"/>-->
 
-          <textarea class="word-textarea primary-color revert" :class="textareaFocusFlag?'textarea-style-2' :''" :value="currentMessage"
-                    @input="valueInput" adjust-position @focus="textareaFocus" @blur="textareaBlur" @confirm="confirm($event)"
-                    :maxlength="textLength" :placeholder="placehodlerText" adjust-position="true" cursor-spacing="14"/>
+          <!--<textarea class="word-textarea primary-color revert" :class="textareaFocusFlag?'textarea-style-2' :''" :value="currentMessage"-->
+                    <!--@input="valueInput" adjust-position-->
+                    <!--cursor-spacing="14" @confirm="confirm($event)"-->
+                    <!--:maxlength="textLength" :placeholder="placehodlerText"-->
+                    <!--@focus="textareaFocus" @blur="textareaBlur"/>-->
+
+          <textarea class="word-textarea primary-color revert" :value="currentMessage" :class="textareaFocusFlag?'textarea-style-2' :''"
+                    @input="valueInput" adjust-position
+                    cursor-spacing="14" @confirm="confirm($event)"
+                    :maxlength="textLength" :placeholder="placehodlerText"
+                    @focus="textareaFocus" @blur="textareaBlur"/>
 
         </view>
         <view class="weui-flex__item"  v-else>
@@ -80,7 +88,7 @@ export default {
       lineHeightNum: '80rpx',
       voiceMode: false,
       textareaFocusFlag: false,
-      cursorSpace: 15
+      timeout: 0
     }
   },
   computed: {
@@ -173,12 +181,17 @@ export default {
       this.$emit('msgSendStatus', event)
     },
     textareaFocus () {
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
       this.textareaFocusFlag = true
-      this.cursorSpace = 15
     },
     textareaBlur () {
-      this.textareaFocusFlag = false
-      this.cursorSpace = 0
+      const that = this
+      this.timeout = setTimeout(function () {
+        that.textareaFocusFlag = false
+      }, 500)
+      // this.textareaFocusFlag = false
     },
     changeVoiceMode () {
       getRecordAuth()
@@ -265,6 +278,7 @@ export default {
   width:100%;
   margin-top: 3rpx;
   /*height:100%;*/
+  height: 80rpx;
 }
 
 .input-widget .iconfont{
@@ -275,7 +289,9 @@ export default {
     align-items: flex-end;
   }
   .textarea-style-2{
-    height: 80rpx;
     line-height: 40rpx;
+  }
+  .textarea-style-1{
+    line-height: 80rpx;
   }
 </style>
