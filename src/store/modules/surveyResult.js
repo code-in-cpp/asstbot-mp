@@ -2,14 +2,13 @@ const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 const surveyStatisticUrl = 'https://xiaodamp.cn/asstbot/survey/statistic'
 var date = new Date()
-import wechat from './wechat'
 
 const state = {
   result: [],
   subjects: [],
-  replySurveys: [],
   curSurvey: {},
-  chartConfigs: []
+  chartConfigs: [],
+  surveyResult: {}
 }
 
 const getters = {
@@ -60,17 +59,12 @@ const getters = {
   },
 
   getSurveyAnswer: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let answers = []
-    let subjects = []
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        answers = item.answers
-        subjects = item.survey.subjects
-        break
-      }
+    if (!state.surveyResult.answers || !state.surveyResult.survey) {
+      return []
     }
+    let answers = state.surveyResult.answers
+    console.log('survey Result is ', state.surveyResult)
+    let subjects = state.surveyResult.survey.subjects
     let ret = []
     for (let index in answers) {
       let questionId = answers[index].id
@@ -89,89 +83,49 @@ const getters = {
   },
 
   getResponderName: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let responder = {}
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        responder = item.responder
-      }
+    if (!state.surveyResult.responder) {
+      return '匿名'
     }
+    let responder = state.surveyResult.responder
     return (!responder.nickName || responder.nickName === '') ? '匿名' : responder.nickName
   },
 
-  getSurveyResultTitle: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let title = ''
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        title = item.survey.title
-      }
-    }
-    return title
-  },
-
   getSurveyResultType: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let surveyType = 'exam'
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        surveyType = item.survey.type
-      }
+    if (!state.surveyResult.survey) {
+      return '匿名'
     }
+    let surveyType = state.surveyResult.survey.type
     return surveyType
   },
 
   getResponderAvator: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let responder = {}
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        responder = item.responder
-      }
+    if (!state.surveyResult.responder) {
+      return '/static/image/nobody3.png'
     }
+    let responder = state.surveyResult.responder
     return (!responder.avatarUrl || responder.avatarUrl === '') ? '/static/image/nobody3.png' : responder.avatarUrl
   },
 
-  getCreateTime: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        return item.created_at
-      }
-    }
-    return date.toLocaleDateString().replace('/', '-')
-  },
-
   getConclusion: state => (id, type) => {
-    let queryResults = (type === 'ask') ? state.result : state.replySurveys
-    let score = ''
-    let conclusions = ''
-    for (let index in queryResults) {
-      let item = queryResults[index]
-      if (item.id === id) {
-        score = item.score
-        conclusions = item.survey.conclusions
-        break
-      }
+    let surveyResult = state.surveyResult
+    if (surveyResult == null || !surveyResult.survey) {
+      return ''
     }
+    let conclusions = surveyResult.survey.conclusions
+    if (surveyResult.conclusion != null) {
+      return conclusions[surveyResult.conclusion].text
+    }
+    let score = surveyResult.score
     let ret = ''
     for (let index in conclusions) {
       let conclusion = conclusions[index]
       if (conclusion.scoreRange) {
-        if (score > conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
+        if (score >= conclusion.scoreRange.min && score <= conclusion.scoreRange.max) {
           ret = conclusion.text
         }
       }
     }
     return ret
-  },
-  getReplySurveys: state => {
-    return state.replySurveys
   }
 }
 
@@ -188,8 +142,8 @@ const mutations = {
     state.chartConfigs = charts
   },
 
-  updateReplySurveys (state, result) {
-    state.replySurveys = result
+  updateSurveyResult (state, result) {
+    state.surveyResult = result
   }
 }
 
@@ -238,35 +192,16 @@ const actions = {
       })
     })
   },
-  querySurveyResultByUser ({dispatch, commit}) {
-    return new Promise((resolve, reject) => {
-      wechat.getOpenId()
-        .then((userId) => {
-          wx.request({
-            url: surveyResultUrl,
-            data: {
-              userId: userId
-            },
-            success: (response) => {
-              console.log('receive user reply survey', response.data.result)
-              commit('updateReplySurveys', response.data.result)
-              resolve(response)
-            },
-            faile: (err) => {
-              reject(err)
-            }
-          })
-        })
-    })
-  },
-  deleteSurveyResult ({dispatch, commit}, id) {
+  querySurveyResultById ({ dispatch, commit }, resultId) {
     return new Promise((resolve, reject) => {
       wx.request({
-        url: surveyResultUrl + '?id=' + id,
-        method: 'DELETE',
+        url: surveyResultUrl,
+        data: {
+          id: resultId
+        },
         success: (response) => {
-          console.log('delete user survey result', id)
-          dispatch('querySurveyResultByUser')
+          console.log('receive user reply survey', response.data.result)
+          commit('updateSurveyResult', response.data.result)
           resolve(response)
         },
         faile: (err) => {
@@ -275,6 +210,7 @@ const actions = {
       })
     })
   },
+
   queryAnswerStatics ({commit}, surveyId) {
     return new Promise((resolve, reject) => {
       wx.request({

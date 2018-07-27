@@ -82,13 +82,16 @@ export default {
   computed: {
     ...mapState({
       bodAvatar: state => state.bodProfile.avatar,
-      survey: state => state.surveyResult.curSurvey
+      surveyResult: state => state.surveyResult.surveyResult
     }),
     surveyAnswers () {
       return this.$store.getters.getSurveyAnswer(this.resultId, this.type)
     },
     surveyTitle () {
-      return this.$store.getters.getSurveyResultTitle(this.resultId, this.type)
+      if (!this.surveyResult.survey) {
+        return '匿名'
+      }
+      return this.surveyResult.survey.title
     },
     surveyConclusion () {
       return this.$store.getters.getConclusion(this.resultId, this.type)
@@ -103,10 +106,9 @@ export default {
       return this.$store.getters.getResponderAvator(this.resultId, this.type)
     },
     getCreateTime () {
-      return formatTime(new Date(this.$store.getters.getCreateTime(this.resultId, this.type)))
+      return formatTime(new Date(this.surveyResult.created_at))
     },
     showFooter () {
-      // return this.$store.getters.getSurveyAnswer(this.resultId, this.type).length <= 3
       return true
     },
     getResult () {
@@ -121,9 +123,7 @@ export default {
     this.resultId = option.resultId
     this.score = option.score
     this.type = option.type
-    if (this.type === 'reply') {
-      this.$store.dispatch('querySurveyResultByUser')
-    }
+    this.$store.dispatch('querySurveyResultById', this.resultId)
   },
   methods: {
     imageLoadEnd (event) {
