@@ -51,11 +51,9 @@ export default {
       this.$store.commit('talkToBotFather')
       if (this.hasLogin) {
         if (this.scene.indexOf('redirectTo') !== -1) {
-          this.$store.commit('appendDividerMessage')
           this.$store.dispatch('sendGenericRequest', {type: 'dialog-start', data: this.redirect})
           this.redirect = {}
         } else if (this.scene.indexOf('relaunchFrom') !== -1) {
-          this.$store.commit('appendDividerMessage')
           this.$store.dispatch('start')
         } else if (this.scene === 'onLoad') {
           this.$store.dispatch('start')
