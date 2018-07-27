@@ -1,7 +1,6 @@
 const surveyResultUrl = 'https://xiaodamp.cn/asstbot/survey/result'
 const surveyUrl = 'https://xiaodamp.cn/asstbot/survey'
 const surveyStatisticUrl = 'https://xiaodamp.cn/asstbot/survey/statistic'
-var date = new Date()
 
 const state = {
   result: [],
