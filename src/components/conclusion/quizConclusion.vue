@@ -6,7 +6,7 @@
       <view class="weui-cell__hd subject-item-style flex-1">
         <view class="weui-label subject-title-style">结论 {{i+1}}</view>
       </view>
-      <view class="subject-item-style icon-item-style width-92" @click="addConclusionMedia(0)">
+      <view class="subject-item-style icon-item-style width-92" @click="addConclusionMedia(i)">
         <i class="icon iconfont icon-picture font-color image-icon-color"></i>
       </view>
       <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
