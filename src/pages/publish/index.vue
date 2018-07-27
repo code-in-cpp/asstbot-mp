@@ -1,6 +1,5 @@
 <template>
   <movable-area class="move-area">
-    
     <view class="page">
       <title-bar :title="title"/>
       <view class="content">
@@ -23,8 +22,8 @@
             <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
-        
       </view>
+      <home-button/>
     </view>
   </movable-area>
 </template>

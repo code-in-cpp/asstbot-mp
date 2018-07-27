@@ -2,10 +2,10 @@
   <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex primary-color light">
       <view class="placeholder">
-        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=true" v-if="!voiceMode">
+        <button class="input-widget form-control primary-color" size="small" @click="changeVoiceMode" v-if="!voiceMode">
           <i class="icon iconfont icon-translation"></i>
         </button>
-        <button class="input-widget .form-control .primary-color" size="small" @click="voiceMode=false" v-else>
+        <button class="input-widget form-control primary-color" size="small" @click="voiceMode=false" v-else>
           <i class="icon iconfont .icon-keyboard"></i>
         </button>
       </view>
@@ -44,6 +44,33 @@
 import { mapState } from 'vuex'
 import recordButton from './widget/recordButton'
 import devicePadding from './view/devicePadding'
+
+function getRecordAuth () {
+  return new Promise((resolve, reject) => {
+    wx.getSetting({
+      success (res) {
+        if (!res.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success () {
+              resolve()
+            },
+            fail (err) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请在设置页面打开“录音功能”',
+                icon: 'none'
+              })
+              reject(err)
+            }
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  })
+}
 
 export default {
   data () {
@@ -145,7 +172,6 @@ export default {
     msgSendStatus (event) {
       this.$emit('msgSendStatus', event)
     },
-
     textareaFocus () {
       this.textareaFocusFlag = true
       this.cursorSpace = 15
@@ -153,6 +179,15 @@ export default {
     textareaBlur () {
       this.textareaFocusFlag = false
       this.cursorSpace = 0
+    },
+    changeVoiceMode () {
+      getRecordAuth()
+        .then(() => {
+          this.voiceMode = true
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 }
