@@ -85,7 +85,7 @@ export default {
   methods: {
     activeSomeKindOfMsg (array) {
       if (!this.activeMsg) {
-        return undefined
+        return {}
       }
       let message = this.activeMsg.msgs.filter((msg) => {
         return array.indexOf(msg.type) !== -1
@@ -94,7 +94,7 @@ export default {
       if (message.length >= 1) {
         return message[0]
       } else {
-        return undefined
+        return {}
       }
     },
     msgDisplayBegin () {

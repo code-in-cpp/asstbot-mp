@@ -116,7 +116,7 @@ export default {
       return this.inputPromt.length ? this.inputPromt.length : 140
     },
     placehodlerText () {
-      return this.inputPromt.prompt ? this.inputPromt.prompt : ''
+      return this.inputPromt.prompt ? this.inputPromt.prompt : ' '
     }
   },
 
