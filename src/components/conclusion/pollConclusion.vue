@@ -3,7 +3,7 @@
     <block v-for="(pollConclusion, i) in conclusions" :key="i">
     <view class="poll-conclusion-cell" >
         <view class="inline-cell-title">
-          <view class="weui-cells__title">评语内容：</view>
+          <view class="weui-cells__title">结论内容：</view>
           <view class="icon-item-style font-style" @click="addConclusionMedia(0)">
               <i class="icon iconfont icon-picture font-color image-icon-color"></i>
           </view>
@@ -25,7 +25,7 @@
         <view class="weui-cells weui-cells_after-title" >
         <view class="weui-cell" @click="addConclusion">
           <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-          <view class="weui-cell__bd">添加评语</view>
+          <view class="weui-cell__bd">添加结论</view>
         </view>
       </view>
     </block>

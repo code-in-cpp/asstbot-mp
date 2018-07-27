@@ -60,7 +60,7 @@ const actions = {
         } else if (!valid.result.subjectAnswer) {
           title = '答案: 文字和图片至少要填一个'
         } else {
-          title = '评语: 文字和图片至少要填一个'
+          title = '结论: 文字和图片至少要填一个'
         }
         wx.showToast({
           title,

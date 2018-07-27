@@ -91,7 +91,7 @@ export default {
     return {
       subjectTypeName: subjectTypeName,
       subjectType: subjectType,
-      items: ['题目', '评语'],
+      items: ['题目', '结论'],
       activeIndex: 0,
       titleEditFlag: false,
       introEditFlag: false,
@@ -133,7 +133,7 @@ export default {
         return ['题目', '结论']
       }
       return [`题目 ( ${this.survey.subjects.length} )`,
-        `评语 ( ${this.survey.conclusions.length} )`]
+        `结论 ( ${this.survey.conclusions.length} )`]
     },
     disableShare () {
       if (!this.survey || !this.survey.subjects) {

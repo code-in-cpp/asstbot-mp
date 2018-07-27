@@ -51,7 +51,7 @@
             <bot-say-text :content=getResult></bot-say-text>
           </view>
           <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.text != null && surveyConclusion.text != '' > 0">
-            <bot-say-text :content="'评语是：' + surveyConclusion.text"></bot-say-text>
+            <bot-say-text :content="'结论是：' + surveyConclusion.text"></bot-say-text>
           </view>
           <view class="weui-cell__bd">
               <bot-say-image :content="surveyConclusion.imageUrl" v-if="surveyConclusion.imageUrl != null && surveyConclusion.imageUrl != ''" @loadDone="imageLoadEnd"></bot-say-image>

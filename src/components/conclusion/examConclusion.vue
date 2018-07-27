@@ -4,7 +4,7 @@
     <view class="subject-divider"></view>
     <view class="weui-cell weui-cell_input subject-area subject-style font-size clear-border">
         <view class="weui-cell__hd subject-item-style flex-1">
-          <view class="weui-label subject-title-style">评语分类 {{i+1}}</view>
+          <view class="weui-label subject-title-style">结论分类 {{i+1}}</view>
         </view>
         <view class="weui-cell__ft">
           <view class="subject-item-style icon-item-style width-92" @click="removeConclusion(i)">
@@ -33,7 +33,7 @@
     </view>
     <view class="weui-cell weui-cell_input" >
         <view class="weui-cell__hd">
-        <view class="weui-label">评语内容</view>
+        <view class="weui-label">结论内容</view>
         </view>
         <view class="weui-cell__bd">
         <input class="weui-input" placeholder="请输入文本" :value="conclusion.text"
@@ -50,7 +50,7 @@
 <view class="weui-cells weui-cells_after-title" >
     <view class="weui-cell" @click="addConclusion">
     <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-    <view class="weui-cell__bd">添加评语分类</view>
+    <view class="weui-cell__bd">添加结论分类</view>
     </view>
 </view>
 </block>

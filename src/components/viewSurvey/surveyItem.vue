@@ -96,5 +96,6 @@ export default {
     align-items: center;
     color: @p-color;
     padding-right: 20rpx;
+    width: 100%;
   }
 </style>
