@@ -5,10 +5,22 @@
       :src="getIcon"
       :arrow="arrowType"
       :title="question.question"
-      @itemClicked="clicked">
+      @clickOnThis="questionClicked">
     </wxc-list>
     <block v-if="showDetail">
-
+      <view class="answer-wrap">
+        <view class="list-item">
+          <block v-for="(answer, i) in question.answers" :key="i">
+            <!--<question :question = "item"></question>-->
+            <wxc-list
+              class="item"
+              :src=answer.imageUrl
+              :title=answer.value
+              @clickOnThis="answerClicked">
+            </wxc-list>
+          </block>
+        </view>
+      </view>
     </block>
   </view>
 </template>
@@ -33,6 +45,7 @@
     },
     watch: {
       showDetail: function (newValue, oldValue) {
+        console.log('clicked, showDetail changed')
         if (newValue) {
           this.arrowType = 'arrow-down'
         } else {
@@ -42,10 +55,16 @@
     },
     computed: {
       getIcon () {
-        if (this.question === undefined || this.question === null || this.question.type === undefined || this.question.type === null) {
+        if (!this.question || !this.question.type) {
           return '/static/image/radiao.png'
         }
         return '/static/image/' + this.question.type + '.png'
+      },
+      getTitle () {
+        if (this.showDetail) {
+          return 'detatiled'
+        }
+        return 'hide'
       }
     },
     // components: {
@@ -61,8 +80,12 @@
       //   console.log('survey item, try to change avatar')
       //   this.$emit('changeAvatar')
       // }
-      clicked () {
+      questionClicked () {
+        console.log('questionClicked')
         this.showDetail = !this.showDetail
+      },
+      answerClicked () {
+        console.log('answerClicked')
       }
     }
   }
@@ -89,5 +112,14 @@
   }
   .item:last-of-type {
     /*mode="none"*/
+  }
+  .answer-wrap {
+    width: 700rpx;
+    background: #efefef;
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    border: @s-color solid 2rpx;
   }
 </style>

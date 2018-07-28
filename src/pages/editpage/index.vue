@@ -1,27 +1,55 @@
 <template>
-  <view class="page">
+  <view class="page" v-if="hasLoaded">
     <title-bar title=" "/>
     <view class="title">
       <wxc-elip line="2">标题： {{survey.title}}</wxc-elip>
     </view>
-    <view class="list-wrap">
-      <view class="list-item">
-        <block v-for="(item, i) in survey.subjects" :key="i">
-          <question :question = "item"></question>
-        </block>
+    <scroll-view scroll-y='true' style="height: 100%">
+      <view class="list-wrap">
+        <view class="list-item">
+          <block v-for="(item, i) in survey.subjects" :key="i">
+            <question :question = "item"></question>
+          </block>
+        </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
   import question from '@/components/survey/question'
   export default {
     data () {
       return {
-        survey: {}
+        hasLoaded: false
       }
+    },
+    computed: {
+      ...mapState({
+        displayAvatar: state => {
+          var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== null && state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
+          return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
+        },
+        survey: state => {
+          return state.currentSurvey.survey
+        },
+        type: state => state.currentSurvey.survey.type,
+        conclusions: state => {
+          return state.currentSurvey.survey.conclusions
+        },
+        subjects: state => state.currentSurvey.survey.subjects
+      //   typeNames: state => {
+      //     if (!state.currentSurvey.survey.subjects) {
+      //       return subjectTypeName[0]
+      //     }
+      //
+      //     return state.currentSurvey.survey.subjects.map((subject) => {
+      //       var index = subjectType.indexOf(subject.type)
+      //       return subjectTypeName[index]
+      //     })
+      //   }
+      })
     },
     components: {
       question
@@ -41,7 +69,9 @@
     },
     onLoad (option) {
       let that = this
-      console.log(option)
+      if (option.source) {
+        this.source = option.source
+      }
       this.$store.dispatch('retrieveSurveyById', option.id)
         .then((survey) => {
           if (survey.subjects.length) {
@@ -52,17 +82,16 @@
               })
             })
           }
-          console.log('comming here............')
+          that.hasLoaded = true
           that.updateCurrentSurvey(survey)
-          if (survey.type !== 'exam') {
-            that.initConclusion()
-          }
-          that.survey = survey
-          console.log(this.survey)
+          console.log(survey)
         })
         .catch((err) => {
           console.log(err)
         })
+    },
+    onUnload () {
+      this.hasLoaded = false
     }
   }
 </script>
