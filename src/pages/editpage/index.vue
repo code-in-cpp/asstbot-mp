@@ -4,7 +4,7 @@
     <view class="title">
       <wxc-elip line="2">标题： {{survey.title}}</wxc-elip>
     </view>
-    <scroll-view scroll-y='true' style="height: 100%">
+    <scroll-view scroll-y='true' style="height: 1080rpx">
       <view class="list-wrap">
         <view class="list-item">
           <block v-for="(item, i) in survey.subjects" :key="i">

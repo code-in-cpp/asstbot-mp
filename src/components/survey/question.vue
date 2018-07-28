@@ -18,9 +18,15 @@
               :src=answer.imageUrl
               :title=answer.value
               arrow=""
-              @clickOnThis="questionClicked">
+              @clickOnThis="answerClicked">
             </wxc-list>
           </block>
+        </view>
+      </view>
+      <view class="button-container">
+        <view class="button-small-wrap">
+          <wxc-button type="danger" :btnStyle="deleteStyle">删除 <wxc-icon color="#fff" type="delete"></wxc-icon></wxc-button>
+          <wxc-button :btnStyle="editStyle">编辑 <wxc-icon color="#fff" type="edit"></wxc-icon></wxc-button>
         </view>
       </view>
     </block>
@@ -32,7 +38,10 @@
   export default {
     data () {
       return {
-        arrowType: 'arrow-right'
+        arrowType: 'arrow-right',
+        editStyle: 'width: 222rpx;background: #1cb2b9; border-radius: 66rpx;color: #fff; margin:30rpx;',
+        deleteStyle: 'width: 222rpx;border-radius: 66rpx;color: #fff; margin:30rpx;'
+        // deleteStyle: 'width: 222rpx;background: #ff9300;border-radius: 66rpx;color: #fff; margin:30rpx;'
       }
     },
     props: {
@@ -83,11 +92,12 @@
       //   this.$emit('changeAvatar')
       // }
       questionClicked () {
-        console.log('questionClicked')
+        // console.log('questionClicked')
         this.showDetail = !this.showDetail
       },
       answerClicked () {
-        console.log('answerClicked')
+        // console.log('answerClicked')
+        this.showDetail = !this.showDetail
       }
     }
   }
@@ -130,5 +140,26 @@
     margin-left: 30rpx;
     margin-right: 30rpx;
     /*border: @s-color solid 2rpx;*/
+  }
+  .button-container {
+    width: 100%;
+    hight: 60rpx;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  /*.container:after {*/
+    /*display: block;*/
+    /*content: " ";*/
+    /*clear:both;*/
+    /*visibility:hidden;*/
+    /*height:0;*/
+  /*}*/
+  .button-small-wrap {
+    margin:10rpx;
+    float: left;
   }
 </style>
