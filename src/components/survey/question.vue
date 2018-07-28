@@ -1,5 +1,6 @@
 <template>
-  <view>
+  <view class="box-padding" :class="[showDetail?'show-border':'']">
+  <!--<view class="show-border">-->
     <wxc-list
       class="item"
       :src="getIcon"
@@ -16,7 +17,8 @@
               class="item"
               :src=answer.imageUrl
               :title=answer.value
-              @clickOnThis="answerClicked">
+              arrow=""
+              @clickOnThis="questionClicked">
             </wxc-list>
           </block>
         </view>
@@ -93,6 +95,13 @@
 
 <style lang="less" scoped>
   @import "../../../static/base.less";
+  .box-padding {
+    margin: 10rpx;
+  }
+  .show-border {
+    border: @s-color solid 2rpx;
+    box-sizing: border-box;
+  }
   .list-wrap {
     width: 100%;
     background: #efefef;
@@ -114,12 +123,12 @@
     /*mode="none"*/
   }
   .answer-wrap {
-    width: 700rpx;
+    width: 690rpx;
     background: #efefef;
     margin-bottom: 10rpx;
     margin-top: 10rpx;
     margin-left: 30rpx;
     margin-right: 30rpx;
-    border: @s-color solid 2rpx;
+    /*border: @s-color solid 2rpx;*/
   }
 </style>
