@@ -81,9 +81,10 @@ const getters = {
       let subject = subjects[parseInt(questionId) - 1]
       let question = subject.question
       let questionUrl = (subject.imageUrl === '') ? null : subject.imageUrl
+      let correct = answers[index].correct === 'true'
       let userSay = answers[index].user_say
       if (userSay) {
-        ret.push({ id: index + 1, question, correct: answers[index].correct, userSay, questionUrl, needSwipper: false })
+        ret.push({ id: index + 1, question, correct: correct, userSay, questionUrl, needSwipper: false })
         continue
       }
 
@@ -95,13 +96,13 @@ const getters = {
       let needSwipper = hasImage && answers[index].result.length > 1
 
       if (!hasImage) {
-        ret.push({ id: index + 1, question, correct: answers[index].correct, userSay: textValues, questionUrl, needSwipper: false })
+        ret.push({ id: index + 1, question, correct: correct, userSay: textValues, questionUrl, needSwipper: false })
         continue
       }
       if (needSwipper) {
-        ret.push({ id: index + 1, question, results: answers[index].result, correct: answers[index].correct, userSay: null, questionUrl, needSwipper: needSwipper })
+        ret.push({ id: index + 1, question, results: answers[index].result, correct: correct, userSay: null, questionUrl, needSwipper: needSwipper })
       } else {
-        ret.push({ id: index + 1, question, results: answers[index].result, correct: answers[index].correct, userSay: null, questionUrl, needSwipper: needSwipper })
+        ret.push({ id: index + 1, question, results: answers[index].result, correct: correct, userSay: null, questionUrl, needSwipper: needSwipper })
       }
     }
     console.log('user answer detail is ', ret)
