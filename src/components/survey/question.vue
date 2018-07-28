@@ -39,7 +39,8 @@
     data () {
       return {
         arrowType: 'arrow-right',
-        editStyle: 'width: 222rpx;background: #1cb2b9; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
+        editStyle: 'width: 222rpx;background: #c1c1c1; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
+        // editStyle: 'width: 222rpx;background: #1cb2b9; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
         deleteStyle: 'width: 222rpx;border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;'
         // deleteStyle: 'width: 222rpx;background: #ff9300;border-radius: 66rpx;color: #fff; margin:30rpx;'
       }

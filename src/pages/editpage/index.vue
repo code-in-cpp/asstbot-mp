@@ -1,10 +1,14 @@
 <template>
   <view class="page" v-if="hasLoaded">
     <title-bar title=" "/>
-    <view class="title">
-      <wxc-elip line="2">标题： {{survey.title}}</wxc-elip>
-    </view>
-    <scroll-view scroll-y='true' style="height: 1080rpx">
+    <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
+    <wxc-tab @tabchange="onClick" default-index="0" active-text-color="#1cb2b9" active-line-color="#1cb2b9" component-id="tab1">
+      <wxc-tab-panel label='题目' component-id="tab1">
+      </wxc-tab-panel>
+      <wxc-tab-panel label='结论' component-id="tab1">
+      </wxc-tab-panel>
+    </wxc-tab>
+    <scroll-view scroll-y='true' style="height: 840rpx">
       <view class="list-wrap">
         <view class="list-item">
           <block v-for="(item, i) in survey.subjects" :key="i">
@@ -13,15 +17,23 @@
         </view>
       </view>
     </scroll-view>
+    <view class="button-container">
+      <view class="button-small-wrap">
+        <wxc-button :btnStyle="editStyle">返回 <wxc-icon color="#fff" type="arrow-left"></wxc-icon></wxc-button>
+        <wxc-button :btnStyle="editStyle">添加 <wxc-icon color="#fff" type="add"></wxc-icon></wxc-button>
+      </view>
+    </view>
   </view>
 </template>
 
 <script>
   import { mapState, mapMutations } from 'vuex'
   import question from '@/components/survey/question'
+  import surveyItem from '@/components/viewSurvey/surveyItem'
   export default {
     data () {
       return {
+        editStyle: 'width: 222rpx;background: #c1c1c1; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
         hasLoaded: false
       }
     },
@@ -52,19 +64,33 @@
       })
     },
     components: {
-      question
+      question,
+      surveyItem
     },
     methods: {
       ...mapMutations([
         'initConclusion',
         'updateCurrentSurvey'
       ]),
-      commentClicked (event) {
-        console.log('comment clicked')
+      changeAvatar () {
+        const that = this
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album', 'camera'],
+          success: function (res) {
+            that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+              that.$store.commit('updateSurveyAvatarUrl', res)
+            }).catch(err => {
+              console.error(err)
+            })
+          }
+        })
       },
-
-      helpClicked (event) {
-        console.log('help clicked')
+      toEditPage () {
+        wx.navigateTo({
+          url: '../surveyTitleAndIntro/main'
+        })
       }
     },
     onLoad (option) {
@@ -129,5 +155,18 @@
     padding-right: 20rpx;
     padding-top: 20rpx;
     padding-bottom: 20rpx;
+  }
+  .button-container {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .button-small-wrap {
+    margin:10rpx;
+    float: left;
   }
 </style>
