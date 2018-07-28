@@ -101,6 +101,9 @@ export default {
       items: state => {
         return state.inputValue.items
       },
+      event: state => {
+        return state.inputValue.event
+      },
       globalShow: state => state.inputValue.globalShow
     }),
     displayText () {
@@ -167,7 +170,7 @@ export default {
         })
         this.currentMessage = ''
       } else {
-        this.$store.dispatch('sentCheckBoxReply', {items: this.items}).then(res => {
+        this.$store.dispatch('sentCheckBoxReply', {items: this.items, event: this.event}).then(res => {
           this.$store.commit('clearState')
         })
       }

@@ -56,6 +56,9 @@ export default {
       } else {
         this.scrollToView = `bottom${val.length - 1}`
       }
+    },
+    localmsgsending: function (val) {
+      this.scollToBottom()
     }
   },
   components: {

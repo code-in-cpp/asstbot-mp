@@ -57,7 +57,7 @@
           this.checkArrIndex.map(item => {
             arr = [...arr, this.list.items[item]]
           })
-          this.$store.commit('updateCheckboxData', {items: arr})
+          this.$store.commit('updateCheckboxData', {items: arr, event: this.list.event})
         }
       },
       saveInArray (item, arr) {
@@ -80,7 +80,7 @@
           this.checkArrIndex.map(item => {
             arr = [...arr, this.list.items[item]]
           })
-          this.$store.commit('updateCheckboxData', {items: arr})
+          this.$store.commit('updateCheckboxData', {items: arr, event: this.list.event})
         }
       },
       touchStart (option) {

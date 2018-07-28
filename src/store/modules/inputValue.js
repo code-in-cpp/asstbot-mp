@@ -1,6 +1,7 @@
 
 const state = {
   items: [],
+  event: null,
   globalShow: false,
   previewShow: true
 }
@@ -11,6 +12,7 @@ const getters = {
 const mutations = {
   updateCheckboxData (state, obj) {
     state.items = [...obj.items]
+    state.event = obj.event
   },
   clearState (state) {
     state.items = []
