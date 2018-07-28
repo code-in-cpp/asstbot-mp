@@ -4,25 +4,25 @@
     <wxc-list
       class="item"
       :src="getIcon"
-      :arrow="arrowType"
+      arrow=""
       :title="question.question"
       @clickOnThis="questionClicked">
     </wxc-list>
-    <block v-if="showDetail">
-      <view class="answer-wrap">
-        <view class="list-item">
-          <block v-for="(answer, i) in question.answers" :key="i">
-            <!--<question :question = "item"></question>-->
-            <wxc-list
-              class="item"
-              :src=answer.imageUrl
-              :title=answer.value
-              arrow=""
-              @clickOnThis="answerClicked">
-            </wxc-list>
-          </block>
-        </view>
+    <view class="answer-wrap">
+      <view class="list-item">
+        <block v-for="(answer, i) in question.answers" :key="i">
+          <!--<question :question = "item"></question>-->
+          <wxc-list
+            class="item"
+            :src=answer.imageUrl
+            :title=answer.value
+            arrow=""
+            @clickOnThis="answerClicked">
+          </wxc-list>
+        </block>
       </view>
+    </view>
+    <block v-if="showDetail">
       <view class="button-container">
         <view class="button-small-wrap">
           <wxc-button type="danger" :btnStyle="deleteStyle">删除 <wxc-icon color="#fff" type="delete"></wxc-icon></wxc-button>
@@ -39,7 +39,7 @@
     data () {
       return {
         arrowType: 'arrow-right',
-        editStyle: 'width: 222rpx;background: #c1c1c1; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
+        editStyle: 'width: 222rpx;background: #808080; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
         // editStyle: 'width: 222rpx;background: #1cb2b9; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
         deleteStyle: 'width: 222rpx;border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;'
         // deleteStyle: 'width: 222rpx;background: #ff9300;border-radius: 66rpx;color: #fff; margin:30rpx;'
