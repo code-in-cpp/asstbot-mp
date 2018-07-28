@@ -34,8 +34,8 @@ export default Component({
       value: '#f5123e' // 右侧描述部分的左侧红点颜色
     },
     arrow: {
-      type: Boolean,
-      value: true // 是否显示箭头
+      type: String,
+      value: '' // 是否显示箭头
     },
     mode: {
       type: String,

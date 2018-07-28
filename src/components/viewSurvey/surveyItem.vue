@@ -16,7 +16,6 @@
 
 <script>
 import viewAvatar from '@/components/viewSurvey/viewAvatar'
-import Badge from '@/components/viewSurvey/Badge'
 export default {
   props: {
     surveyInfo: {
@@ -29,8 +28,7 @@ export default {
     }
   },
   components: {
-    viewAvatar,
-    Badge
+    viewAvatar
   },
   methods: {
     changeInfo () {
