@@ -30,7 +30,7 @@
               </view>
               </view>
             </block>
-            <block v-for="(result, i) in item.results" :key="i">
+            <block v-if="item.userSay==null" v-for="(result, i) in item.results" :key="i">
               <view class="weui-cell__ft">
               <user-say-text :content="result.value"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam' && result.correct != null">

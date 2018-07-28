@@ -37,13 +37,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
 					"name": "毛孩子",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=081abe00915811e8b7d899c93befe945",
+					"query": "id=a81f22f08ccc11e8b1e74d9f5b42667a",
 					"scene": "1008"
 				},
 				{
@@ -84,8 +84,8 @@
 				{
 					"id": 6,
 					"name": "createdView",
-					"pathName": "pages/visitedSurvey/main",
-					"query": "",
+					"pathName": "pages/editpage/main",
+					"query": "id=fe2cdb3090d011e8801a4d596a827c78",
 					"scene": "1008"
 				},
 				{

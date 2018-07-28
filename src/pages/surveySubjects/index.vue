@@ -1,6 +1,6 @@
 <template>
   <movable-area class="move-area">
-    <view class="page">
+    <view class="page" v-if="hasLoaded">
       <title-bar title=" "/>
       <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       <view class="content">
@@ -96,7 +96,8 @@ export default {
       titleEditFlag: false,
       introEditFlag: false,
       textareaShowArray: [],
-      source: 'main'
+      source: 'main',
+      hasLoaded: false
     }
   },
   computed: {
@@ -258,10 +259,14 @@ export default {
           })
         }
         that.updateCurrentSurvey(survey)
+        that.hasLoaded = true
       })
     .catch((err) => {
       console.log(err)
     })
+  },
+  onUnload () {
+    this.hasLoaded = false
   },
   onShareAppMessage (res) {
     let surveyId = this.survey.id
