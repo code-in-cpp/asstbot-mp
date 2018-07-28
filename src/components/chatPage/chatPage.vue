@@ -1,12 +1,13 @@
 <template>
   <block>
+    <view class="pulldown-box" :style="{height:pullDownHeight + 'px'}"></view>
     <view class="content">
       <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
           @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus"
+      <command-area  @msgSendStatus="handleMsgSendStatus" @pullDown="pullDown"
           :inputPromt="activeInputPromtMsg"
           :displayFinish="displayFinish"
           :needFocus="messageList.length && messageList.length>5"/>
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       displayFinish: false,
-      localMsgSending: false
+      localMsgSending: false,
+      pullDownHeight: 0
     }
   },
   props: {
@@ -144,6 +146,18 @@ export default {
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
+    },
+    pullDown (height) {
+      // const that = this
+      // if (height - 50 > 0) {
+      //   setTimeout(function () {
+      //     that.pullDownHeight = height - 50
+      //   }, 500)
+      // } else {
+      //   this.pullDownHeight = height - 50
+      // }
+
+      this.pullDownHeight = height - 50
     }
   },
 
@@ -158,5 +172,8 @@ export default {
 <style scoped>
   .footer{
     position: relative;
+  }
+  .pulldown-box{
+    /*transition: height 1s;*/
   }
 </style>

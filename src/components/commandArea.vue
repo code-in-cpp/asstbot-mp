@@ -22,12 +22,15 @@
                     <!--:maxlength="textLength" :placeholder="placehodlerText"-->
                     <!--@focus="textareaFocus" @blur="textareaBlur"/>-->
 
-          <textarea class="word-textarea primary-color revert" :value="currentMessage" :class="textareaFocusFlag?'textarea-style-2' :''"
-                    @input="valueInput" adjust-position
-                    cursor-spacing="14" @confirm="confirm($event)"
-                    :maxlength="textLength" :placeholder="placehodlerText"
-                    @focus="textareaFocus" @blur="textareaBlur"/>
+          <!--<textarea class="word-textarea primary-color revert textarea-style-2" :value="currentMessage"-->
+                    <!--@input="valueInput" adjust-position-->
+                    <!--cursor-spacing="14" @confirm="confirm($event)"-->
+                    <!--:maxlength="textLength" :placeholder="placehodlerText" :focus="hasFocus"/>-->
 
+          <textarea class="word-textarea primary-color revert textarea-style-2" :value="currentMessage" @input="valueInput"
+                    @change="valueChange"  @confirm="confirm($event)" adjust-position cursor-spacing="14"
+                    :maxlength="textLength" :placeholder="placehodlerText" @focus="textFocus" @blur="textBlur"
+          ></textarea>
         </view>
         <view class="weui-flex__item"  v-else>
           <record-button @msgSendStatus="msgSendStatus"></record-button>
@@ -88,7 +91,8 @@ export default {
       lineHeightNum: '80rpx',
       voiceMode: false,
       textareaFocusFlag: false,
-      timeout: 0
+      timeout: 0,
+      hasFocus: false
     }
   },
   computed: {
@@ -148,9 +152,15 @@ export default {
 
   methods: {
     valueInput (ev) {
+      console.log('valueInput:::' + ev.mp.detail.value)
+      this.currentMessage = ev.mp.detail.value
+    },
+    valueChange (ev) {
+      console.log('valueChange:::' + ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
+      console.log('sendMessage:' + this.currentMessage)
       if (this.currentMessage && this.currentMessage !== this.displayText) {
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
@@ -163,6 +173,8 @@ export default {
       }
     },
     confirm (e) {
+      this.hasFocus = true
+      console.log('focusState:' + this.hasFocus + new Date().getTime())
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
           this.currentMessage = ''
@@ -180,18 +192,25 @@ export default {
     msgSendStatus (event) {
       this.$emit('msgSendStatus', event)
     },
-    textareaFocus () {
-      if (this.timeout) {
-        clearTimeout(this.timeout)
-      }
-      this.textareaFocusFlag = true
-    },
-    textareaBlur () {
+    textFocus (e) {
       const that = this
-      this.timeout = setTimeout(function () {
-        that.textareaFocusFlag = false
-      }, 500)
-      // this.textareaFocusFlag = false
+      wx.getSystemInfo({
+        success: function (res) {
+          let dom = wx.createSelectorQuery().select('#bottom').boundingClientRect()
+          dom.exec(function (resp) {
+            console.log(resp[0].bottom)
+            if (res.screenHeight - resp[0].bottom > 150) {
+              that.$emit('pullDown', e.mp.detail.height)
+            } else {
+              that.$emit('pullDown', 50)
+            }
+          })
+        }
+      })
+    },
+    textBlur (e) {
+      this.$emit('pullDown', 50)
+      this.hasFocus = false
     },
     changeVoiceMode () {
       getRecordAuth()
@@ -201,6 +220,10 @@ export default {
         .catch((err) => {
           console.error(err)
         })
+    },
+    focusDown () {
+      this.hasFocus = false
+      console.log('focusState:' + this.hasFocus + new Date().getTime())
     }
   }
 }

@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -83,9 +83,9 @@
 				},
 				{
 					"id": 6,
-					"name": "createdView",
-					"pathName": "pages/visitedSurvey/main",
-					"query": "",
+					"name": "输入框的多选框测试",
+					"pathName": "pages/surveyChat/main",
+					"query": "id=f605ec40923711e88429f5fb0ddc2255",
 					"scene": "1008"
 				},
 				{
