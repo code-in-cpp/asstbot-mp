@@ -1,5 +1,5 @@
 <template>
-  <view class = padding :class="isActive? 'active-item': '' ">
+  <view class ="surveyTitle" :class="isActive? 'active-item': '' ">
     <view class="list-item">
       <view class="label-wrapper" @click="changeAvatar">
         <view-avatar :url="surveyInfo.avatarUrl" @click="changeAvatar"></view-avatar>
@@ -8,7 +8,7 @@
         <view class="da-title survey-title">{{surveyInfo.title}}</view>
         <view class="da-desc survey-desc">{{surveyInfo.intro}}</view>
       </view>
-      <i class="icon iconfont icon-enter iconStyle" @click="changeInfo"></i>
+      <i class="icon iconfont icon-enter iconStyle icon-width-92" @click="changeInfo"></i>
     </view>
   </view>
 </template>
@@ -16,7 +16,6 @@
 
 <script>
 import viewAvatar from '@/components/viewSurvey/viewAvatar'
-import Badge from '@/components/viewSurvey/Badge'
 export default {
   props: {
     surveyInfo: {
@@ -29,8 +28,7 @@ export default {
     }
   },
   components: {
-    viewAvatar,
-    Badge
+    viewAvatar
   },
   methods: {
     changeInfo () {
@@ -53,7 +51,12 @@ export default {
     border-bottom: 2rpx solid;
     border-bottom-color: @btn-border-color;
   }
-
+  .surveyTitle{
+    background-color: #ffffff;
+    height: 160rpx;
+    border-bottom: 2rpx solid;
+    border-bottom-color: @btn-border-color;
+  }
   .list-item {
     padding-top: 12rpx;
     margin-left: 10rpx;
@@ -97,5 +100,8 @@ export default {
     color: @p-color;
     padding-right: 20rpx;
     width: 100%;
+  }
+  .icon-width-92{
+    width: 92rpx!important;
   }
 </style>

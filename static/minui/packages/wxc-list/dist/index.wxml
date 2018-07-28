@@ -15,5 +15,5 @@
 
     <view wx:if="{{desc}}" class="list__desc--text">{{desc}}</view>
 
-    <wxc-icon wx:if="{{arrow}}" class="list__desc--arrow" type="arrow-right" size="30" color="#c2c2c2" _pid="{{_pid}}"></wxc-icon>
+    <wxc-icon wx:if="{{arrow}}" class="list__desc--arrow" type="{{arrow}}" size="30" color="#c2c2c2" _pid="{{_pid}}"></wxc-icon>
 </view>

@@ -25,9 +25,9 @@
 </view>
 <view class="subject-divider"></view>
 <view class="weui-cells weui-cells_after-title" >
-    <view class="weui-cell" @click="addQuizConclusion">
-        <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-        <view class="weui-cell__bd">添加结论分类</view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd"  @click="addQuizConclusion"><i class="icon iconfont icon-add"></i></view>
+        <view class="weui-cell__bd"  @click="addQuizConclusion">添加结论分类</view>
     </view>
 </view>
 </block>

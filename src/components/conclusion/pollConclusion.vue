@@ -23,9 +23,9 @@
     <block v-if="conclusions.length === 0">
       <view class="subject-divider"></view>
         <view class="weui-cells weui-cells_after-title" >
-        <view class="weui-cell" @click="addConclusion">
-          <view class="weui-cell__hd"><i class="icon iconfont icon-add"></i></view>
-          <view class="weui-cell__bd">添加结论</view>
+        <view class="weui-cell" >
+          <view class="weui-cell__hd" @click="addConclusion"><i class="icon iconfont icon-add"></i></view>
+          <view class="weui-cell__bd" @click="addConclusion">添加结论</view>
         </view>
       </view>
     </block>
