@@ -81,9 +81,28 @@ const getters = {
       let subject = subjects[parseInt(questionId) - 1]
       let question = subject.question
       let questionUrl = (subject.imageUrl === '') ? null : subject.imageUrl
-      let results = answers[index].result
       let userSay = answers[index].user_say
-      ret.push({ id: index + 1, question, results, correct: answers[index].correct, userSay, questionUrl })
+      if (userSay) {
+        ret.push({ id: index + 1, question, correct: answers[index].correct, userSay, questionUrl, needSwipper: false })
+        continue
+      }
+
+      let hasImage = false
+      let textValues = answers[index].result.map((item) => {
+        hasImage = hasImage || item.imageUrl
+        return item.value
+      }).join(';')
+      let needSwipper = hasImage && answers[index].result.length > 1
+
+      if (!hasImage) {
+        ret.push({ id: index + 1, question, correct: answers[index].correct, userSay: textValues, questionUrl, needSwipper: false })
+        continue
+      }
+      if (needSwipper) {
+        ret.push({ id: index + 1, question, results: answers[index].result, correct: answers[index].correct, userSay: null, questionUrl, needSwipper: needSwipper })
+      } else {
+        ret.push({ id: index + 1, question, results: answers[index].result, correct: answers[index].correct, userSay: null, questionUrl, needSwipper: needSwipper })
+      }
     }
     console.log('user answer detail is ', ret)
     return ret

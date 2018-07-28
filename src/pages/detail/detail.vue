@@ -21,7 +21,7 @@
             <view class="weui-cell__bd">
               <bot-say-image :content="item.questionUrl" v-if="item.questionUrl!=null" @loadDone="imageLoadEnd"></bot-say-image>
             </view>
-            <block v-if="item.userSay!=null">
+            <block v-if="item.userSay!=null && item.needSwipper == false">
               <view class="weui-cell__ft">
               <user-say-text :content="item.userSay" v-if="item.userSay.length > 0"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam'">
@@ -30,7 +30,7 @@
               </view>
               </view>
             </block>
-            <block v-if="item.userSay==null" v-for="(result, i) in item.results" :key="i">
+            <block v-if="item.needSwipper == false" v-for="(result, i) in item.results" :key="i">
               <view class="weui-cell__ft">
               <user-say-text :content="result.value"></user-say-text>
               <view class="answer-correct"  v-if="surveyType==='exam' && result.correct != null">
@@ -44,6 +44,22 @@
                 <i class="icon iconfont icon-right" v-if="result.correct"></i>
                 <i class="icon iconfont icon-close" v-else></i>
               </view>
+              </view>
+            </block>
+            <block v-if="item.needSwipper">
+              <view class="weui-cell__ft" >
+                <swiper indicator-dots="true" class="swiper">
+                  <block v-for="(result, j) in item.results"  :key="j">
+                    <swiper-item style="border-radius: 20rpx">
+                      <user-say-image :url="result.imageUrl"></user-say-image>
+                      <view class="value image-value" v-if="result.value">{{result.value}}</view>
+                    </swiper-item>
+                  </block>
+                </swiper>
+                <view class="answer-correct"  v-if="surveyType==='exam'">
+                  <i class="icon iconfont icon-right" v-if="item.correct"></i>
+                  <i class="icon iconfont icon-close" v-else></i>
+                </view>
               </view>
             </block>
           </view>
@@ -261,5 +277,37 @@ export default {
   text-overflow: ellipsis;
   width: 450rpx;
   max-height: 110rpx;
+}
+
+.swiper{
+  width:400rpx;
+  display:inline-block;
+  margin-right:10rpx;
+}
+
+.image-value{
+  text-align:center;
+  font-size:28rpx;
+  line-height: 50rpx;
+  height: 100rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+
+.haveimage .valueBox{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 300rpx;
+  height: 400rpx;
+}
+
+.swiper-box{
+  text-align: right;
 }
 </style>
