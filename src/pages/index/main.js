@@ -7,6 +7,9 @@ app.$mount()
 export default {
   config: {
     'enablePullDownRefresh': false,
-    'disableScroll': true
+    'disableScroll': true,
+    'usingComponents': {
+      'xiaoda-textarea': '../../../static/xiaoda-textarea/dist/index'
+    }
   }
 }

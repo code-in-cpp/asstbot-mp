@@ -1,0 +1,27 @@
+<view class="textarea">
+<textarea
+class="word-textarea revert textarea-style-2"
+value='{{value}}'
+placeholder='{{placeholder}}'
+placeholder-style='{{placeholderStyle}}'
+placeholder-class='{{placeholderClass}}'
+disabled='{{disabled}}'
+maxlength='{{maxlength}}'
+auto-focus='{{autoFocus}}'
+focus='{{focus}}'
+auto-height='{{autoHeight}}'
+fixed='{{fixed}}'
+cursor-spacing='{{cursorSpacing}}'
+cursor='cursor'
+show-confirm-bar='{{showConfirmBar}}'
+selection-start='{{selectionStart}}'
+selection-end='{{selectionEnd}}'
+adjust-position='{{adjust}}'
+bindfocus='onFocus'
+bindblur='onBlur'
+bindlinechange='onLinechange'
+bindinput='onInput'
+bindconfirm='onConfirm'
+>
+</textarea>
+</view>

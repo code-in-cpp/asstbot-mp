@@ -1,7 +1,6 @@
 <template>
   <block>
-    <view class="pulldown-box" :style="{height:pullDownHeight + 'px'}"></view>
-    <view class="content">
+    <view class="content" style="flex-direction: column">
       <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
           @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
@@ -33,8 +32,7 @@ export default {
   data () {
     return {
       displayFinish: false,
-      localMsgSending: false,
-      pullDownHeight: 0
+      localMsgSending: false
     }
   },
   props: {
@@ -146,18 +144,6 @@ export default {
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
-    },
-    pullDown (height) {
-      // const that = this
-      // if (height - 50 > 0) {
-      //   setTimeout(function () {
-      //     that.pullDownHeight = height - 50
-      //   }, 500)
-      // } else {
-      //   this.pullDownHeight = height - 50
-      // }
-
-      this.pullDownHeight = height - 50
     }
   },
 

@@ -17,7 +17,7 @@
           <view class="left-item">
             <view class="avatar-wrapper">
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
-              <bod-avatar :url="survey.avatarUrl" size="30"  
+              <bod-avatar :url="survey.avatarUrl" size="30"
                 v-if="i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )"/>
             </view>
             <view class="content">
@@ -89,7 +89,6 @@ export default {
   },
 
   onLoad () {
-    console.log('onload')
     if (this.lastBotMsg) {
       let that = this
       this.$emit('renderUpdate')
