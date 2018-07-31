@@ -14,8 +14,10 @@ export default {
       'wxc-tab': '../../../static/minui/packages/wxc-tab/dist/index',
       'wxc-tab-panel': '../../../static/minui/packages/wxc-tab/dist/panel',
       'wxc-tab-label': '../../../static/minui/packages/wxc-tab/dist/label',
-      'wxc-elip': '../../../static/minui/packages/wxc-elip/dist/index',
-      'wux-white-space': '../../../static/wux/white-space/index'
+      'wxc-badge': '../../../static/minui/packages/wxc-badge/dist/index',
+      'wxc-avatar': '../../../static/minui/packages/wxc-avatar/dist/index',
+      'wxc-cc': '../../../static/minui/packages/wxc-cc/dist/index',
+      'wxc-elip': '../../../static/minui/packages/wxc-elip/dist/index'
     },
     'enablePullDownRefresh': false,
     'disableScroll': true

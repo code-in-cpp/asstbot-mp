@@ -1,29 +1,10 @@
 <template>
   <view class="page" v-if="hasLoaded">
     <title-bar title=" "/>
-    <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
-    <wxc-tab @tabchange="onClick" default-index="0" active-text-color="#1cb2b9" active-line-color="#1cb2b9" component-id="tab1">
-      <wxc-tab-panel label='题目' component-id="tab1">
-      </wxc-tab-panel>
-      <wxc-tab-panel label='结论' component-id="tab1">
-      </wxc-tab-panel>
-    </wxc-tab>
-    <scroll-view scroll-y='true' style="height: 840rpx">
-      <view class="list-wrap">
-        <view class="list-item">
-          <block v-for="(item, i) in survey.subjects" :key="i">
-            <question :question = "item"></question>
-            <!--<wux-white-space size="small" bodyStyle="background-color:0" />-->
-          </block>
-        </view>
-      </view>
-    </scroll-view>
-    <view class="button-container">
-      <view class="button-small-wrap">
-        <wxc-button :btnStyle="editStyle">返回 <wxc-icon color="#fff" type="arrow-left"></wxc-icon></wxc-button>
-        <wxc-button :btnStyle="editStyle">添加 <wxc-icon color="#fff" type="add"></wxc-icon></wxc-button>
-      </view>
-    </view>
+    <wxc-cc class="survey-avatar-wrap">
+        <wxc-avatar class="survey-avatar" :src="displayAvatar"></wxc-avatar>
+    </wxc-cc>
+    <wxc-elip class="survey-title" line="2">{{survey.title}}</wxc-elip>
   </view>
 </template>
 
@@ -34,7 +15,7 @@
   export default {
     data () {
       return {
-        editStyle: 'width: 222rpx;background: #808080; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
+        editStyle: 'width: 222rpx;background: #c1c1c1; border-radius: 66rpx;color: #fff; margin-left:30rpx; margin-right:30rpx;',
         hasLoaded: false
       }
     },
@@ -125,49 +106,65 @@
 
 <style lang="less" scoped>
   @import "../../../static/base.less";
-  .list-wrap {
+  .survey-avatar-wrap {
+    display: block;
     width: 100%;
-    background: @background-color;
-    padding-bottom: 30rpx;
-    padding-top: 30rpx;
-    top: 100rpx;
+    height: 200rpx;
   }
-  .list-item {
-    background: #fff;
-    margin-bottom: 30rpx;
+  .survey-avatar {
+    width: 160rpx;
+    height: 160rpx;
+    display: inline-block;
   }
-  .list-item:last-child {
-    margin: 0;
-  }
-  .item {
-    flex: 1;
-  }
-  /*.desc-highlight {*/
-    /*font-size: 24rpx;*/
-    /*height: 38rpx;*/
-    /*padding: 0 22rpx;*/
-    /*border: 1px solid #f5342f;*/
-    /*border-radius: 20rpx;*/
-    /*color: #f5342f;*/
-    /*line-height: 38rpx;*/
-  /*}*/
-  .title {
-    padding-left: 20rpx;
-    padding-right: 20rpx;
-    padding-top: 20rpx;
-    padding-bottom: 20rpx;
-  }
-  .button-container {
-    width: 100%;
+  .survey-title {
+    display: flex;
     text-align: center;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
+    justify-content: center;
   }
-  .button-small-wrap {
-    margin:10rpx;
-    float: left;
-  }
+  /*.list-wrap {*/
+    /*width: 100%;*/
+    /*background: @background-color;*/
+    /*padding-bottom: 30rpx;*/
+    /*padding-top: 30rpx;*/
+    /*top: 100rpx;*/
+  /*}*/
+  /*.list-item {*/
+    /*background: #fff;*/
+    /*margin-bottom: 30rpx;*/
+  /*}*/
+  /*.list-item:last-child {*/
+    /*margin: 0;*/
+  /*}*/
+  /*.item {*/
+    /*flex: 1;*/
+  /*}*/
+  /*!*.desc-highlight {*!*/
+    /*!*font-size: 24rpx;*!*/
+    /*!*height: 38rpx;*!*/
+    /*!*padding: 0 22rpx;*!*/
+    /*!*border: 1px solid #f5342f;*!*/
+    /*!*border-radius: 20rpx;*!*/
+    /*!*color: #f5342f;*!*/
+    /*!*line-height: 38rpx;*!*/
+  /*!*}*!*/
+  /*.title {*/
+    /*padding-left: 20rpx;*/
+    /*padding-right: 20rpx;*/
+    /*padding-top: 20rpx;*/
+    /*padding-bottom: 20rpx;*/
+  /*}*/
+  /*.button-container {*/
+    /*width: 100%;*/
+    /*text-align: center;*/
+    /*align-items: center;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: space-between;*/
+    /*box-sizing: border-box;*/
+  /*}*/
+  /*.button-small-wrap {*/
+    /*margin:10rpx;*/
+    /*float: left;*/
+  /*}*/
 </style>
