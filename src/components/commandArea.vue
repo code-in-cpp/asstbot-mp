@@ -132,7 +132,6 @@ export default {
       return this.inputPromt.prompt ? this.inputPromt.prompt : ' '
     }
   },
-
   props: {
     inputPromt: {
       type: Object,
@@ -147,21 +146,17 @@ export default {
       default: false
     }
   },
-
   watch: {
     displayText: function (newVal, oldVal) {
       this.currentMessage = newVal
     }
   },
-
   components: {
     recordButton,
     devicePadding
   },
-
   methods: {
     valueInput (ev) {
-      console.log(ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     valueChange (ev) {
@@ -169,7 +164,6 @@ export default {
     },
     sendMessage (ev) {
       if (this.currentMessage && this.currentMessage !== this.displayText) {
-        console.log('sendMessage:' + this.currentMessage)
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
         })
@@ -184,11 +178,9 @@ export default {
       const that = this
       setTimeout(function () {
         that.hasFocus = true
-        console.log('confirm')
       }, 100)
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
-          console.log('confirm发送消息')
           this.currentMessage = ''
         }).catch(error => {
           console.log('error:' + error)
@@ -203,11 +195,11 @@ export default {
         this.$store.commit('setGlobalTrue')
       }
     },
-
     msgSendStatus (event) {
       this.$emit('msgSendStatus', event)
     },
     textFocus (e) {
+      console.log('textFocus')
       const that = this
       this.hasFocus = true
       wx.getSystemInfo({
@@ -226,6 +218,7 @@ export default {
       })
     },
     textBlur (e) {
+      console.log('textBlur')
       this.hasFocus = false
       this.pullUp = true
       this.keyBoardHeight = '0rpx'
