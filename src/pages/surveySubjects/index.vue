@@ -1,6 +1,6 @@
 <template>
   <movable-area class="move-area">
-    <view class="page" v-if="hasLoaded">
+    <view class="page">
       <title-bar title=" "/>
       <survey-item :surveyInfo="survey" @changeInfo="toEditPage" @changeAvatar="changeAvatar"></survey-item>
       <view class="content">
@@ -9,35 +9,27 @@
           <view class="weui-tab__panel">
             <scroll-view scroll-y='true' style="height: 100%">
               <view v-if="activeIndex == 0">
-                <block v-for="(subject, i) in subjects" :key="subject">
-                  <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
-                    <view class="weui-cell weui-cell_input subject-area subject-style font-size">
-                      <view class="weui-cell__hd subject-item-style flex-1">
-                        <view class="weui-label subject-title-style">题目 {{i+1}}</view>
-                      </view>
-
-                      <view class="weui-cell__ft subject-item-style">
-                        <picker @change="updateSubjectType({index:i, type: subjectType[$event.mp.detail.value]})" :value="subject.typeIndex" :range="subjectTypeName">
-                          <view class="weui-select subject-hieght-line">{{typeNames[i]}}</view>
-                        </picker>
-                      </view>
-                      <view class="subject-item-style icon-item-style width-92" @click.stop="addMedia(i)">
-                        <i class="icon iconfont icon-picture font-color image-icon-color"></i>
-                      </view>
-                      <view class="weui-cell__ft subject-item-style">
-                        <view class="icon-item-style width-92" @click="removeSubject(i)">
-                          <i class="icon iconfont icon-trash trash-icon-color"></i>
+                <view v-for="(subject, i) in subjects" :key="i" class="subject-wrapper" :class="ativeSubjectIndex===i?'active-subject':''">
+                  <view @click="toggleSubject(i)">
+                    <view class="weui-cells weui-cells_after-title clear-border" style="border-bottom:1rpx solid #dadada">
+                      <view class="weui-cell weui-cell_input subject-area subject-style font-size">
+                        <view class="weui-cell__hd subject-item-style flex-1">
+                          <view class="weui-label subject-title-style">题目 {{i+1}}</view>
+                        </view>
+                        <view class="weui-cell__ft subject-item-style">
+                          <view class="subject-hieght-line">{{typeNames[i]}}</view>
                         </view>
                       </view>
                     </view>
+
+                    <da-text :content="subject.question"></da-text>
+                    <da-image :url="subject.imageUrl"/>
+                    <da-answer :subjectIndex="i" :type="subject.type" :surveyType="type"></da-answer>
                   </view>
-
-                  <text-or-area :content="subject.question" :index="i" @getTextareaValue="getTextareaValue" :defaultValue="'请填写问题'"></text-or-area>
-
-                  <image-gallery v-if="subject.imageUrl" :imageUrl="subject.imageUrl" :index="i" :type="'question'"></image-gallery>
-                  <edit-answer :subjectIndex="i" :type="subject.type" :surveyType="type" ></edit-answer>
-                </block>
-                <view class="subject-divider"></view>
+                  <view :id="'subject-operation-'+i">
+                    <subject-operation :subject="i" v-if="ativeSubjectIndex===i" @actionDone="ativeSubjectIndex=-1"/>
+                  </view>
+                </view>
                 <view class="weui-cells weui-cells_after-title clear-border">
                   <view class="weui-cell">
                     <view class="weui-cell__ft" @click="addSubject"><i class="icon iconfont icon-add"></i></view>
@@ -47,9 +39,21 @@
               </view>
 
               <view v-if="activeIndex == 1">
-                  <exam-conclusion v-if="type=='exam'"/>
-                  <quiz-conclusion v-else-if="type=='quiz'" />
-                  <poll-conclusion v-else/>
+                <view v-for="(conclusion, i) in conclusions" :key="conclusion" :class="activeConclusionIndex===i?'active-conclusion':''">
+                  <view @click="toggleConclusion(i)">
+                    <conclusion :surveyType="survey.type" :conclusion="conclusion" :index="i"/>
+                  </view>
+                  <view :id="'conclusion-operation-'+i">
+                    <conclusion-operation :conclusion="i" v-if="activeConclusionIndex===i" @actionDone="activeConclusionIndex=-1"/>
+                  </view>
+                </view>
+                <view class="subject-divider"></view>
+                <view class="weui-cells weui-cells_after-title clear-border" v-if="survey.type=='exam'||survey.type=='quiz'||conclusions.length == 0">
+                  <view class="weui-cell">
+                    <view class="weui-cell__ft" @click="addConclusion"><i class="icon iconfont icon-add"></i></view>
+                    <view class="weui-cell__ft" @click="addConclusion">添加结论</view>
+                  </view>
+                </view>
               </view>
             </scroll-view>
           </view>
@@ -73,15 +77,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import editAnswer from '@/components/editAnswer'
+import { mapState } from 'vuex'
 import navBar from '@/components/navBar'
-import imageGallery from '@/components/imageGallery'
-import pollConclusion from '@/components/conclusion/pollConclusion'
-import examConclusion from '@/components/conclusion/examConclusion'
-import quizConclusion from '@/components/conclusion/quizConclusion'
+import daText from '@/components/view/daText'
+import daImage from '@/components/view/daImage'
+import daAnswer from '@/components/view/daAnswer'
+import subjectOperation from '@/components/widget/subjectOperation'
+import conclusion from '@/components/conclusion/conclusion'
+import conclusionOperation from '@/components/widget/conclusionOperation'
 import surveyItem from '@/components/viewSurvey/surveyItem'
-import textOrArea from '@/components/textOrArea'
 
 const subjectType = ['radio', 'checkbox', 'text', 'date', 'location', 'phone']
 const subjectTypeName = ['单选', '多选', '问答', '日期', '地点', '手机']
@@ -97,33 +101,31 @@ export default {
       introEditFlag: false,
       textareaShowArray: [],
       source: 'main',
-      hasLoaded: false
+      ativeSubjectIndex: -1,
+      activeConclusionIndex: -1
     }
   },
   computed: {
     ...mapState({
       displayAvatar: state => {
-        var surveyAvatarUrl = (state.currentSurvey.survey.avatarUrl !== null && state.currentSurvey.survey.avatarUrl !== 'null' && state.currentSurvey.survey.avatarUrl !== '') ? state.currentSurvey.survey.avatarUrl : ''
+        var surveyAvatarUrl = (state.curSurvey.survey.avatarUrl !== null && state.curSurvey.survey.avatarUrl !== 'null' && state.curSurvey.survey.avatarUrl !== '') ? state.curSurvey.survey.avatarUrl : ''
         return surveyAvatarUrl === '' ? state.bodProfile.avatar : surveyAvatarUrl
       },
       survey: state => {
-        return state.currentSurvey.survey
+        return state.curSurvey.survey
       },
-      type: state => state.currentSurvey.survey.type,
+      type: state => state.curSurvey.survey.type,
       conclusions: state => {
-        return state.currentSurvey.survey.conclusions
+        return state.curSurvey.survey.conclusions
       },
 
-      // pollConclusion: state => {
-      //   return state.currentSurvey.survey.conclusions[0]
-      // },
-      subjects: state => state.currentSurvey.survey.subjects,
+      subjects: state => state.curSurvey.survey.subjects,
       typeNames: state => {
-        if (!state.currentSurvey.survey.subjects) {
+        if (!state.curSurvey.survey.subjects) {
           return subjectTypeName[0]
         }
 
-        return state.currentSurvey.survey.subjects.map((subject) => {
+        return state.curSurvey.survey.subjects.map((subject) => {
           var index = subjectType.indexOf(subject.type)
           return subjectTypeName[index]
         })
@@ -141,35 +143,30 @@ export default {
         return true
       }
       return this.survey.subjects.length === 0
+    },
+    scrollToView () {
+      if (this.activeIndex === 0) {
+        return `subject-operation-${this.ativeSubjectIndex}`
+      } else {
+        return `conclusion-operation-${this.activeConclusionIndex}`
+      }
     }
   },
 
   components: {
-    editAnswer,
     navBar,
-    imageGallery,
-    pollConclusion,
-    examConclusion,
-    textOrArea,
-    quizConclusion,
+    daText,
+    daImage,
+    daAnswer,
+    subjectOperation,
+    conclusion,
+    conclusionOperation,
     surveyItem
   },
 
   methods: {
-    ...mapMutations([
-      'updateCurrentSurvey',
-      'addSubject',
-      'clearSurvey',
-      'removeSubject',
-      'updateSubjectType',
-      'updateSubjectQuestion',
-      'addAnswer',
-      'removeAnswer',
-      'updateAnswerValue',
-      'updateAnswerCorrect'
-    ]),
     saveSurvey () {
-      this.$store.dispatch('editSurvey', this.survey)
+      this.$store.dispatch('saveCurSurvey', this.survey)
         .then(() => {
           if (this.source === 'main') {
             wx.navigateBack()
@@ -185,6 +182,23 @@ export default {
     },
     tabActive (event) {
       this.activeIndex = event
+      this.ativeSubjectIndex = -1
+      this.activeConclusionIndex = -1
+    },
+    toggleSubject (subject) {
+      if (this.ativeSubjectIndex === subject) {
+        this.ativeSubjectIndex = -1
+      } else {
+        this.ativeSubjectIndex = subject
+      }
+    },
+    toggleConclusion (conclusion) {
+      console.log(conclusion)
+      if (this.activeConclusionIndex === conclusion) {
+        this.activeConclusionIndex = -1
+      } else {
+        this.activeConclusionIndex = conclusion
+      }
     },
     changeAvatar () {
       const that = this
@@ -194,26 +208,22 @@ export default {
         sourceType: ['album', 'camera'],
         success: function (res) {
           that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
-            that.$store.commit('updateSurveyAvatarUrl', res)
+            that.$store.commit('changeCurSurveyAvatar', res)
+            that.$store.dispatch('saveCurSurvey', that.survey)
           }).catch(err => {
             console.error(err)
           })
         }
       })
     },
-    addMedia (index) {
-      const that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: function (res) {
-          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
-            that.$store.commit('updateSubjectQuestionImage', {index, imageUrl: res})
-          }).catch(err => {
-            console.error(err)
-          })
-        }
+    addSubject () {
+      wx.navigateTo({
+        url: '/pages/editsubject/main?action=create'
+      })
+    },
+    addConclusion () {
+      wx.navigateTo({
+        url: '/pages/editconclusion/main?action=create'
       })
     },
     toEditPage () {
@@ -233,40 +243,19 @@ export default {
             url: `/pages/surveyChat/main?id=${this.survey.id}&scene=test`
           })
         })
-    },
-    showTextarea (index) {
-      let a = !this.textareaShowArray[index]
-      this.textareaShowArray.splice(index, 1, a)
-    },
-    getTextareaValue (value) {
-      this.updateSubjectQuestion({index: value.index, question: value.value})
     }
   },
 
   onLoad (option) {
-    let that = this
     if (option.source) {
       this.source = option.source
     }
-    this.$store.dispatch('retrieveSurveyById', option.id)
+    this.$store.dispatch('retrieveCurSurvey', option.id)
       .then((survey) => {
-        if (survey.subjects.length) {
-          survey.subjects.map(item => {
-            item.imageUrl = item.imageUrl ? item.imageUrl : ''
-            item.answers.map(item => {
-              item.imageUrl = item.imageUrl ? item.imageUrl : ''
-            })
-          })
-        }
-        that.updateCurrentSurvey(survey)
-        that.hasLoaded = true
       })
     .catch((err) => {
       console.log(err)
     })
-  },
-  onUnload () {
-    this.hasLoaded = false
   },
   onShareAppMessage (res) {
     let surveyId = this.survey.id
@@ -285,7 +274,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "../../../static/base.less";
+
 .content {
   flex-direction: column;
 }
@@ -293,9 +284,6 @@ export default {
 .mini-btn{
     width: 30%;
     margin-right: 20rpx;
-}
-.weui-select {
-  border-right: 0 !important;
 }
 
 .subject-divider {
@@ -376,16 +364,12 @@ export default {
 .flex-1{
   flex:1
 }
-.width-92{
-  width: 92rpx;
+
+.subject-wrapper {
+  margin-bottom: 20rpx;
 }
 
-.image-icon-color {
-  color: green
+.active-subject, .active-conclusion {
+  border: solid 2rpx @s-color
 }
-
-.trash-icon-color {
-  color: #9d0000
-}
-
 </style>

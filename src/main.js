@@ -16,6 +16,8 @@ import logoTitleBar from '@/components/titleBar/logoTitleBar'
 import userLogin from '@/components/widget/userLogin'
 import loading from '@/components/view/loading'
 import copyableText from '@/components/widget/copyableText'
+import daText from '@/components/view/daText'
+import daImage from '@/components/view/daImage'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -34,6 +36,8 @@ Vue.component('logo-title-bar', logoTitleBar)
 Vue.component('user-login', userLogin)
 Vue.component('loading', loading)
 Vue.component('copyable-text', copyableText)
+Vue.component('da-text', daText)
+Vue.component('da-image', daImage)
 
 const app = new Vue(App)
 app.$mount()

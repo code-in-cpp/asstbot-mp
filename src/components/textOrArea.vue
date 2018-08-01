@@ -44,7 +44,6 @@
 <style scoped>
   .textarea-box{
     background: #fff;
-    border-bottom: 1rpx solid #dadada;
   }
   .textarea-text{
     /*width:100%;*/

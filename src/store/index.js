@@ -11,6 +11,7 @@ import surveyResult from './modules/surveyResult'
 import id from './modules/id'
 import inputValue from './modules/inputValue'
 import asr from './modules/asr'
+import curSurvey from './modules/curSurvey'
 
 Vue.use(Vuex)
 
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     surveyResult,
     id,
     inputValue,
-    asr
+    asr,
+    curSurvey
   },
   strict: debug
 })

@@ -6,7 +6,7 @@
     <view class="btn-title"> {{title}} </view>
   </button>
   <button class="btn-item" v-else>
-    <i class="icon iconfont btn-icon" :class="icon"></i>
+    <i class="icon iconfont btn-icon" :class="'icon-'+icon"></i>
     <view class="btn-title"> {{title}} </view>
   </button>
 </view>
@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     isShare () {
-      console.log('iconButton:' + this.opentype)
       if (this.opentype === undefined || this.opentype === null || this.opentype.length === 0) {
         return false
       }
@@ -79,5 +78,9 @@ export default {
   /*去按钮边框*/
   .btn-item::after{
     border: none;
+  }
+
+  .btn-item:active {
+    background-color: #f2f2f2
   }
 </style>

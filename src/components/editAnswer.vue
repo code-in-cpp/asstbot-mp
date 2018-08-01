@@ -1,137 +1,168 @@
 <template>
   <block>
-    <checkbox-group  v-if="type=='checkbox'" class="anwser-container">
-      <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
-        <checkbox v-if="type=='checkbox' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
-        <view class="weui-cell__bd height-92">
-            <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
-                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                   :value="answer.value" @blur="blur"/>
-        </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
-          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
-          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
-        </view>
-        <view class="weui-cell__ft font-style">
-          <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
-            <i class="icon iconfont icon-trash"></i>
+    <checkbox-group  v-if="subject.type=='checkbox'" class="anwser-container">
+      <block  v-for="(answer, index) in answers" :key="index">
+        <view class="checkbox anwser-item">
+          <checkbox v-if="survey.type=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></checkbox>
+          <view class="weui-cell__bd height-92">
+              <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
+                    @change="updateAnswerValue(index, $event.mp.detail.value)"
+                    :value="answer.value" @blur="blur"/>
+          </view>
+          <view class="icon-item-style font-style" v-if="!answer.imageUrl" @click.stop="addMedia(index)">
+            <i class="icon iconfont icon-picture font-color"></i>
+          </view>
+          <view class="weui-cell__ft font-style">
+            <view class="icon-item-style" @click="removeAnswer(index)">
+              <i class="icon iconfont icon-trash"></i>
+            </view>
           </view>
         </view>
-      </view>
+        <view class="anwser-item border" v-if="answer.imageUrl">
+          <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
+        </view>
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+          <view class="weui-cell__bd">
+            答案: 文字和图片不能同时为空
+          </view>
+          <view class="weui-cell__ft">
+              <icon type="warn" size="15" color="#E64340"></icon>
+          </view>
+        </view>
+      </block>
     </checkbox-group>
 
-    <radio-group v-if="type=='radio'"  class="anwser-container">
-      <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
-        <radio v-if="type=='radio' && surveyType=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
-        <view class="weui-cell__bd height-92">
-          <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
-                  @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                  :value="answer.value"  @blur="blur"/>
-        </view>
-        <picker v-if="surveyType=='quiz'" @change="udpateAnswerQuiz(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
-          <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
-        </picker>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
-          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color image-icon-color"></i>
-          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
-        </view>
-        <view class="weui-cell__ft font-style">
-          <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
-            <i class="icon iconfont icon-trash trash-icon-color"></i>
+    <radio-group v-else-if="subject.type=='radio'"  class="anwser-container">
+      <block  v-for="(answer, index) in answers" :key="index">
+        <view class="radio anwser-item">
+          <radio v-if="survey.type=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio>
+          <view class="weui-cell__bd height-92">
+            <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
+                    @change="updateAnswerValue(index, $event.mp.detail.value)"
+                    :value="answer.value"  @blur="blur"/>
+          </view>
+          <picker v-if="survey.type=='quiz'" @change="updateAnswerNext(index, $event.mp.detail.value)" :value="answer.next" :range="questionNames">
+            <view class="weui-select height-line-92">{{displayNames[answer.next]}}</view>
+          </picker>
+          <view class="icon-item-style font-style" v-if="!answer.imageUrl" @click.stop="addMedia(index)">
+            <i class="icon iconfont icon-picture font-color"></i>
+          </view>
+          <view class="weui-cell__ft font-style">
+            <view class="icon-item-style" @click="removeAnswer(index)">
+              <i class="icon iconfont icon-trash trash-icon-color"></i>
+            </view>
           </view>
         </view>
-      </view>
+        <view class="anwser-item border" v-if="answer.imageUrl">
+          <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
+        </view>
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+          <view class="weui-cell__bd">
+            答案: 文字和图片不能同时为空
+          </view>
+          <view class="weui-cell__ft">
+              <icon type="warn" size="15" color="#E64340"></icon>
+          </view>
+        </view>
+      </block>
     </radio-group>
 
-    <block v-if="type!='radio' && type !='checkbox'">
+    <block v-else>
       <view class = "anwser-container">
-      <view class="radio anwser-item" v-for="(answer, index) in answers" :key="index">
-        <view class="weui-cell__bd height-92">
-          <block v-if="type=='date'">
-            <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})">
-              <view class="picker height-line-92 input-location">
-                {{answer.value}}
-              </view>
-            </picker>
-          </block>
-          <block v-else-if="type=='location'">
-            <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
-              <view class="picker height-line-92 input-location">
-                {{answer.value}}
-              </view>
-            </picker>
-          </block>
-          <block v-else-if="type=='phone'">
-            <input class="weui-input height-line-92 input-location" type="number" placeholder="请输入号码"
-                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                   :value="answer.value"/>
-          </block>
-          <block v-else>
-            <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
-                   @change="updateAnswerValue({subject: subjectIndex, index: index, value: $event.mp.detail.value})"
-                   :value="answer.value"/>
-          </block>
-        </view>
-        <view class="icon-item-style font-style" @click.stop="addMedia({subject: subjectIndex, index: index})">
-          <i v-if="!answer.imageUrl" class="icon iconfont icon-picture font-color"></i>
-          <image class="answer-image" v-if="answer.imageUrl" :src="answer.imageUrl"></image>
-        </view>
-        <view class="weui-cell__ft font-style">
-          <view class="icon-item-style" @click="removeAnswer({subject:subjectIndex, answer:index})">
-            <i class="icon iconfont icon-trash"></i>
+      <block v-for="(answer, index) in answers" :key="index">
+        <view class="radio anwser-item">
+          <view class="weui-cell__bd height-92">
+            <block v-if="subject.type=='date'">
+              <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue(index, $event.mp.detail.value)">
+                <view class="picker height-line-92 input-location">
+                  {{answer.value}}
+                </view>
+              </picker>
+            </block>
+            <block v-else-if="subject.type=='location'">
+              <picker mode="region" @change="updateRegionAnswer(index, $event.mp.detail.value)" :value="region">
+                <view class="picker height-line-92 input-location">
+                  {{answer.value}}
+                </view>
+              </picker>
+            </block>
+            <block v-else-if="subject.type=='phone'">
+              <input class="weui-input height-line-92 input-location" type="number" placeholder="请输入号码"
+                    @change="updateAnswerValue(index, $event.mp.detail.value)"
+                    :value="answer.value"/>
+            </block>
+            <block v-else>
+              <input class="weui-input height-line-92 input-location" :placeholder="'请输入答案'+(index+1)"
+                    @change="updateAnswerValue(index, $event.mp.detail.value)"
+                    :value="answer.value"/>
+            </block>
+          </view>
+          <view class="icon-item-style font-style" v-if="!answer.imageUrl" @click.stop="addMedia(index)">
+            <i class="icon iconfont icon-picture font-color"></i>
+          </view>
+
+          <view class="weui-cell__ft font-style">
+            <view class="icon-item-style" @click="removeAnswer(index)">
+              <i class="icon iconfont icon-trash"></i>
+            </view>
           </view>
         </view>
-      </view>
+        <view class="anwser-item border" v-if="answer.imageUrl">
+          <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
+        </view>   
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+          <view class="weui-cell__bd">
+            答案: 文字和图片不能同时为空
+          </view>
+          <view class="weui-cell__ft">
+              <icon type="warn" size="15" color="#E64340"></icon>
+          </view>
+        </view>    
+      </block>
       </view>
     </block>
 
-    <view class="weui-cell weui-check__label add-answer-box">
-        <view class="weui-cell__ft font-style"   @click="addAnswer(subjectIndex)">
+    <view class="weui-cell weui-check__label add-answer-box anwser-container">
+        <view class="weui-cell__ft font-style"   @click="addAnswer()">
           <i class="icon iconfont icon-add"></i>
         </view>
-        <view class="weui-cell__ft height-line-92" @click="addAnswer(subjectIndex)">
-          添加答案
+        <view class="weui-cell__ft height-line-92" @click="addAnswer()">
+          添加选项
         </view>
     </view>
   </block>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import imageUploader from '@/components/widget/imageUploader'
+
 export default {
   data () {
     return {
       region: ['广东', '广州', '海珠'],
-      customItem: '全部',
-      focusEnd: true
+      customItem: '全部'
     }
   },
   props: {
-    subjectIndex: {
-      type: Number,
-      default: 0
+    subject: {
+      type: Object,
+      default: {}
     },
-    type: {
-      type: String,
-      default: 'radio'
-    },
-    surveyType: {
-      type: String,
-      default: 'exam'
+    survey: {
+      type: Object,
+      default: {}
     }
   },
-
+  components: {
+    imageUploader
+  },
   computed: {
     answers () {
-      let survey = this.$store.state.currentSurvey.survey
-      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
-        return []
-      }
-      return this.$store.state.currentSurvey.survey.subjects[this.subjectIndex].answers
+      return this.subject.answers
     },
     questionNames () {
-      let survey = this.$store.state.currentSurvey.survey
-      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+      let survey = this.survey
+      if (!survey || !survey.subjects) {
         return []
       }
       let ret = ['顺序']
@@ -150,8 +181,8 @@ export default {
     },
     displayNames () {
       let ret = ['顺序']
-      let survey = this.$store.state.currentSurvey.survey
-      if (!survey || !survey.subjects || survey.subjects === 0 || !survey.subjects[this.subjectIndex]) {
+      let survey = this.survey
+      if (!survey || !survey.subjects) {
         return ret
       }
       for (let id = 1; id < survey.subjects.length + 1; id++) {
@@ -165,69 +196,93 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
-      'addAnswer',
-      'removeAnswer',
-      'updateAnswerValue',
-      'updateAnswerCorrect',
-      'updateAnswerImagePath',
-      'updateAnswerNext'
-    ]),
     toUpdateAnswerCorrect (index) {
-      if (this.type === 'radio') {
-        this.answers.map((answer, i) => {
-          this.updateAnswerCorrect({
-            subject: this.subjectIndex,
-            index: i,
-            value: i === index})
+      let value
+      if (this.subject.type === 'radio') {
+        value = this.answers.map((answer, i) => {
+          return i === index
         })
-      } else if (this.type === 'checkbox') {
-        var correct = !this.answers[index].correct
-        this.updateAnswerCorrect({
-          subject: this.subjectIndex,
-          index: index,
-          value: correct
+      } else if (this.subject.type === 'checkbox') {
+        value = this.answers.map((answer, i) => {
+          return i === index ? !answer.correct : answer.correct
         })
       }
+      this.updateAnswerCorrect(value)
     },
 
     updateRegionAnswer (index, value) {
       console.log('region select:', index, 'value', value)
       let location = value[0].replace('省', '') + '-' + value[1].replace('市', '')
-      this.updateAnswerValue({
-        subject: this.subjectIndex,
-        index: index,
-        value: location
-      })
+      this.updateAnswerValue(index, location)
     },
 
-    udpateAnswerQuiz (index, value) {
-      console.log('region select:', index, 'value', value)
-      this.updateAnswerNext({
-        subject: this.subjectIndex,
-        index: index,
-        next: value
-      })
-    },
-
-    addMedia (obj, e) {
-      const that = this
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: function (res) {
-          that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
-            that.$store.commit('updateAnswerImagePath', {...obj, value: res})
-          }).catch(err => {
-            console.log(err)
-          })
+    updateAnswerNext (index, value) {
+      let answers = [...this.answers].map((answer, i) => {
+        if (index === i) {
+          answer.next = value
         }
+        return answer
       })
+      this.$emit('input', answers)
+    },
+
+    updateAnswerValue (index, value) {
+      let answers = [...this.answers].map((answer, i) => {
+        if (index === i) {
+          answer.value = value
+        }
+        return answer
+      })
+      this.$emit('input', answers)
+    },
+
+    updateAnswerCorrect (value) {
+      let answers = [...this.answers].map((answer, i) => {
+        answer.correct = value[i]
+        return answer
+      })
+      this.$emit('input', answers)
+    },
+
+    updateAnswerUrl (index, value) {
+      let answers = [...this.answers]
+      answers[index].imageUrl = value
+      this.$emit('input', answers)
+    },
+
+    removeAnswer (index) {
+      let answers = [...this.answers]
+      answers.splice(index, 1)
+      this.$emit('input', answers)
+    },
+
+    addAnswer () {
+      let value = ''
+      let correct = true
+      if (this.subject.type === 'date') {
+        value = '2018-07-12'
+      }
+      if (this.subject.type === 'location') {
+        value = '陕西-西安'
+      }
+      if (this.subject.type === 'radio' || this.subject.type === 'checkbox') {
+        correct = false
+      }
+      let answers = [...this.answers]
+      answers.push({value, correct, imageUrl: '', next: 0})
+      this.$emit('input', answers)
+    },
+
+    addMedia (index, url) {
+      this.$store.dispatch('selectImageToUpload')
+        .then((url) => {
+          this.updateAnswerUrl(index, url)
+        })
+    },
+
+    deleteImage (index) {
+      this.updateAnswerUrl(index, '')
     }
-  },
-  blur () {
-    this.focusEnd = true
   }
 }
 </script>
@@ -238,7 +293,9 @@ export default {
 view {
   font-size: @font-size-small;
 }
-
+.weui-select {
+  border-right: none!important;
+}
 .weui-cells:before {
   border-top: 0rpx;
 }
@@ -300,7 +357,7 @@ view {
   position: relative;
   padding: 0 30rpx;
 }
-.anwser-item:after{
+.anwser-item.border:after{
   content: '';
   position: absolute;
   border-bottom:1rpx solid #dadada;
@@ -309,6 +366,7 @@ view {
   width: 100%;
   height: 0;
 }
+
 .input-location {
   margin-left: 20rpx;
 }
@@ -319,7 +377,7 @@ view {
 }
 .add-answer-box{
   padding: 0 0rpx!important;
-  margin-left: 20rpx;
+  padding-left: 20rpx!important;
   display: flex;
   justify-content: flex-start;
 }
@@ -327,5 +385,13 @@ view {
   border-top: none;
 }
 
+
+.image-icon-color {
+  color: green
+}
+
+.trash-icon-color {
+  color: #9d0000
+}
 
 </style>

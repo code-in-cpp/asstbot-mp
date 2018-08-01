@@ -48,7 +48,27 @@ const actions = {
           const remoteUrl = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
           resolve(remoteUrl)
         },
-        fial: (err) => {
+        fail: (err) => {
+          reject(err)
+        }
+      })
+    })
+  },
+
+  selectImageToUpload ({dispatch}) {
+    return new Promise((resolve, reject) => {
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: (res) => {
+          dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
+            resolve(res)
+          }).catch(err => {
+            reject(err)
+          })
+        },
+        fail: (err) => {
           reject(err)
         }
       })
