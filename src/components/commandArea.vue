@@ -164,7 +164,7 @@ export default {
       this.$emit('msgSendStatus', event)
     },
     textFocus (e) {
-      console.log('textFocus')
+      // console.log('textFocus')
       const that = this
       wx.getSystemInfo({
         success: function (res) {

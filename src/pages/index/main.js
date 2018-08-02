@@ -7,9 +7,6 @@ app.$mount()
 export default {
   config: {
     'enablePullDownRefresh': false,
-    'disableScroll': true,
-    'usingComponents': {
-      'xiaoda-input': '../../../static/xiaoda-input/dist/index'
-    }
+    'disableScroll': true
   }
 }

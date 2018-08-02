@@ -148,7 +148,7 @@ export default {
       this.localMsgSending = (event === 'start')
     },
     keyBoardUp (height) {
-      console.log('height:' + height)
+      // console.log('height:' + height)
       this.keyBoardHeight = height
     }
   },
