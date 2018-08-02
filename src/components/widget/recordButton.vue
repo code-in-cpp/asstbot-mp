@@ -84,9 +84,22 @@ export default {
         }
         that.clearRecordStatus()
       })
+      recorderManager.onError((error) => {
+        console.log('录音停止，原因可能如下所示')
+        console.log(error)
+      })
       recorderManager.onFrameRecorded((res) => {
         const { frameBuffer } = res
         console.log('frameBuffer.byteLength', frameBuffer.byteLength)
+      })
+      recorderManager.onError((error) => {
+        console.log('录音断开，可能是由于下面原因导致的')
+        console.log(error)
+        if (wx.getStorageSync('recordError')) {
+          wx.setStorageSync('recordError', JSON.stringify(error) + wx.getStorageSync('recordError'))
+        } else {
+          wx.setStorageSync('recordError', JSON.stringify(error))
+        }
       })
 
       const options = {

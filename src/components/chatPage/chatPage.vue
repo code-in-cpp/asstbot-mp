@@ -1,14 +1,15 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
+      <view :style="{height:keyBoardHeight}"></view>
       <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
           @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus" @pullDown="pullDown"
+      <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputPromt="activeInputPromtMsg"
-          :displayFinish="displayFinish"
+          :displayFinish="displayFinish" @keyBoardUp="keyBoardUp"
           :needFocus="messageList.length && messageList.length>5"/>
     </view>
   </block>
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       displayFinish: false,
-      localMsgSending: false
+      localMsgSending: false,
+      keyBoardHeight: '0rpx'
     }
   },
   props: {
@@ -144,6 +146,10 @@ export default {
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
+    },
+    keyBoardUp (height) {
+      console.log('height:' + height)
+      this.keyBoardHeight = height
     }
   },
 

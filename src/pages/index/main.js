@@ -9,7 +9,7 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
-      'xiaoda-textarea': '../../../static/xiaoda-textarea/dist/index'
+      'xiaoda-input': '../../../static/xiaoda-input/dist/index'
     }
   }
 }
