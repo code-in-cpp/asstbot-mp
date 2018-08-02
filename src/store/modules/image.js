@@ -48,7 +48,7 @@ const actions = {
           const remoteUrl = `${hostRoot}/${JSON.parse(res.data).fileUrl}`
           resolve(remoteUrl)
         },
-        fial: (err) => {
+        fail: (err) => {
           reject(err)
         }
       })

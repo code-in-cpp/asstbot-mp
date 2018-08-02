@@ -84,6 +84,10 @@ export default {
         }
         that.clearRecordStatus()
       })
+      recorderManager.onError((error) => {
+        console.log('录音停止，原因可能如下所示')
+        console.log(error)
+      })
       recorderManager.onFrameRecorded((res) => {
         const { frameBuffer } = res
         console.log('frameBuffer.byteLength', frameBuffer.byteLength)
