@@ -90,6 +90,7 @@ export default {
       })
       recorderManager.onError((error) => {
         console.log('录音断开，可能是由于下面原因导致的')
+        console.log(error)
         if (wx.getStorageSync('recordError')) {
           wx.setStorageSync('recordError', JSON.stringify(error) + wx.getStorageSync('recordError'))
         } else {
