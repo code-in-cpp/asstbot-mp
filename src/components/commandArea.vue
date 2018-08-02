@@ -1,5 +1,5 @@
 <template>
-  <form report-submit="true" @submit="sendMessage" class="footer" :style="{position:keyBoardHeight!='0rpx'?'fixed':'relative',width:'100%',bottom:keyBoardHeight}">
+  <form report-submit="true" @submit="sendMessage" class="footer">
     <view class="weui-flex primary-color light">
       <view class="placeholder">
         <button class="input-widget form-control primary-color" size="small" @click="changeVoiceMode" v-if="!voiceMode">
@@ -34,18 +34,28 @@
           <!--&gt;</textarea>-->
 
 
-          <xiaoda-textarea :adjust="pullUp" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength" :placeholder="placehodlerText" :focus="hasFocus" @input="valueInput" @change="valueChange" @confirm="confirm" @focus="textFocus" @blur="textBlur"></xiaoda-textarea>
+          <!--<xiaoda-textarea :adjust="pullUp" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength" :placeholder="placehodlerText" :focus="hasFocus" @input="valueInput" @change="valueChange" @confirm="confirm" @focus="textFocus" @blur="textBlur"></xiaoda-textarea>-->
 
-        </view>
-        <view class="weui-flex__item" v-else>
-          <record-button @msgSendStatus="msgSendStatus"></record-button>
-        </view>
-      </block>
-      <view class="placeholder">
-        <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
-          <i class="icon iconfont icon-arrows"></i>
-        </button>
-        <!--<button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">-->
+
+          <!--<xiaoda-input :adjust="pullUp" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength"-->
+                        <!--:placeholder="placehodlerText"-->
+                        <!--@input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"-->
+          <!--&gt;</xiaoda-input>-->
+
+          <input class="word-textarea primary-color revert textarea-style-2" type="text" adjust-position="true" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength"
+          :placeholder="placehodlerText" confirm-type="send" confirm-hold="true"
+          @input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"/>
+
+</view>
+<view class="weui-flex__item" v-else>
+<record-button @msgSendStatus="msgSendStatus"></record-button>
+</view>
+</block>
+<view class="placeholder">
+<button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
+<i class="icon iconfont icon-arrows"></i>
+</button>
+<!--<button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">-->
           <!--<i class="icon iconfont icon-arrows"></i>-->
         <!--</button>-->
         <!--<button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">-->
@@ -92,13 +102,8 @@ export default {
   data () {
     return {
       currentMessage: '',
-      rowHeight: '80rpx',
-      lineHeightNum: '80rpx',
       voiceMode: false,
-      timeout: 0,
-      hasFocus: false,
-      pullUp: false,
-      keyBoardHeight: '0rpx'
+      pullUp: false
     }
   },
   computed: {
@@ -161,7 +166,6 @@ export default {
 
   methods: {
     valueInput (ev) {
-      console.log(ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     valueChange (ev) {
@@ -181,11 +185,6 @@ export default {
       }
     },
     confirm (e) {
-      const that = this
-      setTimeout(function () {
-        that.hasFocus = true
-        console.log('confirm')
-      }, 100)
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
           console.log('confirm发送消息')
@@ -209,26 +208,24 @@ export default {
     },
     textFocus (e) {
       const that = this
-      this.hasFocus = true
       wx.getSystemInfo({
         success: function (res) {
           let dom = wx.createSelectorQuery().select('#bottom').boundingClientRect()
           dom.exec(function (resp) {
             if (res.screenHeight - resp[0].bottom - 40 > e.mp.detail.height) {
               that.pullUp = false
-              that.keyBoardHeight = e.mp.detail.height * 2 + 'rpx'
+              that.$emit('keyBoardUp', e.mp.detail.height * 2 + 'rpx')
             } else {
               that.pullUp = true
-              that.keyBoardHeight = '0rpx'
+              that.$emit('keyBoardUp', '0rpx')
             }
           })
         }
       })
     },
     textBlur (e) {
-      this.hasFocus = false
-      this.pullUp = true
-      this.keyBoardHeight = '0rpx'
+      this.pullUp = false
+      this.$emit('keyBoardUp', '0rpx')
     },
     changeVoiceMode () {
       getRecordAuth()
