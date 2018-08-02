@@ -9,7 +9,6 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
-      'xiaoda-input': '../../../static/xiaoda-input/dist/index'
     }
   }
 }

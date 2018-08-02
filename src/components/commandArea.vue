@@ -15,7 +15,6 @@
           <input class="word-textarea primary-color revert textarea-style-2" type="text" adjust-position="true" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength"
           :placeholder="placehodlerText" confirm-type="send" confirm-hold="true"
           @input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"/>
-
 </view>
 <view class="weui-flex__item" v-else>
 <record-button @msgSendStatus="msgSendStatus"></record-button>
@@ -164,7 +163,6 @@ export default {
       this.$emit('msgSendStatus', event)
     },
     textFocus (e) {
-      console.log('textFocus')
       const that = this
       wx.getSystemInfo({
         success: function (res) {
