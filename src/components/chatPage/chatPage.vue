@@ -129,7 +129,7 @@ export default {
         let para = key + '=' + option[key]
         ret += (ret === '?') ? para : '&' + para
       }
-      console.log('build para is', ret)
+      // console.log('build para is', ret)
       return ret
     },
     delayRedirectTo (scene, url) {

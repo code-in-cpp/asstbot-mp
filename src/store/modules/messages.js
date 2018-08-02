@@ -83,7 +83,7 @@ var _impleSendmessage = (commit, id, type, data) => {
           title: '服务器出问题了，工程师正在抓紧解决',
           icon: 'none'
         })
-        console.log('test')
+        // console.log('test')
         reject(err)
       },
       complete: (response) => {

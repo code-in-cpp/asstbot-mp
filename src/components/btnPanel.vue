@@ -36,7 +36,7 @@ export default {
 
   methods: {
     item_selected (index) {
-      console.log(index)
+      // console.log(index)
       this.$emit('iconBtnClicked', index)
       this.$emit('panelClosed')
     },
