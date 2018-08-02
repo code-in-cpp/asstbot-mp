@@ -61,8 +61,11 @@
       </view>
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
-          <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="default" @click="saveSurvey" >保存 </button>
+          <view class="weui-flex__item btn-style-survey" v-if="activeIndex==0">
+            <button class="weui-btn btn-font" type="default" @click="addSubject" >添加题目</button>
+          </view>          
+          <view class="weui-flex__item btn-style-survey" v-if="activeIndex==1">
+            <button class="weui-btn btn-font" type="default" @click="addConclusion" >添加结论 </button>
           </view>
           <view class="weui-flex__item btn-style-survey">
             <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>

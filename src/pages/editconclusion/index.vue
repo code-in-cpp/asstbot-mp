@@ -186,4 +186,7 @@ export default {
 .content {
   flex-direction: column;
 }
+.weui-label {
+  color: #999;
+}
 </style>

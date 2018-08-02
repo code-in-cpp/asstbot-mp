@@ -2,20 +2,27 @@
     <view class="anwser-container">
       <view class="checkbox anwser-item" v-for="(answer, index) in answers" :key="index">
         <block v-if="type=='radio'">
-          <view class="anwser-check-icon" v-if="surveyType==='exam'">
-            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!answer.correct"></icon>
-            <icon class="weui-icon-checkbox_success" type="success" size="23" v-else></icon>
+          <view class="anwser-check-icon">
+            <icon class="weui-icon-checkbox_success" type="success" size="23" color="grey" v-if="surveyType==='exam'&&answer.correct"></icon>
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-else></icon>
           </view>
         </block>
         <block v-else-if="type=='checkbox'">
-          <view class="anwser-check-icon" v-if="surveyType==='exam'">
+          <view class="anwser-check-icon">
             <view class="checkbox-wrapper">
-              <icon class="weui-icon-checkbox_success" type="success_no_circle" size="13" v-if="answer.correct"></icon>
+              <icon class="weui-icon-checkbox_success" type="success_no_circle" size="13" color="grey"
+                  v-if="surveyType==='exam'&&answer.correct"></icon>
             </view>
           </view>
         </block>
+        <block v-else>
+          <view class="anwser-check-icon">
+            <view class="answer-item-icon">
+            </view>
+          </view>          
+        </block>
         <view class="weui-cell__bd height-92">
-          <view class="weui-input height-line-92 input-location">
+          <view class="weui-input height-line-92 input-location" :class="correctAnswers[index]?'correct-answer':'' ">
             {{answer.value}}
           </view>
         </view>
@@ -94,6 +101,24 @@ export default {
         ret.push('结论' + id)
       }
       return ret
+    },
+    correctAnswers () {
+      if (!this.answers || !this.surveyType || !this.type) {
+        return []
+      }
+      return this.answers.map((answer) => {
+        return this.surveyType === 'exam' &&
+        (this.type === 'checkbox' || this.type === 'radio') &&
+        answer.correct
+      })
+    }
+  },
+  methods: {
+
+    shouldDisplayCorrect (answer) {
+      return this.surveyType === 'exam' &&
+        (this.type === 'checkbox' || this.type === 'radio') &&
+        answer.correct
     }
   }
 }
@@ -114,6 +139,10 @@ view {
   padding: 0rpx 60rpx;
 }
 
+.weui-select {
+  border-right: none!important
+}
+
 .checkbox-wrapper {
   height: 39rpx;
   width: 39rpx;
@@ -123,21 +152,20 @@ view {
   justify-content: space-around;
 }
 
-.checkbox-icon-box {
-  border: solid 1px #666;
-  height: 36rpx;
-  width: 36rpx;
-  margin-right:9.2rpx;
-  margin-left: 9.2rpx;
-  overflow: hidden;
+.answer-item-icon {
+  margin: 10rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: @p-light-color
 }
-.checkbox-icon-box__wrapper {
-  padding-right:0.35em;
+
+.correct-answer:after {
+  content: " (正确答案)";
+  font-size: 0.9em;
+  color: @p-light-color
 }
-.checkbox-icon-box .icon-right {
-  color: #1AAD19;
-  font-size: 40rpx;
-}
+
 .icon-item-style{
   width:92rpx;
   text-align: center;

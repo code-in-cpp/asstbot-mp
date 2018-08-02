@@ -146,10 +146,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../../../static/base.less';
 .weui-select {
   border-right: none!important;
+  text-align: center;
 }
 
+.weui-label {
+  color: #999;
+}
 
 .content {
   width: 100%
@@ -169,4 +174,6 @@ export default {
 .weui-cell_warn {
   font-size: 24rpx;
 }
+
+
 </style>

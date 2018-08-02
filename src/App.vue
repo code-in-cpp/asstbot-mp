@@ -270,6 +270,10 @@ page{
   border-bottom: 16rpx solid transparent;
 
 }
+
+.weui-cell_warn {
+  font-size: 24rpx;
+}
   .move-area{
     height: 100vh;
     width: 100%;

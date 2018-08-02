@@ -5,13 +5,21 @@
         <text class="content-text">标题</text>
         <input class="content-input" type="text" autofocus="true" focus="true" @input="editTitle" :value="title">
       </view>
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="title==''">
+          <view class="weui-cell__bd">
+            请输入有效标题
+          </view>
+          <view class="weui-cell__ft">
+              <icon type="warn" size="15" color="#E64340"></icon>
+          </view>
+        </view>      
       <view class="content-box content-box-1">
         <text class="content-text">简介</text>
         <!--<input class="content-input" type="text" @blur="editIntro" :value="intro">-->
         <textarea @input="editIntro" :value="intro"></textarea>
       </view>
     <view class="btn-box">
-      <button :disabled="!title" class="btn-save" @click="saveSurvey">保存</button>
+      <button :disabled="!title" class="btn-save" type="primary" @click="saveSurvey">保存</button>
       <!--<view>保存</view>-->
     </view>
     <home-button/>
@@ -37,7 +45,7 @@
       ...mapState({
         survey: state => {
           console.log('survey:' + state.currentSurvey.survey)
-          return state.currentSurvey.survey
+          return state.curSurvey.survey
         }
       })
     },
@@ -51,9 +59,12 @@
       },
       saveSurvey () {
         if (this.title) {
-          this.$store.commit('updateSurveyTitle', this.title)
-          this.$store.commit('updateSurveyIntro', this.intro)
-          wx.navigateBack()
+          this.$store.commit('updateCurSurveyTitle', this.title)
+          this.$store.commit('updateCurSurveyIntro', this.intro)
+          this.$store.dispatch('saveCurSurvey', this.survey)
+            .then(() => {
+              wx.navigateBack()
+            })
         } else {
           wx.showToast({
             title: '请输入有效标题'
@@ -83,6 +94,7 @@
   }
   .content-box-1{
     height: auto;
+    line-height: 40rpx;
   }
   .content-text{
     padding:0 20rpx;
@@ -96,11 +108,11 @@
     flex: 1;
   }
   .btn-box{
-    padding: 0 30rpx;
+    padding: 0 80rpx;
     flex:1;
     align-items: flex-end;
     display: flex;
-    padding-bottom: 30rpx;
+    padding-bottom: 40rpx;
   }
   .btn-save{
     width: 100%;

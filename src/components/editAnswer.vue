@@ -19,6 +19,9 @@
           </view>
         </view>
         <view class="anwser-item border" v-if="answer.imageUrl">
+          <view v-if="survey.type=='exam'" class="anwser-check-icon">
+
+          </view>
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
@@ -54,6 +57,8 @@
           </view>
         </view>
         <view class="anwser-item border" v-if="answer.imageUrl">
+          <view v-if="survey.type=='exam'" class="anwser-check-icon">
+          </view>
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
@@ -357,15 +362,20 @@ view {
   position: relative;
   padding: 0 30rpx;
 }
-.anwser-item.border:after{
-  content: '';
-  position: absolute;
-  border-bottom:1rpx solid #dadada;
-  left: 30rpx;
-  bottom:0;
-  width: 100%;
-  height: 0;
+.anwser-item.border
+{
+  :after{
+    content: '';
+    position: absolute;
+    border-bottom:1rpx solid #dadada;
+    left: 30rpx;
+    bottom:0;
+    width: 100%;
+    height: 0;
+  }
 }
+
+
 
 .input-location {
   margin-left: 20rpx;

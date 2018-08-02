@@ -22,6 +22,7 @@
     line-height:64rpx;
     display:block;
     padding-left:30rpx;
+    padding-right: 10rpx;
     box-sizing:border-box;
   }
 </style>

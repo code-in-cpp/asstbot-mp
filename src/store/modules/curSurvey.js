@@ -14,6 +14,13 @@ const getters = {
 }
 
 const mutations = {
+  updateCurSurveyTitle (state, title) {
+    state.survey.title = title
+  },
+  updateCurSurveyIntro (state, intro) {
+    state.survey.intro = intro
+  },
+
   handleQuizNextByDelete (state, index) {
     state.survey.subjects.forEach(subject => {
       subject.answers.forEach(answer => {
