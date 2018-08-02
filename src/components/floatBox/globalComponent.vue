@@ -25,7 +25,7 @@
     methods: {
       doEvent (obj) {
         this.$store.commit('setGlobalFalse')
-        console.log('do something...')
+        // console.log('do something...')
       }
     }
   }

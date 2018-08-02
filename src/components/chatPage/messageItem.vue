@@ -69,7 +69,7 @@ export default {
 
   computed: {
     displayIncomingMsgs () {
-      console.log(this.messages)
+      // console.log(this.messages)
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
         return msg.type === 'text' ||
           msg.type === 'getUserinfo' ||

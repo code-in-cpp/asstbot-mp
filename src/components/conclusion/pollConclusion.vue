@@ -67,7 +67,7 @@ export default {
         sourceType: ['album', 'camera'],
         success: function (res) {
           that.$store.dispatch('uploadImage', res.tempFilePaths[0]).then(res => {
-            console.log(res)
+            // console.log(res)
             that.$store.commit('updateConclusionimage', {index: index, imageUrl: res})
           }).catch(error => {
             console.error(error)

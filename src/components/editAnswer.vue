@@ -192,7 +192,7 @@ export default {
     },
 
     updateRegionAnswer (index, value) {
-      console.log('region select:', index, 'value', value)
+      // console.log('region select:', index, 'value', value)
       let location = value[0].replace('省', '') + '-' + value[1].replace('市', '')
       this.updateAnswerValue({
         subject: this.subjectIndex,
@@ -202,7 +202,7 @@ export default {
     },
 
     udpateAnswerQuiz (index, value) {
-      console.log('region select:', index, 'value', value)
+      // console.log('region select:', index, 'value', value)
       this.updateAnswerNext({
         subject: this.subjectIndex,
         index: index,

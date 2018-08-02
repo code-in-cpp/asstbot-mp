@@ -161,7 +161,7 @@ export default {
 
   methods: {
     valueInput (ev) {
-      console.log(ev.mp.detail.value)
+      // console.log(ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     valueChange (ev) {
@@ -169,7 +169,7 @@ export default {
     },
     sendMessage (ev) {
       if (this.currentMessage && this.currentMessage !== this.displayText) {
-        console.log('sendMessage:' + this.currentMessage)
+        // console.log('sendMessage:' + this.currentMessage)
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
         })
