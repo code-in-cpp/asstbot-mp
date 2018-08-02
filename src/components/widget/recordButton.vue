@@ -88,6 +88,14 @@ export default {
         const { frameBuffer } = res
         console.log('frameBuffer.byteLength', frameBuffer.byteLength)
       })
+      recorderManager.onError((error) => {
+        console.log('录音断开，可能是由于下面原因导致的')
+        if (wx.getStorageSync('recordError')) {
+          wx.setStorageSync('recordError', JSON.stringify(error) + wx.getStorageSync('recordError'))
+        } else {
+          wx.setStorageSync('recordError', JSON.stringify(error))
+        }
+      })
 
       const options = {
         duration: 60000,
