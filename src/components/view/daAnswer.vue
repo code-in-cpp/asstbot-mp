@@ -153,7 +153,7 @@ view {
 }
 
 .answer-item-icon {
-  margin: 10rpx;
+  border: 12rpx solid white;
   width: 20rpx;
   height: 20rpx;
   border-radius: 50%;

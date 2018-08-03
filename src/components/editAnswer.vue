@@ -298,6 +298,9 @@ export default {
 view {
   font-size: @font-size-small;
 }
+.iconfont {
+  font-size: @font-size-middle+4rpx;
+}
 .weui-select {
   border-right: none!important;
 }

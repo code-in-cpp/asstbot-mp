@@ -37,7 +37,7 @@
     </scoll-view>
     </view>
     <view class="footer bottom_button">
-      <button class="weui-btn" type="primary" @tap="saveSubject">保存</button>
+      <button class="weui-btn" type="primary" @tap="saveSubject" :disabled="error">保存</button>
     </view>
   </view>
 </template>
@@ -61,7 +61,20 @@ export default {
   computed: {
     ...mapState({
       survey: state => state.curSurvey.survey
-    })
+    }),
+    error () {
+      if (this.subject.question === '' && this.subject.imageUrl === '') {
+        return true
+      }
+
+      let answerError = false
+      this.subject.answers.map((answer) => {
+        if (answer.value === '' && answer.imageUrl === '') {
+          answerError = true
+        }
+      })
+      return answerError
+    }
   },
   components: {
     editAnswer,
