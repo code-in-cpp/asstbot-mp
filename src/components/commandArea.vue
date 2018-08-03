@@ -12,19 +12,21 @@
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
 
-          <input class="word-textarea primary-color revert textarea-style-2" type="text" adjust-position="true" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength"
-          :placeholder="placehodlerText" confirm-type="send" confirm-hold="true"
+          <input class="word-textarea primary-color revert textarea-style-2"  adjust-position="true" :value="currentMessage" :cursorSpacing="14" 
+          :maxLength="textLength" :placeholder="placehodlerText" :type="textType"
+          confirm-type="send" confirm-hold="true" 
           @input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"/>
-</view>
-<view class="weui-flex__item" v-else>
-<record-button @msgSendStatus="msgSendStatus"></record-button>
-</view>
-</block>
-<view class="placeholder">
-<button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
-<i class="icon iconfont icon-arrows"></i>
-</button>
-      </view>
+
+        </view>
+        <view class="weui-flex__item" v-else>
+          <record-button @msgSendStatus="msgSendStatus"></record-button>
+        </view>
+      </block>
+    <view class="placeholder">
+    <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
+      <i class="icon iconfont icon-arrows"></i>
+    </button>
+    </view>
     </view>
     <device-padding></device-padding>
   </form>
