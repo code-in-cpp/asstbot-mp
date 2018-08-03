@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+
 function emojiParse (text) {
   const emojiMap = {
     '微笑': 'qqface0',
@@ -109,21 +110,54 @@ function emojiParse (text) {
     '右太极': 'qqface104'
   }
 
-  var reg = new RegExp(/[\'\[]?([^\[\[\]\]]*)[\'\]]?/i)
-  var arr = text.split(reg)
-  var node
+  var node = {
+    node: '',
+    txt: ''
+  }
   var nodeList = []
-  for (var i = 0; i < arr.length; i++) {
-    var str = arr[i]
-    node = {}
-    if (str === '') continue
-    if (emojiMap[str]) {
-      node.node = 'emoji'
-      node.txt = emojiMap[str]
-    } else {
-      node.node = 'text'
-      node.txt = str
+  var status = 'text'
+
+  var fst = {
+    'text': {
+      '[': (cur) => {
+        node.node = 'text'
+        nodeList.push(node)
+        node = {txt: '['}
+        status = 'emoji'        
+      }
+    },
+    'emoji': {
+      '[': (cur) => {
+        status = 'text'
+        node.txt = node.txt + cur
+      },
+      ']': (cur) => {
+        let str = node.txt.slice(1, node.txt.length)
+        if (emojiMap[str]) {
+          node.node = 'emoji'
+          node.txt = emojiMap[str]
+          nodeList.push(node)
+          node = {node: '', txt: ''}
+          status = 'text'
+        } else {
+          status = 'text'
+          node.txt = node.txt + cur
+        }
+      }
     }
+  }
+
+  for (var i = 0; i < text.length; i++) {
+    let cur = text[i]
+    let fstHandle = fst[status][cur]
+    if (fstHandle) {
+      fstHandle(cur)
+    } else {
+      node.txt = node.txt + cur
+    }
+  }
+  if (node.txt.length > 0) {
+    node.node = 'text'
     nodeList.push(node)
   }
   return nodeList
