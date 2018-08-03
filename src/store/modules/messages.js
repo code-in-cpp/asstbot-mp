@@ -25,7 +25,6 @@ const getters = {
 const mutations = {
   appendMessage (state, message) {
     const timestamp = new Date()
-    __appendMsg(state, {timestamp, ...message})
     if (chatBot === 'surveyBot') {
       state.surveybotMsg.push({timestamp, ...message})
     } else {
