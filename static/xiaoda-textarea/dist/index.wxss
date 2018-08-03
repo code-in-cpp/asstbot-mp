@@ -1,0 +1,22 @@
+.textarea{
+
+}
+.word-textarea{
+  background: #fff;
+  min-height: 74rpx;
+  padding-left: 10rpx;
+  line-height: 74rpx;
+  word-break: break-word;
+  border: 1rpx solid #dadada;
+  box-sizing: border-box;
+  width:100%;
+  margin-top: 3rpx;
+  height: 80rpx;
+}
+.revert{
+  color: #545a68 !important;
+  background-color: #ffffff !important;
+}
+.textarea-style-2{
+  line-height: 40rpx;
+}

@@ -10,7 +10,7 @@
   export default {
     props: ['content'],
     created () {
-      console.log(this)
+      // console.log(this)
     }
   }
 </script>

@@ -1,15 +1,15 @@
 <template>
   <block>
-    <view class="pulldown-box" :style="{height:pullDownHeight + 'px'}"></view>
-    <view class="content">
+    <view class="content" style="flex-direction: column">
+      <view :style="{height:keyBoardHeight}"></view>
       <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
           @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
-      <command-area  @msgSendStatus="handleMsgSendStatus" @pullDown="pullDown"
+      <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputPromt="activeInputPromtMsg"
-          :displayFinish="displayFinish"
+          :displayFinish="displayFinish" @keyBoardUp="keyBoardUp"
           :needFocus="messageList.length && messageList.length>5"/>
     </view>
   </block>
@@ -34,7 +34,7 @@ export default {
     return {
       displayFinish: false,
       localMsgSending: false,
-      pullDownHeight: 0
+      keyBoardHeight: '0rpx'
     }
   },
   props: {
@@ -129,7 +129,7 @@ export default {
         let para = key + '=' + option[key]
         ret += (ret === '?') ? para : '&' + para
       }
-      console.log('build para is', ret)
+      // console.log('build para is', ret)
       return ret
     },
     delayRedirectTo (scene, url) {
@@ -147,17 +147,9 @@ export default {
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
     },
-    pullDown (height) {
-      // const that = this
-      // if (height - 50 > 0) {
-      //   setTimeout(function () {
-      //     that.pullDownHeight = height - 50
-      //   }, 500)
-      // } else {
-      //   this.pullDownHeight = height - 50
-      // }
-
-      this.pullDownHeight = height - 50
+    keyBoardUp (height) {
+      // console.log('height:' + height)
+      this.keyBoardHeight = height
     }
   },
 

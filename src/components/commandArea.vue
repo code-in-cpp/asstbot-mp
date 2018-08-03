@@ -11,41 +11,19 @@
       </view>
       <block>
         <view class="weui-flex__item"  v-if="!voiceMode">
-          <!--<textarea class="word-textarea primary-color revert" :value="currentMessage"-->
-            <!--@input="valueInput" adjust-position auto-height="true"-->
-            <!--cursor-spacing="14"  @confirm="confirm($event)"-->
-            <!--:maxlength="textLength" :placeholder="placehodlerText"/>-->
 
-          <!--<textarea class="word-textarea primary-color revert" :class="textareaFocusFlag?'textarea-style-2' :''" :value="currentMessage"-->
-                    <!--@input="valueInput" adjust-position-->
-                    <!--cursor-spacing="14" @confirm="confirm($event)"-->
-                    <!--:maxlength="textLength" :placeholder="placehodlerText"-->
-                    <!--@focus="textareaFocus" @blur="textareaBlur"/>-->
-
-          <!--<textarea class="word-textarea primary-color revert textarea-style-2" :value="currentMessage"-->
-                    <!--@input="valueInput" adjust-position-->
-                    <!--cursor-spacing="14" @confirm="confirm($event)"-->
-                    <!--:maxlength="textLength" :placeholder="placehodlerText" :focus="hasFocus"/>-->
-
-          <textarea class="word-textarea primary-color revert textarea-style-2" :value="currentMessage" @input="valueInput"
-                    @change="valueChange"  @confirm="confirm($event)" adjust-position cursor-spacing="14"
-                    :maxlength="textLength" :placeholder="placehodlerText" @focus="textFocus" @blur="textBlur"
-          ></textarea>
-        </view>
-        <view class="weui-flex__item"  v-else>
-          <record-button @msgSendStatus="msgSendStatus"></record-button>
-        </view>
-      </block>
-      <view class="placeholder">
-        <button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
-          <i class="icon iconfont icon-arrows"></i>
-        </button>
-        <!--<button v-if="items.length || (currentMessage)" class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">-->
-          <!--<i class="icon iconfont icon-arrows"></i>-->
-        <!--</button>-->
-        <!--<button v-if="(currentMessage=='') && !items.length" class="input-widget primary-color form-control buttonSend" @click="setGlobalShow">-->
-          <!--<i class="icon iconfont icon-add"></i>-->
-        <!--</button>-->
+          <input class="word-textarea primary-color revert textarea-style-2" type="text" adjust-position="true" :value="currentMessage" :cursorSpacing="14" :maxLength="textLength"
+          :placeholder="placehodlerText" confirm-type="send" confirm-hold="true"
+          @input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"/>
+</view>
+<view class="weui-flex__item" v-else>
+<record-button @msgSendStatus="msgSendStatus"></record-button>
+</view>
+</block>
+<view class="placeholder">
+<button class="input-widget form-control secondary-color buttonSend" size="small" formType="submit" :disabled="(currentMessage=='') && !items.length">
+<i class="icon iconfont icon-arrows"></i>
+</button>
       </view>
     </view>
     <device-padding></device-padding>
@@ -87,12 +65,8 @@ export default {
   data () {
     return {
       currentMessage: '',
-      rowHeight: '80rpx',
-      lineHeightNum: '80rpx',
       voiceMode: false,
-      textareaFocusFlag: false,
-      timeout: 0,
-      hasFocus: false
+      pullUp: false
     }
   },
   computed: {
@@ -126,7 +100,6 @@ export default {
       return this.inputPromt.prompt ? this.inputPromt.prompt : ' '
     }
   },
-
   props: {
     inputPromt: {
       type: Object,
@@ -141,29 +114,23 @@ export default {
       default: false
     }
   },
-
   watch: {
     displayText: function (newVal, oldVal) {
       this.currentMessage = newVal
     }
   },
-
   components: {
     recordButton,
     devicePadding
   },
-
   methods: {
     valueInput (ev) {
-      console.log('valueInput:::' + ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     valueChange (ev) {
-      console.log('valueChange:::' + ev.mp.detail.value)
       this.currentMessage = ev.mp.detail.value
     },
     sendMessage (ev) {
-      console.log('sendMessage:' + this.currentMessage)
       if (this.currentMessage && this.currentMessage !== this.displayText) {
         this.$store.dispatch('sendQuery', this.currentMessage).then(res => {
           this.$store.commit('clearState')
@@ -176,10 +143,11 @@ export default {
       }
     },
     confirm (e) {
-      this.hasFocus = true
-      console.log('focusState:' + this.hasFocus + new Date().getTime())
       if (e.mp.detail.value) {
         this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
+          this.currentMessage = ''
+        }).catch(error => {
+          console.log('error:' + error)
           this.currentMessage = ''
         })
       }
@@ -191,7 +159,6 @@ export default {
         this.$store.commit('setGlobalTrue')
       }
     },
-
     msgSendStatus (event) {
       this.$emit('msgSendStatus', event)
     },
@@ -201,19 +168,20 @@ export default {
         success: function (res) {
           let dom = wx.createSelectorQuery().select('#bottom').boundingClientRect()
           dom.exec(function (resp) {
-            console.log(resp[0].bottom)
-            if (res.screenHeight - resp[0].bottom > 150) {
-              that.$emit('pullDown', e.mp.detail.height)
+            if (res.screenHeight - resp[0].bottom - 40 > e.mp.detail.height) {
+              that.pullUp = false
+              that.$emit('keyBoardUp', e.mp.detail.height * 2 + 'rpx')
             } else {
-              that.$emit('pullDown', 50)
+              that.pullUp = true
+              that.$emit('keyBoardUp', '0rpx')
             }
           })
         }
       })
     },
     textBlur (e) {
-      this.$emit('pullDown', 50)
-      this.hasFocus = false
+      this.pullUp = false
+      this.$emit('keyBoardUp', '0rpx')
     },
     changeVoiceMode () {
       getRecordAuth()
@@ -223,10 +191,6 @@ export default {
         .catch((err) => {
           console.error(err)
         })
-    },
-    focusDown () {
-      this.hasFocus = false
-      console.log('focusState:' + this.hasFocus + new Date().getTime())
     }
   }
 }
