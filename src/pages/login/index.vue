@@ -2,12 +2,12 @@
   <view class="page">
     <view class="content primary-color dark">
       <view>
-        <image src="../../static/image/logo-main.png" mode="widthFix"/>
+        <image src="../../static/image/logo.svg" mode="widthFix"/>
       </view>
       <view class="button-area" v-if="!userAuthed">
         <button type="primary" open-type="getUserInfo" @getuserinfo="gotUserInfo">微信登录</button>
         <button @click="guestLogin">匿名登录</button>
-      </view>
+      </view> 
     </view>
   </view>
 </template>
@@ -71,8 +71,8 @@ export default {
 }
 
 .content image {
-  width: 400rpx;
-  height: 516rpx
+  width: 320rpx;
+  height: 412rpx
 }
 .button-area button {
   margin: 20rpx 100rpx;

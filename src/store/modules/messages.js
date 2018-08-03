@@ -26,6 +26,11 @@ const mutations = {
   appendMessage (state, message) {
     const timestamp = new Date()
     __appendMsg(state, {timestamp, ...message})
+    if (chatBot === 'surveyBot') {
+      state.surveybotMsg.push({timestamp, ...message})
+    } else {
+      state.creatorBotMsg.push({timestamp, ...message})
+    }
   },
   talkToBotFather (state) {
     chatBot = 'bodFather'
@@ -41,6 +46,32 @@ const mutations = {
   appendDividerMessage (state, cause) {
     const timestamp = new Date()
     __appendMsg(state, {timestamp, gui: 'gui', type: 'divider'})
+  },
+  appendUserMessage (state, caption) {
+    let message = {
+      from: {
+        id: ''
+      },
+      type: 'text',
+      data: {
+        query: caption
+      }
+    }
+    this.commit('appendMessage', message)
+  },
+  modifyMessage (state, message) {
+    let modify = (msg) => {
+      if (msg.timestamp === message.timestamp) {
+        return message
+      } else {
+        return msg
+      }
+    }
+    if (chatBot === 'surveyBot') {
+      state.surveybotMsg = state.surveybotMsg.map(modify)
+    } else {
+      state.creatorBotMsg = state.surveybotMsg.map(modify)
+    }
   }
 }
 

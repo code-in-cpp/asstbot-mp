@@ -75,7 +75,8 @@ export default {
           msg.type === 'getUserinfo' ||
           msg.type === 'dialog-end' ||
           msg.type === 'image' ||
-          msg.type === 'divider'
+          msg.type === 'divider' ||
+          msg.type === 'button-list'
       })
     }
   },
