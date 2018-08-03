@@ -19,7 +19,7 @@
 
 <script>
 import messageItem from '@/components/chatPage/messageItem'
-import userSaySending from '@/components/userSay/userSaySending'
+import userSaySending from '@/components/userSay/sending'
 
 export default {
   data () {

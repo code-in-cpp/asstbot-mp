@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import botSayText from '@/components/botSay/botSayText'
-import botSayUserAuth from '@/components/botSay/botSayUserAuth'
-import botSayNew from '@/components/botSay/botSayNew'
+import botSayText from '@/components/botSay/text'
+import botSayUserAuth from '@/components/botSay/userAuth'
+import botSayNew from '@/components/botSay/new'
 import botAvatar from '@/components/bodAvatar'
-import botSayRadioSelect from '@/components/botSay/botSayRadioSelect'
-import botSayImage from '@/components/botSay/botSayImage'
+import botSayRadioSelect from '@/components/botSay/radioSelect'
+import botSayImage from '@/components/botSay/image'
 
 export default {
   props: {

@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import userSayMessage from '@/components/userSay/userSayMessage'
-import botSayMessage from '@/components/botSay/botSayMessage'
-import botMsgReceiving from '@/components/botSay/botMsgReceiving'
+import userSayMessage from '@/components/userSay/message'
+import botSayMessage from '@/components/botSay/message'
+import botMsgReceiving from '@/components/botSay/msgReceiving'
 import guiDivider from '@/components/mpSay/divider'
-import botSayDivider from '@/components/botSay/botSayDivider'
+import botSayDivider from '@/components/botSay/divider'
 
 export default {
   data () {

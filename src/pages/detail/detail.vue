@@ -84,10 +84,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import userSayText from '@/components/userSay/userSayText'
-import botSayText from '@/components/botSay/botSayText'
-import botSayImage from '@/components/botSay/botSayImage'
-import userSayImage from '@/components/userSay/userSayImage'
+import userSayText from '@/components/userSay/text'
+import botSayText from '@/components/botSay/text'
+import botSayImage from '@/components/botSay/image'
+import userSayImage from '@/components/userSay/image'
 import copyright from '@/components/copyright'
 
 import { formatTime } from '@/utils/index'

@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import userSayText from '@/components/userSay/userSayText'
-import userSayImage from '@/components/userSay/userSayImage'
-import userSayAllow from '@/components/userSay/userSayAllow'
-import userSaySpeech from '@/components/userSay/userSaySpeech'
-import userSayCheckboxReply from '@/components/userSay/userSayCheckboxReply'
-import userSayRadioReply from '@/components/userSay/userSayRadioReply'
+import userSayText from '@/components/userSay/text'
+import userSayImage from '@/components/userSay/image'
+import userSayAllow from '@/components/userSay/allow'
+import userSaySpeech from '@/components/userSay/speech'
+import userSayCheckboxReply from '@/components/userSay/checkboxReply'
+import userSayRadioReply from '@/components/userSay/radioReply'
 import { mapState } from 'vuex'
 
 export default {
