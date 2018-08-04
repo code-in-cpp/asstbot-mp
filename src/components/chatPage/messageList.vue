@@ -80,7 +80,7 @@ export default {
       setTimeout(function () {
         that.scrollToView = ''
         that.scrollToView = 'bottom'
-      }, 200)
+      }, 100)
     }
   }
 }

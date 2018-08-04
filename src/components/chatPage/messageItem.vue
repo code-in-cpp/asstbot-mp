@@ -101,7 +101,7 @@ export default {
         } else {
           that.$emit('renderUpdate')
         }
-      }, 800)
+      }, 600)
     }
   },
   created () {
