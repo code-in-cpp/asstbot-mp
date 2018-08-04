@@ -3,15 +3,15 @@
     <view class="page">
       <title-bar :title="title"/>
       <view class="content">
-        <wxc-panel>
-          <view class="weui-flex">
-            <bod-avatar :url="avatarUrl" size="80"/>
-            <view class="weui-flex__item">
-              <view class="da-title survey-title">{{title}}</view>
-              <view class="da-desc survey-desc">{{intro}}</view>
-            </view>
-          </view>
-        </wxc-panel>
+        <!--<wxc-panel>-->
+          <!--<view class="weui-flex">-->
+            <!--<bod-avatar :url="avatarUrl" size="80"/>-->
+            <!--<view class="weui-flex__item">-->
+              <!--<view class="da-title survey-title">{{title}}</view>-->
+              <!--<view class="da-desc survey-desc">{{intro}}</view>-->
+            <!--</view>-->
+          <!--</view>-->
+        <!--</wxc-panel>-->
         <wxc-panel title="分享">
           <button open-type="share" class="share-button">
             <wxc-list icon="weixin" icon-color="#1cb2b9" title="转发给好友"></wxc-list>
@@ -22,6 +22,7 @@
             <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
+        <painter :customStyle="customStyle" @imgOK="onImgOk" :palette="_template" v-if="hasLoaded && retrieveDone"/>
       </view>
       <home-button/>
     </view>
@@ -29,21 +30,33 @@
 </template>
 
 <script>
-import { saveQrCodeToPhotosAlbum } from '@/utils/qrcode'
+import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
+import { CreatedPoster } from './createdPoster'
 
 export default {
   data: {
-    surveyId: '',
-    title: '',
-    avatarUrl: '',
-    intro: ''
+    surveyId: '2c0ef34080ea11e88ee1db0f184fef52',
+    title: '你身边有爱抬杠的人吗？',
+    avatarUrl: 'https://www.xiaodamp.cn/asstbot/image/nobody.png',
+    intro: '',
+    shareQrCode: '',
+    hasLoaded: false,
+    retrieveDone: false,
+    shareImg: '',
+    customStyle: 'margin-left:100rpx;margin-top:10rpx'
   },
   methods: {
     publish () {
-      wx.showLoading({
-        title: '生成图片中'
-      })
-      saveQrCodeToPhotosAlbum(this.surveyId)
+      savePosterToPhotosAlbum(this.shareImg)
+    },
+    onImgOk (e) {
+      this.shareImg = e.mp.detail.path
+    }
+  },
+  computed: {
+    _template () {
+      var poster = new CreatedPoster()
+      return poster.do(this.title, this.intro, this.shareQrCode)
     }
   },
   onShareAppMessage (res) {
@@ -59,19 +72,26 @@ export default {
     }
   },
   onLoad (option) {
+    console.log('onLoad, survey id:', option.id)
+    if (option.title) {
+      this.title = option.title
+    }
+    if (option.avatarUrl) {
+      this.avatarUrl = option.avatarUrl
+    }
     if (option.id) {
       this.surveyId = option.id
-      this.title = option.title
-      this.avatarUrl = option.avatarUrl
       this.$store.dispatch('querySurveyById', this.surveyId)
         .then((survey) => {
           this.intro = survey.intro
+          this.retrieveDone = true
+        })
+      getQrcodeImageUrl(this.surveyId)
+        .then(value => {
+          this.shareQrCode = value
+          this.hasLoaded = true
         })
       // console.log(JSON.stringify(option))
-    } else {
-      this.surveyId = '2c0ef34080ea11e88ee1db0f184fef52'
-      this.title = '你身边有爱抬杠的人吗？'
-      this.avatarUrl = 'https://www.xiaodamp.cn/asstbot/image/nobody.png'
     }
   }
 }

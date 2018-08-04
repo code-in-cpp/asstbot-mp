@@ -10,6 +10,7 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
+      'painter': '../../../static/painter/painter',
       'wxc-panel': '../../../static/minui/packages/wxc-panel/dist/index',
       'wxc-list': '../../../static/minui/packages/wxc-list/dist/index'
     }

@@ -27,14 +27,13 @@ function getSaveImageAuth (scene) {
   })
 }
 
-function getQrcodeImageUrl (scene) {
+export function getQrcodeImageUrl (scene) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: config.service.qrcodeUrl + '?scene=' + scene,
       method: 'GET',
       success: (response) => {
         let imageUrl = config.service.hostRoot + response.data.url
-        console.log('get qrcode image url: ' + imageUrl)
         resolve(imageUrl)
       },
       fail: (err) => {
@@ -69,7 +68,6 @@ function saveImageToPhotosAlbum (imageFilePath) {
     wx.saveImageToPhotosAlbum({
       filePath: imageFilePath,
       success: (res) => {
-        console.log('save image to photo album : ' + imageFilePath)
         resolve(res)
       },
       fail: (err) => {
@@ -113,7 +111,17 @@ export function saveQrCodeToPhotosAlbum (scene) {
   })
 }
 
+export function savePosterToPhotosAlbum (poster) {
+  getSaveImageAuth(poster)
+    .then(saveImageToPhotosAlbum)
+    .then(comfirmSaveImageToPhotosAlbum)
+    .catch((err) => {
+      console.log('save qrcode image to photo album failed : ' + JSON.stringify(err))
+    })
+}
+
 export default {
   getQrcodeImageUrl,
-  saveQrCodeToPhotosAlbum
+  saveQrCodeToPhotosAlbum,
+  savePosterToPhotosAlbum
 }
