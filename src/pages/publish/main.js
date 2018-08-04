@@ -12,6 +12,7 @@ export default {
     'usingComponents': {
       'painter': '../../../static/painter/painter',
       'wxc-panel': '../../../static/minui/packages/wxc-panel/dist/index',
+      'wxc-popup': '../../../static/minui/packages/wxc-popup/dist/index',
       'wxc-list': '../../../static/minui/packages/wxc-list/dist/index'
     }
   }

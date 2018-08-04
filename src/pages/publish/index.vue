@@ -3,15 +3,15 @@
     <view class="page">
       <title-bar :title="title"/>
       <view class="content">
-        <!--<wxc-panel>-->
-          <!--<view class="weui-flex">-->
-            <!--<bod-avatar :url="avatarUrl" size="80"/>-->
-            <!--<view class="weui-flex__item">-->
-              <!--<view class="da-title survey-title">{{title}}</view>-->
-              <!--<view class="da-desc survey-desc">{{intro}}</view>-->
-            <!--</view>-->
-          <!--</view>-->
-        <!--</wxc-panel>-->
+        <wxc-panel>
+          <view class="weui-flex">
+            <bod-avatar :url="avatarUrl" size="80"/>
+            <view class="weui-flex__item">
+              <view class="da-title survey-title">{{title}}</view>
+              <view class="da-desc survey-desc">{{intro}}</view>
+            </view>
+          </view>
+        </wxc-panel>
         <wxc-panel title="分享">
           <button open-type="share" class="share-button">
             <wxc-list icon="weixin" icon-color="#1cb2b9" title="转发给好友"></wxc-list>
@@ -22,7 +22,9 @@
             <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
-        <painter :customStyle="customStyle" @imgOK="onImgOk" :palette="_template" v-if="hasLoaded && retrieveDone"/>
+        <wxc-popup class="J_Popup" @clickOnThis="popupHide">
+          <painter :customStyle="customStyle" @imgOK="onImgOk" :palette="_template" v-if="shouldShow"/>
+        </wxc-popup>
       </view>
       <home-button/>
     </view>
@@ -30,6 +32,7 @@
 </template>
 
 <script>
+// import { getQrcodeImageUrl } from '@/utils/qrcode'
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
 import { CreatedPoster } from './createdPoster'
 
@@ -42,15 +45,32 @@ export default {
     shareQrCode: '',
     hasLoaded: false,
     retrieveDone: false,
+    shouldShow: false,
     shareImg: '',
-    customStyle: 'margin-left:100rpx;margin-top:10rpx'
+    customStyle: 'margin-left:0rpx;margin-top:10rpx'
   },
   methods: {
     publish () {
+      this.showPopup()
+    },
+    popupHide () {
+      console.log('popupHide')
       savePosterToPhotosAlbum(this.shareImg)
     },
     onImgOk (e) {
+      console.log('onImgOk')
       this.shareImg = e.mp.detail.path
+    },
+    showPopup () {
+      this.shouldShow = true
+      let popupComponent = this.$mp.page.selectComponent('.J_Popup')
+      popupComponent && popupComponent.show()
+      // popupComponent && popupComponent.toggle(true)
+    },
+    hidePopup () {
+      let popupComponent = this.$mp.page.selectComponent('.J_Popup')
+      // popupComponent && popupComponent.hide()
+      popupComponent && popupComponent.toggle()
     }
   },
   computed: {

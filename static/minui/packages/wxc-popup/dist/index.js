@@ -91,6 +91,7 @@ export default Component({
     popupTap() {
       if (this.data.locked !== 'true') {
         this.hide();
+        this.triggerEvent('clickOnThis');
       }
     },
     hide() {
