@@ -55,6 +55,7 @@ export default {
     },
     popupHide () {
       console.log('popupHide')
+      this.shouldShow = false
       savePosterToPhotosAlbum(this.shareImg)
     },
     onImgOk (e) {
@@ -66,11 +67,6 @@ export default {
       let popupComponent = this.$mp.page.selectComponent('.J_Popup')
       popupComponent && popupComponent.show()
       // popupComponent && popupComponent.toggle(true)
-    },
-    hidePopup () {
-      let popupComponent = this.$mp.page.selectComponent('.J_Popup')
-      // popupComponent && popupComponent.hide()
-      popupComponent && popupComponent.toggle()
     }
   },
   computed: {
