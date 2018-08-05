@@ -34,14 +34,18 @@
 <script>
 // import { getQrcodeImageUrl } from '@/utils/qrcode'
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
-import { CreatedPoster } from './createdPoster'
+// import { CreatedPoster } from './createdPoster'
+import {VisitedPoster} from './visitedPoster'
 
 export default {
   data: {
     surveyId: '2c0ef34080ea11e88ee1db0f184fef52',
+    resultId: '59a47830973211e88234972f98fd44b2',
     title: '你身边有爱抬杠的人吗？',
     avatarUrl: 'https://www.xiaodamp.cn/asstbot/image/nobody.png',
     intro: '',
+    conclusion: '',
+    conclusionUrl: '',
     shareQrCode: '',
     hasLoaded: false,
     retrieveDone: false,
@@ -70,9 +74,13 @@ export default {
     }
   },
   computed: {
+    // _template () {
+    //   var poster = new CreatedPoster()
+    //   return poster.do(this.title, this.intro, this.shareQrCode)
+    // }
     _template () {
-      var poster = new CreatedPoster()
-      return poster.do(this.title, this.intro, this.shareQrCode)
+      var poster = new VisitedPoster()
+      return poster.do('赵永刚', this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
     }
   },
   onShareAppMessage (res) {
@@ -109,6 +117,13 @@ export default {
         })
       // console.log(JSON.stringify(option))
     }
+    // if (option.resultId) {
+    this.$store.dispatch('querySurveyResultById', this.resultId)
+      .then((result) => {
+        this.conclusion = result.conclusion
+        console.log('survey result:', result)
+      })
+    // }
   }
 }
 </script>
