@@ -22,7 +22,7 @@
             <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
-        <wxc-popup class="J_Popup" @clickOnThis="popupHide">
+        <wxc-popup class="J_Popup" @clickOnThis="clickOnPopup">
           <painter :customStyle="customStyle" @imgOK="onImgOk" @imgErr="onImgErr" :palette="_template" v-if="shouldShow"/>
         </wxc-popup>
       </view>
@@ -56,10 +56,10 @@ export default {
     publish () {
       this.showPopup()
     },
-    popupHide () {
-      console.log('popupHide')
+    clickOnPopup () {
+      console.log('clickOnPopup')
       this.shouldShow = false
-      if (!this.shareImg === '') {
+      if (this.shareImg !== '') {
         savePosterToPhotosAlbum(this.shareImg)
       } else {
         wx.showToast({
@@ -70,8 +70,8 @@ export default {
       }
     },
     onImgOk (e) {
-      console.log('onImgOk')
       this.shareImg = e.mp.detail.path
+      console.log('onImgOk, img:', this.shareImg)
       wx.hideLoading()
     },
     onImgErr () {
@@ -89,7 +89,7 @@ export default {
   computed: {
     _template () {
       var poster
-      if (!this.conclusionUrl === '' || !this.conclusion === '') {
+      if (this.conclusionUrl !== '' || this.conclusion !== '') {
         poster = new VisitedPoster()
         return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
       }
