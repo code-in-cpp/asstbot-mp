@@ -90,11 +90,11 @@ export default {
     _template () {
       var poster
       if (this.conclusionUrl !== '' || this.conclusion !== '') {
-        console.log('visited poster')
+        // console.log('visited poster, url: ', this.conclusionUrl)
         poster = new VisitedPoster()
         return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
       }
-      console.log('created poster')
+      // console.log('created poster')
       poster = new CreatedPoster()
       return poster.do(this.title, this.intro, this.shareQrCode)
     }
