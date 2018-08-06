@@ -23,7 +23,7 @@
           </button>
         </wxc-panel>
         <wxc-popup class="J_Popup" @clickOnThis="popupHide">
-          <painter :customStyle="customStyle" @imgOK="onImgOk" :palette="_template" v-if="shouldShow"/>
+          <painter :customStyle="customStyle" @imgOK="onImgOk" @imgErr="onImgErr" :palette="_template" v-if="shouldShow"/>
         </wxc-popup>
       </view>
       <home-button/>
@@ -34,21 +34,20 @@
 <script>
 // import { getQrcodeImageUrl } from '@/utils/qrcode'
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
-// import { CreatedPoster } from './createdPoster'
+import { CreatedPoster } from './createdPoster'
 import {VisitedPoster} from './visitedPoster'
 
 export default {
   data: {
     surveyId: '2c0ef34080ea11e88ee1db0f184fef52',
-    resultId: '59a47830973211e88234972f98fd44b2',
+    resultId: '7bf4603097c311e88234972f98fd44b2',
     title: '你身边有爱抬杠的人吗？',
     avatarUrl: 'https://www.xiaodamp.cn/asstbot/image/nobody.png',
     intro: '',
+    responderNickName: '',
     conclusion: '',
     conclusionUrl: '',
     shareQrCode: '',
-    hasLoaded: false,
-    retrieveDone: false,
     shouldShow: false,
     shareImg: '',
     customStyle: 'margin-left:0rpx;margin-top:10rpx'
@@ -60,27 +59,42 @@ export default {
     popupHide () {
       console.log('popupHide')
       this.shouldShow = false
-      savePosterToPhotosAlbum(this.shareImg)
+      if (!this.shareImg === '') {
+        savePosterToPhotosAlbum(this.shareImg)
+      } else {
+        wx.showToast({
+          title: '图片生成失败',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     },
     onImgOk (e) {
       console.log('onImgOk')
       this.shareImg = e.mp.detail.path
+      wx.hideLoading()
+    },
+    onImgErr () {
+      console.log('onImgErr')
+      this.shareImg = ''
+      wx.hideLoading()
     },
     showPopup () {
       this.shouldShow = true
       let popupComponent = this.$mp.page.selectComponent('.J_Popup')
       popupComponent && popupComponent.show()
-      // popupComponent && popupComponent.toggle(true)
+      wx.showLoading()
     }
   },
   computed: {
-    // _template () {
-    //   var poster = new CreatedPoster()
-    //   return poster.do(this.title, this.intro, this.shareQrCode)
-    // }
     _template () {
-      var poster = new VisitedPoster()
-      return poster.do('赵永刚', this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
+      var poster
+      if (!this.conclusionUrl === '' || !this.conclusion === '') {
+        poster = new VisitedPoster()
+        return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
+      }
+      poster = new CreatedPoster()
+      return poster.do(this.title, this.intro, this.shareQrCode)
     }
   },
   onShareAppMessage (res) {
@@ -95,7 +109,7 @@ export default {
       path: '/pages/index/main'
     }
   },
-  onLoad (option) {
+  onLoad: function (option) {
     console.log('onLoad, survey id:', option.id)
     if (option.title) {
       this.title = option.title
@@ -108,22 +122,27 @@ export default {
       this.$store.dispatch('querySurveyById', this.surveyId)
         .then((survey) => {
           this.intro = survey.intro
-          this.retrieveDone = true
         })
       getQrcodeImageUrl(this.surveyId)
         .then(value => {
           this.shareQrCode = value
-          this.hasLoaded = true
         })
       // console.log(JSON.stringify(option))
     }
-    // if (option.resultId) {
-    this.$store.dispatch('querySurveyResultById', this.resultId)
-      .then((result) => {
-        this.conclusion = result.conclusion
-        console.log('survey result:', result)
-      })
-    // }
+    if (option.resultId) {
+    // if (this.resultId) {
+      // this.resultId = option.resultId
+      this.$store.dispatch('querySurveyResultById', this.resultId)
+        .then((surveyResult) => {
+          let result = surveyResult.data.result
+          let index = result.conclusion
+          this.responderNickName = result.responder.nickName
+          if (index < result.survey.conclusions.length) {
+            this.conclusion = result.survey.conclusions[index].text
+            this.conclusionUrl = result.survey.conclusions[index].imageUrl
+          }
+        })
+    }
   }
 }
 </script>
