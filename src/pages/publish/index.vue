@@ -90,9 +90,11 @@ export default {
     _template () {
       var poster
       if (this.conclusionUrl !== '' || this.conclusion !== '') {
+        console.log('visited poster')
         poster = new VisitedPoster()
         return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
       }
+      console.log('created poster')
       poster = new CreatedPoster()
       return poster.do(this.title, this.intro, this.shareQrCode)
     }
@@ -131,7 +133,7 @@ export default {
     }
     if (option.resultId) {
     // if (this.resultId) {
-      // this.resultId = option.resultId
+      this.resultId = option.resultId
       this.$store.dispatch('querySurveyResultById', this.resultId)
         .then((surveyResult) => {
           let result = surveyResult.data.result
@@ -142,6 +144,9 @@ export default {
             this.conclusionUrl = result.survey.conclusions[index].imageUrl
           }
         })
+    } else {
+      this.conclusion = ''
+      this.conclusionUrl = ''
     }
   }
 }
