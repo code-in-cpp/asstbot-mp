@@ -53,6 +53,7 @@ export default {
 @import "../../../static/base.less";
 
 .weui-flex {
-  background-color: @background-color+#050505
+  background-color: @background-color+#050505;
+  padding-top: 20rpx;
 }
 </style>
