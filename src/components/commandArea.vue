@@ -146,12 +146,8 @@ export default {
     },
     confirm (e) {
       if (e.mp.detail.value) {
-        this.$store.dispatch('sendQuery', e.mp.detail.value).then(res => {
-          this.currentMessage = ''
-        }).catch(error => {
-          console.log('error:' + error)
-          this.currentMessage = ''
-        })
+        this.$store.dispatch('sendQuery', e.mp.detail.value)
+        this.currentMessage = ''
       }
     },
     setGlobalShow () {
@@ -165,21 +161,21 @@ export default {
       this.$emit('msgSendStatus', event)
     },
     textFocus (e) {
-      const that = this
-      wx.getSystemInfo({
-        success: function (res) {
-          let dom = wx.createSelectorQuery().select('#bottom').boundingClientRect()
-          dom.exec(function (resp) {
-            if (res.screenHeight - resp[0].bottom - 40 > e.mp.detail.height) {
-              that.pullUp = false
-              that.$emit('keyBoardUp', e.mp.detail.height * 2 + 'rpx')
-            } else {
-              that.pullUp = true
-              that.$emit('keyBoardUp', '0rpx')
-            }
-          })
-        }
-      })
+      // const that = this
+      // wx.getSystemInfo({
+      //   success: function (res) {
+      //     let dom = wx.createSelectorQuery().select('#bottom').boundingClientRect()
+      //     dom.exec(function (resp) {
+      //       if (res.screenHeight - resp[0].bottom - 40 > e.mp.detail.height) {
+      //         that.pullUp = false
+      //         that.$emit('keyBoardUp', e.mp.detail.height * 2 + 'rpx')
+      //       } else {
+      //         that.pullUp = true
+      //         that.$emit('keyBoardUp', '0rpx')
+      //       }
+      //     })
+      //   }
+      // })
     },
     textBlur (e) {
       this.pullUp = false

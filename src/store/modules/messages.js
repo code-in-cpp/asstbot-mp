@@ -13,9 +13,9 @@ const state = {
 
 var __appendMsg = function (state, msg) {
   if (chatBot === 'surveyBot') {
-    state.surveybotMsg = [...state.surveybotMsg, msg]
+    state.surveybotMsg.push(msg)
   } else {
-    state.creatorBotMsg = [...state.creatorBotMsg, msg]
+    state.creatorBotMsg.push(msg)
   }
 }
 
@@ -24,11 +24,10 @@ const getters = {
 
 const mutations = {
   appendMessage (state, message) {
-    const timestamp = new Date()
     if (chatBot === 'surveyBot') {
-      state.surveybotMsg.push({timestamp, ...message})
+      state.surveybotMsg.push({...message})
     } else {
-      state.creatorBotMsg.push({timestamp, ...message})
+      state.creatorBotMsg.push({...message})
     }
   },
   talkToBotFather (state) {
