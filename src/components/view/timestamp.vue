@@ -1,20 +1,14 @@
 <template>
   <view class="time">
-      {{displayTime}}
+      {{time}}
   </view>
 </template>
 
 <script>
-import util from '@/utils/index'
 export default {
   props: {
     time: {
-      type: Date
-    }
-  },
-  computed: {
-    displayTime () {
-      return util.formatTime(this.time)
+      type: String
     }
   }
 }
