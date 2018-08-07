@@ -9,7 +9,7 @@ export class VisitedPoster {
     this.name = name
     this.title = title
     this.conclusion = conclusion
-    // this.conclusionUrl = conclusionUrl
+    this.conclusionUrl = conclusionUrl
     this.shareQrCode = shareQrCode
     return this._template()
   }
@@ -82,8 +82,8 @@ export class VisitedPoster {
           left: '100rpx',
           top: '220rpx',
           width: '272rpx',
-          height: '272rpx',
-          mode: 'aspectFill'
+          height: '272rpx'
+          // mode: 'aspectFill'
         }
       }
       ]
