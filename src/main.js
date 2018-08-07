@@ -4,7 +4,6 @@ import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
 import '@/../static/font/iconfont.css'
 import bodAvatar from '@/components/bodAvatar'
-import pageTitle from '@/components/pageTitle'
 import spinner from '@/components/view/spinner'
 import recordStatus from '@/components/view/recordStatus'
 import botTitleBar from '@/components/titleBar/botTitleBar'
@@ -13,7 +12,6 @@ import devicePadding from '@/components/view/devicePadding'
 import daLogo from '@/components/view/daLogo'
 import homeButton from '@/components/widget/homeButton'
 import logoTitleBar from '@/components/titleBar/logoTitleBar'
-import userLogin from '@/components/widget/userLogin'
 import loading from '@/components/view/loading'
 import copyableText from '@/components/widget/copyableText'
 import daText from '@/components/view/daText'
@@ -24,7 +22,6 @@ App.mpType = 'app'
 Vue.prototype.$store = store
 
 Vue.component('bod-avatar', bodAvatar)
-Vue.component('page-title', pageTitle)
 Vue.component('spinner', spinner)
 Vue.component('record-status', recordStatus)
 Vue.component('bot-title-bar', botTitleBar)
@@ -33,7 +30,6 @@ Vue.component('device-padding', devicePadding)
 Vue.component('da-logo', daLogo)
 Vue.component('home-button', homeButton)
 Vue.component('logo-title-bar', logoTitleBar)
-Vue.component('user-login', userLogin)
 Vue.component('loading', loading)
 Vue.component('copyable-text', copyableText)
 Vue.component('da-text', daText)
