@@ -14,7 +14,7 @@ export class CreatedPoster {
   }
   _template () {
     return ({
-      background: '../image/create-poster.png',
+      background: '../image/created-poster.png',
       width: '470rpx',
       height: '842rpx',
       views: [{
@@ -22,10 +22,10 @@ export class CreatedPoster {
         url: this.shareQrCode,
         // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
         css: {
-          left: '236rpx',
-          top: '480rpx',
-          width: '140rpx',
-          height: '140rpx'
+          left: '80rpx',
+          top: '340rpx',
+          width: '300rpx',
+          height: '300rpx'
         }
       },
       {
