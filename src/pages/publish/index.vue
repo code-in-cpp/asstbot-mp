@@ -22,8 +22,8 @@
             <wxc-list icon="share" icon-color="#1cb2b9" title="分享到朋友圈"></wxc-list>
           </button>
         </wxc-panel>
-        <wxc-popup class="J_Popup" @clickOnThis="clickOnPopup" v-if="shouldShow">
-          <painter :customStyle="customStyle" @imgOK="onImgOk" @imgErr="onImgErr" :palette="_template"/>
+        <wxc-popup class="J_Popup" @clickOnThis="clickOnPopup">
+          <painter :customStyle="customStyle" @imgOK="onImgOk" @imgErr="onImgErr" :palette="_template" v-if="shouldShow"/>
         </wxc-popup>
       </view>
       <home-button/>
