@@ -7,14 +7,14 @@
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <block v-if="msg.type=='divider'">
           <block v-if="!lastBotMsg || i < received">
-            <bot-say-divider :message="msg"></bot-say-divider>
+            <divider ></divider>
           </block>
         </block>
         <view class="weui-flex bot-message" v-else>
           <view class="left-item">
             <view class="avatar-wrapper">
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
-              <bod-avatar :url="survey.avatarUrl" size="30"
+              <bot-avatar :url="survey.avatarUrl" size="30"
                 v-if="i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )"/>
             </view>
             <view class="content">

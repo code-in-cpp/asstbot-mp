@@ -5,7 +5,7 @@
          upper-threshold="150">
         <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
         <view class="padding-top-64">
-          <block v-for="(messages, i) in messageList" :key="i" v-if="i>=(messageList.length - 30)">
+          <block v-for="(messages, i) in messageList" :key="messages.id">
             <view :id="i">
               <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
                         :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
@@ -85,19 +85,7 @@ export default {
   },
   computed: {
     needTextReply () {
-      if (!this.messageList) {
-        return false
-      }
-      if (!this.messageList.length < 5) {
-        return false
-      }
-      let list = this.messageList.slice(-1).pop()
-      if (list && list.to) {
-        let message = [...list.msgs].slice(-1).pop()
-        return message.type === 'text'
-      } else {
-        return false
-      }
+      return false
     },
     activeMsg () {
       if (!this.messageList) {

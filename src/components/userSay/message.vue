@@ -4,11 +4,9 @@
       <view class="weui-flex__item">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
         <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
-        <user-say-allow :content="messages.data.query" v-else-if="messages.type=='allow'"></user-say-allow>
         <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
         <user-say-checkbox-reply :content="messages.data" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
-        <user-say-radio-reply :content="messages.data" v-else-if="messages.type=='radio-reply'"></user-say-radio-reply>
-        <user-say-divider :data="messages" v-else-if="messages.type=='divider'"></user-say-divider>
+        <user-say-radio-reply :content="messages.data"  @previewImage="$store.commit('setPreviewFalse')" v-else-if="messages.type=='radio-reply'" ></user-say-radio-reply>
       </view>
       <view class="user-avatar" v-if="userAuthed">
         <open-data type="userAvatarUrl" />
@@ -18,12 +16,9 @@
 </template>
 
 <script>
-import userSayText from '@/components/userSay/text'
 import userSayImage from '@/components/userSay/image'
-import userSayAllow from '@/components/userSay/allow'
 import userSaySpeech from '@/components/userSay/speech'
 import userSayCheckboxReply from '@/components/userSay/checkboxReply'
-import userSayRadioReply from '@/components/userSay/radioReply'
 import { mapState } from 'vuex'
 
 export default {
@@ -44,7 +39,6 @@ export default {
 
       return this.messages.type === 'text' ||
         this.messages.type === 'image' ||
-        this.messages.type === 'allow' ||
         this.messages.type === 'speech' ||
         this.messages.type === 'checkbox-reply' ||
         this.messages.type === 'radio-reply' ||
@@ -52,12 +46,9 @@ export default {
     }
   },
   components: {
-    userSayText,
     userSayImage,
-    userSayAllow,
     userSaySpeech,
-    userSayCheckboxReply,
-    userSayRadioReply
+    userSayCheckboxReply
   }
 }
 </script>

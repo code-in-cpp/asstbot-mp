@@ -1,0 +1,5 @@
+  <view class="wrapper word-text right-block flex-1" wx:if="content.length > 0">
+    <view class="outgoing right-item">
+      <copyable-text text="{{content}}"/>
+    </view>
+  </view>

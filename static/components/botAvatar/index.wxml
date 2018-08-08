@@ -1,0 +1,2 @@
+<image src="{{displayUrl}}" class="avatar" style="width:{{size*2}}rpx; height:{{size*2}}rpx;'"/>
+

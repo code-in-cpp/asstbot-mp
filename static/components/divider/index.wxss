@@ -1,0 +1,12 @@
+@import '/static/style/weui.wxss';
+@import '/static/style/main.wxss';
+
+.divider {
+  border-radius: 8rpx;
+  padding-right: 8rpx;
+  padding-left: 8rpx;
+}
+.weui-flex {
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+}

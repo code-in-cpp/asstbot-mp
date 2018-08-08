@@ -1,0 +1,32 @@
+<block>
+    <block wx:if="{{outgoing}}">
+      <user-say-message :messages="messages"></user-say-message>
+    </block>
+    <block wx:else>
+      <block wx:for="displayIncomingMsgs" wx:for-item="msg" wx:for-index="i">
+        <block wx:if="msg.type=='divider'">
+          <block wx:if="!lastBotMsg || i < received">
+            <bot-say-divider :message="msg"></bot-say-divider>
+          </block>
+        </block>
+        <view class="weui-flex bot-message" v-else>
+          <view class="left-item">
+            <view class="avatar-wrapper">
+              <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
+              <bot-avatar url="{{survey.avatarUrl}}" size="30"
+                wx:if="i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )"/>
+            </view>
+            <view class="content">
+              <bot-say-message msg="{{msg}}" bindloadDone="$emit('itemLoad')" wx:if="!lastBotMsg || i < received"/>
+              <view class="aaa" wx:if="lastBotMsg && i == received">
+                <bot-msg-receiving/>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <!--<block v-if="lastBotMsg && received < displayIncomingMsgs.length">-->
+        <!--<bot-msg-receiving/>-->
+      <!--</block>-->
+    </block>
+</block>

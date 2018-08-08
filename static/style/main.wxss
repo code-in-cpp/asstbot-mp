@@ -1,0 +1,31 @@
+.divider-style {
+  background-color: #c8c7cc;
+  color: #f2f2f2;
+  font-size: 22rpx;
+}
+
+.incoming {
+  padding: 20rpx;
+  margin-left: 20rpx;
+  border: solid #eaeaea 1rpx;
+  border-radius: 15px 15px 15px 0;
+  width: auto!important;
+  display: inline-block;
+  font-size: 28rpx;
+  max-width: 90%;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.outgoing {
+  padding:20rpx;
+  border:solid #eaeaea 1rpx;
+  border-radius:30rpx 30rpx 0 30rpx;
+  background-color: #a3ecf1 !important;
+  color: #000000 !important;
+  font-size: 28rpx;
+  margin-right:10rpx;
+  text-align:left;
+  position: relative;
+}

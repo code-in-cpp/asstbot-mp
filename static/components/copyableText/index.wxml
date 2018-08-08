@@ -1,0 +1,3 @@
+    <view  bindlongpress="copyText">
+      {{text}}
+    </view>
