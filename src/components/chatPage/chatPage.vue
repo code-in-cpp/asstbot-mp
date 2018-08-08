@@ -5,12 +5,12 @@
          upper-threshold="150">
         <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
         <view class="padding-top-64">
-          <block v-for="(messages, i) in messageList" :key="i" v-if="i>=(messageList.length - 30)">
-            <view :id="i">
-              <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
-                        :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
+          <block v-for="(index, i) in displayIndexs" :key="index" >
+            <view :id="index">
+              <message-item :survey="survey" :lastBotMsg="i==(displayIndexs.length-1)" :msgIndex="index"
+                      @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
             </view>
-            <view :id="'bottom'+i"></view>
+            <view :id="'bottom'+index"></view>
           </block>
           <block v-if="localMsgSending">
             <user-say-sending/>
@@ -18,22 +18,20 @@
           <view id="bottom"></view>
         </view>
       </scroll-view>
-      <!-- <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
-          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/> -->
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
       <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputPromt="activeInputPromtMsg"
           :displayFinish="displayFinish" @keyBoardUp="keyBoardUp"
-          :needFocus="messageList.length && messageList.length>5"/>
+          :needFocus="msgListSize && msgListSize>5"/>
     </view>
   </block>
 </template>
 
 <script>
 import commandArea from '@/components/commandArea'
-import messageList from '@/components/chatPage/messageList'
+import { mapGetters } from 'vuex'
 import selectBox from '@/components/selectBox'
 import messageItem from '@/components/chatPage/messageItem'
 import userSaySending from '@/components/userSay/sending'
@@ -53,15 +51,13 @@ export default {
       displayFinish: false,
       localMsgSending: false,
       keyBoardHeight: '0rpx',
-      scrollToView: 'bottom',
-      lower: 0,
-      upper: 30
+      scrollToView: 'bottom'
     }
   },
   props: {
-    messageList: {
-      type: Array,
-      default: []
+    msgListSize: {
+      type: Number,
+      default: 0
     },
     survey: {
       type: Object,
@@ -69,46 +65,24 @@ export default {
     }
   },
   watch: {
-    messageList: function (val) {
+    msgListSize: function (val) {
       const that = this
       this.msgDisplayBegin()
-      this.upper = this.messageList.length
-      this.lower = this.upper - 30
       if (this.showImage) {
         setTimeout(function () {
-          that.scrollToView = `bottom${val.length - 1}`
+          that.scrollToView = `bottom${val - 1}`
         }, 500)
       } else {
-        this.scrollToView = `bottom${val.length - 1}`
+        this.scrollToView = `bottom${val - 1}`
       }
     }
   },
   computed: {
-    needTextReply () {
-      if (!this.messageList) {
-        return false
-      }
-      if (!this.messageList.length < 5) {
-        return false
-      }
-      let list = this.messageList.slice(-1).pop()
-      if (list && list.to) {
-        let message = [...list.msgs].slice(-1).pop()
-        return message.type === 'text'
-      } else {
-        return false
-      }
-    },
-    activeMsg () {
-      if (!this.messageList) {
-        return undefined
-      }
-      let lastmsg = [...this.messageList].slice(-1)[0]
-      if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
-        return undefined
-      }
-      return lastmsg
-    },
+    ...mapGetters({
+      displayIndexs: 'getCreatorMsgIndexs',
+      needTextReply: 'needTextReply',
+      activeMsg: 'activeMsg'
+    }),
 
     activeRedirectMsg () {
       return this.activeSomeKindOfMsg(['redirect', 'reLaunch'])
@@ -121,20 +95,6 @@ export default {
     }
   },
   methods: {
-    // scrolltolower (event) {
-    //   console.log('scrolltolower')
-    //   if (this.upper < this.messageList.length) {
-    //     this.lower += 5
-    //     this.upper += 5
-    //   }
-    // },
-    // scrolltoupper (event) {
-    //   console.log('scrolltoupper')
-    //   if (this.lower > 0) {
-    //     this.lower -= 5
-    //     this.upper -= 5
-    //   }
-    // },
     activeSomeKindOfMsg (array) {
       if (!this.activeMsg) {
         return {}
@@ -212,7 +172,7 @@ export default {
     scollToBottom () {
       const that = this
       this.scrollToView = ''
-      that.scrollToView = 'bottom'
+      this.scrollToView = 'bottom'
       setTimeout(function () {
         that.scrollToView = ''
         that.scrollToView = 'bottom'
@@ -222,7 +182,6 @@ export default {
 
   components: {
     commandArea,
-    messageList,
     selectBox,
     messageItem,
     userSaySending

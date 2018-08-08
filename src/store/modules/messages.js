@@ -20,6 +20,46 @@ var __appendMsg = function (state, msg) {
 }
 
 const getters = {
+  getCreatorMsgIndexs (state) {
+    let msgIndexs = [...state.creatorBotMsg.keys()].slice(-30)
+    console.log('msg indexs', msgIndexs)
+    return msgIndexs
+  },
+
+  getCreateMsgLength (state) {
+    // return 0
+    return state.creatorBotMsg.length
+  },
+
+  getMessagesBy: state => (index) => {
+    return state.creatorBotMsg[parseInt(index)]
+  },
+
+  needTextReply (state) {
+    if (!state.creatorBotMsg) {
+      return false
+    }
+    if (!state.creatorBotMsg.length < 5) {
+      return false
+    }
+    let list = state.creatorBotMsg.slice(-1).pop()
+    if (list && list.to) {
+      let message = [...list.msgs].slice(-1).pop()
+      return message.type === 'text'
+    } else {
+      return false
+    }
+  },
+  activeMsg (state) {
+    if (!state.creatorBotMsg) {
+      return undefined
+    }
+    let lastmsg = state.creatorBotMsg.slice(-1)[0]
+    if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
+      return undefined
+    }
+    return lastmsg
+  }
 }
 
 const mutations = {
