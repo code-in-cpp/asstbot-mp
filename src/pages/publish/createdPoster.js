@@ -15,24 +15,30 @@ export class CreatedPoster {
     this.title = title
     this.intro = intro
     this.shareQrCode = shareQrCode
+    this.avatar = avatar
     return this._template()
   }
-  getRectHeight (info) {
+  getLineCount (info) {
     let words = parseInt(this.botWidth / (this.botFontSize + this.botLetterSpaceing))
     let count = parseInt(info.length / words)
-    console.log('words:', words, 'count:', count)
-    if (info.length % words !== 0) {
-      console.log('need count++')
+    // console.log('words:', words, 'count:', count)
+    if ((info.length % words) !== 0) {
+      // console.log('need count++')
       count++
     }
-    return count * this.botLineHeight + 20
+    return count
+  }
+  getRectHeight (info) {
+    let count = this.getLineCount(info)
+    return count * this.botLineHeight + this.botPadding * 2
   }
   _template () {
+    // let botTitle = '主题是：好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。'
     let botTitle = '主题是：' + this.title
     let greetingHeight = this.getRectHeight(this.greeting)
     let titleHeight = this.getRectHeight(botTitle)
     let titleTop = this.greetingTop + greetingHeight + this.botDivider
-    return ({
+    let items = ({
       background: '../image/created-poster.png',
       width: '470rpx',
       height: '842rpx',
@@ -151,6 +157,38 @@ export class CreatedPoster {
       }
       ]
     })
+    if (this.intro) {
+      let botIntro = '内容是：' + this.intro
+      let introTop = titleTop + titleHeight + this.botDivider
+      let introHeight = this.getRectHeight(botIntro)
+      let introText = {
+        type: 'text',
+        text: botIntro,
+        css: {
+          left: '117rpx',
+          top: `${this.botPadding + introTop}rpx`,
+          fontSize: `${this.botFontSize}rpx`,
+          lineHeight: `${this.botLineHeight}rpx`,
+          align: 'left',
+          width: `${this.botWidth}rpx`,
+          color: '#000000'
+        }
+      }
+      let introRect = {
+        type: 'rect',
+        css: {
+          left: '100rpx',
+          top: `${introTop}rpx`,
+          width: '410rpx',
+          height: `${introHeight}rpx`,
+          color: '#ffffff',
+          borderRadius: '10rpx'
+        }
+      }
+      items.views.push(introRect)
+      items.views.push(introText)
+    }
+    return items
   }
 }
 
