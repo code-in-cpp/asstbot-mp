@@ -1,10 +1,11 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
-      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
+      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%"
+         upper-threshold="150">
         <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
         <view class="padding-top-64">
-          <block v-for="(messages, i) in messageList" :key="i">
+          <block v-for="(messages, i) in messageList" :key="i" v-if="i>=(messageList.length - 30)">
             <view :id="i">
               <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
                         :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
@@ -52,7 +53,9 @@ export default {
       displayFinish: false,
       localMsgSending: false,
       keyBoardHeight: '0rpx',
-      scrollToView: 'bottom'
+      scrollToView: 'bottom',
+      lower: 0,
+      upper: 30
     }
   },
   props: {
@@ -69,6 +72,8 @@ export default {
     messageList: function (val) {
       const that = this
       this.msgDisplayBegin()
+      this.upper = this.messageList.length
+      this.lower = this.upper - 30
       if (this.showImage) {
         setTimeout(function () {
           that.scrollToView = `bottom${val.length - 1}`
@@ -116,6 +121,20 @@ export default {
     }
   },
   methods: {
+    // scrolltolower (event) {
+    //   console.log('scrolltolower')
+    //   if (this.upper < this.messageList.length) {
+    //     this.lower += 5
+    //     this.upper += 5
+    //   }
+    // },
+    // scrolltoupper (event) {
+    //   console.log('scrolltoupper')
+    //   if (this.lower > 0) {
+    //     this.lower -= 5
+    //     this.upper -= 5
+    //   }
+    // },
     activeSomeKindOfMsg (array) {
       if (!this.activeMsg) {
         return {}
