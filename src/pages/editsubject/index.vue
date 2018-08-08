@@ -13,7 +13,7 @@
         <view class="weui-cell">
           <image-uploader :url="subject.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>
         </view>
-        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="subject.question==''&&subject.imageUrl==''">
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
             标题: 文字和图片不能同时为空
           </view>
@@ -37,7 +37,7 @@
     </scoll-view>
     </view>
     <view class="footer bottom_button">
-      <button class="weui-btn" type="primary" @tap="saveSubject" :disabled="error">保存</button>
+      <button class="weui-btn" type="primary" @tap="saveSubject">保存</button>
     </view>
   </view>
 </template>
@@ -56,7 +56,8 @@ export default {
     subject: {},
     typeRange: subjectType,
     typeNameRange: subjectTypeName,
-    typeIndex: -1
+    typeIndex: -1,
+    isLegal: true
   },
   computed: {
     ...mapState({
@@ -85,13 +86,16 @@ export default {
     updateTitleValue (event) {
       console.log(event)
       this.subject.question = event.value
+      this.verifySubject()
     },
     deleteImage () {
       this.subject.imageUrl = ''
+      this.verifySubject()
     },
     chooseTitleImage (url) {
       console.log('chooseTitleImage', url)
       this.subject.imageUrl = url
+      this.verifySubject()
     },
     subjectTypeChange (event) {
       this.typeIndex = event.mp.detail.value
@@ -125,7 +129,38 @@ export default {
       this.subject.answers = event
       console.log(this.subject.answers)
     },
+
+    verifySubject () {
+      this.isLegal = this.subject.question !== '' || this.subject.imageUrl !== ''
+    },
+
+    verifyAnswer (answer) {
+      if (this.subject.type === 'phone') {
+        answer.islegal = answer.value.length === 11
+        answer.verifyResult = (answer.islegal) ? '' : '手机号码需要设置为11位'
+      } else {
+        answer.islegal = answer.value !== '' || answer.imageUrl !== ''
+        answer.verifyResult = (answer.islegal) ? '' : '答案: 文字和图片不能同时为空'
+      }
+    },
+
+    verifyAnswers () {
+      let ret = true
+      this.subject.answers.forEach(answer => {
+        this.verifyAnswer(answer)
+        ret = ret & answer.islegal
+      })
+      console.log('answer is', this.subject.answers)
+      return ret
+    },
+
     saveSubject () {
+      this.verifySubject()
+      let answerLegal = this.verifyAnswers()
+      if (!this.isLegal || !answerLegal) {
+        console.log('subject question is in legal')
+        return
+      }
       const option = this.$root.$mp.query
       if (option.action === 'create') {
         this.$store.commit('appendCurSubject', this.subject)
