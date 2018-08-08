@@ -24,9 +24,9 @@
           </view>
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
         </view>
-        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!answer.islegal">
           <view class="weui-cell__bd">
-            答案: 文字和图片不能同时为空
+            {{answer.verifyResult}}
           </view>
           <view class="weui-cell__ft">
               <icon type="warn" size="15" color="#E64340"></icon>
@@ -61,9 +61,9 @@
           </view>
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
         </view>
-        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!answer.islegal">
           <view class="weui-cell__bd">
-            答案: 文字和图片不能同时为空
+            {{answer.verifyResult}}
           </view>
           <view class="weui-cell__ft">
               <icon type="warn" size="15" color="#E64340"></icon>
@@ -115,9 +115,9 @@
         <view class="anwser-item border" v-if="answer.imageUrl">
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
         </view>   
-        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="answer.value==''&&answer.imageUrl==''">
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!answer.islegal">
           <view class="weui-cell__bd">
-            答案: 文字和图片不能同时为空
+            {{answer.verifyResult}}
           </view>
           <view class="weui-cell__ft">
               <icon type="warn" size="15" color="#E64340"></icon>
@@ -126,15 +126,16 @@
       </block>
       </view>
     </block>
-
-    <view class="weui-cell weui-check__label add-answer-box anwser-container">
-        <view class="weui-cell__ft font-style"   @click="addAnswer()">
-          <i class="icon iconfont icon-add"></i>
-        </view>
-        <view class="weui-cell__ft height-line-92" @click="addAnswer()">
-          添加选项
-        </view>
-    </view>
+    <block v-if="survey.type=='exam' || subject.type=='radio' || subject.type=='checkbox'">
+      <view class="weui-cell weui-check__label add-answer-box anwser-container">
+          <view class="weui-cell__ft font-style"   @click="addAnswer()">
+            <i class="icon iconfont icon-add"></i>
+          </view>
+          <view class="weui-cell__ft height-line-92" @click="addAnswer()">
+            添加选项
+          </view>
+      </view> 
+    </block>
   </block>
 </template>
 
@@ -232,12 +233,10 @@ export default {
     },
 
     updateAnswerValue (index, value) {
-      let answers = [...this.answers].map((answer, i) => {
-        if (index === i) {
-          answer.value = value
-        }
-        return answer
-      })
+      let answers = [...this.answers]
+      let answer = answers[index]
+      answer.value = value
+      this.verifyAnswer(answer)
       this.$emit('input', answers)
     },
 
@@ -252,6 +251,7 @@ export default {
     updateAnswerUrl (index, value) {
       let answers = [...this.answers]
       answers[index].imageUrl = value
+      this.verifyAnswer(answers[index])
       this.$emit('input', answers)
     },
 
@@ -261,7 +261,31 @@ export default {
       this.$emit('input', answers)
     },
 
+    verifyAnswer (answer) {
+      if (this.subject.type === 'phone') {
+        answer.islegal = answer.value.length === 11
+        answer.verifyResult = (answer.islegal) ? '' : '手机号码需要设置为11位'
+      } else {
+        answer.islegal = answer.value !== '' || answer.imageUrl !== ''
+        answer.verifyResult = (answer.islegal) ? '' : '答案: 文字和图片不能同时为空'
+      }
+    },
+
+    verifyAnswers () {
+      let ret = true
+      this.answers.forEach(answer => {
+        this.verifyAnswer(answer)
+        ret = ret & answer.islegal
+      })
+      console.log('answer is', this.answers)
+      return ret
+    },
+
     addAnswer () {
+      let islegal = this.verifyAnswers()
+      if (!islegal) {
+        return
+      }
       let value = ''
       let correct = true
       if (this.subject.type === 'date') {
@@ -274,7 +298,7 @@ export default {
         correct = false
       }
       let answers = [...this.answers]
-      answers.push({value, correct, imageUrl: '', next: 0})
+      answers.push({value, correct, imageUrl: '', next: 0, islegal: true})
       this.$emit('input', answers)
     },
 

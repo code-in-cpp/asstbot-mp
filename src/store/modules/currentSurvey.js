@@ -127,36 +127,36 @@ const mutations = {
     state.survey.subjects = []
     state.survey.conclusions = []
   },
-  updateSubjectType (state, {index, type}) {
-    var oldType = state.survey.subjects[index].type
-    if (type === 'date' || type === 'phone' || type === 'location') {
-      if (oldType !== type) {
-        state.survey.subjects[index].answers = []
-        state.survey.subjects[index].type = type
-      }
-      return
-    }
+  // updateSubjectType (state, {index, type}) {
+  //   var oldType = state.survey.subjects[index].type
+  //   if (type === 'date' || type === 'phone' || type === 'location') {
+  //     if (oldType !== type) {
+  //       state.survey.subjects[index].answers = []
+  //       state.survey.subjects[index].type = type
+  //     }
+  //     return
+  //   }
 
-    if (type === 'radio' && oldType !== 'radio') {
-      var findFirstRadio = false
-      var answers = state.survey.subjects[index].answers
-      answers = answers.map((answer) => {
-        if (answer.correct && !findFirstRadio) {
-          findFirstRadio = true
-        } else {
-          answer.correct = false
-        }
-        return answer
-      })
-      state.survey.subjects[index].answers = answers
-    }
-    state.survey.subjects[index].type = type
-    if (type === 'date') {
-      state.survey.subjects[index].nlu = true
-    } else {
-      state.survey.subjects[index].nlu = false
-    }
-  },
+  //   if (type === 'radio' && oldType !== 'radio') {
+  //     var findFirstRadio = false
+  //     var answers = state.survey.subjects[index].answers
+  //     answers = answers.map((answer) => {
+  //       if (answer.correct && !findFirstRadio) {
+  //         findFirstRadio = true
+  //       } else {
+  //         answer.correct = false
+  //       }
+  //       return answer
+  //     })
+  //     state.survey.subjects[index].answers = answers
+  //   }
+  //   state.survey.subjects[index].type = type
+  //   if (type === 'date') {
+  //     state.survey.subjects[index].nlu = true
+  //   } else {
+  //     state.survey.subjects[index].nlu = false
+  //   }
+  // },
   updateSubjectQuestion (state, {index, question}) {
     state.survey.subjects[index].question = question
   },
@@ -165,21 +165,6 @@ const mutations = {
   },
   deleteSubjectQuestionImage (state, {index}) {
     state.survey.subjects[index].imageUrl = ''
-  },
-  addAnswer (state, subjectIndex) {
-    let subject = state.survey.subjects[subjectIndex]
-    let defaultValue = ''
-    let defaultCorrect = true
-    if (subject.type === 'date') {
-      defaultValue = '2018-07-12'
-    }
-    if (subject.type === 'location') {
-      defaultValue = '陕西-西安'
-    }
-    if (subject.type === 'radio' || subject.type === 'checkbox') {
-      defaultCorrect = false
-    }
-    state.survey.subjects[subjectIndex].answers.push({value: defaultValue, correct: defaultCorrect, imageUrl: '', next: 0})
   },
   removeAnswer (state, {subject, answer}) {
     state.survey.subjects[subject].answers.splice(answer, 1)
