@@ -20,10 +20,14 @@ var __appendMsg = function (state, msg) {
 }
 
 const getters = {
-  getCreatorMsgIndexs (state) {
-    let msgIndexs = [...state.creatorBotMsg.keys()].slice(-30)
-    console.log('msg indexs', msgIndexs)
-    return msgIndexs
+  getDisplayIndexs: (state) => (chatType) => {
+    if (chatType === 'main') {
+      let msgIndexs = [...state.creatorBotMsg.keys()].slice(-30)
+      console.log('msg indexs', msgIndexs)
+      return msgIndexs
+    } else {
+      return [...state.surveybotMsg.keys()]
+    }
   },
 
   getCreateMsgLength (state) {
@@ -31,8 +35,12 @@ const getters = {
     return state.creatorBotMsg.length
   },
 
-  getMessagesBy: state => (index) => {
-    return state.creatorBotMsg[parseInt(index)]
+  getMessagesBy: state => (index, chatType) => {
+    if (chatType === 'main') {
+      return state.creatorBotMsg[parseInt(index)]
+    } else {
+      return state.surveybotMsg[parseInt(index)]
+    }
   },
 
   needTextReply (state) {

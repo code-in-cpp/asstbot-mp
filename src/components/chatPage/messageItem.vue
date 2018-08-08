@@ -54,6 +54,10 @@ export default {
       type: Number,
       default: 0
     },
+    chatType: {
+      type: String,
+      default: ''
+    },
     lastBotMsg: {
       type: Boolean,
       default: true
@@ -85,7 +89,7 @@ export default {
   },
 
   onLoad () {
-    this.messages = this.$store.getters.getMessagesBy(this.msgIndex)
+    this.messages = this.$store.getters.getMessagesBy(this.msgIndex, this.chatType)
     this.outgoing = this.messages.from !== undefined
     console.log('get messages index', this.msgIndex, 'messages:', this.messages)
     if (this.lastBotMsg) {

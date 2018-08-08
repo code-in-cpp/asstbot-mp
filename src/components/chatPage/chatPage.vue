@@ -7,7 +7,7 @@
         <view class="padding-top-64">
           <block v-for="(index, i) in displayIndexs" :key="index" >
             <view :id="index">
-              <message-item :survey="survey" :lastBotMsg="i==(displayIndexs.length-1)" :msgIndex="index"
+              <message-item :survey="survey" :lastBotMsg="i==(displayIndexs.length-1)" :msgIndex="index" :chatType="chatType"
                       @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
             </view>
             <view :id="'bottom'+index"></view>
@@ -59,6 +59,12 @@ export default {
       type: Number,
       default: 0
     },
+
+    chatType: {
+      type: String,
+      default: ''
+    },
+
     survey: {
       type: Object,
       default: {}
@@ -79,10 +85,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      displayIndexs: 'getCreatorMsgIndexs',
+      // displayIndexs: 'getCreatorMsgIndexs',
       needTextReply: 'needTextReply',
       activeMsg: 'activeMsg'
     }),
+
+    displayIndexs () {
+      return this.$store.getters.getDisplayIndexs(this.chatType)
+    },
 
     activeRedirectMsg () {
       return this.activeSomeKindOfMsg(['redirect', 'reLaunch'])
@@ -115,6 +125,7 @@ export default {
     msgDisplayFinish () {
       this.displayFinish = true
       let lastMsg = this.activeRedirectMsg
+      console.log('last msg ====> !', lastMsg)
       if (lastMsg) {
         this.doRedirect(lastMsg)
       }
