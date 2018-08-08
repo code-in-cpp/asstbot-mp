@@ -3,9 +3,6 @@
     <block v-if="outgoing">
       <user-say-message :messages="messages"></user-say-message>
     </block>
-    <block v-else-if="messages.gui!=undefined">
-      <gui-divider :message="messages"></gui-divider>
-    </block>
     <block v-else>
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <block v-if="msg.type=='divider'">
@@ -40,7 +37,6 @@
 import userSayMessage from '@/components/userSay/message'
 import botSayMessage from '@/components/botSay/message'
 import botMsgReceiving from '@/components/botSay/msgReceiving'
-import guiDivider from '@/components/mpSay/divider'
 import botSayDivider from '@/components/botSay/divider'
 
 export default {
@@ -85,7 +81,6 @@ export default {
     userSayMessage,
     botSayMessage,
     botMsgReceiving,
-    guiDivider,
     botSayDivider
   },
 

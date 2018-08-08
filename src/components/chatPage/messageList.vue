@@ -9,7 +9,7 @@
         </view>
         <view :id="'bottom'+i"></view>
       </block>
-      <block v-if="localmsgsending">
+      <block v-if="localMsgSending">
         <user-say-sending/>
       </block>
       <view id="bottom"></view>

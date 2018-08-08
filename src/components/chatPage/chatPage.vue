@@ -1,9 +1,24 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
-      <view :style="{height:keyBoardHeight}"></view>
-      <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
-          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/>
+      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
+        <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
+        <view class="padding-top-64">
+          <block v-for="(messages, i) in messageList" :key="i">
+            <view :id="i">
+              <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
+                        :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
+            </view>
+            <view :id="'bottom'+i"></view>
+          </block>
+          <block v-if="localMsgSending">
+            <user-say-sending/>
+          </block>
+          <view id="bottom"></view>
+        </view>
+      </scroll-view>
+      <!-- <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
+          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/> -->
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
@@ -19,6 +34,8 @@
 import commandArea from '@/components/commandArea'
 import messageList from '@/components/chatPage/messageList'
 import selectBox from '@/components/selectBox'
+import messageItem from '@/components/chatPage/messageItem'
+import userSaySending from '@/components/userSay/sending'
 
 const urlMaping = {
   'edit-survey': '/pages/surveySubjects/main',
@@ -34,7 +51,8 @@ export default {
     return {
       displayFinish: false,
       localMsgSending: false,
-      keyBoardHeight: '0rpx'
+      keyBoardHeight: '0rpx',
+      scrollToView: 'bottom'
     }
   },
   props: {
@@ -45,6 +63,19 @@ export default {
     survey: {
       type: Object,
       default: {}
+    }
+  },
+  watch: {
+    messageList: function (val) {
+      const that = this
+      this.msgDisplayBegin()
+      if (this.showImage) {
+        setTimeout(function () {
+          that.scrollToView = `bottom${val.length - 1}`
+        }, 500)
+      } else {
+        this.scrollToView = `bottom${val.length - 1}`
+      }
     }
   },
   computed: {
@@ -146,17 +177,36 @@ export default {
     },
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
+      this.scollToBottom()
     },
     keyBoardUp (height) {
       // console.log('height:' + height)
       this.keyBoardHeight = height
+    },
+    renderComplete () {
+      this.scollToBottom()
+      this.msgDisplayFinish()
+    },
+    renderUpdate () {
+      this.scollToBottom()
+    },
+    scollToBottom () {
+      const that = this
+      this.scrollToView = ''
+      that.scrollToView = 'bottom'
+      setTimeout(function () {
+        that.scrollToView = ''
+        that.scrollToView = 'bottom'
+      }, 100)
     }
   },
 
   components: {
     commandArea,
     messageList,
-    selectBox
+    selectBox,
+    messageItem,
+    userSaySending
   }
 }
 </script>
