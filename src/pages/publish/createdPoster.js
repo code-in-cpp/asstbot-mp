@@ -3,10 +3,10 @@ export class CreatedPoster {
   intro = ''
   shareQrCode = ''
   avatar = '../image/avatar.png'
-  botFontSize = 28
+  botFontSize = 26
   botLetterSpaceing = 2
   botWidth = 390
-  botLineHeight = 36
+  botLineHeight = 32
   botDivider = 20
   botPadding = 10
   greetingTop = 180
@@ -40,47 +40,17 @@ export class CreatedPoster {
     let titleTop = this.greetingTop + greetingHeight + this.botDivider
     let items = ({
       background: '../image/created-poster.png',
-      width: '470rpx',
-      height: '842rpx',
+      width: '600rpx',
+      height: '1068rpx',
       views: [{
         type: 'image',
         url: this.shareQrCode,
         // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
         css: {
-          left: '80rpx',
-          top: '340rpx',
-          width: '300rpx',
-          height: '300rpx'
-        }
-      },
-      {
-        type: 'text',
-        text: this.title,
-        // text: '你是一个有趣的人吗？献给有趣的灵魂们。你是一个有趣的人吗？献给有趣的灵魂们。你是一个有趣的',
-        css: {
-          left: '30rpx',
-          top: '180rpx',
-          fontSize: '28rpx',
-          lineHeight: '36rpx',
-          align: 'left',
-          maxLines: 3,
-          width: '400rpx',
-          color: '#4A4A4A'
-        }
-      },
-      {
-        type: 'text',
-        text: this.intro,
-        // text: '好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。',
-        css: {
-          left: '30rpx',
-          top: '650rpx',
-          fontSize: '22rpx',
-          lineHeight: '30rpx',
-          align: 'left',
-          width: '400rpx',
-          maxLines: 4,
-          color: '#6A6A6A'
+          left: '210rpx',
+          top: '800rpx',
+          width: '180rpx',
+          height: '180rpx'
         }
       },
       {
@@ -128,7 +98,7 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
-          color: '#000000'
+          color: '#2b313d'
         }
       },
       {
@@ -152,7 +122,7 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
-          color: '#000000'
+          color: '#2b313d'
         }
       }
       ]
@@ -171,7 +141,7 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
-          color: '#000000'
+          color: '#2b313d'
         }
       }
       let introRect = {

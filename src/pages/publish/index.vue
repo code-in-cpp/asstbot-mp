@@ -34,6 +34,7 @@
 <script>
 // import { getQrcodeImageUrl } from '@/utils/qrcode'
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
+// import { savePosterToPhotosAlbum } from '@/utils/qrcode'
 import { CreatedPoster } from './createdPoster'
 import {VisitedPoster} from './visitedPoster'
 
@@ -120,7 +121,6 @@ export default {
       this.avatarUrl = option.avatarUrl
     }
     if (option.resultId) {
-    // if (this.resultId) {
       this.resultId = option.resultId
       this.$store.dispatch('querySurveyResultById', this.resultId)
         .then((surveyResult) => {
@@ -140,7 +140,6 @@ export default {
         .then((survey) => {
           this.intro = survey.intro
         })
-      // console.log(JSON.stringify(option))
     } else {
       this.conclusion = ''
       this.conclusionUrl = ''
