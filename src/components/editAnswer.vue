@@ -164,6 +164,7 @@ export default {
   },
   computed: {
     answers () {
+      console.log('answers is', this.subject.answers)
       return this.subject.answers
     },
     questionNames () {
@@ -314,6 +315,10 @@ export default {
     deleteImage (index) {
       this.updateAnswerUrl(index, '')
     }
+  },
+
+  onLoad (option) {
+    this.verifyAnswers()
   }
 }
 </script>
