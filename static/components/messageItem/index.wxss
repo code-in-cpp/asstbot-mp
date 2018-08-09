@@ -1,0 +1,29 @@
+@import '/static/style/weui.wxss';
+@import '/static/style/main.wxss';
+
+.message-wrapper{
+  margin-bottom: 10px;
+}
+
+.bot-message {
+  padding-bottom: 10px;
+  display: flex;
+
+}
+
+.bot-message .avatar-wrapper {
+  padding: 3px 10px;
+  width: 40rpx
+}
+
+.bot-message .left-item{
+    max-width: 80%;
+    display: flex;
+    width:100%;
+  }
+.bot-message .content{
+    width:100%
+  }
+  .aaa{
+    margin-left: -40rpx;
+  }

@@ -8,7 +8,12 @@
           <block v-for="(messages, i) in messageList" :key="messages.id">
             <view :id="i">
               <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
-                        :messages="messages" @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
+                        :messages="messages" :userAuthed="userAuthed"
+                        @renderComplete="renderComplete"
+                        @renderUpdate="renderUpdate"
+                        @itemLoad="scollToBottom"
+                        @previewImage="$store.commit('setPreviewFalse')"
+                        @buttonListEvent="action"/>
             </view>
             <view :id="'bottom'+i"></view>
           </block>
@@ -33,10 +38,9 @@
 
 <script>
 import commandArea from '@/components/commandArea'
-import messageList from '@/components/chatPage/messageList'
 import selectBox from '@/components/selectBox'
-import messageItem from '@/components/chatPage/messageItem'
 import userSaySending from '@/components/userSay/sending'
+import { mapState } from 'vuex'
 
 const urlMaping = {
   'edit-survey': '/pages/surveySubjects/main',
@@ -84,6 +88,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      userAuthed: state => state.userProfile.authed
+    }),
     needTextReply () {
       return false
     },
@@ -109,20 +116,21 @@ export default {
     }
   },
   methods: {
-    // scrolltolower (event) {
-    //   console.log('scrolltolower')
-    //   if (this.upper < this.messageList.length) {
-    //     this.lower += 5
-    //     this.upper += 5
-    //   }
-    // },
-    // scrolltoupper (event) {
-    //   console.log('scrolltoupper')
-    //   if (this.lower > 0) {
-    //     this.lower -= 5
-    //     this.upper -= 5
-    //   }
-    // },
+    action (event) {
+      let buttonList = event.mp.detail.buttonList
+      let item = event.mp.detail.item
+      if (buttonList.reflex) {
+        this.$store.commit('appendUserMessage', item.caption)
+      }
+      this.$store.dispatch('sendGenericRequest', {
+        type: 'event',
+        data:
+        {
+          name: item.event,
+          ...item.data
+        }
+      })
+    },
     activeSomeKindOfMsg (array) {
       if (!this.activeMsg) {
         return {}
@@ -210,9 +218,7 @@ export default {
 
   components: {
     commandArea,
-    messageList,
     selectBox,
-    messageItem,
     userSaySending
   }
 }
