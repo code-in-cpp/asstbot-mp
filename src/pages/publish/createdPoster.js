@@ -28,32 +28,35 @@ export class CreatedPoster {
     }
     return count
   }
-  getRectHeight (info) {
-    let count = this.getLineCount(info)
-    return count * this.botLineHeight + this.botPadding * 2
+  getMaxLines (h) {
+    return parseInt((h - this.botPadding * 2) / this.botLineHeight)
+  }
+  getRectHeight (lines) {
+    return lines * this.botLineHeight + this.botPadding * 2
+  }
+  getTextRecHeight (info) {
+    return this.getRectHeight(this.getLineCount(info))
   }
   _template () {
     // let botTitle = '主题是：好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。好看的皮囊千篇一律，有趣的灵魂万里挑一。让你好看的皮囊见识你灵魂的有趣。'
     let botTitle = '主题是：' + this.title
-    let greetingHeight = this.getRectHeight(this.greeting)
-    let titleHeight = this.getRectHeight(botTitle)
+    let greetingHeight = this.getTextRecHeight(this.greeting)
+    console.log('greetingHeight', greetingHeight)
     let titleTop = this.greetingTop + greetingHeight + this.botDivider
+    console.log('titleTop', titleTop)
+    let textSpaceLeft = 780 - titleTop
+    let titleMaxLines = this.getMaxLines(textSpaceLeft)
+    let titleLines = this.getLineCount(botTitle)
+    if (titleLines > titleMaxLines) {
+      titleLines = titleMaxLines
+    }
+    let titleHeight = this.getRectHeight(titleLines)
+    textSpaceLeft -= titleHeight
     let items = ({
       background: '../image/created-poster.png',
       width: '600rpx',
       height: '1068rpx',
       views: [{
-        type: 'image',
-        url: this.shareQrCode,
-        // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
-        css: {
-          left: '210rpx',
-          top: '800rpx',
-          width: '180rpx',
-          height: '180rpx'
-        }
-      },
-      {
         type: 'image',
         url: this.avatar,
         // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
@@ -122,15 +125,23 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
+          maxLines: titleLines,
           color: '#2b313d'
         }
       }
       ]
     })
-    if (this.intro) {
+    let introTop = titleTop + titleHeight + this.botDivider
+    if (this.intro && textSpaceLeft > this.botDivider + this.botLineHeight) {
       let botIntro = '内容是：' + this.intro
-      let introTop = titleTop + titleHeight + this.botDivider
-      let introHeight = this.getRectHeight(botIntro)
+      textSpaceLeft -= this.botDivider
+      let introMaxLines = this.getMaxLines(textSpaceLeft)
+      let introLines = this.getLineCount(botIntro)
+      if (introLines > introMaxLines) {
+        introLines = introMaxLines
+      }
+      let introHeight = this.getRectHeight(introLines)
+      textSpaceLeft -= introHeight
       let introText = {
         type: 'text',
         text: botIntro,
@@ -141,7 +152,8 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
-          color: '#2b313d'
+          color: '#2b313d',
+          maxLines: introLines
         }
       }
       let introRect = {
@@ -158,6 +170,19 @@ export class CreatedPoster {
       items.views.push(introRect)
       items.views.push(introText)
     }
+    textSpaceLeft = parseInt(textSpaceLeft / 2)
+    let qrcode = {
+      type: 'image',
+      url: this.shareQrCode,
+      // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
+      css: {
+        left: '210rpx',
+        top: `${800 - textSpaceLeft}rpx`,
+        width: '180rpx',
+        height: '180rpx'
+      }
+    }
+    items.views.push(qrcode)
     return items
   }
 }
