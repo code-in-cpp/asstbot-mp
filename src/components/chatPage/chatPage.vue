@@ -31,7 +31,7 @@
 
 <script>
 import commandArea from '@/components/commandArea'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import selectBox from '@/components/selectBox'
 import messageItem from '@/components/chatPage/messageItem'
 import userSaySending from '@/components/userSay/sending'
@@ -84,11 +84,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      // displayIndexs: 'getCreatorMsgIndexs',
-      needTextReply: 'needTextReply',
-      activeMsg: 'activeMsg'
-    }),
+    // ...mapGetters({
+    //   // displayIndexs: 'getCreatorMsgIndexs',
+    //   needTextReply: 'needTextReply',
+    //   activeMsg: 'activeMsg'
+    // }),
+
+    needTextReply () {
+      return this.$store.getters.needTextReply(this.chatType)
+    },
+
+    activeMsg () {
+      return this.$store.getters.activeMsg(this.chatType)
+    },
 
     displayIndexs () {
       return this.$store.getters.getDisplayIndexs(this.chatType)

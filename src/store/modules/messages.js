@@ -43,14 +43,15 @@ const getters = {
     }
   },
 
-  needTextReply (state) {
-    if (!state.creatorBotMsg) {
+  needTextReply: state => (chatType) => {
+    let msgList = (chatType === 'main') ? state.creatorBotMsg : state.surveybotMsg
+    if (!msgList) {
       return false
     }
-    if (!state.creatorBotMsg.length < 5) {
+    if (!msgList.length < 5) {
       return false
     }
-    let list = state.creatorBotMsg.slice(-1).pop()
+    let list = msgList.slice(-1).pop()
     if (list && list.to) {
       let message = [...list.msgs].slice(-1).pop()
       return message.type === 'text'
@@ -58,11 +59,12 @@ const getters = {
       return false
     }
   },
-  activeMsg (state) {
-    if (!state.creatorBotMsg) {
+  activeMsg: state => (chatType) => {
+    let msgList = (chatType === 'main') ? state.creatorBotMsg : state.surveybotMsg
+    if (!msgList) {
       return undefined
     }
-    let lastmsg = state.creatorBotMsg.slice(-1)[0]
+    let lastmsg = msgList.slice(-1)[0]
     if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
       return undefined
     }
