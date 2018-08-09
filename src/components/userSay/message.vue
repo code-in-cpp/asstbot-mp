@@ -17,7 +17,6 @@
 
 <script>
 import userSayImage from '@/components/userSay/image'
-import userSaySpeech from '@/components/userSay/speech'
 import userSayCheckboxReply from '@/components/userSay/checkboxReply'
 import { mapState } from 'vuex'
 
@@ -47,7 +46,6 @@ export default {
   },
   components: {
     userSayImage,
-    userSaySpeech,
     userSayCheckboxReply
   }
 }
