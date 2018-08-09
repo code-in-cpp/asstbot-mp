@@ -11,7 +11,7 @@ export default {
     'usingComponents': {
       'bot-avatar': '/static/components/botAvatar/index',
       'divider': '/static/components/divider/index',
-      'bot-say-text': '/static/components/botSay/text/index',
+      'bot-say-message': '/static/components/botSay/message/index',
       'user-say-message': '/static/components/userSay/message/index'
     }
   }

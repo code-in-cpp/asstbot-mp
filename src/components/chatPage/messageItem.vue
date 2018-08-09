@@ -1,7 +1,7 @@
 <template>
 <block>
     <block v-if="outgoing">
-      <user-say-message :messages="messages" :userAuthed="userAuthed"></user-say-message>
+      <user-say-message :messages="messages" :userAuthed="userAuthed" @previewImage="$store.commit('setPreviewFalse')"></user-say-message>
     </block>
     <block v-else>
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
@@ -18,9 +18,10 @@
                 v-if="i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )"/>
             </view>
             <view class="content">
-              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"/>
+              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"
+                 @buttonListEvent="action" @previewImage="$store.commit('setPreviewFalse')"/>
               <view class="aaa" v-if="lastBotMsg && i == received">
-                <bot-msg-receiving/>
+                <bot-say-receiving/>
               </view>
             </view>
           </view>
@@ -34,9 +35,6 @@
 </template>
 
 <script>
-import botSayMessage from '@/components/botSay/message'
-import botMsgReceiving from '@/components/botSay/msgReceiving'
-import botSayDivider from '@/components/botSay/divider'
 import { mapState } from 'vuex'
 
 export default {
@@ -80,10 +78,22 @@ export default {
     }
   },
 
-  components: {
-    botSayMessage,
-    botMsgReceiving,
-    botSayDivider
+  methods: {
+    action (event) {
+      let buttonList = event.mp.detail.buttonList
+      let item = event.mp.detail.item
+      if (buttonList.reflex) {
+        this.$store.commit('appendUserMessage', item.caption)
+      }
+      this.$store.dispatch('sendGenericRequest', {
+        type: 'event',
+        data:
+        {
+          name: item.event,
+          ...item.data
+        }
+      })
+    }
   },
 
   onLoad () {

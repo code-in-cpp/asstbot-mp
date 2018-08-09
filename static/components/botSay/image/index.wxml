@@ -1,0 +1,5 @@
+<image bindtap="previewImage" 
+    mode="widthFix"
+    class="image"
+    src="{{content}}" 
+    bindload="loadDone"/>

@@ -13,8 +13,9 @@ export default {
     'usingComponents': {
       'bot-avatar': '/static/components/botAvatar/index',
       'divider': '/static/components/divider/index',
-      'bot-say-text': '/static/components/botSay/text/index',
-      'bot-say-button-list': '/static/components/botSay/buttonList/index',
+      'loading': '/static/components/loading/index',
+      'bot-say-message': '/static/components/botSay/message/index',
+      'bot-say-receiving': '/static/components/botSay/receiving/index',
       'user-say-message': '/static/components/userSay/message/index'
     }
   }

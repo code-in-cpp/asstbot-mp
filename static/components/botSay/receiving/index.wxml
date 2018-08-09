@@ -1,0 +1,12 @@
+  <view class="weui-flex bot-message">
+    <view class="left-item">
+      <view class="avatar-wrapper">
+        
+      </view>
+      <view class="content">
+        <view class="incoming">
+          <loading/>
+        </view>        
+      </view>
+    </view>
+  </view>

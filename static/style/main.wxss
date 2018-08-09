@@ -4,6 +4,30 @@
   font-size: 22rpx;
 }
 
+.small-font-size {
+  font-size: 28rpx;
+}
+
+.big-font-size {
+  font-size: 48rpx;
+}
+
+.middle-font-size {
+  font-size: 32rpx;
+}
+
+.tiny-font-size {
+  font-size: 26rpx;
+}
+
+.s-color {
+  color: #1cb2b9!important
+}
+
+.s-bg-color {
+  color: #1cb2b9
+}
+
 .incoming {
   padding: 20rpx;
   margin-left: 20rpx;
@@ -29,3 +53,24 @@
   text-align:left;
   position: relative;
 }
+
+/* Bot Message Style  */
+.bot-message {
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.bot-message .avatar-wrapper {
+  padding: 3px 10px;
+  width: 40rpx
+}
+
+.bot-message .left-item{
+    max-width: 80%;
+    display: flex;
+    width:100%;
+  }
+
+.bot-message .content{
+    width:100%
+  }
