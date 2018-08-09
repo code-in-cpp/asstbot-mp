@@ -62,10 +62,12 @@ export class CreatedPoster {
         // url: 'https://xiaodamp.cn/asstbot/image?name=29995920955311e88601e133de4e1e2f.png',
         css: {
           left: '446rpx',
-          top: '78rpx',
+          top: '80rpx',
           width: '80rpx',
           height: '80rpx',
-          borderRadius: '40rpx'
+          borderRadius: '40rpx',
+          borderWidth: '4rpx',
+          borderColor: '#1cb2b9'
         }
       },
       {
@@ -77,7 +79,8 @@ export class CreatedPoster {
           top: `${this.greetingTop}rpx`,
           width: '60rpx',
           height: '60rpx',
-          borderRadius: '30rpx'
+          borderRadius: '30rpx',
+          background: '#ffffff'
         }
       },
       {
