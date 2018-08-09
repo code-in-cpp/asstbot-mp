@@ -22,7 +22,12 @@ var __appendMsg = function (state, msg) {
 const getters = {
   getDisplayIndexs: (state) => (chatType) => {
     if (chatType === 'main') {
-      let msgIndexs = [...state.creatorBotMsg.keys()].slice(-30)
+      let msgIndexs = [...state.creatorBotMsg.keys()]
+      if (state.creatorBotMsg.length > 30) {
+        let startPos = (parseInt(state.creatorBotMsg.length / 10) * 10) - 20
+        console.log('start pos is ', startPos, 'length', state.creatorBotMsg.length)
+        msgIndexs = [...state.creatorBotMsg.keys()].slice(startPos)
+      }
       console.log('msg indexs', msgIndexs)
       return msgIndexs
     } else {
