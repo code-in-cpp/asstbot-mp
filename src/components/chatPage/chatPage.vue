@@ -72,6 +72,7 @@ export default {
   },
   watch: {
     msgListSize: function (val) {
+      console.log('msg list size is ', val, 'show image', this.showImage)
       const that = this
       this.msgDisplayBegin()
       if (this.showImage) {
@@ -84,12 +85,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({
-    //   // displayIndexs: 'getCreatorMsgIndexs',
-    //   needTextReply: 'needTextReply',
-    //   activeMsg: 'activeMsg'
-    // }),
-
     needTextReply () {
       return this.$store.getters.needTextReply(this.chatType)
     },
@@ -178,7 +173,6 @@ export default {
       this.scollToBottom()
     },
     keyBoardUp (height) {
-      // console.log('height:' + height)
       this.keyBoardHeight = height
     },
     renderComplete () {
@@ -191,9 +185,7 @@ export default {
     scollToBottom () {
       const that = this
       this.scrollToView = ''
-      this.scrollToView = 'bottom'
       setTimeout(function () {
-        that.scrollToView = ''
         that.scrollToView = 'bottom'
       }, 100)
     }

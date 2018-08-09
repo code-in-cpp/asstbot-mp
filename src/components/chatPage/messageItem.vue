@@ -41,7 +41,6 @@ import botSayDivider from '@/components/botSay/divider'
 
 export default {
   data () {
-    // console.log(this.messages)
     return {
       outgoing: false,
       received: 0,

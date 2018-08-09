@@ -31,7 +31,6 @@ const getters = {
   },
 
   getCreateMsgLength (state) {
-    // return 0
     return state.creatorBotMsg.length
   },
 
