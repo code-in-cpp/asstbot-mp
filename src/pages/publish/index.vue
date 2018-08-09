@@ -34,6 +34,7 @@
 <script>
 // import { getQrcodeImageUrl } from '@/utils/qrcode'
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
+// import { savePosterToPhotosAlbum } from '@/utils/qrcode'
 import { CreatedPoster } from './createdPoster'
 import {VisitedPoster} from './visitedPoster'
 
@@ -96,7 +97,7 @@ export default {
       }
       // console.log('created poster')
       poster = new CreatedPoster()
-      return poster.do(this.title, this.intro, this.shareQrCode)
+      return poster.do(this.title, this.intro, this.shareQrCode, this.avatarUrl)
     }
   },
   onShareAppMessage (res) {
@@ -119,20 +120,7 @@ export default {
     if (option.avatarUrl) {
       this.avatarUrl = option.avatarUrl
     }
-    if (option.id) {
-      this.surveyId = option.id
-      this.$store.dispatch('querySurveyById', this.surveyId)
-        .then((survey) => {
-          this.intro = survey.intro
-        })
-      getQrcodeImageUrl(this.surveyId)
-        .then(value => {
-          this.shareQrCode = value
-        })
-      // console.log(JSON.stringify(option))
-    }
     if (option.resultId) {
-    // if (this.resultId) {
       this.resultId = option.resultId
       this.$store.dispatch('querySurveyResultById', this.resultId)
         .then((surveyResult) => {
@@ -143,10 +131,24 @@ export default {
             this.conclusion = result.survey.conclusions[index].text
             this.conclusionUrl = result.survey.conclusions[index].imageUrl
           }
+          this.surveyId = result.survey.id
+          this.intro = result.survey.intro
+        })
+    } else if (option.id) {
+      this.surveyId = option.id
+      this.$store.dispatch('querySurveyById', this.surveyId)
+        .then((survey) => {
+          this.intro = survey.intro
         })
     } else {
       this.conclusion = ''
       this.conclusionUrl = ''
+    }
+    if (this.surveyId) {
+      getQrcodeImageUrl(this.surveyId)
+        .then(value => {
+          this.shareQrCode = value
+        })
     }
   }
 }
