@@ -1,0 +1,16 @@
+  <block wx:if="{{needDisplay}}">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <user-say-text content="{{messages.data.query}}" wx:if="{{messages.type=='text'}}"/>
+        <user-say-image url="{{messages.data.url}}" bindpreviewImage="previewImage" wx:elif="{{messages.type=='image'}}"/>
+        <user-say-checkbox-reply content="{{messages.data}}" bindpreviewImage="previewImage"
+           wx:elif="{{messages.type==='checkbox-reply'}}"/>
+        <user-say-radio-reply content="{{messages.data}}"  
+          bindpreviewImage="previewImage" wx:elif="{{messages.type=='radio-reply'}}" />
+        <user-say-speech content="{{messages.data}}" wx:elif="{{messages.type=='speech'}}"/>
+      </view>
+      <view class="user-avatar" wx:if="{{userAuthed}}">
+        <open-data type="userAvatarUrl" />
+      </view>
+    </view>
+  </block>

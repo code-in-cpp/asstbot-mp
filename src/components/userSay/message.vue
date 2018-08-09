@@ -3,9 +3,9 @@
     <view class="weui-flex">
       <view class="weui-flex__item">
         <user-say-text :content="messages.data.query" v-if="messages.type=='text'"></user-say-text>
-        <user-say-image :url="messages.data.url" v-else-if="messages.type=='image'"></user-say-image>
+        <user-say-image :url="messages.data.url" @previewImage="$store.commit('setPreviewFalse')" v-else-if="messages.type=='image'"></user-say-image>
         <user-say-speech :content="messages.data" v-else-if="messages.type=='speech'"></user-say-speech>
-        <user-say-checkbox-reply :content="messages.data" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
+        <user-say-checkbox-reply :content="messages.data" @previewImage="$store.commit('setPreviewFalse')" v-else-if="messages.type==='checkbox-reply'"></user-say-checkbox-reply>
         <user-say-radio-reply :content="messages.data"  @previewImage="$store.commit('setPreviewFalse')" v-else-if="messages.type=='radio-reply'" ></user-say-radio-reply>
       </view>
       <view class="user-avatar" v-if="userAuthed">
@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import userSayImage from '@/components/userSay/image'
-import userSayCheckboxReply from '@/components/userSay/checkboxReply'
 import { mapState } from 'vuex'
 
 export default {
@@ -43,10 +41,6 @@ export default {
         this.messages.type === 'radio-reply' ||
         this.messages.type === 'divider'
     }
-  },
-  components: {
-    userSayImage,
-    userSayCheckboxReply
   }
 }
 </script>

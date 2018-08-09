@@ -9,6 +9,10 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
+      'bot-avatar': '/static/components/botAvatar/index',
+      'divider': '/static/components/divider/index',
+      'bot-say-text': '/static/components/botSay/text/index',
+      'user-say-message': '/static/components/userSay/message/index'
     }
   }
 }

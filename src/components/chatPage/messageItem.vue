@@ -1,7 +1,7 @@
 <template>
 <block>
     <block v-if="outgoing">
-      <user-say-message :messages="messages"></user-say-message>
+      <user-say-message :messages="messages" :userAuthed="userAuthed"></user-say-message>
     </block>
     <block v-else>
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import userSayMessage from '@/components/userSay/message'
 import botSayMessage from '@/components/botSay/message'
 import botMsgReceiving from '@/components/botSay/msgReceiving'
 import botSayDivider from '@/components/botSay/divider'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -64,6 +64,9 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      userAuthed: state => state.userProfile.authed
+    }),
     displayIncomingMsgs () {
       // console.log(this.messages)
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
@@ -78,7 +81,6 @@ export default {
   },
 
   components: {
-    userSayMessage,
     botSayMessage,
     botMsgReceiving,
     botSayDivider

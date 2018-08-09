@@ -1,0 +1,6 @@
+  <view class="wrapper word-text">
+    <image bindtap="previewImage" wx:if="url" src="{{url}}" class="outgoing image"/>
+    <view  wx:else class="outgoing right-item" style="height: auto;width: auto;margin-right: -10rpx">
+      您已取消上传
+    </view>
+  </view>

@@ -14,9 +14,8 @@ export default {
       'bot-avatar': '/static/components/botAvatar/index',
       'divider': '/static/components/divider/index',
       'bot-say-text': '/static/components/botSay/text/index',
-      'user-say-radio-reply': '/static/components/userSay/radioReply/index',
-      'user-say-text': '/static/components/userSay/text/index',
-      'user-say-speech': '/static/components/userSay/speech/index'
+      'bot-say-button-list': '/static/components/botSay/buttonList/index',
+      'user-say-message': '/static/components/userSay/message/index'
     }
   }
 }
