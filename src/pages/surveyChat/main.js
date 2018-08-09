@@ -9,10 +9,9 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
-      'bot-avatar': '/static/components/botAvatar/index',
-      'divider': '/static/components/divider/index',
-      'bot-say-message': '/static/components/botSay/message/index',
-      'user-say-message': '/static/components/userSay/message/index'
+      'loading': '/static/components/loading/index',
+      'message-item': '/static/components/messageItem/index',
+      'bot-say-receiving': '/static/components/botSay/receiving/index'
     }
   }
 }

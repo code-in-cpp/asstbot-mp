@@ -3,7 +3,6 @@
     <view class="content" style="flex-direction: column">
       <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%"
          upper-threshold="150">
-        <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
         <view class="padding-top-64">
           <block v-for="(messages, i) in messageList" :key="messages.id">
             <view :id="i">
@@ -56,16 +55,13 @@ export default {
     return {
       displayFinish: false,
       localMsgSending: false,
-      keyBoardHeight: '0rpx',
-      scrollToView: 'bottom',
-      lower: 0,
-      upper: 30
+      scrollToView: 'bottom'
     }
   },
   props: {
-    messageList: {
-      type: Array,
-      default: []
+    messageSource: {
+      type: String,
+      default: 'creator'
     },
     survey: {
       type: Object,
@@ -74,25 +70,21 @@ export default {
   },
   watch: {
     messageList: function (val) {
-      const that = this
       this.msgDisplayBegin()
-      this.upper = this.messageList.length
-      this.lower = this.upper - 30
-      if (this.showImage) {
-        setTimeout(function () {
-          that.scrollToView = `bottom${val.length - 1}`
-        }, 500)
-      } else {
-        this.scrollToView = `bottom${val.length - 1}`
-      }
+      this.scrollToView = `bottom${val.length - 1}`
     }
   },
   computed: {
     ...mapState({
       userAuthed: state => state.userProfile.authed
     }),
-    needTextReply () {
-      return false
+
+    messageList () {
+      if (this.messageSource === 'creator') {
+        return this.$store.state.messages.creatorBotMsg
+      } else {
+        return this.$store.state.messages.surveybotMsg
+      }
     },
     activeMsg () {
       if (!this.messageList) {
@@ -193,10 +185,6 @@ export default {
     handleMsgSendStatus (event) {
       this.localMsgSending = (event === 'start')
       this.scollToBottom()
-    },
-    keyBoardUp (height) {
-      // console.log('height:' + height)
-      this.keyBoardHeight = height
     },
     renderComplete () {
       this.scollToBottom()

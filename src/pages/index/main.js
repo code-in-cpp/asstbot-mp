@@ -13,8 +13,7 @@ export default {
     'usingComponents': {
       'loading': '/static/components/loading/index',
       'message-item': '/static/components/messageItem/index',
-      'bot-say-receiving': '/static/components/botSay/receiving/index',
-      'user-say-message': '/static/components/userSay/message/index'
+      'bot-say-receiving': '/static/components/botSay/receiving/index'
     }
   }
 }

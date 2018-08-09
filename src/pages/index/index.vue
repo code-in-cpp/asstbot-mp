@@ -2,7 +2,7 @@
 <movable-area class="move-area">
   <view class="page">
     <bot-title-bar></bot-title-bar>
-    <chat-page :messageList="messageList" @redirectTo="toRedirect"/>
+    <chat-page messageSource="creator" @redirectTo="toRedirect"/>
   </view>
 </movable-area>
 </template>
@@ -21,7 +21,6 @@ export default {
   },
   computed: {
     ...mapState({
-      messageList: state => state.messages.creatorBotMsg,
       previewImageFlag: state => {
         return state.inputValue.previewShow
       }

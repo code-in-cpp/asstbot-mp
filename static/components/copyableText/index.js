@@ -23,7 +23,7 @@ Component({
   methods: {
     copyText () {
       wx.setClipboardData({
-        data: this.properties.content,
+        data: this.properties.text,
         success: () => {
           wx.showToast({
             title: '内容已复制'
