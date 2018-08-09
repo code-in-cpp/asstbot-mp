@@ -39,17 +39,21 @@ import { mapState } from 'vuex'
 
 export default {
   data () {
-    // console.log(this.messages)
     return {
-      outgoing: this.messages.from !== undefined,
-      received: 0
+      outgoing: false,
+      received: 0,
+      messages: {}
     }
   },
 
   props: {
-    messages: {
-      type: Object,
-      default: {}
+    msgIndex: {
+      type: Number,
+      default: 0
+    },
+    chatType: {
+      type: String,
+      default: ''
     },
     lastBotMsg: {
       type: Boolean,
@@ -66,7 +70,6 @@ export default {
       userAuthed: state => state.userProfile.authed
     }),
     displayIncomingMsgs () {
-      // console.log(this.messages)
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
         return msg.type === 'text' ||
           msg.type === 'getUserinfo' ||
@@ -97,6 +100,10 @@ export default {
   },
 
   onLoad () {
+    this.messages = this.$store.getters.getMessagesBy(this.msgIndex, this.chatType)
+    this.outgoing = this.messages.from !== undefined
+    this.lastBotMsg = this.lastBotMsg && this.messages.to !== undefined
+    console.log('get messages index', this.msgIndex, 'messages:', this.messages)
     if (this.lastBotMsg) {
       let that = this
       this.$emit('renderUpdate')

@@ -32,13 +32,13 @@
         </block>
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" v-model="conclusion.text" placeholder="请输入结论" style="height: 3.3em" />
+            <textarea class="weui-textarea" @change="updateTitleValue" placeholder="请输入结论" style="height: 3.3em" />
           </view>
         </view>
         <view class="weui-cell">
           <image-uploader :url="conclusion.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>
         </view>
-        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="error">
+        <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
             文字和图片不能同时为空
           </view>
@@ -49,7 +49,7 @@
       </view>
     </view>
     <view class="footer bottom_button">
-      <button class="weui-btn" type="primary" @tap="saveConclusion" :disabled="error">保存</button>
+      <button class="weui-btn" type="primary" @tap="saveConclusion" >保存</button>
     </view>
   </view>
 </template>
@@ -110,15 +110,13 @@ function getFreeRange (maxCount, occupiedRanges) {
 export default {
   data: {
     conclusion: {},
-    title: ''
+    title: '',
+    isLegal: true
   },
   computed: {
     ...mapState({
       survey: state => state.curSurvey.survey
-    }),
-    error () {
-      return (this.conclusion.text === '' && this.conclusion.imageUrl === '')
-    }
+    })
   },
   components: {
     imageUploader,
@@ -126,14 +124,16 @@ export default {
   },
   methods: {
     updateTitleValue (event) {
-      console.log(event)
-      this.conclusion.value = event.value
+      this.conclusion.text = event.mp.detail.value
+      this.verifyConclusion()
     },
     deleteImage () {
       this.conclusion.imageUrl = ''
+      this.verifyConclusion()
     },
     chooseTitleImage (url) {
       this.conclusion.imageUrl = url
+      this.verifyConclusion()
     },
     changeMinNumber (event) {
       console.log(event)
@@ -143,7 +143,15 @@ export default {
       console.log(event)
       this.conclusion.scoreRange.max = event.number
     },
+    verifyConclusion () {
+      this.isLegal = (this.conclusion.text !== '' || this.conclusion.imageUrl !== '')
+    },
+
     saveConclusion () {
+      this.verifyConclusion()
+      if (!this.isLegal) {
+        return
+      }
       const option = this.$root.$mp.query
       if (option.action === 'create') {
         this.$store.commit('appendCurConclusion', this.conclusion)

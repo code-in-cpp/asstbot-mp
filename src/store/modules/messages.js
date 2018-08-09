@@ -20,6 +20,60 @@ var __appendMsg = function (state, msg) {
 }
 
 const getters = {
+  getDisplayIndexs: (state) => (chatType) => {
+    if (chatType === 'main') {
+      let msgIndexs = [...state.creatorBotMsg.keys()]
+      if (state.creatorBotMsg.length > 30) {
+        let startPos = (parseInt(state.creatorBotMsg.length / 10) * 10) - 20
+        console.log('start pos is ', startPos, 'length', state.creatorBotMsg.length)
+        msgIndexs = [...state.creatorBotMsg.keys()].slice(startPos)
+      }
+      console.log('msg indexs', msgIndexs)
+      return msgIndexs
+    } else {
+      return [...state.surveybotMsg.keys()]
+    }
+  },
+
+  getCreateMsgLength (state) {
+    return state.creatorBotMsg.length
+  },
+
+  getMessagesBy: state => (index, chatType) => {
+    if (chatType === 'main') {
+      return state.creatorBotMsg[parseInt(index)]
+    } else {
+      return state.surveybotMsg[parseInt(index)]
+    }
+  },
+
+  needTextReply: state => (chatType) => {
+    let msgList = (chatType === 'main') ? state.creatorBotMsg : state.surveybotMsg
+    if (!msgList) {
+      return false
+    }
+    if (!msgList.length < 5) {
+      return false
+    }
+    let list = msgList.slice(-1).pop()
+    if (list && list.to) {
+      let message = [...list.msgs].slice(-1).pop()
+      return message.type === 'text'
+    } else {
+      return false
+    }
+  },
+  activeMsg: state => (chatType) => {
+    let msgList = (chatType === 'main') ? state.creatorBotMsg : state.surveybotMsg
+    if (!msgList) {
+      return undefined
+    }
+    let lastmsg = msgList.slice(-1)[0]
+    if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
+      return undefined
+    }
+    return lastmsg
+  }
 }
 
 const mutations = {

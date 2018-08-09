@@ -34,6 +34,14 @@
       </view>
       <view class="weui-cells__title">选项</view>
       <edit-answer :survey="survey" :subject="subject" @input="answerChange"/>
+      <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!answersLegal">
+          <view class="weui-cell__bd">
+            {{inlegalText}}
+          </view>
+          <view class="weui-cell__ft">
+              <icon type="warn" size="15" color="#E64340"></icon>
+          </view>
+      </view>
     </scoll-view>
     </view>
     <view class="footer bottom_button">
@@ -57,7 +65,9 @@ export default {
     typeRange: subjectType,
     typeNameRange: subjectTypeName,
     typeIndex: -1,
-    isLegal: true
+    isLegal: true,
+    answersLegal: true,
+    inlegalText: ''
   },
   computed: {
     ...mapState({
@@ -136,7 +146,9 @@ export default {
 
     verifyAnswer (answer) {
       if (this.subject.type === 'phone') {
-        answer.islegal = answer.value.length === 11
+        let reg = /^([1-9][0-9]{10})/
+        answer.islegal = reg.test(answer.value)
+        console.log('test result=>', answer.islegal)
         answer.verifyResult = (answer.islegal) ? '' : '手机号码需要设置为11位'
       } else {
         answer.islegal = answer.value !== '' || answer.imageUrl !== ''
@@ -144,8 +156,35 @@ export default {
       }
     },
 
+    hasCorrectAnswer () {
+      let correctAnswer = this.subject.answers.find(answer => {
+        return answer.correct === true
+      })
+      return correctAnswer != null
+    },
+
     verifyAnswers () {
       let ret = true
+      if (this.subject.type === 'radio') {
+        this.answersLegal = this.subject.answers.length >= 1
+        this.inlegalText = '单选题最少有一个选型'
+      }
+      if (this.subject.type === 'checkbox') {
+        this.answersLegal = this.subject.answers.length >= 2
+        this.inlegalText = '多选题最少有二个选型'
+      }
+      if (!this.answersLegal) {
+        return false
+      } else if (this.survey.type === 'exam') {
+        if (!this.hasCorrectAnswer()) {
+          this.answersLegal = false
+          this.inlegalText = '没有有效的正确答案'
+        }
+        if (!this.answersLegal) {
+          return false
+        }
+      }
+
       this.subject.answers.forEach(answer => {
         this.verifyAnswer(answer)
         ret = ret & answer.islegal

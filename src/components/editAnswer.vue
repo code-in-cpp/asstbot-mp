@@ -164,6 +164,7 @@ export default {
   },
   computed: {
     answers () {
+      console.log('answers is', this.subject.answers)
       return this.subject.answers
     },
     questionNames () {
@@ -263,7 +264,9 @@ export default {
 
     verifyAnswer (answer) {
       if (this.subject.type === 'phone') {
-        answer.islegal = answer.value.length === 11
+        let reg = /^([1-9][0-9]{10})/
+        answer.islegal = reg.test(answer.value)
+        console.log('test result=>', answer.islegal)
         answer.verifyResult = (answer.islegal) ? '' : '手机号码需要设置为11位'
       } else {
         answer.islegal = answer.value !== '' || answer.imageUrl !== ''
@@ -312,6 +315,10 @@ export default {
     deleteImage (index) {
       this.updateAnswerUrl(index, '')
     }
+  },
+
+  onLoad (option) {
+    this.verifyAnswers()
   }
 }
 </script>
