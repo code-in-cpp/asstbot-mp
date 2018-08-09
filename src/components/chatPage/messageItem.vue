@@ -91,6 +91,7 @@ export default {
   onLoad () {
     this.messages = this.$store.getters.getMessagesBy(this.msgIndex, this.chatType)
     this.outgoing = this.messages.from !== undefined
+    this.lastBotMsg = this.lastBotMsg && this.messages.to !== undefined
     console.log('get messages index', this.msgIndex, 'messages:', this.messages)
     if (this.lastBotMsg) {
       let that = this
