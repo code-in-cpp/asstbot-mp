@@ -8,7 +8,13 @@ app.$mount()
 export default {
   config: {
     'enablePullDownRefresh': false,
-    'disableScroll': true
+    'disableScroll': true,
+    'usingComponents': {
+      'bot-say-text': '/static/components/botSay/text/index',
+      'bot-say-image': '/static/components/botSay/image/index',
+      'user-say-text': '/static/components/userSay/text/index',
+      'user-say-image': '/static/components/userSay/image/index'
+    }
   }
 
 }
