@@ -187,8 +187,8 @@ export default {
       this.scollToBottom()
     },
     renderComplete () {
-      this.scollToBottom()
       this.msgDisplayFinish()
+      this.scollToBottom()
     },
     renderUpdate () {
       this.scollToBottom()
@@ -200,7 +200,7 @@ export default {
       setTimeout(function () {
         that.scrollToView = ''
         that.scrollToView = 'bottom'
-      }, 100)
+      }, 200)
     }
   },
 

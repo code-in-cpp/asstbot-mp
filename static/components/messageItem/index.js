@@ -27,7 +27,7 @@ Component({
    */
   data: {
     outgoing: false,
-    received: 0,
+    received: 1,
     displayIncomingMsgs: []
   },
 
@@ -69,7 +69,7 @@ Component({
         that.setData({
           received
         })
-        if (that.data.received > that.data.displayIncomingMsgs.length ||
+        if (that.data.received > (that.data.displayIncomingMsgs.length - 1) ||
              !that.properties.lastBotMsg) {
           that.triggerEvent('renderComplete')
           clearInterval(interval)
