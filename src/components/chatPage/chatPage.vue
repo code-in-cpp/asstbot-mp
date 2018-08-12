@@ -1,8 +1,7 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
-      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%"
-         upper-threshold="150">
+      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
         <view class="padding-top-64">
           <block v-for="(messages, i) in messageList" :key="messages.id">
             <view :id="i">
@@ -218,5 +217,8 @@ export default {
   }
   .pulldown-box{
     /*transition: height 1s;*/
+  }
+  .padding-top-64{
+    padding-top: 70rpx;
   }
 </style>
