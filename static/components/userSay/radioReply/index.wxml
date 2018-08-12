@@ -1,8 +1,8 @@
   <view>
     <view class="wrapper word-text right-block">
-      <block wx:if="{{content.caption}}">
+      <block wx:if="{{content.value}}">
         <view class="outgoing right-item" >
-          <copyable-text text="{{content.caption}}"/>
+          <copyable-text text="{{content.value}}"/>
         </view>
       </block>
     </view>
