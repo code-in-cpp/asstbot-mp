@@ -112,7 +112,7 @@ export default {
       let buttonList = event.mp.detail.buttonList
       let item = event.mp.detail.item
       if (buttonList.reflex) {
-        this.$store.commit('appendUserMessage', item.caption)
+        this.$store.commit('appendUserMessage', item.value ? item.value : item.caption)
       }
       this.$store.dispatch('sendGenericRequest', {
         type: 'event',

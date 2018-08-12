@@ -99,14 +99,14 @@ const mutations = {
     const timestamp = new Date()
     __appendMsg(state, {timestamp, gui: 'gui', type: 'divider'})
   },
-  appendUserMessage (state, caption) {
+  appendUserMessage (state, value) {
     let message = {
       from: {
         id: ''
       },
       type: 'text',
       data: {
-        query: caption
+        query: value
       }
     }
     this.commit('appendMessage', message)
