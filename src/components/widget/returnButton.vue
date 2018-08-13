@@ -1,5 +1,5 @@
 <template>
-  <block v-if="canReturn">
+  <block >
     <view class="return-button" @click="navigateBack">
       <i class="icon iconfont icon-return"></i>
       <view class="desc"><text>返回</text></view>
@@ -16,7 +16,13 @@ export default {
   },
   methods: {
     navigateBack () {
-      wx.navigateBack()
+      if (this.canReturn) {
+        wx.navigateBack()
+      } else {
+        wx.reLaunch({
+          url: '../index/main?scene=relaunchFrom'
+        })
+      }
     }
   },
   onLoad () {
