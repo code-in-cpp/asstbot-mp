@@ -66,11 +66,11 @@
           <view class="detail-cell weui-cell__bd" v-if="surveyType==='exam'">
             <bot-say-text :content=getResult></bot-say-text>
           </view>
-          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion.text != null && surveyConclusion.text != '' > 0">
+          <view class="detail-cell weui-cell__bd" v-if="surveyConclusion && surveyConclusion.text">
             <bot-say-text :content="'结论：' + surveyConclusion.text"></bot-say-text>
           </view>
           <view class="weui-cell__bd">
-              <bot-say-image :content="surveyConclusion.imageUrl" v-if="surveyConclusion.imageUrl != null && surveyConclusion.imageUrl != ''" @loadDone="imageLoadEnd"></bot-say-image>
+              <bot-say-image :content="surveyConclusion.imageUrl" v-if="surveyConclusion && surveyConclusion.imageUrl" @loadDone="imageLoadEnd"></bot-say-image>
           </view>
         </scroll-view>
       </view>
