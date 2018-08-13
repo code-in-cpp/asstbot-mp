@@ -1,10 +1,10 @@
   <block>
     <view class="wrapper word-text right-block">
-      <view class="outgoing right-item" wx:if="displayText.length > 0">
+      <view class="outgoing right-item" wx:if="{{displayText}}">
         <copyable-text text="{{displayText}}" />
       </view>
     </view>
-    <view class="swiper-box" wx:if="imgUrls.length > 0">
+    <view class="swiper-box" wx:if="{{imgUrls.length}}">
       <swiper indicator-dots="true" class="swiper">
         <block wx:for="{{imgUrls}}" wx:key="{{item}}">
           <swiper-item style="border-radius: 20rpx">
