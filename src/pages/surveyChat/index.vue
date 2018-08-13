@@ -1,6 +1,6 @@
 <template>
 <movable-area class="move-area">
-  <view class="page">
+  <view class="page" v-if="loadDone">
     <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
     <chat-page messageSource="surveyBot" :survey="survey"/>
   </view>
@@ -15,7 +15,8 @@ export default {
   data () {
     return {
       survey: {},
-      option: {}
+      option: {},
+      loadDone: false
     }
   },
   computed: {
@@ -35,6 +36,7 @@ export default {
   methods: {
     startChat () {
       let option = this.option
+      console.log('startChat, option:', option)
       if (option.id) {
         const scene = option.scene ? option.scene : 'publish'
         this.$store.commit('talkToSurveyBot', {id: option.id, scene})
@@ -42,6 +44,7 @@ export default {
         this.$store.dispatch('retrieveSurveyById', option.id)
           .then((survey) => {
             this.survey = survey
+            this.loadDone = true
           })
           .catch((err) => {
             console.log(err)
@@ -54,6 +57,7 @@ export default {
         this.$store.dispatch('retrieveSurveyById', id)
           .then((survey) => {
             this.survey = survey
+            this.loadDone = true
           })
           .catch((err) => {
             console.log(err)
@@ -92,6 +96,7 @@ export default {
 
   onLoad (option) {
     this.option = option
+    this.loadDone = false
   }
 }
 </script>
