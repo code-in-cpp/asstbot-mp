@@ -62,16 +62,16 @@
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
           <view class="weui-flex__item btn-style-survey" v-if="activeIndex==0">
-            <button class="weui-btn btn-font" type="default" @click="addSubject" >添加题目</button>
+            <button class="weui-btn btn-font" type="default" @click="addSubject"><i class="icon iconfont icon-add"></i>新题目</button>
           </view>          
           <view class="weui-flex__item btn-style-survey" v-if="activeIndex==1">
-            <button class="weui-btn btn-font" type="default" @click="addConclusion" >添加结论 </button>
+            <button class="weui-btn btn-font" type="default" @click="addConclusion"><i class="icon iconfont icon-add"></i>新结论 </button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="default" @click="selfTest" >自测</button>
+            <button class="weui-btn btn-font" type="default" @click="selfTest"><i class="icon iconfont icon-live"></i>自测</button>
           </view>
           <view class="weui-flex__item btn-style-survey">
-            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare">分享 </button>
+            <button class="weui-btn btn-font" type="primary" @click="toPublishPage" :disabled="disableShare"><i class="icon iconfont icon-share"></i>分享 </button>
           </view>
         </view>
       </view>
