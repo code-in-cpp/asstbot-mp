@@ -45,7 +45,7 @@
       <view class="footer bottom_button">
         <view class="weui-flex bottom-button-box">
             <view class="weui-flex__item btn-style-survey">
-              <button class="weui-btn btn-font" type="default" @click="selfTest" :disabled="disableShare"><i class="icon iconfont icon-stealth"></i>自测</button>
+              <button class="weui-btn btn-font" type="default" @click="selfTest" :disabled="disableShare"><i class="icon iconfont icon-live"></i>自测</button>
             </view>
             <view class="weui-flex__item btn-style-survey">
               <button class="weui-btn btn-font" type="default" @click="chartStatics" ><i class="icon iconfont icon-stealth"></i>统计</button>
