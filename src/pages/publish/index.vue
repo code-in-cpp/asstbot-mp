@@ -114,6 +114,8 @@ export default {
   },
   onLoad: function (option) {
     console.log('onLoad, survey id:', option.id)
+    this.conclusion = ''
+    this.conclusionUrl = ''
     if (option.title) {
       this.title = option.title
     }
@@ -121,6 +123,7 @@ export default {
       this.avatarUrl = option.avatarUrl
     }
     if (option.resultId) {
+      console.log('publish visited survey, resultId not null')
       this.resultId = option.resultId
       this.$store.dispatch('querySurveyResultById', this.resultId)
         .then((surveyResult) => {
@@ -132,23 +135,33 @@ export default {
             this.conclusionUrl = result.survey.conclusions[index].imageUrl
           }
           this.surveyId = result.survey.id
+          console.log('publish visited survey, survey id is:', result.survey.id)
           this.intro = result.survey.intro
+          if (this.surveyId) {
+            console.log('publish visited survey, survey id is:', this.surveyId)
+            getQrcodeImageUrl(this.surveyId)
+              .then(value => {
+                this.shareQrCode = value
+              })
+          }
         })
     } else if (option.id) {
+      console.log('publish created survey, id not null')
       this.surveyId = option.id
       this.$store.dispatch('querySurveyById', this.surveyId)
         .then((survey) => {
           this.intro = survey.intro
+          if (this.surveyId) {
+            console.log('publish created survey, survey id is:', this.surveyId)
+            getQrcodeImageUrl(this.surveyId)
+              .then(value => {
+                this.shareQrCode = value
+              })
+          }
         })
     } else {
       this.conclusion = ''
       this.conclusionUrl = ''
-    }
-    if (this.surveyId) {
-      getQrcodeImageUrl(this.surveyId)
-        .then(value => {
-          this.shareQrCode = value
-        })
     }
   }
 }
