@@ -1,6 +1,8 @@
 <template>
   <movable-view class="move-btn" inertia='true' damping='10' friction='5' :x="370" :y="600"  animation="true" direction="all" @click="toHome">
-    <image class="image" :src="imageUrl"></image>
+    <cover-view>
+      <cover-image class="image" :src="imageUrl"></cover-image>
+    </cover-view>
   </movable-view>
 </template>
 
