@@ -75,6 +75,15 @@ export default {
   },
 
   onShow () {
+    console.log('on show')
+  },
+  onHide () {
+    console.log('hide:')
+  },
+
+  onLoad (option) {
+    this.option = option
+    this.loadDone = false
     if (this.previewImageFlag) {
       if (this.hasLogin) {
         this.startChat()
@@ -89,14 +98,6 @@ export default {
     } else {
       this.$store.commit('setPreviewTrue')
     }
-  },
-  onHide () {
-    console.log('hide:')
-  },
-
-  onLoad (option) {
-    this.option = option
-    this.loadDone = false
   }
 }
 </script>
