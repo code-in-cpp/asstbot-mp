@@ -17,7 +17,8 @@ export default {
       survey: {},
       option: {},
       loadDone: false,
-      firstTimeShow: true
+      firstTimeShow: true,
+      scene: ''
     }
   },
   computed: {
@@ -77,7 +78,7 @@ export default {
 
   onShow () {
     console.log('on show')
-    if (!this.firstTimeShow) {
+    if (!this.firstTimeShow && this.scene !== 'test') {
       wx.showModal({
         title: '你有一份问卷未完成',
         content: '现在继续回答吗？',
@@ -106,6 +107,7 @@ export default {
     this.option = option
     this.loadDone = false
     this.firstTimeShow = true
+    this.scene = option.scene
     if (this.previewImageFlag) {
       if (this.hasLogin) {
         this.startChat()
