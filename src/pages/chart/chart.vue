@@ -18,7 +18,7 @@
         </view>
       </view>
     </view>
-    <home-button/>
+    <!--<home-button/>-->
   </movable-area>
 
 </template>
