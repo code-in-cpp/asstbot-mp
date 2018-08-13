@@ -124,6 +124,7 @@ export default {
 .chart-canvas-view{
   padding-left: 40rpx;
   padding-top: 40rpx;
+  height: 420rpx;
 }
 
 .chart-view-title{
@@ -136,7 +137,7 @@ export default {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  height: 480rpx;
+  /*height: 480rpx;*/
   display: block;
   flex-direction: column;
 }
