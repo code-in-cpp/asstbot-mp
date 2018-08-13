@@ -9,6 +9,9 @@ export default {
     'enablePullDownRefresh': false,
     'disableScroll': true,
     'usingComponents': {
+      'loading': '/static/components/loading/index',
+      'message-item': '/static/components/messageItem/index',
+      'bot-say-receiving': '/static/components/botSay/receiving/index'
     }
   }
 }

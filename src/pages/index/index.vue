@@ -2,7 +2,7 @@
 <movable-area class="move-area">
   <view class="page">
     <bot-title-bar></bot-title-bar>
-    <chat-page :msgListSize= "msgListSize" chatType="main" @redirectTo="toRedirect"/>
+    <chat-page messageSource="creator" @redirectTo="toRedirect"/>
   </view>
 </movable-area>
 </template>
@@ -25,10 +25,10 @@ export default {
         return state.inputValue.previewShow
       }
     }),
-    ...mapGetters({
-      hasLogin: 'hasLogin',
-      msgListSize: 'getCreateMsgLength'
-    })
+    ...mapGetters([
+      'hasLogin'
+    ]
+    )
   },
 
   components: {

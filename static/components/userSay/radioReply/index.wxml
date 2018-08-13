@@ -1,0 +1,12 @@
+  <view>
+    <view class="wrapper word-text right-block">
+      <block wx:if="{{content.value}}">
+        <view class="outgoing right-item" >
+          <copyable-text text="{{content.value}}"/>
+        </view>
+      </block>
+    </view>
+    <view class="right-block word-text" wx:if="{{content.imageUrl}}">
+      <image bindtap="previewImage" class="image" mode="widthFix" src="{{content.imageUrl}}"></image>
+    </view>
+  </view>

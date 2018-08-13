@@ -37,13 +37,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "毛孩子",
 					"pathName": "pages/surveyChat/main",
-					"query": "id=66d69fe0922f11e88f3143601faa2d5a",
+					"query": "id=a81f22f08ccc11e8b1e74d9f5b42667a",
 					"scene": "1008"
 				},
 				{

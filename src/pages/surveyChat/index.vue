@@ -2,7 +2,7 @@
 <movable-area class="move-area">
   <view class="page">
     <bot-title-bar :avatarUrl="survey.avatarUrl" :title="survey.title"></bot-title-bar>
-    <chat-page :msgListSize= "msgListSize" chatType="bot" :survey="survey"/>
+    <chat-page messageSource="surveyBot" :survey="survey"/>
   </view>
 </movable-area>
 </template>
@@ -20,8 +20,6 @@ export default {
   },
   computed: {
     ...mapState({
-      // messageList: state => state.messages.surveybotMsg,
-      msgListSize: state => state.messages.surveybotMsg.length,
       previewImageFlag: state => {
         return state.inputValue.previewShow
       }

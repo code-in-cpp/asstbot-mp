@@ -1,26 +1,27 @@
 <template>
 <block>
     <block v-if="outgoing">
-      <user-say-message :messages="messages"></user-say-message>
+      <user-say-message :messages="messages" :userAuthed="userAuthed" @previewImage="$store.commit('setPreviewFalse')"></user-say-message>
     </block>
     <block v-else>
       <block v-for="(msg, i) in displayIncomingMsgs" :key="msg">
         <block v-if="msg.type=='divider'">
           <block v-if="!lastBotMsg || i < received">
-            <bot-say-divider :message="msg"></bot-say-divider>
+            <divider ></divider>
           </block>
         </block>
         <view class="weui-flex bot-message" v-else>
           <view class="left-item">
             <view class="avatar-wrapper">
               <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
-              <bod-avatar :url="survey.avatarUrl" size="30"
+              <bot-avatar :url="survey.avatarUrl" size="30"
                 v-if="i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )"/>
             </view>
             <view class="content">
-              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"/>
+              <bot-say-message :msg="msg" @loadDone="$emit('itemLoad')" v-if="!lastBotMsg || i < received"
+                 @buttonListEvent="action" @previewImage="$store.commit('setPreviewFalse')"/>
               <view class="aaa" v-if="lastBotMsg && i == received">
-                <bot-msg-receiving/>
+                <bot-say-receiving/>
               </view>
             </view>
           </view>
@@ -34,10 +35,7 @@
 </template>
 
 <script>
-import userSayMessage from '@/components/userSay/message'
-import botSayMessage from '@/components/botSay/message'
-import botMsgReceiving from '@/components/botSay/msgReceiving'
-import botSayDivider from '@/components/botSay/divider'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -68,6 +66,9 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      userAuthed: state => state.userProfile.authed
+    }),
     displayIncomingMsgs () {
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
         return msg.type === 'text' ||
@@ -80,11 +81,22 @@ export default {
     }
   },
 
-  components: {
-    userSayMessage,
-    botSayMessage,
-    botMsgReceiving,
-    botSayDivider
+  methods: {
+    action (event) {
+      let buttonList = event.mp.detail.buttonList
+      let item = event.mp.detail.item
+      if (buttonList.reflex) {
+        this.$store.commit('appendUserMessage', item.value ? item.value : item.caption)
+      }
+      this.$store.dispatch('sendGenericRequest', {
+        type: 'event',
+        data:
+        {
+          name: item.event,
+          ...item.data
+        }
+      })
+    }
   },
 
   onLoad () {

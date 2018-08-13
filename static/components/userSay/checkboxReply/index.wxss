@@ -1,0 +1,29 @@
+@import '/static/style/main.wxss';
+
+.wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.word-text{
+  padding-bottom: 10px;
+}
+
+.right-block{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.right-item{
+  max-width: 70%;
+}
+.image{
+  width:400rpx;
+  border-radius: 20rpx;
+}
+.swiper-box{
+  text-align: right;
+}
+.swiper{
+  width:400rpx;
+  display:inline-block;
+  margin-right:10rpx;
+}

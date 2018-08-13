@@ -1,16 +1,19 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
-      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%"
-         upper-threshold="150">
-        <!--<view class="padding-top-64" :class="{'height-110':!showImage,'height-444':showImage}">-->
+      <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
         <view class="padding-top-64">
-          <block v-for="(index, i) in displayIndexs" :key="index" >
-            <view :id="index">
-              <message-item :survey="survey" :lastBotMsg="i==(displayIndexs.length-1)" :msgIndex="index" :chatType="chatType"
-                      @renderComplete="renderComplete" @renderUpdate="renderUpdate" @itemLoad="scollToBottom"/>
+          <block v-for="(messages, i) in messageList" :key="messages.id">
+            <view :id="i">
+              <message-item :survey="survey" :lastBotMsg="i==(messageList.length-1)&&messages.to!==undefined"
+                        :messages="messages" :userAuthed="userAuthed"
+                        @renderComplete="renderComplete"
+                        @renderUpdate="renderUpdate"
+                        @itemLoad="scollToBottom"
+                        @previewImage="$store.commit('setPreviewFalse')"
+                        @buttonListEvent="action"/>
             </view>
-            <view :id="'bottom'+index"></view>
+            <view :id="'bottom'+i"></view>
           </block>
           <block v-if="localMsgSending">
             <user-say-sending/>
@@ -18,23 +21,24 @@
           <view id="bottom"></view>
         </view>
       </scroll-view>
+      <!-- <message-list :messagesList="messageList" :survey="survey" :localmsgsending="localMsgSending"
+          @renderFinish="msgDisplayFinish" @renderBegin="msgDisplayBegin"/> -->
     </view>
     <view class="footer">
       <select-box  v-if="displayFinish" :messageAction="activeBoxMsg"/>
       <command-area  @msgSendStatus="handleMsgSendStatus"
           :inputPromt="activeInputPromtMsg"
           :displayFinish="displayFinish" @keyBoardUp="keyBoardUp"
-          :needFocus="msgListSize && msgListSize>5"/>
+          :needFocus="messageList.length && messageList.length>5"/>
     </view>
   </block>
 </template>
 
 <script>
 import commandArea from '@/components/commandArea'
-// import { mapGetters } from 'vuex'
 import selectBox from '@/components/selectBox'
-import messageItem from '@/components/chatPage/messageItem'
 import userSaySending from '@/components/userSay/sending'
+import { mapState } from 'vuex'
 
 const urlMaping = {
   'edit-survey': '/pages/surveySubjects/main',
@@ -50,51 +54,46 @@ export default {
     return {
       displayFinish: false,
       localMsgSending: false,
-      keyBoardHeight: '0rpx',
       scrollToView: 'bottom'
     }
   },
   props: {
-    msgListSize: {
-      type: Number,
-      default: 0
-    },
-
-    chatType: {
+    messageSource: {
       type: String,
-      default: ''
+      default: 'creator'
     },
-
     survey: {
       type: Object,
       default: {}
     }
   },
   watch: {
-    msgListSize: function (val) {
-      console.log('msg list size is ', val, 'show image', this.showImage)
-      const that = this
+    messageList: function (val) {
       this.msgDisplayBegin()
-      if (this.showImage) {
-        setTimeout(function () {
-          that.scrollToView = `bottom${val - 1}`
-        }, 500)
-      } else {
-        this.scrollToView = `bottom${val - 1}`
-      }
+      this.scrollToView = `bottom${val.length - 1}`
     }
   },
   computed: {
-    needTextReply () {
-      return this.$store.getters.needTextReply(this.chatType)
-    },
+    ...mapState({
+      userAuthed: state => state.userProfile.authed
+    }),
 
+    messageList () {
+      if (this.messageSource === 'creator') {
+        return this.$store.state.messages.creatorBotMsg
+      } else {
+        return this.$store.state.messages.surveybotMsg
+      }
+    },
     activeMsg () {
-      return this.$store.getters.activeMsg(this.chatType)
-    },
-
-    displayIndexs () {
-      return this.$store.getters.getDisplayIndexs(this.chatType)
+      if (!this.messageList) {
+        return undefined
+      }
+      let lastmsg = [...this.messageList].slice(-1)[0]
+      if (!lastmsg || !lastmsg.to || !lastmsg.msgs || lastmsg.msgs.length === 0) {
+        return undefined
+      }
+      return lastmsg
     },
 
     activeRedirectMsg () {
@@ -108,6 +107,21 @@ export default {
     }
   },
   methods: {
+    action (event) {
+      let buttonList = event.mp.detail.buttonList
+      let item = event.mp.detail.item
+      if (buttonList.reflex) {
+        this.$store.commit('appendUserMessage', item.value ? item.value : item.caption)
+      }
+      this.$store.dispatch('sendGenericRequest', {
+        type: 'event',
+        data:
+        {
+          name: item.event,
+          ...item.data
+        }
+      })
+    },
     activeSomeKindOfMsg (array) {
       if (!this.activeMsg) {
         return {}
@@ -128,7 +142,6 @@ export default {
     msgDisplayFinish () {
       this.displayFinish = true
       let lastMsg = this.activeRedirectMsg
-      console.log('last msg ====> !', lastMsg)
       if (lastMsg) {
         this.doRedirect(lastMsg)
       }
@@ -172,12 +185,9 @@ export default {
       this.localMsgSending = (event === 'start')
       this.scollToBottom()
     },
-    keyBoardUp (height) {
-      this.keyBoardHeight = height
-    },
     renderComplete () {
-      this.scollToBottom()
       this.msgDisplayFinish()
+      this.scollToBottom()
     },
     renderUpdate () {
       this.scollToBottom()
@@ -185,16 +195,17 @@ export default {
     scollToBottom () {
       const that = this
       this.scrollToView = ''
+      that.scrollToView = 'bottom'
       setTimeout(function () {
+        that.scrollToView = ''
         that.scrollToView = 'bottom'
-      }, 100)
+      }, 200)
     }
   },
 
   components: {
     commandArea,
     selectBox,
-    messageItem,
     userSaySending
   }
 }
@@ -206,5 +217,8 @@ export default {
   }
   .pulldown-box{
     /*transition: height 1s;*/
+  }
+  .padding-top-64{
+    padding-top: 70rpx;
   }
 </style>

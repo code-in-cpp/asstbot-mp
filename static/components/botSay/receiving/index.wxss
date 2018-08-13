@@ -1,0 +1,2 @@
+@import '/static/style/weui.wxss';
+@import '/static/style/main.wxss';

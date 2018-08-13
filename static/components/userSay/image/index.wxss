@@ -1,0 +1,38 @@
+@import '/static/style/main.wxss';
+
+.wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.word-text{
+  padding-bottom: 20rpx;
+}
+
+.right-block{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.right-item{
+  max-width: 70%;
+}
+.image{
+  width: 400rpx;
+  margin-right: 10rpx;
+  border-radius: 20rpx;
+}
+.wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.word-text{
+padding-bottom: 10px;
+padding-right: 10px;
+}
+.outgoing {
+  height: 100px;
+  width: 100px;
+  border: solid 1px beige;
+}
+.image{
+  border-radius: 20rpx;
+}

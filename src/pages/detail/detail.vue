@@ -84,10 +84,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import userSayText from '@/components/userSay/text'
-import botSayText from '@/components/botSay/text'
-import botSayImage from '@/components/botSay/image'
-import userSayImage from '@/components/userSay/image'
 import copyright from '@/components/copyright'
 
 import { formatTime } from '@/utils/index'
@@ -148,11 +144,7 @@ export default {
     }
   },
   components: {
-    userSayText,
-    botSayText,
-    copyright,
-    botSayImage,
-    userSayImage
+    copyright
   }
 }
 </script>

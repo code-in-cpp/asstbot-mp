@@ -1,0 +1,33 @@
+<block>
+    <block wx:if="{{outgoing}}">
+      <user-say-message messages="{{messages}}" userAuthed="{{userAuthed}}" bindpreviewImage="previewImage"></user-say-message>
+    </block>
+    <block wx:else>
+      <block wx:key="{{msg.id}}" wx:for="{{displayIncomingMsgs}}" wx:for-index="i" wx:for-item="msg">
+        <block wx:if="{{msg.type=='divider'}}">
+          <block wx:if="{{!lastBotMsg || i < received}}">
+            <divider />
+          </block>
+        </block>
+        <view class="weui-flex bot-message" wx:else>
+          <view class="left-item">
+            <view class="avatar-wrapper">
+              <!--<image :src="bodAvatar" class="small-avatar" v-if="i==0"/>-->
+              <bot-avatar url="{{survey.avatarUrl}}" size="30"
+                wx:if="{{i==0 || (displayIncomingMsgs[i-1].type =='divider' && (i-1) < received )}}"/>
+            </view>
+            <view class="content">
+              <bot-say-message msg="{{msg}}" bindloadDone="loadDone" wx:if="{{!lastBotMsg || i < received}}"
+                 bindbuttonListEvent="buttonListEvent" bindpreviewImage="previewImage"/>
+              <view wx:if="{{lastBotMsg && i == received}}">
+                <bot-say-receiving/>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <!--<block v-if="lastBotMsg && received < displayIncomingMsgs.length">-->
+        <!--<bot-msg-receiving/>-->
+      <!--</block>-->
+    </block>
+</block>

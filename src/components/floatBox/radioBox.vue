@@ -39,7 +39,7 @@
     methods: {
       selectItem (obj) {
         if (this.touchEndTime - this.touchStartTime < 800) {
-          this.$store.dispatch('sentRadioReply', {...obj, value: obj.caption})
+          this.$store.dispatch('sentRadioReply', {...obj, value: obj.value ? obj.value : obj.caption})
         }
       },
       touchStart (option) {

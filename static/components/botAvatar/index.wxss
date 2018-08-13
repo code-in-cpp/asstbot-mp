@@ -1,0 +1,4 @@
+/* components/view/botAvatar/botAvatar.wxss */
+.avatar {
+  border-radius: 50%
+}

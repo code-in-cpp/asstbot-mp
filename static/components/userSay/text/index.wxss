@@ -1,0 +1,19 @@
+@import '/static/style/main.wxss';
+.wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.word-text{
+  padding-bottom: 10px;
+}
+
+.right-block{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.right-item{
+  max-width: 70%;
+}
+  .flex-1{
+    flex: 1;
+  }

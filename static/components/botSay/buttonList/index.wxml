@@ -1,0 +1,8 @@
+<view class="weui-flex button-list" wx:if="{{show}}">
+  <view class="weui-flex button" wx:for="{{message.items}}" wx:key="item">
+    <button class="weui-btn mini-btn" 
+      type="default" size="mini" data-item="{{item}}" bindtap="click">
+      {{item.caption}}
+    </button>
+  </view>
+</view>

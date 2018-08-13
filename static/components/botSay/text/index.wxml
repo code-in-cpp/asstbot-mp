@@ -1,0 +1,3 @@
+    <view class="incoming" wx:if="content.length > 0">
+      <copyable-text text="{{content}}"/>
+    </view>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import 'weui-wxss/dist/style/weui.wxss'
-import '@/../static/font/iconfont.css'
+import '@/../static/font/iconfont.wxss'
 import bodAvatar from '@/components/bodAvatar'
 import spinner from '@/components/view/spinner'
 import recordStatus from '@/components/view/recordStatus'
@@ -12,7 +12,6 @@ import devicePadding from '@/components/view/devicePadding'
 import daLogo from '@/components/view/daLogo'
 import homeButton from '@/components/widget/homeButton'
 import logoTitleBar from '@/components/titleBar/logoTitleBar'
-import loading from '@/components/view/loading'
 import copyableText from '@/components/widget/copyableText'
 import daText from '@/components/view/daText'
 import daImage from '@/components/view/daImage'
@@ -30,7 +29,6 @@ Vue.component('device-padding', devicePadding)
 Vue.component('da-logo', daLogo)
 Vue.component('home-button', homeButton)
 Vue.component('logo-title-bar', logoTitleBar)
-Vue.component('loading', loading)
 Vue.component('copyable-text', copyableText)
 Vue.component('da-text', daText)
 Vue.component('da-image', daImage)
