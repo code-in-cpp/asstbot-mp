@@ -76,6 +76,7 @@
       <view class = "anwser-container">
       <block v-for="(answer, index) in answers" :key="index">
         <view class="radio anwser-item">
+          <!-- <radio v-if="survey.type=='exam'" @click="toUpdateAnswerCorrect(index)" :checked="answer.correct" class="anwser-check-icon"></radio> -->
           <view class="weui-cell__bd height-92">
             <block v-if="subject.type=='date'">
               <picker mode="date" :value="answer.value" start="2015-09-01" end="2017-09-01" @change="updateAnswerValue(index, $event.mp.detail.value)">
@@ -237,6 +238,9 @@ export default {
       let answers = [...this.answers]
       let answer = answers[index]
       answer.value = value
+      if ((this.survey.type === 'exam') && (this.subject.type !== 'radio') && (this.subject.type !== 'checkbox')) {
+        answer.correct = true
+      }
       this.verifyAnswer(answer)
       this.$emit('input', answers)
     },
