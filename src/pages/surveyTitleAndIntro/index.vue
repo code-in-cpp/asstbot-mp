@@ -12,7 +12,7 @@
           <view class="weui-cell__ft">
               <icon type="warn" size="15" color="#E64340"></icon>
           </view>
-        </view>      
+        </view>
       <view class="content-box content-box-1">
         <text class="content-text">简介</text>
         <!--<input class="content-input" type="text" @blur="editIntro" :value="intro">-->
@@ -95,6 +95,7 @@
   .content-box-1{
     height: auto;
     line-height: 40rpx;
+    padding-top: 20rpx;
   }
   .content-text{
     padding:0 20rpx;

@@ -28,6 +28,7 @@ export default {
 <style lang="less" scoped>
 @import '~@/../static/base';
 .return-button {
+  padding-left: 20rpx;
   display: flex;
   flex-direction: row;
   color: @text-on-p-color;
