@@ -104,6 +104,7 @@ export class CreatedPoster {
           lineHeight: `${this.botLineHeight}rpx`,
           align: 'left',
           width: `${this.botWidth}rpx`,
+          letterSpacing: `${this.botLetterSpaceing}rpx`,
           color: '#2b313d'
         }
       },
@@ -129,6 +130,7 @@ export class CreatedPoster {
           align: 'left',
           width: `${this.botWidth}rpx`,
           maxLines: titleLines,
+          letterSpacing: `${this.botLetterSpaceing}rpx`,
           color: '#2b313d'
         }
       }
@@ -156,6 +158,7 @@ export class CreatedPoster {
           align: 'left',
           width: `${this.botWidth}rpx`,
           color: '#2b313d',
+          letterSpacing: `${this.botLetterSpaceing}rpx`,
           maxLines: introLines
         }
       }

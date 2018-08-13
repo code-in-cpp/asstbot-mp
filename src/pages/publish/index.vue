@@ -93,6 +93,7 @@ export default {
       if (this.conclusionUrl !== '' || this.conclusion !== '') {
         // console.log('visited poster, url: ', this.conclusionUrl)
         poster = new VisitedPoster()
+        console.log('visited poster, responderNickName: ', this.responderNickName)
         return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
       }
       // console.log('created poster')
