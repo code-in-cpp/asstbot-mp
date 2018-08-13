@@ -16,7 +16,8 @@ export default {
     return {
       survey: {},
       option: {},
-      loadDone: false
+      loadDone: false,
+      firstTimeShow: true
     }
   },
   computed: {
@@ -76,6 +77,26 @@ export default {
 
   onShow () {
     console.log('on show')
+    if (!this.firstTimeShow) {
+      wx.showModal({
+        title: '你有一份问卷未完成',
+        content: '现在继续回答吗？',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户选择继续答卷')
+          } else if (res.cancel) {
+            console.log('用户选择取消答卷')
+            wx.reLaunch({
+              url: '../index/main?scene=relaunchFrom'
+            })
+          }
+        },
+        fail: (err) => {
+          console.log('comfirm continue on survey : ' + JSON.stringify(err))
+        }
+      })
+    }
+    this.firstTimeShow = false
   },
   onHide () {
     console.log('hide:')
@@ -84,6 +105,7 @@ export default {
   onLoad (option) {
     this.option = option
     this.loadDone = false
+    this.firstTimeShow = true
     if (this.previewImageFlag) {
       if (this.hasLogin) {
         this.startChat()
