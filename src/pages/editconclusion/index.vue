@@ -136,11 +136,9 @@ export default {
       this.verifyConclusion()
     },
     changeMinNumber (event) {
-      console.log(event)
       this.conclusion.scoreRange.min = event.number
     },
     changeMaxNumber (event) {
-      console.log(event)
       this.conclusion.scoreRange.max = event.number
     },
     verifyConclusion () {
