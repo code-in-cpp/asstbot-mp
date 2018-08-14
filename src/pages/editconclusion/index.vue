@@ -32,7 +32,7 @@
         </block>
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" @change="updateTitleValue" placeholder="请输入结论" :value="conclusion.text" style="height: 3.3em" />
+            <textarea class="weui-textarea" @input="updateTitleValue" placeholder="请输入结论" :value="conclusion.text" style="height: 3.3em" />
           </view>
         </view>
         <view class="weui-cell">
