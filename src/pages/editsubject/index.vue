@@ -134,6 +134,7 @@ export default {
       }
       this.subject.type = type
       this.subject.nlu = type === 'date'
+      this.verifyAnswers()
     },
     answerChange (event) {
       this.subject.answers = event
@@ -168,10 +169,12 @@ export default {
       if (this.subject.type === 'radio') {
         this.answersLegal = this.subject.answers.length >= 1
         this.inlegalText = '单选题最少有一个选型'
-      }
-      if (this.subject.type === 'checkbox') {
+      } else if (this.subject.type === 'checkbox') {
         this.answersLegal = this.subject.answers.length >= 2
         this.inlegalText = '多选题最少有二个选型'
+      } else {
+        this.answersLegal = true
+        this.inlegalText = ''
       }
       if (!this.answersLegal) {
         return false
