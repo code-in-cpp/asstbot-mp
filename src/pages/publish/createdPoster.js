@@ -192,4 +192,3 @@ export class CreatedPoster {
     return items
   }
 }
-

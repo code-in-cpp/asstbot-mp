@@ -169,8 +169,8 @@ export default {
     if (option.action === 'create') {
       let subjectCount = this.survey.subjects.length
       let range = this.survey.type === 'exam'
-          ? getFreeRange(subjectCount, this.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
-          : {min: 0, max: 0}
+        ? getFreeRange(subjectCount, this.survey.conclusions.map((c) => { return [c.scoreRange.min, c.scoreRange.max] }))
+        : {min: 0, max: 0}
       this.conclusion = {
         scoreRange: {
           min: range.min,

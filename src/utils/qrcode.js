@@ -101,14 +101,14 @@ function comfirmSaveImageToPhotosAlbum (image) {
 
 export function saveQrCodeToPhotosAlbum (scene) {
   getSaveImageAuth(scene)
-  .then(getQrcodeImageUrl)
-  .then(storeQrCodeImage)
-  .then(saveImageToPhotosAlbum)
-  .then(comfirmSaveImageToPhotosAlbum)
-  .catch((err) => {
-    wx.hideLoading()
-    console.log('save qrcode image to photo album failed : ' + JSON.stringify(err))
-  })
+    .then(getQrcodeImageUrl)
+    .then(storeQrCodeImage)
+    .then(saveImageToPhotosAlbum)
+    .then(comfirmSaveImageToPhotosAlbum)
+    .catch((err) => {
+      wx.hideLoading()
+      console.log('save qrcode image to photo album failed : ' + JSON.stringify(err))
+    })
 }
 
 export function savePosterToPhotosAlbum (poster) {

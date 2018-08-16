@@ -87,7 +87,7 @@ export default {
         return ''
       }
       return this.items.filter(item => item.caption && item.caption.length > 1)
-            .map((item) => item.caption).join(',')
+        .map((item) => item.caption).join(',')
     },
     textAreaFocus () {
       return this.needFocus && this.inputPromt.type && this.inputPromt.type === 'input-prompt'

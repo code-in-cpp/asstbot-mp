@@ -35,17 +35,3 @@ Vue.component('da-image', daImage)
 
 const app = new Vue(App)
 app.$mount()
-
-export default {
-  // 这个字段走 app.json
-  config: {
-    pages: ['^pages/index/main'],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#2C2D31',
-      navigationBarTextStyle: 'white',
-      navigationStyle: 'custom',
-      enablePullDownRefresh: false
-    }
-  }
-}

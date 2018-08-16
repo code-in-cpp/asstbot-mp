@@ -195,32 +195,32 @@ var _sendmessage = (commit, type, data) => {
           reject(err)
         })
     })
-    .catch((err) => {
-      console.error(err)
-      reject(err)
-    })
+      .catch((err) => {
+        console.error(err)
+        reject(err)
+      })
   })
 }
 
 var __sendLogin = (commit, isNew) => {
   return new Promise((resolve, reject) => {
     _sendmessage(commit, 'login', {code: '', isNew})
-              .then(() => {
-                wx.setStorage({
-                  key: 'has-login',
-                  value: 'true',
-                  success: () => {
-                    resolve()
-                  },
-                  fail: (err) => {
-                    reject(err)
-                  }
-                })
-              })
-              .catch((err) => {
-                console.error(err)
-                reject(err)
-              })
+      .then(() => {
+        wx.setStorage({
+          key: 'has-login',
+          value: 'true',
+          success: () => {
+            resolve()
+          },
+          fail: (err) => {
+            reject(err)
+          }
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+        reject(err)
+      })
   })
 }
 

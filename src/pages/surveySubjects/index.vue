@@ -256,18 +256,18 @@ export default {
     this.$store.dispatch('retrieveCurSurvey', option.id)
       .then((survey) => {
       })
-    .catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   onShareAppMessage (res) {
     let surveyId = this.survey.id
     this.$store.dispatch('editSurvey', this.survey)
-        .then(() => {
-          wx.navigateTo({
-            url: `/pages/display/main?id=${surveyId}`
-          })
+      .then(() => {
+        wx.navigateTo({
+          url: `/pages/display/main?id=${surveyId}`
         })
+      })
     return {
       title: this.survey.title,
       path: '/pages/surveyChat/main?id=' + this.survey.id,

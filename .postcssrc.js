@@ -2,8 +2,7 @@
 
 module.exports = {
   "plugins": {
-    "postcss-mpvue-wxss": {},
-    "postcss-mpvue-wxss-patch": {}
+    "postcss-mpvue-wxss": {}
   }
 }
  

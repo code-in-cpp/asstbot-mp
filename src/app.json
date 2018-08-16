@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/chart/main",
+    "pages/detail/main",
+    "pages/display/main",
+    "pages/editconclusion/main",
+    "pages/editsubject/main",
+    "pages/login/main",
+    "pages/publish/main",
+    "pages/survey/main",
+    "pages/surveyChat/main",
+    "pages/surveyProfile/main",
+    "pages/surveySubjects/main",
+    "pages/surveyTitleAndIntro/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2C2D31",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": false
+  }
+}
