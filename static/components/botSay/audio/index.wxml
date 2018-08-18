@@ -1,0 +1,6 @@
+<audio src="{{current.src}}"
+      poster="{{current.poster}}"
+      name="{{current.name}}"
+      author="{{current.author}}"
+      action="{{audioAction}}"
+      bindplay="audioPlayed" controls></audio>
