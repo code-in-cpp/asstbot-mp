@@ -134,7 +134,6 @@ export default {
       }
       this.subject.type = type
       this.subject.nlu = type === 'date'
-      this.verifyAnswers()
     },
     answerChange (event) {
       this.subject.answers = event

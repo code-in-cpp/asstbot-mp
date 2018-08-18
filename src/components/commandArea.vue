@@ -13,7 +13,7 @@
         <view class="weui-flex__item"  v-if="!voiceMode">
 
           <input class="word-textarea primary-color revert textarea-style-2"  adjust-position="true" :value="currentMessage" :cursorSpacing="14" 
-          :maxLength="textLength" :placeholder="placehodlerText" :type="textType"
+          :maxlength="textLength" :placeholder="placehodlerText" :type="textType"
           confirm-type="send" confirm-hold="true" 
           @input="valueInput" @confirm="confirm" @focus="textFocus" @blur="textBlur"/>
 
