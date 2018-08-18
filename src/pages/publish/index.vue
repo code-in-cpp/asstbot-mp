@@ -36,7 +36,7 @@
 import { savePosterToPhotosAlbum, getQrcodeImageUrl } from '@/utils/qrcode'
 // import { savePosterToPhotosAlbum } from '@/utils/qrcode'
 import { CreatedPoster } from './createdPoster'
-import {VisitedPoster} from './visitedPoster'
+// import {VisitedPoster} from './visitedPoster'
 
 export default {
   data: {
@@ -90,12 +90,12 @@ export default {
   computed: {
     _template () {
       var poster
-      if (this.conclusionUrl !== '' || this.conclusion !== '') {
-        // console.log('visited poster, url: ', this.conclusionUrl)
-        poster = new VisitedPoster()
-        console.log('visited poster, responderNickName: ', this.responderNickName)
-        return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
-      }
+      // if (this.conclusionUrl !== '' || this.conclusion !== '') {
+      //   // console.log('visited poster, url: ', this.conclusionUrl)
+      //   poster = new VisitedPoster()
+      //   console.log('visited poster, responderNickName: ', this.responderNickName)
+      //   return poster.do(this.responderNickName, this.title, this.conclusion, this.conclusionUrl, this.shareQrCode)
+      // }
       // console.log('created poster')
       poster = new CreatedPoster()
       return poster.do(this.title, this.intro, this.shareQrCode, this.avatarUrl)
