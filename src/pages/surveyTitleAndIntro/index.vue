@@ -3,7 +3,7 @@
     <title-bar title=" "/>
       <view class="content-box">
         <text class="content-text">标题</text>
-        <input class="content-input" type="text" autofocus="true" focus="true" @input="editTitle" :value="title">
+        <input class="content-input" type="text" autofocus="true" focus="true" maxlength="20" @input="editTitle" :value="title">
       </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="title==''">
           <view class="weui-cell__bd">
@@ -16,7 +16,7 @@
       <view class="content-box content-box-1">
         <text class="content-text">简介</text>
         <!--<input class="content-input" type="text" @blur="editIntro" :value="intro">-->
-        <textarea @input="editIntro" :value="intro"></textarea>
+        <textarea @input="editIntro" :value="intro" maxlength="100"></textarea>
       </view>
     <view class="btn-box">
       <button :disabled="!title" class="btn-save" type="primary" @click="saveSurvey">保存</button>
