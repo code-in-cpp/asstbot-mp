@@ -1,6 +1,7 @@
 <template>
   <block>
     <view class="content" style="flex-direction: column">
+      <videoplayer :src="videoSrc" v-if="videoPlay" @videoEnded="videoPlay=false"></videoplayer>
       <scroll-view scroll-y='true' :scroll-into-view="scrollToView" style="height: 100%">
         <view class="padding-top-64">
           <block v-for="(messages, i) in messageList" :key="messages.id">
@@ -11,7 +12,8 @@
                         @renderUpdate="renderUpdate"
                         @itemLoad="scollToBottom"
                         @previewImage="$store.commit('setPreviewFalse')"
-                        @buttonListEvent="action"/>
+                        @buttonListEvent="action"
+                        @videoPlay="playVideo"/>
             </view>
             <view :id="'bottom'+i"></view>
           </block>
@@ -38,6 +40,7 @@
 import commandArea from '@/components/commandArea'
 import selectBox from '@/components/selectBox'
 import userSaySending from '@/components/userSay/sending'
+import videoplayer from '@/components/widget/videoplayer'
 import { mapState } from 'vuex'
 
 const urlMaping = {
@@ -54,7 +57,9 @@ export default {
     return {
       displayFinish: false,
       localMsgSending: false,
-      scrollToView: 'bottom'
+      scrollToView: 'bottom',
+      videoPlay: false,
+      videoSrc: ''
     }
   },
   props: {
@@ -200,13 +205,18 @@ export default {
         that.scrollToView = ''
         that.scrollToView = 'bottom'
       }, 200)
+    },
+    playVideo (event) {
+      this.videoPlay = true
+      this.videoSrc = event.mp.detail
     }
   },
 
   components: {
     commandArea,
     selectBox,
-    userSaySending
+    userSaySending,
+    videoplayer
   }
 }
 </script>

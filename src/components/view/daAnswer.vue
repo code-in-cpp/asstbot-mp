@@ -30,7 +30,7 @@
           <view class="weui-select subject-hieght-line">{{displayNames[answer.next]}}</view>
         </view>
         <view class="icon-item-style font-style weui-cell__ft"  v-if="answer.imageUrl">
-          <image class="answer-image" :src="answer.imageUrl"></image>
+          <image class="answer-image" :src="answer.imageUrl"/>
         </view>
       </view>
     </view>

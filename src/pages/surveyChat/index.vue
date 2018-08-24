@@ -78,6 +78,11 @@ export default {
 
   onShow () {
     console.log('on show')
+    if (!this.previewImageFlag) {
+      this.$store.commit('setPreviewTrue')
+      return
+    }
+
     if (!this.firstTimeShow && this.scene !== 'test') {
       wx.showModal({
         title: '你有一份问卷未完成',
@@ -108,19 +113,16 @@ export default {
     this.loadDone = false
     this.firstTimeShow = true
     this.scene = option.scene
-    if (this.previewImageFlag) {
-      if (this.hasLogin) {
-        this.startChat()
-      } else if (this.hasLogin === undefined) {
-        this.$store.dispatch('updateAuthStatus')
-          .then((auth) => {
-            if (auth) {
-              this.startChat()
-            }
-          })
-      }
-    } else {
-      this.$store.commit('setPreviewTrue')
+
+    if (this.hasLogin) {
+      this.startChat()
+    } else if (this.hasLogin === undefined) {
+      this.$store.dispatch('updateAuthStatus')
+        .then((auth) => {
+          if (auth) {
+            this.startChat()
+          }
+        })
     }
   }
 }

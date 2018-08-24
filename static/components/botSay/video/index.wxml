@@ -1,6 +1,6 @@
-<video
-   src="{{current.src}}"
-      poster="{{current.poster}}"
-      autoplay="true" 
-      controls
-></video>
+
+<view>
+  <button class="btn" type=""  bindtap="playVideo">
+    播放视频
+  </button>
+</view>
