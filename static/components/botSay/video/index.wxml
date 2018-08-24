@@ -1,0 +1,6 @@
+<video
+   src="{{current.src}}"
+      poster="{{current.poster}}"
+      autoplay="true" 
+      controls
+></video>

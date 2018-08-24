@@ -1,6 +1,6 @@
 <template>
     <view class="imageGallery" @click="previewImage">
-      <image mode="widthFix" class="image" :src="imageUrl"></image>
+      <image mode="aspectFit" class="image" :src="imageUrl"></image>
       <i class="icon iconfont icon-close font-del" @click.stop="delImage"></i>
     </view>
 </template>

@@ -1,11 +1,11 @@
 <template>
   <view class="weui-cell__bd">
     <view class="weui-uploader">
-      <view class="weui-uploader__bd">
+      <view class="weui-uploader__bd  aaaaaa">
         <view class="weui-uploader__file" v-if="url!==''">
           <image class="weui-uploader__img" :src="url" mode="aspectFill" @click="previewImage"/>
         </view>
-        <view class="weui-uploader__input-box" v-if="url === ''">
+        <view class="weui-uploader__input-box" style="margin-top: 60rpx" v-if="url === ''">
           <view class="weui-uploader__input" @click="chooseImage"></view>
         </view>
         <view class="delete-box" v-else>
@@ -29,16 +29,22 @@ export default {
       this.$emit('deleteImage')
     },
     chooseImage () {
+      console.log('image')
       this.$store.dispatch('selectImageToUpload')
         .then((url) => {
           this.$emit('chooseImage', url)
         })
+      // console.log('selectVideoToUpload')
+      // this.$store.dispatch('selectVideoToUpload')
     },
     previewImage () {
       wx.previewImage({
         current: this.url,
         urls: [this.url]
       })
+    },
+    switchChange (e) {
+      console.log(e)
     }
   }
 }

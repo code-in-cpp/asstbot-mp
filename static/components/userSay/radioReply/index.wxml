@@ -7,6 +7,6 @@
       </block>
     </view>
     <view class="right-block word-text" wx:if="{{content.imageUrl}}">
-      <image bindtap="previewImage" class="image" mode="widthFix" src="{{content.imageUrl}}"></image>
+      <image bindlongpress="previewImage" class="image" mode="aspectFit" src="{{content.imageUrl}}"></image>
     </view>
   </view>

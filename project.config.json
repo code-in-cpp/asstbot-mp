@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.9",
+	"libVersion": "2.2.3",
 	"appid": "wxc5ac60a9e76b7be5",
 	"projectname": "xiaoda-assistant-mp",
 	"svr": "",
@@ -37,20 +37,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
-					"name": "毛孩子",
-					"pathName": "pages/surveyChat/main",
-					"query": "id=a81f22f08ccc11e8b1e74d9f5b42667a",
+					"name": "测试视频",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=2c20e540a5e411e8886623506b803ef6",
 					"scene": "1008"
 				},
 				{
-					"id": -1,
-					"name": "xj",
-					"pathName": "pages/index/main",
-					"query": "id=survey-f519fb00-7f72-11e8-b56b-594b8a930fa4",
+					"id": 1,
+					"name": "脱单",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=8334ded0a22511e8886623506b803ef6",
 					"scene": "1008"
 				},
 				{
@@ -100,6 +100,34 @@
 					"name": "详情页面",
 					"pathName": "pages/detail/main",
 					"query": "resultId=123a65f0923111e88429f5fb0ddc2255&score=3&type=reply",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "毛孩子",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=1f4c7fd09f7411e88a55b16a65a6ada6",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "毛孩子",
+					"pathName": "pages/editsubject/main",
+					"query": "id=1f4c7fd09f7411e88a55b16a65a6ada6",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "毛孩子",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=1f4c7fd09f7411e88a55b16a65a6ada6",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "测试视频",
+					"pathName": "pages/surveySubjects/main",
+					"query": "id=1f4c7fd09f7411e88a55b16a65a6ada6",
 					"scene": "1008"
 				}
 			]

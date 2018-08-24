@@ -1,5 +1,6 @@
-<image bindtap="previewImage" 
+<image bindlongpress="previewImage"
     mode="widthFix"
     class="image"
-    src="{{content}}" 
+    src="{{content}}"
+    mode="aspectFit"
     bindload="loadDone"/>

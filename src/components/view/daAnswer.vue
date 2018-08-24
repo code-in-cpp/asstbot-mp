@@ -19,11 +19,11 @@
           <view class="anwser-check-icon">
             <view class="answer-item-icon">
             </view>
-          </view>          
+          </view>
         </block>
-        <view class="weui-cell__bd height-92">
-          <view class="weui-input height-line-92 input-location" :class="correctAnswers[index]?'correct-answer':'' ">
-            {{answer.value}}
+        <view class="weui-cell__bd">
+          <view class="weui-input line-height-46 input-location" :class="correctAnswers[index]?'correct-answer':'' ">
+            111{{answer.value}}
           </view>
         </view>
         <view class="weui-cell__ft height-92" v-if="surveyType=='quiz'" >
@@ -131,6 +131,12 @@ view {
   font-size: @font-size-small;
 }
 
+.line-height-46{
+  height: auto;
+  line-height: 46rpx;
+  display: flex;
+  align-items: center;
+}
 .weui-cells:before {
   border-top: 0rpx;
 }

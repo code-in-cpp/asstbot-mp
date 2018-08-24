@@ -1,6 +1,6 @@
 <template>
     <view class="textarea-box">
-      <text class="textarea-text" v-if="isText" @click="showTextarea">{{content || defaultValue}}</text>
+      <text class="textarea-text" selectable="true" v-if="isText" @click="showTextarea">{{content || defaultValue}}</text>
       <textarea @blur="blur" class="textarea-item" v-if="!isText" :value="content" :focus="focusEnd"
                 @change="$emit('getTextareaValue',{index: index,  value: $event.mp.detail.value})"
                 @confirm="$emit('getTextareaValue',{index: index,  value: $event.mp.detail.value})"></textarea>

@@ -23,7 +23,10 @@
                     </view>
 
                     <da-text :content="subject.question"></da-text>
-                    <da-image :url="subject.imageUrl"/>
+
+                    <daVideo v-if="subject.urlType=='video'" :url="subject.imageUrl"/>
+                    <daAudio v-else-if="subject.urlType=='audio'" :url="subject.imageUrl"/>
+                    <da-image v-else :url="subject.imageUrl"/>
                     <da-answer :subjectIndex="i" :type="subject.type" :surveyType="type"></da-answer>
                   </view>
                   <view :id="'subject-operation-'+i">
@@ -63,7 +66,7 @@
         <view class="weui-flex bottom-button-box">
           <view class="weui-flex__item btn-style-survey" v-if="activeIndex==0">
             <button class="weui-btn btn-font" type="default" @click="addSubject"><i class="icon iconfont icon-add"></i>新题目</button>
-          </view>          
+          </view>
           <view class="weui-flex__item btn-style-survey" v-if="activeIndex==1">
             <button class="weui-btn btn-font" type="default" @click="addConclusion"><i class="icon iconfont icon-add"></i>新结论 </button>
           </view>
@@ -84,6 +87,8 @@ import { mapState } from 'vuex'
 import navBar from '@/components/navBar'
 import daText from '@/components/view/daText'
 import daImage from '@/components/view/daImage'
+import daVideo from '@/components/view/daVideo'
+import daAudio from '@/components/view/daAudio'
 import daAnswer from '@/components/view/daAnswer'
 import subjectOperation from '@/components/widget/subjectOperation'
 import conclusion from '@/components/conclusion/conclusion'
@@ -160,6 +165,8 @@ export default {
     navBar,
     daText,
     daImage,
+    daVideo,
+    daAudio,
     daAnswer,
     subjectOperation,
     conclusion,

@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .image-wrapper{
   text-align: center;
   font-size: 0;

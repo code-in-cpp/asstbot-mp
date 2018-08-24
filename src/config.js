@@ -15,6 +15,7 @@ export default {
     openIdUrl: `${hostRoot}/openid`,
     userInfoUrl: `${hostRoot}/user/wechat`,
     imageUrl: `${hostRoot}/image`,
+    videoPostUrl: `${hostRoot}/vedio`,
     imagePostUrl: `${hostRoot}/image?compress=true`,
     qrcodeUrl: `${hostRoot}/qrcode`
   }

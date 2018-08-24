@@ -1,6 +1,8 @@
 <block>   
   <bot-say-image content="{{msg.url}}" wx:if="{{msg.type=='image'}}" bindloadDone="loadDone" 
       bindpreviewImage="previewImage"></bot-say-image>
+      <bot-say-audio content="{{msg.url}}" wx:if="{{msg.type=='audio'}}"></bot-say-audio>
+      <bot-say-video content="{{msg.url}}" wx:if="{{msg.type=='video'}}"></bot-say-video>
   <bot-say-button-list message="{{msg}}" wx:elif="{{msg.type=='button-list'}}" bindbuttonListEvent="buttonListEvent" style="width: 90%"></bot-say-button-list>
   <bot-say-text content="{{msg.reply}}" wx:else></bot-say-text>
 </block>

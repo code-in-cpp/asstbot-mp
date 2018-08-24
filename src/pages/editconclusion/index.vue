@@ -1,5 +1,5 @@
 <template>
-  <view class="page">  
+  <view class="page">
     <title-bar :title="survey.title"/>
     <view class="content">
       <view class="weui-cells__title">{{title}}</view>
@@ -13,7 +13,7 @@
 
               </view>
               <view class="weui-cell__ft">
-                <da-counter :number="conclusion.scoreRange.min" min="0" :max="conclusion.scoreRange.max" 
+                <da-counter :number="conclusion.scoreRange.min" min="0" :max="conclusion.scoreRange.max"
                   @changenumber="changeMinNumber"/>
               </view>
           </view>
@@ -36,7 +36,8 @@
           </view>
         </view>
         <view class="weui-cell">
-          <image-uploader :url="conclusion.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>
+          <!--<image-uploader v-if="conclusion.imageUrl" :url="conclusion.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>-->
+          <video-uploader v-if="conclusion.videoUrl" :url="conclusion.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
@@ -57,6 +58,7 @@
 <script>
 import { mapState } from 'vuex'
 import imageUploader from '@/components/widget/imageUploader'
+
 import daCounter from '@/components/uicomponent/daCounter'
 
 function getInitArray (max, value) {
@@ -131,9 +133,17 @@ export default {
       this.conclusion.imageUrl = ''
       this.verifyConclusion()
     },
+    deleteVideo () {
+      this.conclusion.imageUrl = ''
+      // this.verifyConclusion()
+    },
     chooseTitleImage (url) {
       this.conclusion.imageUrl = url
       this.verifyConclusion()
+    },
+    chooseTitleVideo (url) {
+      this.conclusion.videoUrl = url
+      // this.verifyConclusion()
     },
     changeMinNumber (event) {
       this.conclusion.scoreRange.min = event.number
@@ -177,7 +187,8 @@ export default {
           max: range.max
         },
         text: '',
-        imageUrl: ''
+        imageUrl: '',
+        videoUrl: ''
       }
       this.title = '新创建结论'
     } else {
