@@ -1,1 +1,35 @@
 /* static/components/botSay/video/index.wxss */
+
+.videoBox{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  z-index: 1001
+}
+.posterBox{
+  position: relative;
+  max-width: 90%;
+}
+.poster{
+  max-width: 100%;
+  background: #000;
+}
+.triAngle{
+  position: absolute;
+  left:0;
+  top: 0;
+  right: 0;
+  bottom:0;
+  margin: auto auto;
+  border-top: 20rpx solid transparent;
+  border-bottom: 20rpx solid transparent;
+  border-left: 40rpx solid #fff;
+  width: 0;
+  height: 0;
+}

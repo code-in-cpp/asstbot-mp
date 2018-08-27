@@ -115,7 +115,7 @@
         </view>
         <view class="anwser-item border" v-if="answer.imageUrl">
           <image-uploader :url="answer.imageUrl" add="false" @deleteImage="deleteImage(index)"/>
-        </view>   
+        </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!answer.islegal">
           <view class="weui-cell__bd">
             {{answer.verifyResult}}
@@ -123,7 +123,7 @@
           <view class="weui-cell__ft">
               <icon type="warn" size="15" color="#E64340"></icon>
           </view>
-        </view>    
+        </view>
       </block>
       </view>
     </block>
@@ -135,7 +135,7 @@
           <view class="weui-cell__ft height-line-92" @click="addAnswer()">
             添加选项
           </view>
-      </view> 
+      </view>
     </block>
   </block>
 </template>
@@ -165,7 +165,6 @@ export default {
   },
   computed: {
     answers () {
-      console.log('answers is', this.subject.answers)
       return this.subject.answers
     },
     questionNames () {
@@ -284,7 +283,6 @@ export default {
         this.verifyAnswer(answer)
         ret = ret & answer.islegal
       })
-      console.log('answer is', this.answers)
       return ret
     },
 

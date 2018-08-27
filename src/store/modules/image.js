@@ -63,6 +63,7 @@ const actions = {
         filePath,
         name: 'vedio',
         success: (res) => {
+          console.log(res)
           const remoteUrl = `${hostRoot}/${JSON.parse(res.data).url}`
           resolve(remoteUrl)
         },
@@ -103,7 +104,6 @@ const actions = {
         maxDuration: 60,
         camera: 'back',
         success: function (res) {
-          console.log(res)
           if (res.size < 10 * 1024 * 1024) {
             dispatch('uploadVideo', res.tempFilePath).then(res => {
               console.log(res)

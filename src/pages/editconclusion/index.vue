@@ -37,7 +37,10 @@
         </view>
         <view class="weui-cell">
           <!--<image-uploader v-if="conclusion.imageUrl" :url="conclusion.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>-->
-          <video-uploader v-if="conclusion.videoUrl" :url="conclusion.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>
+
+          <!--<video-uploader v-if="conclusion.videoUrl" :url="conclusion.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>-->
+
+          <mediaBox :data="conclusion"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
@@ -60,6 +63,8 @@ import { mapState } from 'vuex'
 import imageUploader from '@/components/widget/imageUploader'
 
 import daCounter from '@/components/uicomponent/daCounter'
+
+import mediaBox from '@/components/widget/mediaBox'
 
 function getInitArray (max, value) {
   let arr = new Array(max)
@@ -122,7 +127,8 @@ export default {
   },
   components: {
     imageUploader,
-    daCounter
+    daCounter,
+    mediaBox
   },
   methods: {
     updateTitleValue (event) {

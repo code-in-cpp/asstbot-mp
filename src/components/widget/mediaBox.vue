@@ -13,18 +13,18 @@
       </view>
       <view>
         <view class="mediaShowBox" v-if="videoUrl">
-          <icon class="icon" type="clear"/>
-          <da-video-for-edit :url="videoUrl" @deleteVideo="deleteVideo"/>
+          <icon class="icon" type="clear" @click="deleteMedia('video')"/>
+          <da-video-for-edit :url="videoUrl" :poster="data.poster" @deleteVideo="deleteVideo"/>
           <!--<daVideoForEdit :url="videoUrl"/>-->
         </view>
         <view class="mediaShowBox" v-else-if="audioUrl">
-          <icon class="icon" type="clear"/>
+          <icon class="icon" type="clear"  @click="deleteMedia('audio')"/>
           <audio :src="audioUrl" controls></audio>
           <!--<audio :src="audioUrl" controls></audio>-->
         </view>
         <view class="mediaShowBox" v-else-if="imageUrl">
-          <icon class="icon" type="clear"/>
-          <image class="image" mode="aspectFit" @click="previewImage" :src="imageUrl"></image>
+          <icon class="icon" type="clear"  @click="deleteMedia('image')"/>
+          <image class="image" mode="widthFix" @click="previewImage" :src="imageUrl"></image>
         </view>
       </view>
     </view>
@@ -46,42 +46,15 @@
       daVideoForEdit
     },
     props: {
-      url: {
-        type: String,
-        default: ''
-      },
-      resourceType: {
-        type: String,
-        default: 'image'
+      data: {
+        type: Object,
+        default: {}
       }
     },
-    // computed: {
-    //   computeState () {
-    //     switch (this.resourceType) {
-    //       case 'image':
-    //         this.mediaState = 1
-    //         this.imageUrl = this.url
-    //         return 1
-    //       case 'video':
-    //         this.mediaState = 2
-    //         this.videoUrl = this.url
-    //         return 2
-    //       case 'audio':
-    //         this.mediaState = 3
-    //         this.audioUrl = this.url
-    //         return 3
-    //       default:
-    //         this.mediaState = 1
-    //         this.imageUrl = this.url
-    //         return 1
-    //     }
-    //   }
-    // },
     name: 'mediaBox',
     methods: {
       setImageState (state) {
         this.mediaState = state
-        console.log(this.mediaState)
       },
       selectFile () {
         if (this.mediaState === 1) {
@@ -107,8 +80,8 @@
       },
       previewImage () {
         wx.previewImage({
-          current: this.url,
-          urls: [this.url]
+          current: this.data.imageUrl,
+          urls: [this.data.imageUrl]
         })
       },
       setNewUrl (event) {
@@ -133,27 +106,54 @@
       deleteVideo () {
         this.videoUrl = ''
         this.$emit('deleteVideo')
+      },
+      deleteMedia (state) {
+        switch (state) {
+          case 'video':
+            this.videoUrl = ''
+            this.$emit('deleteMedia', 'video')
+            break
+          case 'audio':
+            this.audioUrl = ''
+            this.$emit('deleteMedia', 'audio')
+            break
+          case 'image':
+            this.imageUrl = ''
+            this.$emit('deleteMedia', 'image')
+            break
+        }
       }
     },
     onLoad () {
-      switch (this.resourceType) {
-        case 'image':
-          this.mediaState = 1
-          this.imageUrl = this.url
-          return 1
-        case 'video':
-          this.mediaState = 2
-          this.videoUrl = this.url
-          return 2
-        case 'audio':
-          this.mediaState = 3
-          this.audioUrl = this.url
-          return 3
-        default:
-          this.mediaState = 1
-          this.imageUrl = this.url
-          return 1
-      }
+      const that = this
+      setTimeout(function () {
+        switch (that.data.urlType) {
+          case 'image':
+            that.mediaState = 1
+            that.imageUrl = that.data.imageUrl
+            that.videoUrl = ''
+            that.audioUrl = ''
+            return 1
+          case 'video':
+            that.mediaState = 2
+            that.videoUrl = that.data.imageUrl
+            that.imageUrl = ''
+            that.audioUrl = ''
+            return 2
+          case 'audio':
+            that.mediaState = 3
+            that.audioUrl = that.data.imageUrl
+            that.videoUrl = ''
+            that.imageUrl = ''
+            return 3
+          default:
+            that.mediaState = 1
+            that.imageUrl = that.data.imageUrl
+            that.videoUrl = ''
+            that.audioUrl = ''
+            return 1
+        }
+      })
     }
   }
 </script>
@@ -204,5 +204,6 @@
     position: absolute;
     top: 10rpx;
     right: 10rpx;
+    z-index: 1;
   }
 </style>

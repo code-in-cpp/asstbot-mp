@@ -11,7 +11,7 @@
           </view>
         </view>
         <view class="weui-cell">
-          <mediaBox :url="subject.imageUrl" :resourceType="subject.urlType" @inputUrl="getSourseUrl" @chooseVideo="chooseTitleVideo"  @chooseImage="chooseTitleImage" @deleteVideo="deleteVideo"/>
+          <mediaBox :data="subject" :url="subject.imageUrl" :resourceType="subject.urlType" @inputUrl="getSourseUrl" @chooseVideo="chooseTitleVideo"  @chooseImage="chooseTitleImage" @deleteMedia="deleteMedia"/>
           <!--<switchBar @switchState="switchState" v-if="!subject.imageUrl && !subject.videoUrl"/>-->
           <!--<image-uploader v-if="!switchOn" :url="subject.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>-->
           <!--<video-uploader v-if="switchOn" :url="subject.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>-->
@@ -117,6 +117,12 @@ export default {
     deleteVideo () {
       this.subject.imageUrl = ''
       this.subject.urlType = ''
+      this.verifySubject()
+    },
+    deleteMedia (state) {
+      this.subject.imageUrl = ''
+      this.subject.urlType = ''
+      this.subject.poster = ''
       this.verifySubject()
     },
     chooseTitleImage (url) {
@@ -228,7 +234,6 @@ export default {
         this.verifyAnswer(answer)
         ret = ret & answer.islegal
       })
-      console.log('answer is', this.subject.answers)
       return ret
     },
 
@@ -253,7 +258,6 @@ export default {
     }
   },
   onLoad (option) {
-    console.log(option)
     if (!option.action) {
       console.error('need to set parameter')
     }

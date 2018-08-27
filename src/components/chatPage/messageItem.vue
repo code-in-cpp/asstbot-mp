@@ -71,10 +71,13 @@ export default {
     }),
     displayIncomingMsgs () {
       return this.outgoing || !this.messages || !this.messages.msgs ? [] : this.messages.msgs.filter((msg) => {
+        console.log(msg.type)
         return msg.type === 'text' ||
           msg.type === 'getUserinfo' ||
           msg.type === 'dialog-end' ||
           msg.type === 'image' ||
+          msg.type === 'audio' ||
+          msg.type === 'video' ||
           msg.type === 'divider' ||
           msg.type === 'button-list'
       })

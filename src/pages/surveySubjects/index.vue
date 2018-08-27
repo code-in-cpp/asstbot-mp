@@ -24,7 +24,7 @@
 
                     <da-text :content="subject.question"></da-text>
 
-                    <daVideo v-if="subject.urlType=='video'" :url="subject.imageUrl"/>
+                    <daVideoForList v-if="subject.urlType=='video'" :poster="subject.poster"/>
                     <daAudio v-else-if="subject.urlType=='audio'" :url="subject.imageUrl"/>
                     <da-image v-else :url="subject.imageUrl"/>
                     <da-answer :subjectIndex="i" :type="subject.type" :surveyType="type"></da-answer>
@@ -87,7 +87,7 @@ import { mapState } from 'vuex'
 import navBar from '@/components/navBar'
 import daText from '@/components/view/daText'
 import daImage from '@/components/view/daImage'
-import daVideo from '@/components/view/daVideo'
+import daVideoForList from '@/components/view/daVideoForList'
 import daAudio from '@/components/view/daAudio'
 import daAnswer from '@/components/view/daAnswer'
 import subjectOperation from '@/components/widget/subjectOperation'
@@ -165,7 +165,7 @@ export default {
     navBar,
     daText,
     daImage,
-    daVideo,
+    daVideoForList,
     daAudio,
     daAnswer,
     subjectOperation,

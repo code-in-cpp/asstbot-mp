@@ -1,10 +1,12 @@
 <template>
   <view class="image-wrapper" v-if="url">
     <view class="videoBox" v-if="showVideo" @click="hideVideo">
-      <video @click.stop="" :src="url" controls></video>
+      <video direction="90" autoplay="true" :src="url" controls></video>
     </view>
-    <button @click="previewVideo">预览视频</button>
-    <button @click="deleteVideo">删除视频</button>
+    <view v-if="!showVideo" class="posterBox" @click="previewVideo">
+      <image class="poster" mode="widthFix" :src="poster"></image>
+      <view class="triAngle"></view>
+    </view>
   </view>
 </template>
 
@@ -15,7 +17,16 @@
         showVideo: false
       }
     },
-    props: ['url'],
+    props: {
+      url: {
+        type: String,
+        default: ''
+      },
+      poster: {
+        type: String,
+        default: ''
+      }
+    },
     methods: {
       previewVideo () {
         this.showVideo = true
@@ -52,5 +63,25 @@
   .image{
     display: inline-block;
     width:100%;
+  }
+  .posterBox{
+    position: relative;
+  }
+  .poster{
+    background: #000;
+    width: 100%;
+  }
+  .triAngle{
+    position: absolute;
+    left:0;
+    top: 0;
+    right: 0;
+    bottom:0;
+    margin: auto auto;
+    border-top: 20rpx solid transparent;
+    border-bottom: 20rpx solid transparent;
+    border-left: 40rpx solid #fff;
+    width: 0;
+    height: 0;
   }
 </style>

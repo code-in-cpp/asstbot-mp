@@ -5,6 +5,6 @@
     "bot-say-button-list": "/static/components/botSay/buttonList/index",
     "bot-say-image": "/static/components/botSay/image/index",
     "bot-say-audio": "/static/components/botSay/audio/index",
-    "bot-say-video": "static/componnets/botSay/video/index"
+    "bot-say-video": "/static/components/botSay/video/index"
   }
 }

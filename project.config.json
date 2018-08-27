@@ -37,13 +37,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "测试视频",
 					"pathName": "pages/surveySubjects/main",
-					"query": "id=2c20e540a5e411e8886623506b803ef6",
+					"query": "id=531bcaf0a29411e8886623506b803ef6",
 					"scene": "1008"
 				},
 				{
