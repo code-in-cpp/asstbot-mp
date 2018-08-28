@@ -36,11 +36,7 @@
           </view>
         </view>
         <view class="weui-cell">
-          <!--<image-uploader v-if="conclusion.imageUrl" :url="conclusion.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>-->
-
-          <!--<video-uploader v-if="conclusion.videoUrl" :url="conclusion.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>-->
-
-          <mediaBox :data="conclusion"/>
+          <mediaBox :data="conclusion" @inputUrl="getSourseUrl" @chooseVideo="chooseTitleVideo" @chooseImage="chooseTitleImage" @choosePoster="choosePoster" @deleteMedia="deleteMedia" @setAudioName="setAudioName" @setAudioAuthor="setAudioAuthor" @setPoster="setPoster"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
@@ -135,21 +131,56 @@ export default {
       this.conclusion.text = event.mp.detail.value
       this.verifyConclusion()
     },
-    deleteImage () {
+    deleteMedia (state) {
       this.conclusion.imageUrl = ''
+      this.conclusion.urlType = ''
+      if (this.conclusion.mediaInfo) {
+        this.conclusion.mediaInfo.poster = ''
+        this.conclusion.mediaInfo.name = ''
+        this.conclusion.mediaInfo.author = ''
+      }
       this.verifyConclusion()
     },
-    deleteVideo () {
-      this.conclusion.imageUrl = ''
-      // this.verifyConclusion()
+    getSourseUrl (url, state) {
+      this.conclusion.imageUrl = url
+      this.verifyConclusion()
+      switch (state) {
+        case 1:
+          this.conclusion.urlType = 'image'
+          break
+        case 2:
+          this.conclusion.urlType = 'video'
+          break
+        case 3:
+          this.conclusion.urlType = 'audio'
+          break
+      }
     },
     chooseTitleImage (url) {
       this.conclusion.imageUrl = url
+      this.conclusion.urlType = 'image'
       this.verifyConclusion()
     },
     chooseTitleVideo (url) {
-      this.conclusion.videoUrl = url
-      // this.verifyConclusion()
+      this.conclusion.imageUrl = url
+      this.conclusion.urlType = 'video'
+      this.verifyConclusion()
+    },
+    choosePoster (poster) {
+      this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
+      this.conclusion.mediaInfo.poster = poster
+    },
+    setAudioName (name) {
+      this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
+      this.conclusion.mediaInfo.name = name
+    },
+    setAudioAuthor (author) {
+      this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
+      this.conclusion.mediaInfo.author = author
+    },
+    setPoster (poster) {
+      this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
+      this.conclusion.mediaInfo.poster = poster
     },
     changeMinNumber (event) {
       this.conclusion.scoreRange.min = event.number

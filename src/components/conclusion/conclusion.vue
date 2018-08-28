@@ -11,14 +11,24 @@
         </view>
     </view>
     <da-text :content="conclusion.text"></da-text>
-    <da-image :url="conclusion.imageUrl"/>
+    <daVideoForList v-if="conclusion.urlType=='video'" :poster="conclusion.poster"/>
+    <daAudio v-else-if="conclusion.urlType=='audio'" :url="conclusion.imageUrl" :data="conclusion"/>
+    <da-image v-else :url="conclusion.imageUrl"/>
   </view>
 </block>
 </template>
 
 <script>
+  import daImage from '@/components/view/daImage'
+  import daVideoForList from '@/components/view/daVideoForList'
+  import daAudio from '@/components/view/daAudio'
 export default {
-  props: ['surveyType', 'conclusion', 'index']
+    props: ['surveyType', 'conclusion', 'index'],
+    components: {
+      daImage,
+      daVideoForList,
+      daAudio
+    }
 }
 </script>
 

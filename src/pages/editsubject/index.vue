@@ -11,10 +11,7 @@
           </view>
         </view>
         <view class="weui-cell">
-          <mediaBox :data="subject" :url="subject.imageUrl" :resourceType="subject.urlType" @inputUrl="getSourseUrl" @chooseVideo="chooseTitleVideo"  @chooseImage="chooseTitleImage" @deleteMedia="deleteMedia"/>
-          <!--<switchBar @switchState="switchState" v-if="!subject.imageUrl && !subject.videoUrl"/>-->
-          <!--<image-uploader v-if="!switchOn" :url="subject.imageUrl" @chooseImage="chooseTitleImage" @deleteImage="deleteImage"/>-->
-          <!--<video-uploader v-if="switchOn" :url="subject.videoUrl" @chooseVideo="chooseTitleVideo" @deleteVideo="deleteVideo"/>-->
+          <mediaBox :data="subject" @inputUrl="getSourseUrl" @chooseVideo="chooseTitleVideo"  @chooseImage="chooseTitleImage" @choosePoster="choosePoster" @deleteMedia="deleteMedia" @setAudioName="setAudioName" @setAudioAuthor="setAudioAuthor" @setPoster="setPoster"/>
         </view>
         <view class="weui-cell weui-cell_input weui-cell_warn" v-if="!isLegal">
           <view class="weui-cell__bd">
@@ -110,19 +107,14 @@ export default {
       this.subject.question = event.value
       this.verifySubject()
     },
-    deleteImage () {
-      this.subject.imageUrl = ''
-      this.verifySubject()
-    },
-    deleteVideo () {
-      this.subject.imageUrl = ''
-      this.subject.urlType = ''
-      this.verifySubject()
-    },
     deleteMedia (state) {
       this.subject.imageUrl = ''
       this.subject.urlType = ''
-      this.subject.poster = ''
+      if (this.subject.mediaInfo) {
+        this.subject.mediaInfo.poster = ''
+        this.subject.mediaInfo.name = ''
+        this.subject.mediaInfo.author = ''
+      }
       this.verifySubject()
     },
     chooseTitleImage (url) {
@@ -134,6 +126,22 @@ export default {
       this.subject.imageUrl = url
       this.subject.urlType = 'video'
       this.verifySubject()
+    },
+    choosePoster (poster) {
+      this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
+      this.subject.mediaInfo.poster = poster
+    },
+    setAudioName (name) {
+      this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
+      this.subject.mediaInfo.name = name
+    },
+    setAudioAuthor (author) {
+      this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
+      this.subject.mediaInfo.author = author
+    },
+    setPoster (poster) {
+      this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
+      this.subject.mediaInfo.poster = poster
     },
     getSourseUrl (url, state) {
       this.subject.imageUrl = url
@@ -267,7 +275,8 @@ export default {
         question: '',
         imageUrl: '',
         urlType: '',
-        answers: []
+        answers: [],
+        MediaInfo: {}
       }
     } else {
       this.subject = JSON.parse(JSON.stringify(this.survey.subjects[option.subject]))

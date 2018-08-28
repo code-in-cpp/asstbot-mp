@@ -1,12 +1,21 @@
 <template>
   <view class="image-wrapper" v-if="url">
-    <audio style="margin: 10rpx 0;" :src="url" controls></audio>
+    <audio style="margin: 10rpx 0;" :src="url" :name="data.mediaInfo?data.mediaInfo.name:''" :author="data.mediaInfo?data.mediaInfo.author:''" :poster="data.mediaInfo?data.mediaInfo.poster:''" controls></audio>
   </view>
 </template>
 
 <script>
   export default {
-    props: ['url']
+    props: {
+      url: {
+        type: String,
+        default: ''
+      },
+      data: {
+        type: Object,
+        default: {}
+      }
+    }
   }
 </script>
 

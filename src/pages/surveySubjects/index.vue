@@ -25,7 +25,7 @@
                     <da-text :content="subject.question"></da-text>
 
                     <daVideoForList v-if="subject.urlType=='video'" :poster="subject.poster"/>
-                    <daAudio v-else-if="subject.urlType=='audio'" :url="subject.imageUrl"/>
+                    <daAudio v-else-if="subject.urlType=='audio'" :url="subject.imageUrl" :data="subject"/>
                     <da-image v-else :url="subject.imageUrl"/>
                     <da-answer :subjectIndex="i" :type="subject.type" :surveyType="type"></da-answer>
                   </view>

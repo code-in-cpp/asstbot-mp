@@ -6,10 +6,35 @@
         <div class="mediaBtn" :class="mediaState==3?'btnActive':''" @click="setImageState(3)">音频</div>
       </view>
       <view class="uploadBox">
-        <input maxlength="-1" v-if="mediaState==1" class="uploadInput" type="text" placeholder="请输入图片链接" @blur="setNewUrl" @confirm="setNewUrl">
-        <input maxlength="-1" v-else-if="mediaState==2" class="uploadInput" type="text" placeholder="请输入视频链接" @blur="setNewUrl" @confirm="setNewUrl">
-        <input maxlength="-1" v-else class="uploadInput" type="text" placeholder="请输入音频链接" @blur="setNewUrl" @confirm="setNewUrl">
-        <div class="mediaBtn" @click="selectFile" v-if="mediaState!=3">上传</div>
+        <view class="flexBox" v-if="mediaState==1">
+          <input maxlength="-1" class="uploadInput" type="text" placeholder="请输入图片链接" @blur="setNewUrl" @confirm="setNewUrl">
+          <div class="mediaBtn" @click="selectFile">上传</div>
+        </view>
+
+        <view style="width: 100%;" v-else-if="mediaState==2">
+          <view class="flexBox">
+            <input maxlength="-1" class="uploadInput" type="text" placeholder="请输入视频链接" @blur="setNewUrl" @confirm="setNewUrl">
+            <div class="mediaBtn" @click="selectFile">上传</div>
+          </view>
+          <div class="flexBox">
+            <input class="uploadInput" maxlength="-1" type="text" placeholder="请输入封面地址或选择封面" @blur="setVideoPoster" @confirm="setVideoPoster" :value="videoInputValue">
+            <div class="mediaBtn" @click="selectVideoPoster">上传</div>
+          </div>
+          <view class="mediaTip" v-if="videoTipShow">*请先上传视频文件</view>
+        </view>
+
+        <view style="width: 100%;" v-else>
+          <view class="flexBox">
+            <input maxlength="-1" class="uploadInput" type="text" placeholder="请输入音频链接" @blur="setNewUrl" @confirm="setNewUrl">
+          </view>
+          <div class="flexBox"><input class="uploadInput" type="text" placeholder="请输入音频名字" @blur="setAudioName" @confirm="setAudioName"></div>
+          <div class="flexBox"><input class="uploadInput" type="text" placeholder="请输入作者名字" @blur="setAuthor" @confirm="setAuthor"></div>
+          <div class="flexBox">
+            <input class="uploadInput" maxlength="-1" type="text" placeholder="请输入封面地址或选择封面" @blur="setAudioPoster" @confirm="setAudioPoster" :value="audioInputValue">
+            <div class="mediaBtn"  @click="selectAudioPoster">上传</div>
+          </div>
+          <view class="mediaTip" v-if="audioTipShow">*请先上传音频文件</view>
+        </view>
       </view>
       <view>
         <view class="mediaShowBox" v-if="videoUrl">
@@ -19,7 +44,7 @@
         </view>
         <view class="mediaShowBox" v-else-if="audioUrl">
           <icon class="icon" type="clear"  @click="deleteMedia('audio')"/>
-          <audio :src="audioUrl" controls></audio>
+          <audio :src="audioUrl" :name="data.mediaInfo.name" :author="data.mediaInfo.author" :poster="data.mediaInfo.poster" controls></audio>
           <!--<audio :src="audioUrl" controls></audio>-->
         </view>
         <view class="mediaShowBox" v-else-if="imageUrl">
@@ -39,7 +64,11 @@
         mediaState: 1,
         imageUrl: '',
         videoUrl: '',
-        audioUrl: ''
+        audioUrl: '',
+        videoTipShow: false,
+        audioTipShow: false,
+        videoInputValue: '',
+        audioInputValue: ''
       }
     },
     components: {
@@ -54,7 +83,29 @@
     name: 'mediaBox',
     methods: {
       setImageState (state) {
+        this.videoTipShow = false
+        this.audioTipShow = false
         this.mediaState = state
+      },
+      selectVideoPoster () {
+        if (this.videoUrl) {
+          this.$store.dispatch('selectImageToUpload')
+            .then((url) => {
+              this.$emit('choosePoster', url)
+            })
+        } else {
+          this.videoTipShow = true
+        }
+      },
+      selectAudioPoster () {
+        if (this.audioUrl) {
+          this.$store.dispatch('selectImageToUpload')
+            .then((url) => {
+              this.$emit('choosePoster', url)
+            })
+        } else {
+          this.audioTipShow = true
+        }
       },
       selectFile () {
         if (this.mediaState === 1) {
@@ -63,6 +114,11 @@
               this.imageUrl = url
               this.audioUrl = ''
               this.videoUrl = ''
+              if (this.data.mediaInfo) {
+                this.data.mediaInfo.poster = ''
+                this.data.mediaInfo.name = ''
+                this.data.mediaInfo.author = ''
+              }
               this.$emit('chooseImage', url)
             })
         } else if (this.mediaState === 2) {
@@ -71,7 +127,11 @@
               this.imageUrl = ''
               this.audioUrl = ''
               this.videoUrl = url
-              console.log('videoUrl:' + this.videoUrl)
+              if (this.data.mediaInfo) {
+                this.data.mediaInfo.poster = ''
+                this.data.mediaInfo.name = ''
+                this.data.mediaInfo.author = ''
+              }
               this.$emit('chooseVideo', url)
             })
         } else {
@@ -89,6 +149,11 @@
           this.imageUrl = ''
           this.videoUrl = ''
           this.audioUrl = ''
+          if (this.data.mediaInfo) {
+            this.data.mediaInfo.poster = ''
+            this.data.mediaInfo.name = ''
+            this.data.mediaInfo.author = ''
+          }
           switch (this.mediaState) {
             case 1:
               this.imageUrl = event.mp.detail.value
@@ -102,6 +167,32 @@
           }
           this.$emit('inputUrl', event.mp.detail.value, this.mediaState)
         }
+      },
+      setVideoPoster (e) {
+        if (this.videoUrl) {
+          this.videoInputValue = e.mp.detail.value
+          this.$emit('setPoster', e.mp.detail.value)
+        } else {
+          this.videoTipShow = true
+          this.videoInputValue = ''
+        }
+      },
+      setAudioPoster (e) {
+        if (this.audioUrl) {
+          this.audioInputValue = e.mp.detail.value
+          this.$emit('setPoster', e.mp.detail.value)
+        } else {
+          this.audioTipShow = true
+          this.audioInputValue = ''
+        }
+      },
+      setAudioName (e) {
+        console.log(e.mp.detail.value)
+        this.$emit('setAudioName', e.mp.detail.value)
+      },
+      setAuthor (e) {
+        console.log(e.mp.detail.value)
+        this.$emit('setAudioAuthor', e.mp.detail.value)
       },
       deleteVideo () {
         this.videoUrl = ''
@@ -174,10 +265,12 @@
     border:1rpx solid #dadada;
     flex:1;
     margin-right:20rpx;
-    height:80rpx;
+    height:76rpx;
+    line-height: 76rpx;
     align-content: center;
     border-radius: 10rpx;
     padding-left: 20rpx;
+    font-size: 28rpx;
   }
   .mediaBtn{
     width:25%;
@@ -205,5 +298,14 @@
     top: 10rpx;
     right: 10rpx;
     z-index: 1;
+  }
+  .flexBox{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20rpx;
+  }
+  .mediaTip{
+    color: red;
+    font-size: 28rpx;
   }
 </style>

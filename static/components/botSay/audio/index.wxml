@@ -1,1 +1,1 @@
-<audio src="{{content.url}}" poster="{{content.poster}}" controls></audio>
+<audio src="{{content.url}}" poster="{{content.mediaInfo?content.mediaInfo.poster:''}}" name="{{content.mediaInfo?content.mediaInfo.name:''}}" author="{{content.mediaInfo?content.mediaInfo.author:''}}" controls></audio>
