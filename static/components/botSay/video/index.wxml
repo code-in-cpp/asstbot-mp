@@ -1,6 +1,6 @@
 <block>
   <view class="posterBox" wx:if="{{!showVideoFlag}}" bindtap="showVideo">
-    <image class="poster" mode="widthFix" src="{{content.poster}}">播放视频</image>
+    <image class="poster" mode="widthFix" src="{{content.mediaInfo?content.mediaInfo.poster:''}}">播放视频</image>
     <view class="triAngle"></view>
   </view>
   <view class='videoBox' bindtap='hideVideo' wx:else="{{showVideoFlag}}">

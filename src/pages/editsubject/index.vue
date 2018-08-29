@@ -129,19 +129,19 @@ export default {
     },
     choosePoster (poster) {
       this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
-      this.subject.mediaInfo.poster = poster
+      this.subject = {...this.subject, mediaInfo: {...this.subject.mediaInfo, poster: poster}}
     },
     setAudioName (name) {
       this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
-      this.subject.mediaInfo.name = name
+      this.subject = {...this.subject, mediaInfo: {...this.subject.mediaInfo, name: name}}
     },
     setAudioAuthor (author) {
       this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
-      this.subject.mediaInfo.author = author
+      this.subject = {...this.subject, mediaInfo: {...this.subject.mediaInfo, author: author}}
     },
     setPoster (poster) {
       this.subject.mediaInfo = this.subject.mediaInfo ? this.subject.mediaInfo : {}
-      this.subject.mediaInfo.poster = poster
+      this.subject = {...this.subject, mediaInfo: {...this.subject.mediaInfo, poster: poster}}
     },
     getSourseUrl (url, state) {
       this.subject.imageUrl = url

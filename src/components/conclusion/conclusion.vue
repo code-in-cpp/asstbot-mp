@@ -11,7 +11,7 @@
         </view>
     </view>
     <da-text :content="conclusion.text"></da-text>
-    <daVideoForList v-if="conclusion.urlType=='video'" :poster="conclusion.poster"/>
+    <daVideoForList v-if="conclusion.urlType=='video'" :poster="conclusion.mediaInfo?conclusion.mediaInfo.poster:''"/>
     <daAudio v-else-if="conclusion.urlType=='audio'" :url="conclusion.imageUrl" :data="conclusion"/>
     <da-image v-else :url="conclusion.imageUrl"/>
   </view>

@@ -168,19 +168,19 @@ export default {
     },
     choosePoster (poster) {
       this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
-      this.conclusion.mediaInfo.poster = poster
+      this.conclusion = {...this.conclusion, mediaInfo: {...this.conclusion.mediaInfo, poster: poster}}
     },
     setAudioName (name) {
       this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
-      this.conclusion.mediaInfo.name = name
+      this.conclusion = {...this.conclusion, mediaInfo: {...this.conclusion.mediaInfo, name: name}}
     },
     setAudioAuthor (author) {
       this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
-      this.conclusion.mediaInfo.author = author
+      this.conclusion = {...this.conclusion, mediaInfo: {...this.conclusion.mediaInfo, author: author}}
     },
     setPoster (poster) {
       this.conclusion.mediaInfo = this.conclusion.mediaInfo ? this.conclusion.mediaInfo : {}
-      this.conclusion.mediaInfo.poster = poster
+      this.conclusion = {...this.conclusion, mediaInfo: {...this.conclusion.mediaInfo, poster: poster}}
     },
     changeMinNumber (event) {
       this.conclusion.scoreRange.min = event.number

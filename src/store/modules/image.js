@@ -5,6 +5,8 @@ const url = config.service.imagePostUrl
 const videoUrl = config.service.videoPostUrl
 const hostRoot = config.service.hostRoot
 
+let uploadTask
+
 const state = {
 }
 
@@ -58,12 +60,11 @@ const actions = {
 
   uploadVideo ({commit}, filePath) {
     return new Promise((resolve, reject) => {
-      const uploadTask = wx.uploadFile({
+      uploadTask = wx.uploadFile({
         url: videoUrl,
         filePath,
-        name: 'vedio',
+        name: 'video',
         success: (res) => {
-          console.log(res)
           const remoteUrl = `${hostRoot}/${JSON.parse(res.data).url}`
           resolve(remoteUrl)
         },
@@ -71,8 +72,8 @@ const actions = {
           reject(err)
         }
       })
+
       uploadTask.onProgressUpdate((res) => {
-        // resolve(res.progress)
         console.log('上传进度', res.progress)
       })
     })
@@ -106,7 +107,6 @@ const actions = {
         success: function (res) {
           if (res.size < 10 * 1024 * 1024) {
             dispatch('uploadVideo', res.tempFilePath).then(res => {
-              console.log(res)
               resolve(res)
             }).catch(err => {
               reject(err)

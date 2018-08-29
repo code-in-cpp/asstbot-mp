@@ -16,6 +16,7 @@
             <input maxlength="-1" class="uploadInput" type="text" placeholder="请输入视频链接" @blur="setNewUrl" @confirm="setNewUrl">
             <div class="mediaBtn" @click="selectFile">上传</div>
           </view>
+          <progress :percent="progress" show-info  v-if="showProgress" />
           <div class="flexBox">
             <input class="uploadInput" maxlength="-1" type="text" placeholder="请输入封面地址或选择封面" @blur="setVideoPoster" @confirm="setVideoPoster" :value="videoInputValue">
             <div class="mediaBtn" @click="selectVideoPoster">上传</div>
@@ -39,13 +40,12 @@
       <view>
         <view class="mediaShowBox" v-if="videoUrl">
           <icon class="icon" type="clear" @click="deleteMedia('video')"/>
-          <da-video-for-edit :url="videoUrl" :poster="data.poster" @deleteVideo="deleteVideo"/>
+          <da-video-for-edit :url="videoUrl" :poster="data.mediaInfo?data.mediaInfo.poster:''" @deleteVideo="deleteVideo"/>
           <!--<daVideoForEdit :url="videoUrl"/>-->
         </view>
         <view class="mediaShowBox" v-else-if="audioUrl">
           <icon class="icon" type="clear"  @click="deleteMedia('audio')"/>
-          <audio :src="audioUrl" :name="data.mediaInfo.name" :author="data.mediaInfo.author" :poster="data.mediaInfo.poster" controls></audio>
-          <!--<audio :src="audioUrl" controls></audio>-->
+          <audio :src="audioUrl" :name="data.mediaInfo?data.mediaInfo.name:''" :author="data.mediaInfo?data.mediaInfo.author:''" :poster="data.mediaInfo?data.mediaInfo.poster:''" controls></audio>
         </view>
         <view class="mediaShowBox" v-else-if="imageUrl">
           <icon class="icon" type="clear"  @click="deleteMedia('image')"/>
@@ -57,6 +57,10 @@
 
 <script>
   import daVideoForEdit from '@/components/view/daVideoForEdit'
+  import config from '@/config.js'
+
+  const videoUrl = config.service.videoPostUrl
+  const hostRoot = config.service.hostRoot
 
   export default {
     data () {
@@ -68,7 +72,9 @@
         videoTipShow: false,
         audioTipShow: false,
         videoInputValue: '',
-        audioInputValue: ''
+        audioInputValue: '',
+        progress: 0,
+        showProgress: false
       }
     },
     components: {
@@ -122,18 +128,58 @@
               this.$emit('chooseImage', url)
             })
         } else if (this.mediaState === 2) {
-          this.$store.dispatch('selectVideoToUpload')
-            .then((url) => {
-              this.imageUrl = ''
-              this.audioUrl = ''
-              this.videoUrl = url
-              if (this.data.mediaInfo) {
-                this.data.mediaInfo.poster = ''
-                this.data.mediaInfo.name = ''
-                this.data.mediaInfo.author = ''
+          const that = this
+          wx.chooseVideo({
+            sourceType: ['album', 'camera'],
+            maxDuration: 60,
+            camera: 'back',
+            success: function (res) {
+              if (res.size < 10 * 1024 * 1024) {
+                that.showProgress = true
+                const uploadTask = wx.uploadFile({
+                  url: videoUrl,
+                  filePath: res.tempFilePath,
+                  name: 'vedio',
+                  success: (res) => {
+                    that.showProgress = false
+                    const remoteUrl = `${hostRoot}/${JSON.parse(res.data).url}`
+                    that.imageUrl = ''
+                    that.audioUrl = ''
+                    that.videoUrl = remoteUrl
+                    if (that.data.mediaInfo) {
+                      that.data.mediaInfo.poster = ''
+                      that.data.mediaInfo.name = ''
+                      that.data.mediaInfo.author = ''
+                    }
+                    that.$emit('chooseVideo', remoteUrl)
+                  },
+                  fail: (err) => {
+                    // reject(err)
+                    console.log(err)
+                  }
+                })
+
+                uploadTask.onProgressUpdate((res) => {
+                  console.log('上传进度', res.progress)
+                  that.progress = res.progress
+                })
+              } else {
+                console.log('视频文件过大')
               }
-              this.$emit('chooseVideo', url)
-            })
+            }
+          })
+          // this.$store.dispatch('selectVideoToUpload')
+          //   .then((url) => {
+          //     this.imageUrl = ''
+          //     this.audioUrl = ''
+          //     this.videoUrl = url
+          //     if (this.data.mediaInfo) {
+          //       this.data.mediaInfo.poster = ''
+          //       this.data.mediaInfo.name = ''
+          //       this.data.mediaInfo.author = ''
+          //     }
+          //     this.$emit('chooseVideo', url)
+          //   })
         } else {
           console.log('wrong state code')
         }
